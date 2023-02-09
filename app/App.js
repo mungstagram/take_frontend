@@ -26,12 +26,15 @@ const App = () => {
     <>
       <StatusBar style="light" />
       <NavigationContainer>
-        <Stack.Navigator>
-          {/* <Stack.Screen name="Home" component={Home} /> */}
-          {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
-          {/* <Stack.Screen name="Login" component={Login} /> */}
-          {/* <Stack.Screen name="Profile" component={Profile} /> */}
-        </Stack.Navigator>
+        <View>
+          <Text>어질어질</Text>
+        </View>
+        {/* <Stack.Navigator> */}
+        {/* <Stack.Screen name="Home" component={Home} /> */}
+        {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
+        {/* <Stack.Screen name="Login" component={Login} /> */}
+        {/* <Stack.Screen name="Profile" component={Profile} /> */}
+        {/* </Stack.Navigator> */}
       </NavigationContainer>
     </>
   );
