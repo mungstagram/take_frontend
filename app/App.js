@@ -23,6 +23,7 @@ import BottomTabNav from './components/BottomTabNav';
 
 import Home from './screens/Home';
 import Profile from './screens/Profile';
+
 import {NONAME} from 'dns';
 
 const Stack = createNativeStackNavigator();
