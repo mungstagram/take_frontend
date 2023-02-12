@@ -14,7 +14,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './screens/Login';
 // import Signup
 import Signup from './screens/Signup';
-import {Colors} from './constants/Colors';
+import {Colors} from './constants/colors';
+import {Provider} from 'react-redux';
+import store from './redux/store/configStore';
 
 const Stack = createNativeStackNavigator();
 
@@ -50,13 +52,13 @@ function AuthenticatedStack() {
 const App = () => {
   return (
     <>
-      <StatusBar style="light" />
-      {/* <View>
-        <Text>머징?</Text>
-      </View> */}
-      <NavigationContainer>
-        <AuthStack />
-      </NavigationContainer>
+      <Provider store={store}>
+        <StatusBar barStyle={'dark-content'} />
+        {/* <StatusBar style="light" /> */}
+        <NavigationContainer>
+          <AuthStack />
+        </NavigationContainer>
+      </Provider>
     </>
   );
 };

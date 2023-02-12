@@ -1,22 +1,26 @@
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 import React from 'react';
 
-import {Colors} from '../constants/Colors';
+import {Colors} from '../constants/colors';
 
 function AuthInput({
   label,
   keyboardType,
-  secure,
+  secure, // true false, true이면 입력창 내용 가리는 용도 (secureTextEntry에 사용)
   onUpdateValue,
   value,
   isInvalid,
+  title,
+  refInput,
 }) {
+  // console.log(refInput); //idInput
   return (
     <View style={styles.inputContainer}>
       <Text style={[styles.label, isInvalid && styles.labelInvalid]}>
         {label}
       </Text>
       <TextInput
+        placeholder={title}
         style={[styles.input, isInvalid && styles.inputInvalid]}
         autoCapitalize={false}
         // autoCapitalize="none"
@@ -24,6 +28,7 @@ function AuthInput({
         secureTextEntry={secure}
         onChangeText={onUpdateValue}
         value={value}
+        ref={refInput}
       />
     </View>
   );
@@ -33,21 +38,28 @@ export default AuthInput;
 
 const styles = StyleSheet.create({
   inputContainer: {
-    marginVertical: 8,
+    marginVertical: 0,
+    backgroundColor: 'gray',
+    justifyContent: 'center',
+    // height: 100,
+    paddingVertical: 5,
+    // alignItems: 'center',
   },
   label: {
     color: 'white',
-    marginBottom: 4,
   },
   labelInvalid: {
     color: Colors.error500,
   },
   input: {
-    paddingVertical: 8,
-    paddingHorizontal: 6,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginHorizontal: 4,
     backgroundColor: Colors.primary100,
-    borderRadius: 4,
     fontSize: 16,
+    borderRadius: 10,
+    // borderColor: 'blue',
+    // borderWidth: 2,
   },
   inputInvalid: {
     backgroundColor: Colors.error100,
