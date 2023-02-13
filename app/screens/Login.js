@@ -1,25 +1,28 @@
 import React, {useRef, useState} from 'react';
-import {Alert, View, Text} from 'react-native';
+import {Alert, View, Text, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 import AuthInput from '../components/AuthInput';
 import Button from '../components/Button';
-import {StyleSheet} from 'react-native';
+import AuthNavigateButton from '../components/AuthNavigateButton';
+import {__postLogin} from '../redux/modules/loginSlice';
 
 function Login() {
   const dispatch = useDispatch();
 
-  const idInput = useRef();
+  const idInput = useRef('');
   const passwordInput = useRef();
 
   const onSubmitLogin = e => {
-    console.log(idInput.current.focus());
-    // // dispatch();
-    // __postLogin({
-    //   memberId: memberIdInput.current.value,
-    //   password: passwordInput.current.value,
-    // });
-    // memberIdInput.current.focus();
+    console.log('login에서', idInput.current);
+    dispatch(
+      __postLogin({
+        email: idInput.current,
+        password: passwordInput.current,
+      }),
+    );
+
+    // idInput.current.focus();
   };
 
   return (
@@ -29,10 +32,13 @@ function Login() {
       </View>
 
       <View>
+        {/* <AuthInput placeholder="id" refInput={idInput} /> */}
         <AuthInput placeholder="id" refInput={idInput} />
+
         <AuthInput placeholder="password" refInput={passwordInput} />
       </View>
       <Button onPress={onSubmitLogin}>하잉!!</Button>
+      <AuthNavigateButton isLoginpage />
     </View>
   );
 }
