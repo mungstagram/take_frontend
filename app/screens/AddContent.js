@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 
 import YellowButton from '../components/YellowButton';
@@ -18,7 +19,7 @@ import CancelButton from '../components/CancelButton';
 
 const AddContent = () => {
   const [images, setImages] = useState([]);
-
+  // 사진넣기 버튼 클릭시 작동하는 이벤트
   const openPicker = async () => {
     try {
       const response = await MultipleImagePicker.openPicker({
@@ -31,11 +32,13 @@ const AddContent = () => {
       });
 
       console.log('response: ', response);
+      setImages(response);
     } catch (e) {
       console.log(e.code, e.message);
     }
   };
   //remove 라는 이름을 많이 쓴다고 한다.
+
   const onDelete = value => {
     const data = images.filter(
       item =>
@@ -44,7 +47,10 @@ const AddContent = () => {
     );
     setImages(data);
   };
+  // 사진 출력
+  //출력되는 사진들에 각각 삭제버튼을 만들어 줌.
   const renderItem = ({item, index}) => {
+    console.log('dd', item);
     return (
       <View style={styles.imageView}>
         <Image
@@ -61,7 +67,7 @@ const AddContent = () => {
           onPress={() => onDelete(item)}
           activeOpacity={0.9}
           style={styles.buttonDelete}>
-          <Text style={styles.titleDelete}>Xoá</Text>
+          <Text style={styles.titleDelete}>X</Text>
         </TouchableOpacity>
       </View>
     );
@@ -71,34 +77,29 @@ const AddContent = () => {
     <SafeAreaView style={styles.containerBox}>
       <View style={styles.box}>
         <View style={styles.container}>
-          <View style={styles.top}>
-            <Text>로고 들어갈 자리</Text>
-          </View>
           <View style={styles.titleInput}>
             <TextInput placeholder="제목을 입력하세요" />
           </View>
           <View style={styles.contentInput}>
-            <TextInput placeholder="제목을 입력하세요" />
+            <TextInput placeholder="내용을 입력하세요" />
           </View>
           <View>
             <Text>0/600</Text>
           </View>
-          <View style={styles.imageInput}>
-            <TextInput placeholder="제목을 입력하세요" />
-          </View>
-
-          <FlatList
-            data={images}
-            keyExtractor={(item, index) =>
-              (item?.filename ?? item?.path) + index
-            }
-            renderItem={renderItem}
-            numColumns={3}
-          />
-          <View>
-            <TouchableOpacity style={styles.openPicker} onPress={openPicker}>
-              <Text style={styles.openText}>댕댕🐶 사진넣기</Text>
-            </TouchableOpacity>
+          <View style={styles.fileInput}>
+            <View>
+              <TouchableOpacity style={styles.openPicker} onPress={openPicker}>
+                <Text style={styles.openText}>댕댕🐶 사진넣기</Text>
+              </TouchableOpacity>
+            </View>
+            <FlatList
+              data={images}
+              keyExtractor={(item, index) =>
+                (item?.filename ?? item?.path) + index
+              }
+              renderItem={renderItem}
+              numColumns={3}
+            />
           </View>
           <View style={styles.buttonRow}>
             <CancelButton>Cancel</CancelButton>
@@ -111,6 +112,7 @@ const AddContent = () => {
 };
 
 export default AddContent;
+
 const {width} = Dimensions.get('window');
 
 const IMAGE_WIDTH = (width - 24) / 3;
@@ -128,9 +130,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  top: {
-    flex: 1,
-  },
   titleInput: {
     flex: 1,
     border: 1,
@@ -139,12 +138,18 @@ const styles = StyleSheet.create({
   contentInput: {
     flex: 3,
   },
-  imageInput: {
+  fileInput: {
     flex: 2,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonRow: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   openText: {
     fontWeight: 'bold',
@@ -152,6 +157,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     paddingVertical: 12,
   },
+
   openPicker: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -161,7 +167,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    paddingVertical: 24,
+    paddingVertical: 10,
   },
   media: {
     marginLeft: 6,
@@ -172,10 +178,12 @@ const styles = StyleSheet.create({
   },
   buttonDelete: {
     paddingHorizontal: 8,
-    paddingVertical: 4,
-    position: 'absolute',
-    top: 6,
-    right: 6,
+    paddingVertical: 3,
+    position: 'relative',
+    right: 25,
+    marginTop: 3,
+    width: 22,
+    height: 22,
     backgroundColor: '#ffffff92',
     borderRadius: 4,
   },

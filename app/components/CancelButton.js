@@ -16,5 +16,8 @@ export default CancelButton;
 const styles = StyleSheet.create({
   buttonBox: {
     backgroundColor: '#a4a4a4',
+    width: 40,
+    alignContent: 'center',
+    justifyContent: 'center',
   },
 });
