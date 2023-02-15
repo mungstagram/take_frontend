@@ -1,19 +1,10 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {SafeAreaView, ScrollView, StatusBar, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector} from 'react-redux';
 
 import Login from './screens/Login';
-// import Signup
 import Signup from './screens/Signup';
 import UserDetail from './screens/UserDetail';
 import {Colors} from './constants/colors';
@@ -24,7 +15,7 @@ import LoginChecker from './components/LoginChecker';
 const Stack = createNativeStackNavigator();
 
 // 로그인전 이용하는 스크린
-function AuthStack() {
+const AuthStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -36,11 +27,11 @@ function AuthStack() {
       <Stack.Screen name="Signup" component={Signup} />
     </Stack.Navigator>
   );
-}
+};
 
 // 로그인 후 이동하는 screen
 // TODO: 페이지들 넣기, screenOptions 지울듯
-function AuthenticatedStack() {
+const AuthenticatedStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -51,9 +42,9 @@ function AuthenticatedStack() {
       <Stack.Screen name="UserDetail" component={UserDetail} />
     </Stack.Navigator>
   );
-}
+};
 
-export function Navigation() {
+export const Navigation = () => {
   const {isLogin} = useSelector(state => state.login);
   console.log(isLogin);
   return (
@@ -62,7 +53,7 @@ export function Navigation() {
       {isLogin && <AuthenticatedStack />}
     </NavigationContainer>
   );
-}
+};
 
 const App = () => {
   return (

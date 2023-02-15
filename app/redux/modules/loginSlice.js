@@ -21,15 +21,12 @@ const initialState = {
 export const __postLogin = createAsyncThunk(
   'POST_LOGIN',
   async (payload, thunkAPI) => {
-    console.log('슬라이스는 되나?');
     try {
-      //   const data = await http.post('/auth/refresh', payload).then(res => {
       const data = await http.post('/auth/login', payload).then(res => {
         AsyncStorage.setItem('authorization', res.headers.authorization);
         return res;
       });
       AsyncStorage.setItem('nickname', data.data.nickname);
-      console.log('데이타', data);
       if (data.status === 200) {
         alert('로그인 성공');
       }
@@ -138,9 +135,6 @@ const loginSlice = createSlice({
       state.isLoading = false;
       state.isLogin = true;
       state.nickname = action.payload.nickname;
-
-      console.log('닉네임', action.payload.nickname);
-      console.log('풀필드 토큰', action.payload.token);
     },
     [__postLogin.rejected]: (state, action) => {
       state.isLoading = false;
@@ -154,7 +148,6 @@ const loginSlice = createSlice({
     //   state.isLoading = false;
     //   state.idNotChecked = false;
 
-    //   alert('중복 확인 되었습니다.');
     // },
     // [__checkMemberId.rejected]: (state, action) => {
     //   state.isLoading = false;

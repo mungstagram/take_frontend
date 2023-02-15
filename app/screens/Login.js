@@ -9,7 +9,7 @@ import AuthNavigateButton from '../components/AuthNavigateButton';
 import {__postLogin} from '../redux/modules/loginSlice';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function Login() {
+const Login = () => {
   const dispatch = useDispatch();
   const idInput = useRef('');
   const passwordInput = useRef();
@@ -23,10 +23,6 @@ function Login() {
       }),
     );
   };
-  // const access_token = AsyncStorage.getItem('authorization');
-  // // console.log(access_token);
-  // const asyncNickname = AsyncStorage.getItem('nickname');
-  // // console.log(asyncNickname);
 
   return (
     <View style={styles.wrapper}>
@@ -43,7 +39,7 @@ function Login() {
       <AuthNavigateButton isLoginpage />
     </View>
   );
-}
+};
 
 export default Login;
 

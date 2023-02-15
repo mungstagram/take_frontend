@@ -2,25 +2,22 @@ import {View, Text, TextInput, StyleSheet} from 'react-native';
 import React from 'react';
 
 import {Colors} from '../constants/colors';
-function AuthInput({
+const AuthInput = ({
   label, //만약 라벨을 쓴다면 없다면 추후 삭제
   keyboardType,
   secure, // true false, true이면 입력창 내용 가리는 용도 (secureTextEntry에 사용)
-  onUpdateValue,
-  value,
+  onUpdateValue, //로그인에서 사용된 인풋state를 변경하는 setState
+  value, // 회원가입에서는 useState를 통해서 입력을 함. useState에 저장된 인풋값.
   isInvalid,
   placeholder,
-  refInput,
+  refInput, // 로그인 경우 ref를 통해 로그인 함.. 로그인에 사용되는 인풋 값
   helper,
-}) {
+}) => {
   //ref로 오는 경우 (Login)와 state로 오는 경우(회원가입)
   const onChangeRefHandler = e => {
     refInput.current = e;
   };
-  // console.log(value); //TODO: 랜더링이 너무 많이됨 ..
-  // if (refInput) {
-  //   const onChangeTextHandler = onChangeRefHandler;
-  // }
+
   return (
     <View style={styles.inputContainer}>
       <Text style={[styles.label, isInvalid && styles.labelInvalid]}>
@@ -50,19 +47,9 @@ function AuthInput({
           <Text> {helper} </Text>
         </View>
       )}
-      {/* <TextInput
-        placeholder={placeholder}
-        style={[styles.input, isInvalid && styles.inputInvalid]}
-        autoCapitalize={false}
-        keyboardType={keyboardType}
-        secureTextEntry={secure}
-        // onChangeText={onChangeRefHandler} // 조건부로 onChangeText를 적용하고 싶음
-        onChangeText={onUpdateValue}
-        value={value}
-      /> */}
     </View>
   );
-}
+};
 
 export default AuthInput;
 

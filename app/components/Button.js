@@ -2,7 +2,7 @@ import {StyleSheet, View, Pressable, Text} from 'react-native';
 import {Colors} from '../constants/colors';
 import React from 'react';
 
-function Button({children, onPress}) {
+const Button = ({children, onPress}) => {
   //TODO: 디자인 나오고 수정 해야할듯 로그인 사인업 등록에 쓸 듯. 색 크기 조정을 해당 페이지에서?
   return (
     <Pressable
@@ -13,7 +13,7 @@ function Button({children, onPress}) {
       </View>
     </Pressable>
   );
-}
+};
 
 export default Button;
 

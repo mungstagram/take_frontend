@@ -8,7 +8,7 @@ import Button from '../components/Button';
 import AuthNavigateButton from '../components/AuthNavigateButton';
 import {__postUsers} from '../redux/modules/loginSlice';
 
-function Signup() {
+const Signup = () => {
   const dispatch = useDispatch();
 
   //입력 초기값
@@ -37,7 +37,6 @@ function Signup() {
   //유효성 검사 및 유즈스테이트 작성
   const onChangeUserHandler = (name, value) => {
     setUser({...user, [name]: value});
-    // console.log(name);
     if (name === 'email')
       !regEmail.test(value)
         ? setEmailInput(`이메일 형식이 아닙니다.`)
@@ -116,7 +115,7 @@ function Signup() {
       <AuthNavigateButton />
     </View>
   );
-}
+};
 
 export default Signup;
 

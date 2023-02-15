@@ -37,12 +37,6 @@ const LoginChecker = () => {
     );
   }
   return <Navigation />;
-
-  //   return (
-  //     <View>
-  //       <Text>로딩중입니다.</Text>
-  //     </View>
-  //   );
 };
 
 export default LoginChecker;
