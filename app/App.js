@@ -12,6 +12,12 @@ import {Provider} from 'react-redux';
 import store from './redux/store/configStore';
 import LoginChecker from './components/LoginChecker';
 
+import BottomTabNav from './components/BottomTabNav';
+
+import Home from './screens/Home';
+import Profile from './screens/Profile';
+import {NONAME} from 'dns';
+
 const Stack = createNativeStackNavigator();
 
 // 로그인전 이용하는 스크린
@@ -56,6 +62,7 @@ export const Navigation = () => {
 };
 
 const App = () => {
+  console.log('test');
   return (
     <>
       <Provider store={store}>
@@ -67,11 +74,11 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  // screen: {
+  //   flex: 1,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  // },
 });
 
 export default App;
