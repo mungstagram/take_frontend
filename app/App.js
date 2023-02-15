@@ -70,8 +70,6 @@ const App = () => {
       <Provider store={store}>
         <StatusBar barStyle={'dark-content'} />
         <LoginChecker />
-
-        {/* <Navigation /> */}
       </Provider>
     </>
   );

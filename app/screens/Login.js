@@ -35,7 +35,6 @@ function Login() {
       </View>
 
       <View>
-        {/* <AuthInput placeholder="id" refInput={idInput} /> */}
         <AuthInput placeholder="id" refInput={idInput} />
 
         <AuthInput placeholder="password" refInput={passwordInput} />
