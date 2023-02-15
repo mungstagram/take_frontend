@@ -6,7 +6,7 @@ import {useSelector} from 'react-redux';
 import AuthInput from '../components/AuthInput';
 import Button from '../components/Button';
 import AuthNavigateButton from '../components/AuthNavigateButton';
-import {__postLogin} from '../redux/modules/LoginSlice';
+import {__postLogin} from '../redux/modules/loginSlice';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {

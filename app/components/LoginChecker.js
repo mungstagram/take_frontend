@@ -4,7 +4,7 @@ import {View, Text} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import ReactNative from 'react-native';
 
-import {checkLogin} from '../redux/modules/LoginSlice';
+import {checkLogin} from '../redux/modules/loginSlice';
 import {Navigation} from '../App';
 const LoginChecker = () => {
   //    마운트 될 때, asyncStorage의 토큰 여부를 검사 = > 있으면 checkLogin 리듀서를 통해서   isLogin의 상태 true로 바꿔줌
