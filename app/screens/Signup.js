@@ -6,7 +6,7 @@ import {useDispatch} from 'react-redux';
 import AuthInput from '../components/AuthInput';
 import Button from '../components/Button';
 import AuthNavigateButton from '../components/AuthNavigateButton';
-import {__postUsers} from '../redux/modules/loginSlice';
+import {__postUsers} from '../redux/modules/LoginSlice';
 
 const Signup = () => {
   const dispatch = useDispatch();
