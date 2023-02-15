@@ -18,21 +18,22 @@ import YellowButton from '../components/YellowButton';
 import CancelButton from '../components/CancelButton';
 
 const AddContent = () => {
-  const [images, setImages] = useState([]);
+  const [videos, setVideos] = useState([]);
   // 사진넣기 버튼 클릭시 작동하는 이벤트
   const openPicker = async () => {
     try {
       const response = await MultipleImagePicker.openPicker({
-        usedCameraButton: false,
-        maxVideo: 5,
-        selectedAssets: images, //videos
+        usedCameraButton: true,
+        maxVideo: 1,
+        selectedAssets: videos,
         isExportThumbnail: true,
         isCrop: true,
         isCropCircle: true,
+        singleSelectedMode: true,
       });
 
       console.log('response: ', response);
-      setImages(response);
+      setVideos(response);
     } catch (e) {
       console.log(e.code, e.message);
     }
@@ -40,12 +41,12 @@ const AddContent = () => {
   //remove 라는 이름을 많이 쓴다고 한다.
 
   const onDelete = value => {
-    const data = images.filter(
+    const data = videos.filter(
       item =>
         item?.localIdentifier &&
         item?.localIdentifier !== value?.localIdentifier,
     );
-    setImages(data);
+    setVideos(data);
   };
   // 사진 출력
   //출력되는 사진들에 각각 삭제버튼을 만들어 줌.
@@ -58,8 +59,8 @@ const AddContent = () => {
           source={{
             uri:
               item?.type === 'video'
-                ? item?.thumbnail ?? ''
-                : 'file://' + (item?.crop?.cropPath ?? item.path),
+                ? ''
+                : 'file://' + (item?.crop?.cropPath ?? item.realPath),
           }}
           style={styles.media}
         />
@@ -87,13 +88,13 @@ const AddContent = () => {
             <Text>0/600</Text>
           </View>
           <View style={styles.fileInput}>
-            <View>
+            <View style={styles.fileupload}>
               <TouchableOpacity style={styles.openPicker} onPress={openPicker}>
                 <Text style={styles.openText}>댕댕🐶 사진넣기</Text>
               </TouchableOpacity>
             </View>
             <FlatList
-              data={images}
+              data={videos}
               keyExtractor={(item, index) =>
                 (item?.filename ?? item?.path) + index
               }
@@ -144,6 +145,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  fileupload: {
+    height: IMAGE_WIDTH,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 30,
   },
   buttonRow: {
     flex: 1,
