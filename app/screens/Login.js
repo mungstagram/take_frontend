@@ -1,29 +1,32 @@
 import React, {useRef, useState} from 'react';
 import {Alert, View, Text, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import AuthInput from '../components/AuthInput';
 import Button from '../components/Button';
 import AuthNavigateButton from '../components/AuthNavigateButton';
 import {__postLogin} from '../redux/modules/loginSlice';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Login() {
   const dispatch = useDispatch();
-
   const idInput = useRef('');
   const passwordInput = useRef();
 
   const onSubmitLogin = e => {
-    console.log('login에서', idInput.current);
+    // console.log('login에서', idInput.current);
     dispatch(
       __postLogin({
         email: idInput.current,
         password: passwordInput.current,
       }),
     );
-
-    // idInput.current.focus();
   };
+  // const access_token = AsyncStorage.getItem('authorization');
+  // // console.log(access_token);
+  // const asyncNickname = AsyncStorage.getItem('nickname');
+  // // console.log(asyncNickname);
 
   return (
     <View style={styles.wrapper}>

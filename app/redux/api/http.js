@@ -1,4 +1,6 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector} from 'react-redux';
 
 const http = axios.create({
   baseURL: 'http://f1rstweb.shop',
@@ -8,18 +10,21 @@ const http = axios.create({
     accept: 'application/json,',
   },
 });
+// let storedToken;
+// async function fetchToken() {
+//   const storedToken = await AsyncStorage.getItem('authorization');
+//   return storedToken;
+// }
 
-// http.interceptors.request.use(function (config) {
-//   // console.log("들어가나");
-//   // const access_token = sessionStorage.getItem("authorization");
-//   if (access_token !== null) {
-//     // console.log(access_token);
-//     // config.headers.common["Authorization"] = `${access_token}`;
-//     config.headers['Authorization'] = `${access_token}`;
-
-//     // config.headers.common["Authorization"] = `Bearer ${access_token}`;
-//   }
-//   return config;
-// });
+http.interceptors.request.use(async function (config) {
+  const storedToken = await AsyncStorage.getItem('authorization');
+  // console.log(storedToken);
+  if (storedToken !== null || storedToken !== undefined) {
+    // console.log(access_token);
+    // config.headers.common["Authorization"] = `${access_token}`;
+    config.headers['Authorization'] = `${storedToken}`;
+  }
+  return config;
+});
 
 export default http;

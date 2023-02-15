@@ -1,8 +1,8 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import http from '../api/http';
 import {Alert} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// import axios from "axios";
 const initialState = {
   users: [
     {
@@ -11,32 +11,38 @@ const initialState = {
       password: '',
     },
   ],
-  //   isLogin: false,
+  isLogin: false,
   isLoading: false,
   error: null,
-  //   idNotChecked: true,
-  //   nickNotChecked: true,
+  myNick: '',
 };
 
 //로그인 POST요청
 export const __postLogin = createAsyncThunk(
   'POST_LOGIN',
   async (payload, thunkAPI) => {
+    console.log('슬라이스는 되나?');
     try {
-      console.log(111, payload);
+      //   const data = await http.post('/auth/refresh', payload).then(res => {
       const data = await http.post('/auth/login', payload).then(res => {
-        // sessionStorage.setItem("refreshToken", res.data.refreshToken);
+        AsyncStorage.setItem('authorization', res.headers.authorization);
         return res;
       });
-      console.log(222, data);
-
+      AsyncStorage.setItem('nickname', data.data.nickname);
+      console.log('데이타', data);
       if (data.status === 200) {
-        // alert('로그인 성공');
+        alert('로그인 성공');
       }
-      return thunkAPI.fulfillWithValue(data.data);
+      // 직렬화 에러 해결하기 위해서 sendData 선언
+      const sendData = {
+        token: data.headers.authorization,
+        nickname: data.data.nickname,
+        // data.data.nickname 은 바디에 오는 닉네임
+        //data.headers.authorization 헤더에 담겨오는 인증 토큰
+      };
+      return thunkAPI.fulfillWithValue(sendData);
     } catch (error) {
       if (error.response.status === 401) {
-        // alert('아이디와 패스워드를 확인해주세요');
       }
       return thunkAPI.rejectWithValue(error);
     }
@@ -48,7 +54,7 @@ export const __postUsers = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       console.log(payload);
-      const {data} = await http.post('/users/signup', [payload]);
+      const {data} = await http.post('/users/signup', payload);
       console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -104,6 +110,7 @@ const loginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
+    //로그인 여부 관리 리듀서
     checkLogin: (state, action) => {
       state.isLogin = true;
     },
@@ -130,7 +137,10 @@ const loginSlice = createSlice({
     [__postLogin.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isLogin = true;
-      //   sessionStorage.setItem('memberinfo', JSON.stringify(action.payload));
+      state.nickname = action.payload.nickname;
+
+      console.log('닉네임', action.payload.nickname);
+      console.log('풀필드 토큰', action.payload.token);
     },
     [__postLogin.rejected]: (state, action) => {
       state.isLoading = false;

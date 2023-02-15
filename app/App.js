@@ -10,13 +10,16 @@ import {
 } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {useSelector} from 'react-redux';
 
 import Login from './screens/Login';
 // import Signup
 import Signup from './screens/Signup';
+import UserDetail from './screens/UserDetail';
 import {Colors} from './constants/colors';
 import {Provider} from 'react-redux';
 import store from './redux/store/configStore';
+import LoginChecker from './components/LoginChecker';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,19 +48,30 @@ function AuthenticatedStack() {
         headerTintColor: 'white',
         contentStyle: {backgroundColor: Colors.primary100},
       }}>
-      {/*  */}
+      <Stack.Screen name="UserDetail" component={UserDetail} />
     </Stack.Navigator>
   );
 }
+
+export function Navigation() {
+  const {isLogin} = useSelector(state => state.login);
+  console.log(isLogin);
+  return (
+    <NavigationContainer>
+      {!isLogin && <AuthStack />}
+      {isLogin && <AuthenticatedStack />}
+    </NavigationContainer>
+  );
+}
+
 const App = () => {
   return (
     <>
       <Provider store={store}>
         <StatusBar barStyle={'dark-content'} />
-        {/* <StatusBar style="light" /> */}
-        <NavigationContainer>
-          <AuthStack />
-        </NavigationContainer>
+        <LoginChecker />
+
+        {/* <Navigation /> */}
       </Provider>
     </>
   );
