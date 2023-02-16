@@ -44,7 +44,11 @@ const AuthenticatedStack = () => {
         headerTintColor: 'white',
         contentStyle: {backgroundColor: Colors.primary100},
       }}>
-      <Stack.Screen name="UserDetail" component={UserDetail} />
+      <Stack.Screen
+        name="Home"
+        component={BottomTabNav}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
