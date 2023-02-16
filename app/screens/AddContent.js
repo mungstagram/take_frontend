@@ -18,22 +18,40 @@ import YellowButton from '../components/YellowButton';
 import CancelButton from '../components/CancelButton';
 
 const AddContent = () => {
-  const [videos, setVideos] = useState([]);
+  // 제목 인풋상태
+  const [titleText, setTitleText] = useState();
+  //제목 인풋 핸들러
+  const titleTextHandler = event => {
+    console.log('제목', event.nativeEvent.text);
+    setTitleText(event.nativeEvent.text);
+  };
+  // 내용 인풋상태
+  const [contentText, setContentText] = useState('');
+  // 내용 인풋 핸들러
+  const contentTextHandler = event => {
+    console.log('내용', event.nativeEvent.text);
+
+    setContentText(event.nativeEvent.text);
+  };
+
+  // * 사진관련 코드
+  const [images, setImages] = useState([]);
   // 사진넣기 버튼 클릭시 작동하는 이벤트
   const openPicker = async () => {
     try {
       const response = await MultipleImagePicker.openPicker({
         usedCameraButton: true,
-        maxVideo: 1,
-        selectedAssets: videos,
+        mediaType: 'image',
+        maxVideo: 5,
+        selectedAssets: images,
         isExportThumbnail: true,
         isCrop: true,
         isCropCircle: true,
-        singleSelectedMode: true,
+        //singleSelectedMode: true,
       });
 
       console.log('response: ', response);
-      setVideos(response);
+      setImages(response);
     } catch (e) {
       console.log(e.code, e.message);
     }
@@ -41,12 +59,12 @@ const AddContent = () => {
   //remove 라는 이름을 많이 쓴다고 한다.
 
   const onDelete = value => {
-    const data = videos.filter(
+    const data = images.filter(
       item =>
         item?.localIdentifier &&
         item?.localIdentifier !== value?.localIdentifier,
     );
-    setVideos(data);
+    setImages(data);
   };
   // 사진 출력
   //출력되는 사진들에 각각 삭제버튼을 만들어 줌.
@@ -59,7 +77,7 @@ const AddContent = () => {
           source={{
             uri:
               item?.type === 'video'
-                ? ''
+                ? 'file://' + (item?.crop?.cropPath ?? item.realPath)
                 : 'file://' + (item?.crop?.cropPath ?? item.realPath),
           }}
           style={styles.media}
@@ -79,13 +97,23 @@ const AddContent = () => {
       <View style={styles.box}>
         <View style={styles.container}>
           <View style={styles.titleInput}>
-            <TextInput placeholder="제목을 입력하세요" />
+            <TextInput
+              placeholder="제목을 입력하세요"
+              value={titleText}
+              onChange={titleTextHandler}
+            />
           </View>
           <View style={styles.contentInput}>
-            <TextInput placeholder="내용을 입력하세요" />
+            <TextInput
+              placeholder="내용을 입력하세요"
+              maxLength={100}
+              multiline={true}
+              value={contentText}
+              onChange={contentTextHandler}
+            />
           </View>
           <View>
-            <Text>0/600</Text>
+            <Text>{contentText.length}/100</Text>
           </View>
           <View style={styles.fileInput}>
             <View style={styles.fileupload}>
@@ -94,7 +122,7 @@ const AddContent = () => {
               </TouchableOpacity>
             </View>
             <FlatList
-              data={videos}
+              data={images}
               keyExtractor={(item, index) =>
                 (item?.filename ?? item?.path) + index
               }

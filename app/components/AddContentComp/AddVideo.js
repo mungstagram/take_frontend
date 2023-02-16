@@ -16,23 +16,41 @@
 
 // import YellowButton from '../components/YellowButton';
 // import CancelButton from '../components/CancelButton';
-// response:  [{"bucketId": -1739773001, "chooseModel": 0, "duration": 1214, "fileName": "20230216_005335.mp4", "height": 1080, "localIdentifier": 1000008322, "mime": "video/mp4", "parentFolderName": "Camera", "path": "content://media/external/video/media/1000008322", "position": 0, "realPath": "/storage/emulated/0/DCIM/Camera/20230216_005335.mp4", "size": 3308327, "thumbnail": "", "type": "video", "width": 1920}]
 
-// const AddVideo = () => {
+// const AddContent = () => {
+//   // 제목 인풋상태
+//   const [titleText, setTitleText] = useState('');
+//   //제목 인풋 핸들러
+//   const titleTextHandler = e => {
+//     console.log('제목', e);
+//     setTitleText(e.target.value);
+//   };
+//   // 내용 인풋상태
+//   const [contentText, setContentText] = useState();
+//   // 내용 인풋 핸들러
+//   const contentTextHandler = e => {
+//     console.log('내용', e);
+//     setContentText(e.target.value);
+//   };
+
+//   // * 사진관련 코드
 //   const [videos, setVideos] = useState([]);
 //   // 사진넣기 버튼 클릭시 작동하는 이벤트
 //   const openPicker = async () => {
 //     try {
 //       const response = await MultipleImagePicker.openPicker({
-//         usedCameraButton: false,
-//         maxVideo: 5,
+//         usedCameraButton: true,
+//         mediaType: 'video',
+//         maxVideo: 1,
 //         selectedAssets: videos,
 //         isExportThumbnail: true,
 //         isCrop: true,
 //         isCropCircle: true,
+//         singleSelectedMode: true,
 //       });
 
 //       console.log('response: ', response);
+//       setVideos(response);
 //     } catch (e) {
 //       console.log(e.code, e.message);
 //     }
@@ -45,20 +63,21 @@
 //         item?.localIdentifier &&
 //         item?.localIdentifier !== value?.localIdentifier,
 //     );
-//     setImages(data);
+//     setVideos(data);
 //   };
 //   // 사진 출력
 //   //출력되는 사진들에 각각 삭제버튼을 만들어 줌.
 //   const renderItem = ({item, index}) => {
+//     console.log('dd', item);
 //     return (
-//       <View style={styles.videoView}>
+//       <View style={styles.imageView}>
 //         <Image
-//           width={VIDEO_WIDTH}
+//           width={IMAGE_WIDTH}
 //           source={{
 //             uri:
 //               item?.type === 'video'
 //                 ? item?.thumbnail ?? ''
-//                 : 'file://' + (item?.crop?.cropPath ?? item.path),
+//                 : 'file://' + (item?.crop?.cropPath ?? item.realPath),
 //           }}
 //           style={styles.media}
 //         />
@@ -77,30 +96,37 @@
 //       <View style={styles.box}>
 //         <View style={styles.container}>
 //           <View style={styles.titleInput}>
-//             <TextInput placeholder="제목을 입력하세요" />
+//             <TextInput
+//               placeholder="제목을 입력하세요"
+//               value="titleText"
+//               onChange={titleTextHandler}
+//             />
 //           </View>
 //           <View style={styles.contentInput}>
-//             <TextInput placeholder="제목을 입력하세요" />
+//             <TextInput
+//               placeholder="내용을 입력하세요"
+//               maxLength={600}
+//               value="contentText"
+//               onChange={contentTextHandler}
+//             />
 //           </View>
 //           <View>
 //             <Text>0/600</Text>
 //           </View>
-//           <View style={styles.imageInput}>
-//             <TextInput placeholder="제목을 입력하세요" />
-//           </View>
-
-//           <FlatList
-//             data={videos}
-//             keyExtractor={(item, index) =>
-//               (item?.filename ?? item?.path) + index
-//             }
-//             renderItem={renderItem}
-//             numColumns={3}
-//           />
-//           <View>
-//             <TouchableOpacity style={styles.openPicker} onPress={openPicker}>
-//               <Text style={styles.openText}>댕댕🐶 영상올리기</Text>
-//             </TouchableOpacity>
+//           <View style={styles.fileInput}>
+//             <View style={styles.fileupload}>
+//               <TouchableOpacity style={styles.openPicker} onPress={openPicker}>
+//                 <Text style={styles.openText}>댕댕🐶 사진넣기</Text>
+//               </TouchableOpacity>
+//             </View>
+//             <FlatList
+//               data={videos}
+//               keyExtractor={(item, index) =>
+//                 (item?.filename ?? item?.path) + index
+//               }
+//               renderItem={renderItem}
+//               numColumns={3}
+//             />
 //           </View>
 //           <View style={styles.buttonRow}>
 //             <CancelButton>Cancel</CancelButton>
@@ -112,11 +138,11 @@
 //   );
 // };
 
-// export default AddVideo;
+// export default AddContent;
 
 // const {width} = Dimensions.get('window');
 
-// const VIDEO_WIDTH = (width - 24) / 3;
+// const IMAGE_WIDTH = (width - 24) / 3;
 
 // const styles = StyleSheet.create({
 //   containerBox: {
@@ -139,12 +165,24 @@
 //   contentInput: {
 //     flex: 3,
 //   },
-//   imageInput: {
+//   fileInput: {
 //     flex: 2,
+//     flexDirection: 'row',
+//     flexWrap: 'wrap',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   fileupload: {
+//     height: IMAGE_WIDTH,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     marginTop: 30,
 //   },
 //   buttonRow: {
 //     flex: 1,
 //     flexDirection: 'row',
+//     justifyContent: 'center',
+//     alignItems: 'center',
 //   },
 //   openText: {
 //     fontWeight: 'bold',
@@ -152,30 +190,33 @@
 //     color: '#fff',
 //     paddingVertical: 12,
 //   },
+
 //   openPicker: {
 //     justifyContent: 'center',
 //     alignItems: 'center',
 //     backgroundColor: '#000',
 //   },
-//   videoView: {
+//   imageView: {
 //     flex: 1,
 //     flexDirection: 'row',
 //     flexWrap: 'wrap',
-//     paddingVertical: 24,
+//     paddingVertical: 10,
 //   },
 //   media: {
 //     marginLeft: 6,
-//     width: VIDEO_WIDTH,
-//     height: VIDEO_WIDTH,
+//     width: IMAGE_WIDTH,
+//     height: IMAGE_WIDTH,
 //     marginBottom: 6,
 //     backgroundColor: 'rgba(0,0,0,0.2)',
 //   },
 //   buttonDelete: {
 //     paddingHorizontal: 8,
-//     paddingVertical: 4,
-//     position: 'absolute',
-//     top: 6,
-//     right: 6,
+//     paddingVertical: 3,
+//     position: 'relative',
+//     right: 25,
+//     marginTop: 3,
+//     width: 22,
+//     height: 22,
 //     backgroundColor: '#ffffff92',
 //     borderRadius: 4,
 //   },
