@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, ScrollView, StatusBar, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import SplashScreen from 'react-native-splash-screen';
 import {useSelector} from 'react-redux';
 
 import Login from './screens/Login';
@@ -13,7 +14,6 @@ import store from './redux/store/configStore';
 import LoginChecker from './components/LoginChecker';
 
 import BottomTabNav from './components/BottomTabNav';
-
 import Home from './screens/Home';
 import Profile from './screens/Profile';
 import {NONAME} from 'dns';
@@ -52,7 +52,10 @@ const AuthenticatedStack = () => {
 
 export const Navigation = () => {
   const {isLogin} = useSelector(state => state.login);
-  console.log(isLogin);
+  // console.log(isLogin);
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   return (
     <NavigationContainer>
       {!isLogin && <AuthStack />}
@@ -62,7 +65,6 @@ export const Navigation = () => {
 };
 
 const App = () => {
-  console.log('test');
   return (
     <>
       <Provider store={store}>

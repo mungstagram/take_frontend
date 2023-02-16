@@ -2,6 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// import SplashScreen from 'react-native-splash-screen';
 // import ReactNative from 'react-native';
 
 import {checkLogin} from '../redux/modules/loginSlice';
@@ -17,8 +18,9 @@ const LoginChecker = () => {
       const storedToken = await AsyncStorage.getItem('authorization');
 
       if (storedToken) {
+        dispatch(checkLogin());
       }
-      dispatch(checkLogin());
+
       setIsTryingLogin(false);
     }
 
@@ -26,15 +28,7 @@ const LoginChecker = () => {
   }, []);
 
   if (isTryingLogin) {
-    return (
-      <View>
-        <Text>
-          로딩중입니다. 이 부분은 아마도 수정할 거 같습니다. 로딩페이지
-          만들어야해서!! 로딩중입니다. 이 부분은 아마도 수정할 거 같습니다.
-          로딩페이지 만들어야해서
-        </Text>
-      </View>
-    );
+    return <View></View>;
   }
   return <Navigation />;
 };
