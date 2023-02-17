@@ -92,10 +92,19 @@ const AddContent = () => {
     );
   };
 
+  const onSendFormData = () => {
+    const formList = {
+      category,
+      title,
+      content,
+      files,
+    };
+  };
+
   return (
     <SafeAreaView style={styles.containerBox}>
       <View style={styles.box}>
-        <View style={styles.container}>
+        <View style={styles.container} onSubmit={onSendFormData}>
           <View style={styles.titleInput}>
             <TextInput
               placeholder="제목을 입력하세요"
