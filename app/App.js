@@ -19,7 +19,7 @@ import Profile from './screens/Profile';
 
 const Stack = createNativeStackNavigator();
 
-// 로그인전 이용하는 스크린
+//그인전 이용하는 스크린
 const AuthStack = () => {
   return (
     <Stack.Navigator

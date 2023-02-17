@@ -21,6 +21,7 @@ const initialState = {
 export const __postLogin = createAsyncThunk(
   'POST_LOGIN',
   async (payload, thunkAPI) => {
+    console.lgos('payload', payload);
     try {
       const data = await http.post('/auth/login', payload).then(res => {
         AsyncStorage.setItem('authorization', res.headers.authorization);
