@@ -21,6 +21,7 @@ const initialState = {
 export const __postLogin = createAsyncThunk(
   'POST_LOGIN',
   async (payload, thunkAPI) => {
+    // console.log('모듈스', payload);
     try {
       const data = await http.post('/auth/login', payload).then(res => {
         AsyncStorage.setItem('authorization', res.headers.authorization);
@@ -28,7 +29,7 @@ export const __postLogin = createAsyncThunk(
       });
       AsyncStorage.setItem('nickname', data.data.nickname);
       if (data.status === 200) {
-        alert('로그인 성공');
+        Alert.alert('로그인 성공');
       }
       // 직렬화 에러 해결하기 위해서 sendData 선언
       const sendData = {
@@ -39,6 +40,8 @@ export const __postLogin = createAsyncThunk(
       };
       return thunkAPI.fulfillWithValue(sendData);
     } catch (error) {
+      Alert.alert('로그인 실패');
+
       if (error.response.status === 401) {
       }
       return thunkAPI.rejectWithValue(error);
