@@ -28,7 +28,7 @@ export const __postLogin = createAsyncThunk(
       });
       AsyncStorage.setItem('nickname', data.data.nickname);
       if (data.status === 200) {
-        alert('로그인 성공');
+        Alert.alert('로그인 성공');
       }
       // 직렬화 에러 해결하기 위해서 sendData 선언
       const sendData = {
