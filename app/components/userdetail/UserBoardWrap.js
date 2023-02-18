@@ -21,17 +21,19 @@ const styles = StyleSheet.create({
   },
   TabWrapper: {
     height: '15%',
-    position: 'relative',
+    width: '100%',
+
+    position: 'absolute',
     top: 0,
     backgroundColor: 'red',
   },
   ContentWrapper: {
-    // width: '66%',
-    height: '70%',
-    position: 'relative',
+    width: '100%',
+    height: '90%',
+    position: 'absolute',
     bottom: 0,
     backgroundColor: 'gray',
-    // zIndex: 4,
+    zIndex: 4,
   },
 });
 
