@@ -4,7 +4,6 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {Colors} from '../../constants/colors';
 import SelectBox from '../common/SelectBox';
 import Logout from '../Logout';
-import Example from '../svg/example';
 
 const UserBoardWrap = () => {
   // 사진 동영상 중 어떤 페이진지 선택하는 탭
@@ -21,13 +20,16 @@ const UserBoardWrap = () => {
   };
 
   // 최신순 or 좋아요 순 결정하는 state (초깃값 설정)
-  const [dataSortSelector, setDateSortSelector] = useState(0);
+  const [dataSortSelector, setDataSortSelector] = useState(0);
   // SelectBox에 표시될 이름
   const selectParameter = [
     {id: 0, content: '최신순으로 보기'},
     {id: 1, content: '좋아요순으로 보기'},
   ];
   // console.log(selectParameter[0]); // "최신 순으로 보기"
+  const dateSortSelectorHandler = selector => {
+    setDataSortSelector(selector);
+  };
 
   return (
     <View style={styles.Wrapper}>
@@ -51,14 +53,12 @@ const UserBoardWrap = () => {
         <View style={styles.SelectBoxHolder}>
           <SelectBox
             dataSortSelector={dataSortSelector}
-            setDateSortSelector={setDateSortSelector}
+            dateSortSelectorHandler={dateSortSelectorHandler}
             selectParameter={selectParameter}
           />
         </View>
         <Text> 하이</Text>
-        <View>
-          <Example></Example>
-        </View>
+        <View></View>
       </View>
     </View>
   );
@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '50%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
     right: '2%',
+    top: '2%',
     zIndex: 4,
   },
 });
