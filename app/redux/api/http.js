@@ -3,8 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {API_URL} from '@env';
 
 const http = axios.create({
-  // baseURL: `${API_URL}`,
-  baseURL: `http://f1rstweb.shop`,
+  baseURL: `${API_URL}`,
   timeout: 100000,
   headers: {
     'content-type': 'application/json;charset=UTF-8',
