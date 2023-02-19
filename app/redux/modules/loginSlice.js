@@ -54,9 +54,9 @@ export const __postUsers = createAsyncThunk(
   'POST_SIGNUP',
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
+      // console.log(payload);
       const {data} = await http.post('/users/signup', payload);
-      console.log(data);
+      // console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log(error);
