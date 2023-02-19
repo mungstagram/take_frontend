@@ -58,8 +58,6 @@ const dynamicStyles = value =>
     selectBoxContainer: {
       position: 'absolute',
       right: 0,
-      //   padding: '2%',
-      // alignItems: 'flex-start',
       width: '100%',
       zIndex: 2,
       backgroundColor: value ? 'gray' : 'white',
@@ -70,9 +68,6 @@ const dynamicStyles = value =>
 
 const styles = StyleSheet.create({
   selectBoxListContainer: {
-    // position: 'absolute',
-    // right: 0,
-    // alignItems: 'flex-start',
     width: '100%',
     zIndex: 2,
     backgroundColor: 'white',
