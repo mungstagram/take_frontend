@@ -11,7 +11,7 @@ import UserDetail from '../screens/UserDetail';
 
 const BottomTabNav = () => {
   return (
-    <Tab.Navigator initialRouteName="Home">
+    <Tab.Navigator initialRouteName="UserDetail">
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="UserDetail" component={UserDetail} />
       <Tab.Screen name="AddContent " component={AddContent} />
