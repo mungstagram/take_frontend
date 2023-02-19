@@ -256,6 +256,9 @@ android {
 }
 
 dependencies {
+    //파일 시스템 라이브러리
+    implementation project(':react-native-fs')
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     //noinspection GradleDynamicVersion

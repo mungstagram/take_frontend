@@ -14,10 +14,12 @@ import {
 } from 'react-native';
 
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
+import fs from 'react-native-fs';
 
 import YellowButton from '../components/YellowButton';
 import CancelButton from '../components/CancelButton';
 import {useDispatch} from 'react-redux';
+import {__postAddContentFormData} from '../redux/modules/addContentSlice';
 
 const AddContent = () => {
   // 제목 인풋상태
@@ -100,23 +102,33 @@ const AddContent = () => {
 
   //for문을 돌린다??
   const dispatch = useDispatch();
+
+  // 폼데이터 보낼 때, uri, type(mime), fileName 만 보내면 된다고 나와있는데.. 왜 안될까? ㅠㅠ
   const formData = new FormData();
   const onSendFormData = () => {
     console.log('images', images);
     //서버분들이랑 얘기해보기! images안에 데이터가 있는데,
-    console.log('images.real', images);
+    console.log('images.real', images[0].realPath);
     const formList = {
-      category: images.type,
+      category: 'image',
       title: titleText,
       content: contentText,
       // images안에 이미지 배열이 들어있음. 그거 어떻게 분해해서 넘길건지, 어렵다.
       // 그니까 서버분들한테 부탁하기ㅎㅎ
-      // files: images.realPath,
+      files: images,
     };
-    formData.append('category', images);
+    //images.map(image => {});
+
+    formData.append('category', 'image');
     formData.append('title', titleText);
     formData.append('content', contentText);
-    dispatch(__addPostFormData(formData));
+    //formData.append('files', images[0].realPath);
+    formData.append('files', {
+      name: images[0].filename,
+      type: 'multipart/form-data',
+      uri: images[0].path,
+    });
+    dispatch(__postAddContentFormData(formData));
   };
 
   return (
@@ -135,7 +147,7 @@ const AddContent = () => {
           <View style={styles.contentInput}>
             <TextInput
               placeholder="내용을 입력하세요"
-              maxLength={100}
+              maxLength={300}
               // 확인하기
               multiline={true}
               value={contentText}
@@ -151,14 +163,14 @@ const AddContent = () => {
                 <Text style={styles.openText}>댕댕🐶 사진넣기</Text>
               </TouchableOpacity>
             </View>
-            {/* 컴포넌트 맵 돌려서 스크롤뷰로 넣어주는게 나을것 같다. */}
+
             <FlatList
               data={images}
               keyExtractor={(item, index) =>
                 (item?.filename ?? item?.path) + index
               }
               renderItem={renderItem}
-              horizontal={false}
+              horizontal={true}
             />
           </View>
           <View style={styles.buttonRow}>
@@ -174,9 +186,9 @@ const AddContent = () => {
 export default AddContent;
 
 // 코드 손보기
-const {width} = Dimensions.get('window');
+// const {width} = Dimensions.get('window');
 
-const IMAGE_WIDTH = (width - 24) / 3;
+const IMAGE_WIDTH = 100;
 
 const styles = StyleSheet.create({
   containerBox: {
@@ -231,26 +243,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   imageView: {
-    flex: 1,
     flexDirection: 'column',
     flexWrap: 'nowrap',
-    paddingVertical: 10,
     position: 'relative',
-    borderWidth: 1,
+    marginRight: 6,
   },
   media: {
-    marginLeft: 6,
     width: IMAGE_WIDTH,
     height: IMAGE_WIDTH,
-    marginBottom: 6,
     backgroundColor: 'rgba(0,0,0,0.2)',
   },
   buttonDelete: {
     paddingHorizontal: 8,
     paddingVertical: 3,
     position: 'absolute',
-    left: 10,
-    top: 15,
+    right: 4,
+    top: 4,
     marginTop: 3,
     width: 22,
     height: 22,

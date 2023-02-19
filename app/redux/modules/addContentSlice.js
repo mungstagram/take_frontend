@@ -28,11 +28,10 @@ export const __postAddContentFormData = createAsyncThunk(
 
           //유저디테일로 보내는걸로 하기!
           //유저디테일페이지로 넘겨버리자! navigate. sa('/userdetail')
-          //   window.location.href = '/Main';
+
           return res;
         });
-
-      return thunkAPI.fulfillWithValue(sendData);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       console.log('요청실패');
       Alert.alert('업로드실패');
@@ -40,7 +39,8 @@ export const __postAddContentFormData = createAsyncThunk(
     }
   },
 );
-
+//ㄴㅇㅁㄴㅇㅁㄴㅇ
+//게시글작성
 const addContentSlice = createSlice({
   name: 'addContent',
   initialState,
