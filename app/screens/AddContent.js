@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
-import fs from 'react-native-fs';
+//import fs from 'react-native-fs';
 
 import YellowButton from '../components/YellowButton';
 import CancelButton from '../components/CancelButton';

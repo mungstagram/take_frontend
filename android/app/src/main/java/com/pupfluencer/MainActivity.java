@@ -1,7 +1,5 @@
 package com.pupfluencer;
 
-// 파일시스템 import
-import com.rnfs.RNFSPackage;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
