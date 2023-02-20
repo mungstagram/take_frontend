@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Image, Pressable, Text} from 'react-native';
 
+import ArrowDropDown from '../svg/ArrowDropDown';
+import ArrowDropUp from '../svg/ArrowDropUp';
 const SelectBox = ({
   dataSortSelector,
   dateSortSelectorHandler,
@@ -27,10 +29,13 @@ const SelectBox = ({
   return (
     <View style={dynamicStyles(listOpener).selectBoxContainer}>
       <Pressable onPress={onListOpenHandler}>
-        <View>
+        <View style={styles.selectOpener}>
           <Text style={styles.selectBoxText}>
             {selectParameter[dataSortSelector].content}
           </Text>
+          <View style={styles.iconSetter}>
+            {!listOpener ? <ArrowDropDown /> : <ArrowDropUp />}
+          </View>
         </View>
       </Pressable>
       {listOpener && (
@@ -75,7 +80,18 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   selectBoxText: {
-    fontSize: 15,
-    padding: '3%',
+    fontWeight: 'bold',
+    padding: '7%',
+  },
+  selectOpener: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    // backgroundColor: 'red',
+  },
+  iconSetter: {
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    padding: '7%',
+    // backgroundColor: 'red',
   },
 });

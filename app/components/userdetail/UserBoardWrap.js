@@ -3,7 +3,6 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 
 import {Colors} from '../../constants/colors';
 import SelectBox from '../common/SelectBox';
-import Logout from '../Logout';
 
 const UserBoardWrap = () => {
   // 사진 동영상 중 어떤 페이진지 선택하는 탭
@@ -164,8 +163,8 @@ const styles = StyleSheet.create({
   },
   SelectBoxHolder: {
     position: 'absolute',
-    width: '50%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
-    right: '2%',
+    width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
+    right: '4%',
     top: '2%',
     zIndex: 4,
   },
