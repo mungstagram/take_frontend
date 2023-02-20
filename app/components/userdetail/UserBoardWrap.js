@@ -18,17 +18,23 @@ const UserBoardWrap = () => {
     setMainSelector(false);
   };
 
-  // 최신순 or 좋아요 순 결정하는 state (초깃값 설정)
+  // 최신순 or 좋아요 순 결정하는 state (초깃값 설정 서버에 보낼 값을 배열에 담고, 그때의 인덱스)
   const [dataSortSelector, setDataSortSelector] = useState(0);
   // SelectBox에 표시될 이름
   const selectParameter = [
     {id: 0, content: '최신순으로 보기'},
     {id: 1, content: '좋아요순으로 보기'},
   ];
+
+  // 아래 배열에 인덱스값(dataSortSelector를 넣어서 어떤 요청할 지 결정(최신순, 좋아요순))
+  const selectDispatchParameter = ['recent', 'likecount'];
+
   // console.log(selectParameter[0]); // "최신 순으로 보기"
   const dateSortSelectorHandler = selector => {
     setDataSortSelector(selector);
   };
+
+  //TODO: DisPatch 부분만들기
 
   return (
     <View style={styles.Wrapper}>
