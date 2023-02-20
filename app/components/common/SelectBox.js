@@ -68,7 +68,7 @@ const dynamicStyles = value =>
       width: '100%',
       zIndex: 2,
       backgroundColor: value ? 'gray' : 'white',
-      borderRadius: 5,
+      borderRadius: 4,
       elevation: value ? 5 : 0,
     },
   });
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     width: '100%',
     zIndex: 2,
     backgroundColor: 'white',
-    borderRadius: 5,
+    borderRadius: 4,
     elevation: 5,
   },
   selectBoxText: {
