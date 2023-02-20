@@ -12,6 +12,7 @@ const http = axios.create({
 });
 
 http.interceptors.request.use(async function (config) {
+  console.log('Api', `${API_URL}`);
   const storedToken = await AsyncStorage.getItem('authorization');
 
   if (storedToken !== null || storedToken !== undefined) {

@@ -21,7 +21,7 @@ const initialState = {
 export const __postLogin = createAsyncThunk(
   'POST_LOGIN',
   async (payload, thunkAPI) => {
-    // console.log('모듈스', payload);
+    console.log('payload', payload);
     try {
       const data = await http.post('/auth/login', payload).then(res => {
         AsyncStorage.setItem('authorization', res.headers.authorization);
@@ -40,6 +40,7 @@ export const __postLogin = createAsyncThunk(
       };
       return thunkAPI.fulfillWithValue(sendData);
     } catch (error) {
+      console.log('error', error);
       Alert.alert('로그인 실패');
 
       if (error.response.status === 401) {
