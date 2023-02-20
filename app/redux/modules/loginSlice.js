@@ -21,6 +21,7 @@ const initialState = {
 export const __postLogin = createAsyncThunk(
   'POST_LOGIN',
   async (payload, thunkAPI) => {
+    console.log('payload', payload);
     try {
       const data = await http.post('/auth/login', payload).then(res => {
         AsyncStorage.setItem('authorization', res.headers.authorization);
@@ -40,6 +41,9 @@ export const __postLogin = createAsyncThunk(
       };
       return thunkAPI.fulfillWithValue(sendData);
     } catch (error) {
+      console.log('error', error);
+      Alert.alert('로그인 실패');
+
       if (error.response.status === 401) {
       }
       return thunkAPI.rejectWithValue(error);
@@ -51,9 +55,9 @@ export const __postUsers = createAsyncThunk(
   'POST_SIGNUP',
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
+      // console.log(payload);
       const {data} = await http.post('/users/signup', payload);
-      console.log(data);
+      // console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log(error);

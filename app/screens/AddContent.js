@@ -27,6 +27,7 @@ import {__postAddContentFormData} from '../redux/modules/addContentSlice';
 const AddContent = () => {
   // 제목 인풋상태
   const [titleText, setTitleText] = useState();
+  // console.log(titleText);
   //제목 인풋 핸들러
   const titleTextHandler = event => {
     console.log('제목', event.nativeEvent.text);

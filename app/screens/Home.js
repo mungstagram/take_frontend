@@ -1,29 +1,61 @@
 import React from 'react';
-import {StyleSheet, View, Text, Pressable, Modal, Button} from 'react-native';
+import {StyleSheet, View, Text, Button} from 'react-native';
+import TodoList from '../components/todos/TodoList';
+import WriteTodo from '../components/todos/WriteTodo';
 
 function Home({navigation}) {
   return (
-    <View>
-      <View>
-        <Text>유저이미지</Text>
-        <Text>댕댕이프로필사진 누면 프로필 페이지</Text>
+    <>
+      <View style={styles.homeProfile}>
         <Button
+          style={styles.goToProfile}
           title="profile page 열기"
           onPress={() => navigation.navigate('Profile')}
         />
-        <Text>My name</Text>
-        <Text>디데이 기능구현</Text>
-      </View>
-      <View>
-        <View>
-          <Text>강아지정보</Text>
-        </View>
-        <View>
-          <Text>할일리스트 기능구현</Text>
+
+        <View style={styles.homeProfileInner}>
+          <Text>강아지사진</Text>
+          <Text>반려인 사진</Text>
+          <Text>강아지 이름</Text>
+          <Text>우리가 함께한 날 0000일</Text>
         </View>
       </View>
-    </View>
+
+      <View style={styles.homeTodo}>
+        <View style={styles.introduce}>
+          <Text>우리 강아지는요</Text>
+          <Text>강아지종/나이/몸무게</Text>
+        </View>
+        <View>
+          <WriteTodo />
+          <TodoList />
+        </View>
+      </View>
+    </>
   );
 }
+
+const styles = StyleSheet.create({
+  homeProfile: {
+    flex: 1,
+    backgroundColor: '#acacac',
+  },
+  homeProfileInner: {
+    borderWidth: 1,
+  },
+  goToProfile: {
+    width: 50,
+    height: 50,
+  },
+  homeTodo: {
+    flex: 2,
+    backgroundColor: '#949494',
+  },
+  introduce: {
+    height: 100,
+    borderWidth: 1,
+    backgroundColor: '#b6b6b6',
+  },
+});
 
 export default Home;

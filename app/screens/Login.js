@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 
 import AuthInput from '../components/AuthInput';
-import Button from '../components/Button';
+import Button from '../components/common/Button';
 import AuthNavigateButton from '../components/AuthNavigateButton';
 import {__postLogin} from '../redux/modules/loginSlice';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -15,7 +15,7 @@ const Login = () => {
   const passwordInput = useRef();
 
   const onSubmitLogin = e => {
-    // console.log('login에서', idInput.current);
+    console.log('login에서', idInput.current);
     dispatch(
       __postLogin({
         email: idInput.current,
