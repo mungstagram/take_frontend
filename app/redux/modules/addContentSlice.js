@@ -51,7 +51,8 @@ const addContentSlice = createSlice({
     },
     [__postAddContentFormData.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-      state.lists = action.payload;
+
+      // state.lists = action.payload;
       console.log('전송 action.payload', action.payload);
       // 여기에 네비게이트 넣기! 유저디테일페이지로. /유저디테일.{nickName} 검색해보기
     },

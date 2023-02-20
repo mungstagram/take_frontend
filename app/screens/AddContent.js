@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
+import RNFS from 'react-native-fs';
 
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 
@@ -95,6 +96,11 @@ const AddContent = () => {
       // console.log(e.code, e.message);
     }
   };
+  // 권한 거절 후 다시 시도할때
+  const openAgainPicker = () => {
+    setOpenCamera(true);
+    openPicker();
+  };
   //remove 라는 이름을 많이 쓴다고 한다.
 
   const onDelete = value => {
@@ -152,22 +158,24 @@ const AddContent = () => {
     formData.append('category', 'image');
     formData.append('title', titleText);
     formData.append('content', contentText);
-    //formData.append('files', images[0].realPath);
     formData.append('files', {
-      name: images[0].filename,
-      type: 'multipart/form-data',
-      uri: images[0].path,
+      name: images[0].fileName,
+      type: images[0].mime,
+      uri: `file://${images[0].realPath}`,
     });
+    console.log(formData);
     dispatch(__postAddContentFormData(formData));
   };
-
+  // 이미지파일 넣는 부분
+  // formData.append('files', { uri: `file://${profileImg[0].realPath}`, name: profileImg[0].fileName, type: profileImg[0].mime })
   return (
     <SafeAreaView style={styles.containerBox}>
       <View style={styles.box}>
         <View style={styles.container}>
           <View style={styles.titleInput}>
             <TextInput
-              placeholder="제목을 입력하세요"
+              placeholder="제목을 입력하세요(20자 이하)"
+              maxLength={20}
               // returnKeyType="next"
               value={titleText}
               onChange={titleTextHandler}
@@ -176,7 +184,7 @@ const AddContent = () => {
 
           <View style={styles.contentInput}>
             <TextInput
-              placeholder="내용을 입력하세요"
+              placeholder="내용을 입력하세요(300자 이하)"
               maxLength={300}
               // 확인하기
               multiline={true}
@@ -193,6 +201,13 @@ const AddContent = () => {
                 <TouchableOpacity
                   style={styles.openPicker}
                   onPress={openPicker}>
+                  <Text style={styles.openText}>댕댕🐶 사진넣기</Text>
+                </TouchableOpacity>
+              )}
+              {!openCamera && (
+                <TouchableOpacity
+                  style={styles.openPicker2}
+                  onPress={openAgainPicker}>
                   <Text style={styles.openText}>댕댕🐶 사진넣기</Text>
                 </TouchableOpacity>
               )}
@@ -275,6 +290,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000',
+  },
+  openPicker2: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#5b5b5b',
   },
   imageView: {
     flexDirection: 'column',
