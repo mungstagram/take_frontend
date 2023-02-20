@@ -135,21 +135,19 @@ const AddContent = () => {
     );
   };
 
-  //for문을 돌린다??
+
   const dispatch = useDispatch();
 
-  // 폼데이터 보낼 때, uri, type(mime), fileName 만 보내면 된다고 나와있는데.. 왜 안될까? ㅠㅠ
+ // 폼데이터 선언 및 전송
   const formData = new FormData();
   const onSendFormData = () => {
     console.log('images', images);
-    //서버분들이랑 얘기해보기! images안에 데이터가 있는데,
+   
     console.log('images.real', images[0].realPath);
     const formList = {
       category: 'image',
       title: titleText,
       content: contentText,
-      // images안에 이미지 배열이 들어있음. 그거 어떻게 분해해서 넘길건지, 어렵다.
-      // 그니까 서버분들한테 부탁하기ㅎㅎ
       files: images,
     };
     //images.map(image => {});
