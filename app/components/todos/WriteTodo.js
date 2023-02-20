@@ -26,18 +26,38 @@ const WriteTodo = () => {
       }),
     );
   };
-  // console.log('add to do에', addTodoRef);
+
+  // const onReset = () => {
+  //   addTodoRef({
+  //     content: '',
+  //   });
+  //   addTodoRef.current.focus();
+  // };
+
+  console.log('add to do에', addTodoRef);
 
   return (
     <View style={styles.block}>
-      <TextInput
-        placeholder="할 일을 입력하세요"
-        style={styles.todoInput}
-        onChangeText={onChangeAddRefHandler}
-      />
-
-      <View style={styles.todoBtn}>
-        <Button title="저장" onPress={onPress} />
+      <View>
+        <View style={styles.editBlock}>
+          <Text>우리 강아지에게 해줘야해요</Text>
+          <Button title="수정" />
+        </View>
+        <TextInput
+          placeholder="할 일을 입력하세요"
+          style={styles.todoInput}
+          onChangeText={onChangeAddRefHandler}
+        />
+        <View style={styles.todoBtn}>
+          <Button title="저장" onPress={onPress} />
+          {/* <Button
+          title="저장"
+          onPress={() => {
+            onPress();
+            onReset();
+          }}
+        /> */}
+        </View>
       </View>
     </View>
   );
@@ -46,16 +66,26 @@ const WriteTodo = () => {
 const styles = StyleSheet.create({
   block: {
     margin: 10,
-    backgroundColor: 'gray',
-    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  editBlock: {
+    borderWidth: 1,
+    display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
   },
   todoInput: {
+    borderWidth: 1,
+    borderColor: '#000000',
+    height: 20,
     flex: 3,
     fontSize: 15,
-    margin: 5,
+    margin: 20,
     paddingVertical: 8,
     backgroundColor: 'white',
+    display: 'flex',
+    flexDirection: 'row',
   },
   todoBtn: {
     flex: 1,

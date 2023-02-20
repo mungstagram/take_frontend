@@ -65,12 +65,12 @@ export const todoSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
-    // clearTodo: state => {
-    //   state.todo = {
-    //     id: 0,
-    //     content: '',
-    //   };
-    // },
+    clearTodo: state => {
+      state.todo = {
+        id: 0,
+        content: '',
+      };
+    },
   },
   extraReducers: {
     [__addTodos.pending]: state => {
@@ -119,5 +119,5 @@ export const todoSlice = createSlice({
   },
 });
 
-export const {toDos} = todoSlice.actions;
+export const {toDos, clearTodo} = todoSlice.actions;
 export default todoSlice.reducer;
