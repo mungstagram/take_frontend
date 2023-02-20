@@ -78,6 +78,7 @@ const Signup = () => {
   return (
     <View style={styles.wrapper}>
       <View>
+        <AuthNavigateButton />
         <Text>Login</Text>
       </View>
 

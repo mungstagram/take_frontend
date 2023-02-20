@@ -5,10 +5,11 @@ import {useDispatch} from 'react-redux';
 import AuthInput from '../components/AuthInput';
 import AuthButton from '../components/common/AuthButton';
 import {__postLogin} from '../redux/modules/loginSlice';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AuthNavigateButton from '../components/AuthNavigateButton';
 
 const Login = () => {
   const dispatch = useDispatch();
+
   const idInput = useRef('');
   const passwordInput = useRef();
 
@@ -25,7 +26,7 @@ const Login = () => {
   return (
     <View style={styles.wrapper}>
       <View>
-        <Text>Login</Text>
+        <AuthNavigateButton />
       </View>
 
       <View>
