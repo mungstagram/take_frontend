@@ -12,7 +12,7 @@ const SelectBox = ({
   // 게시판에서는 recent or like
   // 검색창에서는 nickname,
   //selectParameter에는 [{id:0,content:~~}] 형식으로
-  console.log(selectParameter);
+  //   console.log(selectParameter);
 
   // SelectBox 여닫는 state (false면 닫힌 상태)
   const [listOpener, setListOpener] = useState(false);
