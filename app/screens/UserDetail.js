@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Logout from '../components/Logout';
 import UserBoardWrap from '../components/userdetail/UserBoardWrap';
 
 // import {Colors} from '../constants/colors';
@@ -13,6 +14,7 @@ const UserDetail = () => {
       </View>
       <View style={styles.Container2}>
         <UserBoardWrap />
+        <Logout></Logout>
       </View>
     </View>
   );

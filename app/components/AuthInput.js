@@ -32,6 +32,7 @@ const AuthInput = ({
           secureTextEntry={secure}
           onChangeText={onChangeRefHandler} // 조건부로 onChangeText를 적용하고 싶음
           value={value}
+          // ref = {refInput} //리액트경우
         />
       ) : (
         <View>
@@ -56,10 +57,10 @@ export default AuthInput;
 const styles = StyleSheet.create({
   inputContainer: {
     marginVertical: 0,
-    backgroundColor: 'gray',
+    // backgroundColor: 'gray',
     justifyContent: 'center',
     // height: 100,
-    paddingVertical: 5,
+    paddingVertical: 10,
     // alignItems: 'center',
   },
   label: {

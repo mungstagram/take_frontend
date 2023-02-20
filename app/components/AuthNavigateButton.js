@@ -2,7 +2,7 @@ import React from 'react';
 import {Pressable, View, Text, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-const AuthNavigateButton = ({isLoginpage}) => {
+const AuthNavigateButton = ({isLoginpage, children}) => {
   const navigation = useNavigation();
   function switchAuthModeHandler() {
     if (isLoginpage) {
@@ -14,9 +14,10 @@ const AuthNavigateButton = ({isLoginpage}) => {
   return (
     <View style={styles.textContainer}>
       <Pressable onPress={switchAuthModeHandler}>
-        <Text style={styles.navigateText}>
+        {children}
+        {/* <Text style={styles.navigateText}>
           {isLoginpage ? 'Create a new user' : 'Log in instead'}
-        </Text>
+        </Text> */}
       </Pressable>
     </View>
   );

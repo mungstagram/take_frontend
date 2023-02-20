@@ -1,10 +1,9 @@
 import {View, Text, StyleSheet, Alert} from 'react-native';
 import React, {useState} from 'react';
-import {useCallback} from 'react';
 import {useDispatch} from 'react-redux';
 
 import AuthInput from '../components/AuthInput';
-import Button from '../components/common/Button';
+import AuthButton from '../components/common/AuthButton';
 import AuthNavigateButton from '../components/AuthNavigateButton';
 import {__postUsers} from '../redux/modules/loginSlice';
 
@@ -111,7 +110,7 @@ const Signup = () => {
           secure
         />
       </View>
-      <Button onPress={onSubmitUserHandler}>하잉!!</Button>
+      <AuthButton onPress={onSubmitUserHandler}>하잉!!</AuthButton>
       <AuthNavigateButton />
     </View>
   );
