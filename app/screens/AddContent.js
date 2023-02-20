@@ -16,7 +16,6 @@ import {
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
-import RNFS from 'react-native-fs';
 
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 
