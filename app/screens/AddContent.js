@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
   View,
@@ -11,14 +11,17 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  Platform,
+  Alert,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
+import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
-//import fs from 'react-native-fs';
 
 import YellowButton from '../components/YellowButton';
 import CancelButton from '../components/CancelButton';
-import {useDispatch} from 'react-redux';
+
 import {__postAddContentFormData} from '../redux/modules/addContentSlice';
 
 const AddContent = () => {
@@ -38,7 +41,33 @@ const AddContent = () => {
 
     setContentText(event.nativeEvent.text);
   };
+  //사진넣기버튼의 사용가능여부조절
+  const [openCamera, setOpenCamera] = useState(false);
+  // //사진업로드 버튼 눌렀을 때 권한묻기
+  // // useEffect는 처음 화면이 렌더링 됐을 때도 실행되기 떄문에 사용할 수 없음.
+  // // Dependecy에 변수지정하기 // 마운트할때는 무조건 실행되는거!
 
+  // 온클릭을 했을때 퍼미션을 실행할거냐 게시글작성 마운트될때 실행할거냐!
+
+  useEffect(() => {
+    if (Platform.OS !== 'ios' && Platform.OS !== 'android') return;
+    const platformPermissions =
+      Platform.OS === 'ios'
+        ? PERMISSIONS.IOS.CAMERA
+        : PERMISSIONS.ANDROID.CAMERA;
+    const requestCameraPermission = async () => {
+      try {
+        const result = await request(platformPermissions);
+        result === RESULTS.GRANTED
+          ? setOpenCamera(true)
+          : Alert.alert('카메라 권한을 허용해주세요!');
+      } catch (error) {
+        Alert.alert('카메라 권한설정이 에러났습니다.');
+        console.warn(error);
+      }
+    };
+    requestCameraPermission();
+  }, []);
   // * 사진관련 코드
   const [images, setImages] = useState([]);
   // 사진넣기 버튼 클릭시 작동하는 이벤트
@@ -159,9 +188,13 @@ const AddContent = () => {
           </View>
           <View style={styles.fileInput}>
             <View style={styles.fileupload}>
-              <TouchableOpacity style={styles.openPicker} onPress={openPicker}>
-                <Text style={styles.openText}>댕댕🐶 사진넣기</Text>
-              </TouchableOpacity>
+              {openCamera && (
+                <TouchableOpacity
+                  style={styles.openPicker}
+                  onPress={openPicker}>
+                  <Text style={styles.openText}>댕댕🐶 사진넣기</Text>
+                </TouchableOpacity>
+              )}
             </View>
 
             <FlatList

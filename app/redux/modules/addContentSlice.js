@@ -39,7 +39,7 @@ export const __postAddContentFormData = createAsyncThunk(
     }
   },
 );
-//ㄴㅇㅁㄴㅇㅁㄴㅇ
+
 //게시글작성
 const addContentSlice = createSlice({
   name: 'addContent',
