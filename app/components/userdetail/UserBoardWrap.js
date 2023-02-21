@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 
 import {Colors} from '../../constants/colors';
 import SelectBox from '../common/SelectBox';
-
+import ImageGetter from '../boardcomponent/ImageGetter';
 const UserBoardWrap = () => {
   // 사진 동영상 중 어떤 페이진지 선택하는 탭
   const [mainSelector, setMainSelector] = useState(true);
@@ -27,43 +27,51 @@ const UserBoardWrap = () => {
   ];
 
   // 아래 배열에 인덱스값(dataSortSelector를 넣어서 어떤 요청할 지 결정(최신순, 좋아요순))
-  const selectDispatchParameter = ['recent', 'likecount'];
+  const selectDispatchParameter = ['recent', 'likescount'];
+  // 어떤 게시판 (데이터 카테고리)인지 선언
+  const imageCategory = 'image'; //image or video
+  const videoCategory = 'video';
 
   // console.log(selectParameter[0]); // "최신 순으로 보기"
   const dateSortSelectorHandler = selector => {
     setDataSortSelector(selector);
   };
 
-  //TODO: DisPatch 부분만들기
-
   return (
-    <View style={styles.Wrapper}>
-      <View style={styles.TabWrapper}>
-        <View style={dynamicStyles(mainSelector).TabLeftBox}>
+    <View style={styles.wrapper}>
+      <View style={styles.tabWrapper}>
+        <View style={dynamicStyles(mainSelector).tabLeftBox}>
           <Pressable onPress={showImageBoard}>
-            <Text style={dynamicStyles(mainSelector).TabTextLeft}> 사진</Text>
+            <Text style={dynamicStyles(mainSelector).tabTextLeft}> 사진</Text>
           </Pressable>
         </View>
-        <View style={dynamicStyles(mainSelector).TabRightBox}>
+        <View style={dynamicStyles(mainSelector).tabRightBox}>
           <Pressable onPress={showVideoBoard}>
-            <Text style={dynamicStyles(mainSelector).TabTextRight}>동영상</Text>
+            <Text style={dynamicStyles(mainSelector).tabTextRight}>동영상</Text>
           </Pressable>
         </View>
       </View>
-      <View style={styles.ContentWrapper}>
-        <View style={dynamicStyles(mainSelector).ContentLeftLayout}></View>
-        <View style={dynamicStyles(mainSelector).ContentRightLayout}></View>
+      <View style={styles.contentWrapper}>
+        <View style={dynamicStyles(mainSelector).contentLeftLayout}></View>
+        <View style={dynamicStyles(mainSelector).contentRightLayout}></View>
       </View>
-      <View style={styles.ContentGetterLayout}>
-        <View style={styles.SelectBoxHolder}>
+      <View style={styles.contentGetterLayout}>
+        <View style={styles.selectBoxHolder}>
           <SelectBox
             dataSortSelector={dataSortSelector}
             dateSortSelectorHandler={dateSortSelectorHandler}
             selectParameter={selectParameter}
           />
         </View>
-        <Text> 하이</Text>
-        <View></View>
+        <View style={styles.dataGetterWrapper}>
+          {mainSelector ? (
+            <ImageGetter
+              order={selectDispatchParameter[dataSortSelector]}
+              category={imageCategory}></ImageGetter>
+          ) : (
+            <></>
+          )}
+        </View>
       </View>
     </View>
   );
@@ -74,7 +82,7 @@ export default UserBoardWrap;
 // 동적 스타일링
 const dynamicStyles = value =>
   StyleSheet.create({
-    TabLeftBox: {
+    tabLeftBox: {
       width: '50%',
       height: '99%',
       position: 'absolute',
@@ -86,9 +94,10 @@ const dynamicStyles = value =>
       zIndex: value ? 2 : 1,
       elevation: value ? 25 : 8,
       justifyContent: 'center',
+      zIndex: 2,
     },
 
-    TabRightBox: {
+    tabRightBox: {
       width: '50%',
       height: '99%',
       position: 'absolute',
@@ -102,7 +111,7 @@ const dynamicStyles = value =>
       justifyContent: 'center',
     },
 
-    ContentLeftLayout: {
+    contentLeftLayout: {
       position: 'absolute',
       height: '100%',
       left: 0,
@@ -112,7 +121,7 @@ const dynamicStyles = value =>
       zIndex: value ? 3 : 1,
       elevation: value ? 0 : 10,
     },
-    ContentRightLayout: {
+    contentRightLayout: {
       position: 'absolute',
       borderTopRightRadius: value ? 12 : 0,
       height: '100%',
@@ -123,13 +132,13 @@ const dynamicStyles = value =>
       elevation: value ? 10 : 0,
     },
 
-    TabTextLeft: {
+    tabTextLeft: {
       textAlign: 'center',
       marginBottom: '5%',
       color: value ? 'blue' : 'black',
       fontWeight: value ? 'bold' : 'normal',
     },
-    TabTextRight: {
+    tabTextRight: {
       textAlign: 'center',
       marginBottom: '5%',
       color: value ? 'black' : 'blue',
@@ -138,11 +147,11 @@ const dynamicStyles = value =>
   });
 
 const styles = StyleSheet.create({
-  Wrapper: {
+  wrapper: {
     flex: 1,
     backgroundColor: 'transparent', // 여백있는지 표시
   },
-  TabWrapper: {
+  tabWrapper: {
     height: '15%',
     width: '100%',
     position: 'absolute',
@@ -150,28 +159,36 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
 
-  ContentWrapper: {
+  contentWrapper: {
     width: '100%',
-    height: '85%',
+    height: '89%',
     position: 'absolute',
     bottom: 0,
     // backgroundColor: 'red', // 임시
     zIndex: 2,
   },
 
-  ContentGetterLayout: {
+  contentGetterLayout: {
     position: 'absolute',
-    height: '87%',
+    height: '86%',
     width: '100%',
     bottom: 0,
     backgroundColor: 'white',
     zIndex: 4,
   },
-  SelectBoxHolder: {
+  selectBoxHolder: {
     position: 'absolute',
     width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
     right: '4%',
     top: '2%',
-    zIndex: 4,
+    zIndex: 8,
+  },
+  dataGetterWrapper: {
+    position: 'absolute',
+    bottom: 0,
+    height: '87%',
+    width: '100%',
+    zIndex: 5,
+    backgroundColor: 'red',
   },
 });
