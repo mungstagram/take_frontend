@@ -77,42 +77,41 @@ const Signup = () => {
 
   return (
     <View style={styles.wrapper}>
-      <View>
+      <View style={styles.buttonPosionter}>
         <AuthNavigateButton />
-        <Text>Login</Text>
       </View>
-
-      <View>
-        <AuthInput
-          placeholder="id"
-          helper={emailInput}
-          onUpdateValue={onChangeUserHandler.bind(this, 'email')}
-          value={email}
-          // keyboardType="email-address"
-        />
-        <AuthInput
-          placeholder="nickname"
-          helper={nicknameInput}
-          onUpdateValue={onChangeUserHandler.bind(this, 'nickname')}
-          value={nickname}
-        />
-        <AuthInput
-          placeholder="password"
-          helper={passInput}
-          onUpdateValue={onChangeUserHandler.bind(this, 'password')}
-          value={password}
-          secure
-        />
-        <AuthInput
-          placeholder="password-check"
-          helper={passCheckInput}
-          onUpdateValue={onChangeUserHandler.bind(this, 'passwordCheck')}
-          value={passwordCheck}
-          secure
-        />
+      <View style={styles.inputWrapper}>
+        <View>
+          <AuthInput
+            placeholder="id"
+            helper={emailInput}
+            onUpdateValue={onChangeUserHandler.bind(this, 'email')}
+            value={email}
+            // keyboardType="email-address"
+          />
+          <AuthInput
+            placeholder="nickname"
+            helper={nicknameInput}
+            onUpdateValue={onChangeUserHandler.bind(this, 'nickname')}
+            value={nickname}
+          />
+          <AuthInput
+            placeholder="password"
+            helper={passInput}
+            onUpdateValue={onChangeUserHandler.bind(this, 'password')}
+            value={password}
+            secure
+          />
+          <AuthInput
+            placeholder="password-check"
+            helper={passCheckInput}
+            onUpdateValue={onChangeUserHandler.bind(this, 'passwordCheck')}
+            value={passwordCheck}
+            secure
+          />
+        </View>
+        <AuthButton onPress={onSubmitUserHandler}>입력 완료</AuthButton>
       </View>
-      <AuthButton onPress={onSubmitUserHandler}>하잉!!</AuthButton>
-      <AuthNavigateButton />
     </View>
   );
 };
@@ -121,14 +120,24 @@ export default Signup;
 
 const styles = StyleSheet.create({
   wrapper: {
-    // alignItems: 'center',
-    backgroundColor: 'black',
+    alignItems: 'center',
+    // backgroundColor: 'black',
     // width: width,
-    // flex: 1,
-    justifyContent: 'center',
+    flex: 1,
+  },
+  buttonPosionter: {
+    position: 'absolute',
+    top: '3%',
+    left: '5%',
   },
   inputContainer: {
     justifyContent: 'center',
     flex: 1,
+  },
+  inputWrapper: {
+    width: '90%',
+    backgroundColor: 'white',
+    position: 'absolute',
+    top: '30%',
   },
 });
