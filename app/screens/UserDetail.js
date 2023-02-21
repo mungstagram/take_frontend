@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Logout from '../components/Logout';
+
 import UserBoardWrap from '../components/userdetail/UserBoardWrap';
 
 // import {Colors} from '../constants/colors';
@@ -14,7 +13,6 @@ const UserDetail = () => {
       </View>
       <View style={styles.Container2}>
         <UserBoardWrap />
-        <Logout></Logout>
       </View>
     </View>
   );
@@ -25,7 +23,6 @@ export default UserDetail;
 const styles = StyleSheet.create({
   Wrapper: {
     flex: 1,
-    backgroundColor: 'red',
   },
   Container1: {
     flex: 1,
@@ -33,6 +30,6 @@ const styles = StyleSheet.create({
   },
   Container2: {
     flex: 3,
-    backgroundColor: 'red',
   },
+  UserBoardWrap,
 });

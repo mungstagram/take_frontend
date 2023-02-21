@@ -3,6 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import AuthButton from '../components/common/AuthButton';
+import ForceLoginButton from '../components/common/ForceLoginButton';
 
 const AuthStartScreen = () => {
   const navigation = useNavigation();
@@ -18,6 +19,7 @@ const AuthStartScreen = () => {
     <View style={styles.Wrapper}>
       <View style={styles.Container1}>
         <Text> 로그인 시작</Text>
+        <ForceLoginButton></ForceLoginButton>
       </View>
       <View style={styles.Container2}>
         <View style={styles.ButtonContainer}>
