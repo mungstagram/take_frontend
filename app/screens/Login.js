@@ -1,9 +1,10 @@
-import React, {useRef, useState} from 'react';
-import {Alert, View, Text, StyleSheet} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+
 import AuthInput from '../components/AuthInput';
 import AuthButton from '../components/common/AuthButton';
-import {__postLogin} from '../redux/modules/loginSlice';
+import {__postLogin, deleteFailLog} from '../redux/modules/loginSlice';
 import AuthNavigateButton from '../components/AuthNavigateButton';
 
 const Login = () => {
@@ -22,6 +23,10 @@ const Login = () => {
       }),
     );
   };
+
+  useEffect(() => {
+    dispatch(deleteFailLog());
+  }, []);
 
   return (
     <View style={styles.wrapper}>
@@ -80,7 +85,6 @@ const styles = StyleSheet.create({
   },
 
   inputWrapper: {
-    // alignItems: 'center',
     width: '90%',
     backgroundColor: 'white',
     position: 'absolute',
