@@ -1,5 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
+// import TodoList from '../components/todos/TodoList';
+// import WriteTodo from '../components/todos/WriteTodo';
 
 function Home({navigation}) {
   return (
@@ -10,18 +12,24 @@ function Home({navigation}) {
           title="profile page 열기"
           onPress={() => navigation.navigate('Profile')}
         />
-        <Text>강아지사진</Text>
-        <Text>반려인 사진</Text>
-        <Text>강아지 이름</Text>
-        <Text>우리가 함께한 날 000일</Text>
+
+        <View style={styles.homeProfileInner}>
+          <Text>강아지사진</Text>
+          <Text>반려인 사진</Text>
+          <Text>강아지 이름</Text>
+          <Text>우리가 함께한 날 0000일</Text>
+        </View>
       </View>
-      <View>
-        {/* {todos.length === 0 ? (
-          <Empty />
-        ) : (
-          <TodoList todos={todos} onToggle={onToggle} onRemove={onRemove} />
-        )} */}
-        {/* <WriteTodo onInsert={onInsert} /> */}
+
+      <View style={styles.homeTodo}>
+        <View style={styles.introduce}>
+          <Text>우리 강아지는요</Text>
+          <Text>강아지종/나이/몸무게</Text>
+        </View>
+        <View>
+          {/* <WriteTodo />
+          <TodoList /> */}
+        </View>
       </View>
     </>
   );
