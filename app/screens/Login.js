@@ -12,7 +12,7 @@ const Login = () => {
 
   const idInput = useRef('');
   const passwordInput = useRef();
-
+  const [secureSetter, setSecureSetter] = useState(true);
   const onSubmitLogin = e => {
     // console.log('login에서', idInput.current);
     dispatch(
@@ -28,13 +28,19 @@ const Login = () => {
       <View>
         <AuthNavigateButton />
       </View>
+      <View style={styles.inputWrapper}>
+        <View style={styles.inputContainer}>
+          <AuthInput placeholder="id" refInput={idInput} />
+          <AuthInput
+            placeholder="password"
+            refInput={passwordInput}
+            secure={secureSetter}
+            setSecureSetter={setSecureSetter}
+          />
 
-      <View>
-        <AuthInput placeholder="id" refInput={idInput} />
-
-        <AuthInput placeholder="password" refInput={passwordInput} />
+          <AuthButton onPress={onSubmitLogin}>입력 완료</AuthButton>
+        </View>
       </View>
-      <AuthButton onPress={onSubmitLogin}>하잉!!</AuthButton>
     </View>
   );
 };
@@ -43,13 +49,22 @@ export default Login;
 
 const styles = StyleSheet.create({
   wrapper: {
-    // alignItems: 'center',
-    backgroundColor: 'white',
-    // width: width,
     flex: 1,
+    backgroundColor: 'blue',
+    alignItems: 'center',
   },
   inputContainer: {
-    justifyContent: 'center',
-    flex: 1,
+    // width: '90%',
+    // height: '60%',
+    // justifyContent: 'center',
+    // backgroundColor: 'green',
+  },
+
+  inputWrapper: {
+    // alignItems: 'center',
+    width: '90%',
+    backgroundColor: 'white',
+    position: 'absolute',
+    top: '30%',
   },
 });

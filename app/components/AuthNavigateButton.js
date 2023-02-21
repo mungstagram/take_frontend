@@ -2,7 +2,7 @@ import React from 'react';
 import {Pressable, View, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-import AroowGoBack from './svg/ArrowGOBack';
+import ArrowGoBack from './svg/ArrowGoBack';
 
 const AuthNavigateButton = () => {
   const navigation = useNavigation();
@@ -12,7 +12,7 @@ const AuthNavigateButton = () => {
   return (
     <View style={styles.textContainer}>
       <Pressable onPress={navigateStartPageHandler}>
-        <AroowGoBack />
+        <ArrowGoBack />
       </Pressable>
     </View>
   );
