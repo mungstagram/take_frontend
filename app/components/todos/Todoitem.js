@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   FlatList,
   View,
@@ -17,14 +17,18 @@ import {__deleteTodos, __editTodos} from '../../redux/modules/todoSlice';
 const Todoitem = ({id, text, done}) => {
   const dispatch = useDispatch();
 
-  // const [edit, setEdit] = useState();
+  const [isEdit, setIsEdit] = useState('');
 
-  // const onPressTodoEdit = () => {
-  //   const EditTodo = {
-  //     content: edit,
-  //   };
-  //   dispatch(__editTodos(EditTodo));
-  // };
+  const toggleIsEdit = () => {
+    setIsEdit(!isEdit);
+  };
+
+  const onPressTodoEdit = () => {
+    // dispatch(__editTodos(id)).then(() => {
+    //   setEdit(!edit);
+    // });
+  };
+
   const onPressTodoRemove = () => {
     Alert.alert(
       '할 일 삭제',
@@ -56,9 +60,13 @@ const Todoitem = ({id, text, done}) => {
         <View style={[styles.checkBox, done && styles.filled]} />
       </TouchableOpacity>
 
-      <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
+      {isEdit ? (
+        <TextInput />
+      ) : (
+        <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
+      )}
 
-      <Button title="수정" />
+      <Button title="수정" onPress={onPressTodoEdit} />
       <Button
         title="삭제"
         style={styles.removeBtn}

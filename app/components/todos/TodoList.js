@@ -25,12 +25,12 @@ const TodoList = () => {
   }, [dispatch]);
 
   const todos = useSelector(state => state.todos.todo);
-  console.log('todos', todos);
+  // console.log('todos', todos);
 
   return (
     <ScrollView>
       {todos
-        .map(item => (
+        ?.map(item => (
           <Todoitem
             key={item.id}
             id={item.id}

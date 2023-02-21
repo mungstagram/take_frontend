@@ -7,33 +7,39 @@ import {
   Button,
   Keyboard,
 } from 'react-native';
-// import {useDispatch} from 'react-redux';
-// import {__addTodos} from '../../redux/modules/todoSlice';
+import {useDispatch} from 'react-redux';
+import {__addTodos} from '../../redux/modules/todoSlice';
 
 const WriteTodo = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const [todo, setTodo] = useState('');
+  const [todo, setTodo] = useState('');
 
-  // const onChangeAddHandler = e => {
-  //   setTodo(e.target.value);
-  // };
+  const addInputHandler = e => {
+    // console.log('e.nativeEvent.text', e.nativeEvent.text);
+    setTodo(e);
+  };
 
-  // const onPressAdd = () => {
-  //   dispatch(__addTodos(todo));
-  // };
+  console.log('되나?', todo);
+  const onPressAdd = () => {
+    dispatch(__addTodos(todo));
+    setTodo('');
+  };
 
   return (
     <View style={styles.block}>
       <View>
         <View style={styles.editBlock}>
           <Text>우리 강아지에게 해줘야해요</Text>
-          <Button title="수정" />
         </View>
         <View style={styles.todoInputBlock}>
-          <TextInput placeholder="할 일을 입력하세요" />
+          <TextInput
+            placeholder="할 일을 입력하세요"
+            onChangeText={addInputHandler}
+            value={todo}
+          />
 
-          <Button title="저장" />
+          <Button title="저장" onPress={onPressAdd} />
         </View>
       </View>
     </View>
@@ -56,7 +62,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderColor: '#000000',
-    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

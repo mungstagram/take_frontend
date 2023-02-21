@@ -14,9 +14,9 @@ export const __addTodos = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log('payload', payload);
     try {
-      const {data} = await http.post('/todos', payload);
+      const data = await http.post('/todos', {content: payload});
       console.log('data', data);
-      return thunkAPI.fulfillWithValue(data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }
@@ -40,7 +40,7 @@ export const __editTodos = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       http.patch(`/todos/${payload.id}`, payload);
-      console.log(payload);
+      // console.log(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
@@ -53,7 +53,7 @@ export const __deleteTodos = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const {data} = await http.delete(`/todos/${payload}`);
-      console.log('삭제', data);
+      // console.log('삭제', data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -89,7 +89,7 @@ export const todoSlice = createSlice({
     [__getTodos.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.todo = action.payload;
-      console.log('payload', action.payload);
+      // console.log('payload', action.payload);
     },
     [__getTodos.rejected]: (state, action) => {
       state.isLoading = false;
