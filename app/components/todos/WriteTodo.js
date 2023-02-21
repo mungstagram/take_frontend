@@ -16,11 +16,10 @@ const WriteTodo = () => {
   const [todo, setTodo] = useState('');
 
   const addInputHandler = e => {
-    // console.log('e.nativeEvent.text', e.nativeEvent.text);
     setTodo(e);
   };
 
-  console.log('되나?', todo);
+  // console.log('되나?', todo);
   const onPressAdd = () => {
     dispatch(__addTodos(todo));
     setTodo('');

@@ -36,12 +36,12 @@ export const __getTodos = createAsyncThunk(
 );
 
 export const __editTodos = createAsyncThunk(
-  'Edit_TODO',
+  'EDIT_TODO',
   async (payload, thunkAPI) => {
     try {
-      http.patch(`/todos/${payload.id}`, payload);
+      const {data} = http.patch(`/todos/${payload.id}`, payload);
       // console.log(payload);
-      return thunkAPI.fulfillWithValue(payload);
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
     }

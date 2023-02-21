@@ -17,16 +17,23 @@ import {__deleteTodos, __editTodos} from '../../redux/modules/todoSlice';
 const Todoitem = ({id, text, done}) => {
   const dispatch = useDispatch();
 
-  const [isEdit, setIsEdit] = useState('');
+  const [edit, setEdit] = useState();
+  const [isEdit, setIsEdit] = useState(false);
 
-  const toggleIsEdit = () => {
-    setIsEdit(!isEdit);
+  const onPressIsEdit = () => {
+    setIsEdit(true);
   };
 
+  const onPressChangeBtn = () => {
+    setIsEdit(false);
+  };
+
+  const onPressChangeEdit = e => {
+    setEdit(e);
+  };
   const onPressTodoEdit = () => {
-    // dispatch(__editTodos(id)).then(() => {
-    //   setEdit(!edit);
-    // });
+    console.log('edit', edit);
+    dispatch(__editTodos(id));
   };
 
   const onPressTodoRemove = () => {
@@ -61,17 +68,33 @@ const Todoitem = ({id, text, done}) => {
       </TouchableOpacity>
 
       {isEdit ? (
-        <TextInput />
+        <TextInput
+          style={styles.textInput}
+          value={edit}
+          onChangeText={onPressChangeEdit}
+        />
       ) : (
         <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
       )}
 
-      <Button title="수정" onPress={onPressTodoEdit} />
       <Button
         title="삭제"
         style={styles.removeBtn}
         onPress={onPressTodoRemove}
       />
+
+      {isEdit ? (
+        <Button
+          title="완료"
+          onPress={() => {
+            onPressIsEdit();
+            onPressChangeBtn();
+            onPressTodoEdit();
+          }}
+        />
+      ) : (
+        <Button title="수정" onPress={onPressIsEdit} />
+      )}
 
       <View style={styles.removePlaceholder} />
     </View>
@@ -113,6 +136,9 @@ const styles = StyleSheet.create({
   removeBtn: {
     width: 20,
     height: 20,
+  },
+  textInput: {
+    width: 200,
   },
 });
 
