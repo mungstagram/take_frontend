@@ -1,22 +1,17 @@
 import React from 'react';
-import {Pressable, View, Text, StyleSheet} from 'react-native';
+import {Pressable, View, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import ArrowGoBack from './svg/ArrowGoBack';
 
-const AuthNavigateButton = ({isLoginpage}) => {
+const AuthNavigateButton = () => {
   const navigation = useNavigation();
-  function switchAuthModeHandler() {
-    if (isLoginpage) {
-      navigation.replace('Signup');
-    } else {
-      navigation.replace('Login');
-    }
-  }
+  const navigateStartPageHandler = () => {
+    navigation.replace('AuthStartScreen');
+  };
   return (
     <View style={styles.textContainer}>
-      <Pressable onPress={switchAuthModeHandler}>
-        <Text style={styles.navigateText}>
-          {isLoginpage ? 'Create a new user' : 'Log in instead'}
-        </Text>
+      <Pressable onPress={navigateStartPageHandler}>
+        <ArrowGoBack />
       </Pressable>
     </View>
   );
@@ -26,11 +21,6 @@ export default AuthNavigateButton;
 
 const styles = StyleSheet.create({
   textContainer: {
-    // backgroundColor: 'red',
     alignItems: 'center',
-  },
-  navigateText: {
-    fontSize: 12,
-    color: 'white',
   },
 });

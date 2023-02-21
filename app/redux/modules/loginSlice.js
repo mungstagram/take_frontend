@@ -31,6 +31,7 @@ export const __postLogin = createAsyncThunk(
       if (data.status === 200) {
         Alert.alert('로그인 성공');
       }
+
       // 직렬화 에러 해결하기 위해서 sendData 선언
       const sendData = {
         token: data.headers.authorization,

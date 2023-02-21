@@ -6,13 +6,13 @@ import SplashScreen from 'react-native-splash-screen';
 import {useSelector} from 'react-redux';
 
 import Login from './screens/Login';
+import AuthStartScreen from './screens/AuthStartScreen';
 import Signup from './screens/Signup';
 import UserDetail from './screens/UserDetail';
 import {Colors} from './constants/colors';
 import {Provider} from 'react-redux';
 import store from './redux/store/configStore';
 import LoginChecker from './components/LoginChecker';
-
 import BottomTabNav from './components/BottomTabNav';
 import Home from './screens/Home';
 import Profile from './screens/Profile';
@@ -22,14 +22,18 @@ const Stack = createNativeStackNavigator();
 //그인전 이용하는 스크린
 const AuthStack = () => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerStyle: {backgroundColor: Colors.primary500},
-        headerTintColor: 'white',
-        contentStyle: {backgroundColor: Colors.primary100},
-      }}>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Signup" component={Signup} />
+    <Stack.Navigator>
+      <Stack.Screen name="AuthStartScreen" component={AuthStartScreen} />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
