@@ -17,12 +17,11 @@ import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 
-import YellowButton from '../components/YellowButton';
-import CancelButton from '../components/CancelButton';
+import {__postAddContentFormData} from '../../redux/modules/addContentSlice';
+import YellowButton from '../YellowButton';
+import CancelButton from '../CancelButton';
 
-import {__postAddContentFormData} from '../redux/modules/addContentSlice';
-
-const AddContent = () => {
+const AddImage = () => {
   // 제목 인풋상태
   const [titleText, setTitleText] = useState();
   // console.log(titleText);
@@ -224,7 +223,7 @@ const AddContent = () => {
   );
 };
 
-export default AddContent;
+export default AddImage;
 
 // 코드 손보기
 // const {width} = Dimensions.get('window');
