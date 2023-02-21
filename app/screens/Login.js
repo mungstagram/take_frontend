@@ -41,6 +41,10 @@ const Login = () => {
           <AuthButton onPress={onSubmitLogin}>입력 완료</AuthButton>
         </View>
       </View>
+<<<<<<< HEAD
+=======
+      <AuthButton onPress={onSubmitLogin}>하잉!!</AuthButton>
+>>>>>>> develop
     </View>
   );
 };
@@ -49,9 +53,16 @@ export default Login;
 
 const styles = StyleSheet.create({
   wrapper: {
+<<<<<<< HEAD
     flex: 1,
     backgroundColor: 'blue',
     alignItems: 'center',
+=======
+    // alignItems: 'center',
+    backgroundColor: 'white',
+    // width: width,
+    flex: 1,
+>>>>>>> develop
   },
   inputContainer: {
     // width: '90%',

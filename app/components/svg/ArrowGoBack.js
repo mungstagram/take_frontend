@@ -1,7 +1,7 @@
 import React from 'react';
 import Svg, {Path} from 'react-native-svg';
 
-const AroowGoBack = () => {
+const ArrowGoBack = () => {
   return (
     <Svg width="12" height="20" viewBox="0 0 12 20" fill="none">
       <Path
@@ -12,4 +12,4 @@ const AroowGoBack = () => {
   );
 };
 
-export default AroowGoBack;
+export default ArrowGoBack;
