@@ -12,11 +12,19 @@ import {
   Alert,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import {__deleteTodos} from '../../redux/modules/todoSlice';
+import {__deleteTodos, __editTodos} from '../../redux/modules/todoSlice';
 
 const Todoitem = ({id, text, done}) => {
   const dispatch = useDispatch();
 
+  // const [edit, setEdit] = useState();
+
+  // const onPressTodoEdit = () => {
+  //   const EditTodo = {
+  //     content: edit,
+  //   };
+  //   dispatch(__editTodos(EditTodo));
+  // };
   const onPressTodoRemove = () => {
     Alert.alert(
       '할 일 삭제',
@@ -50,6 +58,7 @@ const Todoitem = ({id, text, done}) => {
 
       <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
 
+      <Button title="수정" />
       <Button
         title="삭제"
         style={styles.removeBtn}

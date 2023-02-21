@@ -29,14 +29,16 @@ const TodoList = () => {
 
   return (
     <ScrollView>
-      {todos.map(item => (
-        <Todoitem
-          key={item.id}
-          id={item.id}
-          text={item.content}
-          done={item.done}
-        />
-      ))}
+      {todos
+        .map(item => (
+          <Todoitem
+            key={item.id}
+            id={item.id}
+            text={item.content}
+            done={item.done}
+          />
+        ))
+        .reverse()}
     </ScrollView>
   );
 };

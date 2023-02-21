@@ -7,34 +7,21 @@ import {
   Button,
   Keyboard,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import {__addTodos} from '../../redux/modules/todoSlice';
+// import {useDispatch} from 'react-redux';
+// import {__addTodos} from '../../redux/modules/todoSlice';
 
 const WriteTodo = () => {
-  const dispatch = useDispatch();
-  const addTodoRef = useRef();
+  // const dispatch = useDispatch();
 
-  const onChangeAddRefHandler = e => {
-    addTodoRef.current = e;
-  };
+  // const [todo, setTodo] = useState('');
 
-  const onPress = e => {
-    console.log('onPress 안에', addTodoRef.current);
-    dispatch(
-      __addTodos({
-        content: addTodoRef.current,
-      }),
-    );
-  };
-
-  // const onReset = () => {
-  //   addTodoRef({
-  //     content: '',
-  //   });
-  //   addTodoRef.current.focus();
+  // const onChangeAddHandler = e => {
+  //   setTodo(e.target.value);
   // };
 
-  console.log('add to do에', addTodoRef);
+  // const onPressAdd = () => {
+  //   dispatch(__addTodos(todo));
+  // };
 
   return (
     <View style={styles.block}>
@@ -43,20 +30,10 @@ const WriteTodo = () => {
           <Text>우리 강아지에게 해줘야해요</Text>
           <Button title="수정" />
         </View>
-        <TextInput
-          placeholder="할 일을 입력하세요"
-          style={styles.todoInput}
-          onChangeText={onChangeAddRefHandler}
-        />
-        <View style={styles.todoBtn}>
-          <Button title="저장" onPress={onPress} />
-          {/* <Button
-          title="저장"
-          onPress={() => {
-            onPress();
-            onReset();
-          }}
-        /> */}
+        <View style={styles.todoInputBlock}>
+          <TextInput placeholder="할 일을 입력하세요" />
+
+          <Button title="저장" />
         </View>
       </View>
     </View>
@@ -75,25 +52,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 10,
   },
-  todoInput: {
+  todoInputBlock: {
     borderWidth: 1,
+    padding: 10,
     borderColor: '#000000',
-    height: 20,
-    flex: 3,
-    fontSize: 15,
-    margin: 20,
-    paddingVertical: 8,
-    backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'row',
-  },
-  todoBtn: {
-    flex: 1,
-    width: 50,
-    height: 50,
-    backgroundColor: '#c0c0c0',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
 });
 
