@@ -25,7 +25,7 @@ const styles = value =>
       borderRadius: 4,
       paddingVertical: 12,
       // paddingHorizontal: 12,
-      backgroundColor: Colors.primary500,
+      backgroundColor: Colors.mainColorBright,
       alignItems: 'center',
     },
     pressed: {
