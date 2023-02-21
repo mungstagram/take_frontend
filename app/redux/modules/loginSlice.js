@@ -15,6 +15,7 @@ const initialState = {
   isLoading: false,
   error: null,
   myNick: '',
+  isSuccessLogin: true,
 };
 
 //로그인 POST요청
@@ -139,11 +140,13 @@ const loginSlice = createSlice({
     [__postLogin.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isLogin = true;
+      state.isSuccessLogin = true;
       state.nickname = action.payload.nickname;
     },
     [__postLogin.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+      state.isSuccessLogin = false;
     },
     ////아이디와 닉네임부분
     // [__checkMemberId.pending]: state => {

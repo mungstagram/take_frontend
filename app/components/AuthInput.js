@@ -10,7 +10,7 @@ const AuthInput = ({
   secure, // true false, true이면 입력창 내용 가리는 용도 (secureTextEntry에 사용)
   onUpdateValue, //로그인에서 사용된 인풋state를 변경하는 setState
   value, // 회원가입에서는 useState를 통해서 입력을 함. useState에 저장된 인풋값.
-  isInvalid,
+  isInvalid, // 에러 여부에 따른 인풋 색깔 조절용 변수 (true, false)
   placeholder,
   refInput, // 로그인 경우 ref를 통해 로그인 함.. 로그인에 사용되는 인풋 값
   helper,
@@ -29,29 +29,44 @@ const AuthInput = ({
   return (
     <View style={styles.inputContainer}>
       <View>
-        <Text style={[styles.label, isInvalid && styles.labelInvalid]}>
-          {label}
-        </Text>
         {refInput ? (
-          <View>
-            <TextInput
-              placeholder={placeholder}
-              style={[styles.input, isInvalid && styles.inputInvalid]}
-              autoCapitalize={false}
-              keyboardType={keyboardType}
-              secureTextEntry={secure}
-              onChangeText={onChangeRefHandler} // 조건부로 onChangeText를 적용하고 싶음
-              value={value}
-              // ref = {refInput} //리액트경우
-            />
-            <Pressable onPress={onVisibilityHandler}>
-              {secure
-                ? setSecureSetter && <PassWordVisibility />
-                : setSecureSetter && <PassWordVisibilityOff />}
-            </Pressable>
+          <View style={[styles.input, !isInvalid && styles.inputInvalid]}>
+            <Text style={styles.label}>{label}</Text>
+            <View style={styles.inputDirection}>
+              <TextInput
+                placeholder={placeholder}
+                style={styles.textStyle}
+                autoCapitalize={false}
+                keyboardType={keyboardType}
+                secureTextEntry={secure}
+                onChangeText={onChangeRefHandler} // 조건부로 onChangeText를 적용하고 싶음
+                value={value}
+                // ref = {refInput} //리액트경우
+              />
+              <View style={styles.iconPostioner}>
+                {secure
+                  ? setSecureSetter && (
+                      <Pressable
+                        style={styles.pressableContainer}
+                        onPress={onVisibilityHandler}>
+                        <PassWordVisibility />
+                      </Pressable>
+                    )
+                  : setSecureSetter && (
+                      <Pressable
+                        style={styles.pressableContainer}
+                        onPress={onVisibilityHandler}>
+                        <PassWordVisibilityOff />
+                      </Pressable>
+                    )}
+              </View>
+            </View>
           </View>
         ) : (
           <View>
+            <Text style={[styles.label, isInvalid && styles.labelInvalid]}>
+              {label}
+            </Text>
             <TextInput
               placeholder={placeholder}
               style={[styles.input, isInvalid && styles.inputInvalid]}
@@ -61,7 +76,7 @@ const AuthInput = ({
               onChangeText={onUpdateValue}
               value={value}
             />
-            <Text> {helper} </Text>
+            {/* <Text> {helper} </Text> */}
           </View>
         )}
       </View>
@@ -73,33 +88,61 @@ export default AuthInput;
 
 const styles = StyleSheet.create({
   inputContainer: {
-    marginVertical: 0,
     justifyContent: 'center',
-    paddingVertical: 10,
+    paddingVertical: 12,
     width: ' 100%',
-    backgroundColor: 'red',
+    // backgroundColor: 'green',
   },
   label: {
     color: 'white',
+    fontSize: 8,
   },
   labelInvalid: {
     color: 'red',
+    fontSize: 8,
   },
   input: {
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    fontSize: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    fontSize: 8,
     borderTopRightRadius: 4,
     borderTopLeftRadius: 4,
     backgroundColor: Colors.primary100,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.primary100,
   },
   inputInvalid: {
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    fontSize: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    fontSize: 8,
     borderTopRightRadius: 4,
     borderTopLeftRadius: 4,
     backgroundColor: Colors.primary100,
+    borderBottomWidth: 1,
     borderBottomColor: 'red',
+  },
+  labelStyle: {
+    fontSize: 8,
+  },
+  textStyle: {
+    padding: 0,
+    fontSize: 16,
+    // backgroundColor: 'red',
+  },
+  inputDirection: {
+    flexDirection: 'row',
+  },
+  pressableContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 1,
+    height: '95%',
+  },
+  iconPostioner: {
+    position: 'absolute',
+    bottom: '1%',
+    right: '3%',
+    marginHorizontal: 4,
+    height: '100%',
   },
 });
