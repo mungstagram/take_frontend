@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
-import WriteTodo from '../components/todos/WriteTodo';
 
 function Home({navigation}) {
   // const onInsert = text => {
@@ -45,7 +44,6 @@ function Home({navigation}) {
           <TodoList todos={todos} onToggle={onToggle} onRemove={onRemove} />
         )} */}
         {/* <WriteTodo onInsert={onInsert} /> */}
-        <WriteTodo />
       </View>
     </View>
   );
