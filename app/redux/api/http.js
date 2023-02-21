@@ -4,7 +4,6 @@ import {API_URL} from '@env';
 
 const http = axios.create({
   baseURL: `${API_URL}`,
-
   timeout: 100000,
   headers: {
     'content-type': 'application/json;charset=UTF-8',

@@ -14,7 +14,7 @@ const Login = () => {
   const passwordInput = useRef();
 
   const onSubmitLogin = e => {
-    // console.log('login에서', idInput.current);
+    console.log('login에서', idInput.current);
     dispatch(
       __postLogin({
         email: idInput.current,

@@ -1,16 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
-  Dimensions,
   View,
   Text,
   StyleSheet,
-  Button,
   TextInput,
   FlatList,
   Image,
   TouchableOpacity,
   SafeAreaView,
-  ScrollView,
   Platform,
   Alert,
 } from 'react-native';
@@ -70,19 +67,18 @@ const AddContent = () => {
     requestCameraPermission();
   }, []);
   // * 사진관련 코드
-  const [images, setImages] = useState([]);
+  const [videos, setVideos] = useState([]);
   // 사진넣기 버튼 클릭시 작동하는 이벤트
   const openPicker = async () => {
     try {
       const response = await MultipleImagePicker.openPicker({
         usedCameraButton: true,
-        mediaType: 'image',
-
+        mediaType: 'video',
         // 총 선택 가능한 모든파일 수
-        maxSelectedAssets: 5,
+        maxSelectedAssets: 1,
         // 총 선택 가능한 영상 수
-        // maxVideo: 1,
-        selectedAssets: images,
+        maxVideo: 1,
+        selectedAssets: videos,
         isExportThumbnail: true,
         isCrop: true,
         isCropCircle: true,
@@ -90,7 +86,7 @@ const AddContent = () => {
       });
 
       // console.log('response: ', response);
-      setImages(response);
+      setVideos(response);
     } catch (e) {
       // console.log(e.code, e.message);
     }
@@ -103,7 +99,7 @@ const AddContent = () => {
   //remove 라는 이름을 많이 쓴다고 한다.
 
   const onDelete = value => {
-    const data = images.filter(
+    const data = videos.filter(
       item =>
         item?.localIdentifier &&
         item?.localIdentifier !== value?.localIdentifier,
@@ -114,51 +110,40 @@ const AddContent = () => {
   //출력되는 사진들에 각각 삭제버튼을 만들어 줌.
   const renderItem = ({item, index}) => {
     return (
-      <ScrollView style={styles.imageView}>
-        <Image
-          width={IMAGE_WIDTH}
-          source={{
-            uri:
-              item?.type === 'video'
-                ? 'file://' + (item?.crop?.cropPath ?? item.realPath)
-                : 'file://' + (item?.crop?.cropPath ?? item.realPath),
-          }}
-          style={styles.media}
-        />
-        <TouchableOpacity
-          onPress={() => onDelete(item)}
-          activeOpacity={0.9}
-          style={styles.buttonDelete}>
-          <Text style={styles.titleDelete}>X</Text>
-        </TouchableOpacity>
-      </ScrollView>
+      <Image
+        // width={IMAGE_WIDTH}
+        source={{
+          uri:
+            item?.type === 'image'
+              ? 'file://' + (item?.crop?.cropPath ?? item.realPath)
+              : 'file://' + (item?.crop?.cropPath ?? item.realPath),
+        }}
+        style={styles.media}
+      />
     );
   };
 
-
   const dispatch = useDispatch();
 
- // 폼데이터 선언 및 전송
+  // 폼데이터 선언 및 전송
   const formData = new FormData();
   const onSendFormData = () => {
-    console.log('images', images);
-   
-    console.log('images.real', images[0].realPath);
+    console.log('videos', videos[0]);
+
+    console.log('videos.real', videos[0].realPath);
     const formList = {
-      category: 'image',
+      category: 'video',
       title: titleText,
       content: contentText,
-      files: images,
+      files: videos,
     };
-    //images.map(image => {});
-
-    formData.append('category', 'image');
+    formData.append('category', 'video');
     formData.append('title', titleText);
     formData.append('content', contentText);
     formData.append('files', {
-      name: images[0].fileName,
-      type: images[0].mime,
-      uri: `file://${images[0].realPath}`,
+      name: videos[0].fileName,
+      type: videos[0].mime,
+      uri: `file://${videos[0].realPath}`,
     });
     console.log(formData);
     dispatch(__postAddContentFormData(formData));
@@ -169,6 +154,27 @@ const AddContent = () => {
     <SafeAreaView style={styles.containerBox}>
       <View style={styles.box}>
         <View style={styles.container}>
+          <View style={styles.fileInput}>
+            <View style={styles.fileupload}>
+              <FlatList
+                data={videos}
+                keyExtractor={(item, index) =>
+                  (item?.filename ?? item?.path) + index
+                }
+                renderItem={renderItem}
+                horizontal={true}
+              />
+              <View>
+                {openCamera && (
+                  <TouchableOpacity
+                    style={styles.openPicker}
+                    onPress={openPicker}>
+                    <Text style={styles.openText}>댕댕🐶 영상넣기</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+          </View>
           <View style={styles.titleInput}>
             <TextInput
               placeholder="제목을 입력하세요(20자 이하)"
@@ -178,7 +184,6 @@ const AddContent = () => {
               onChange={titleTextHandler}
             />
           </View>
-
           <View style={styles.contentInput}>
             <TextInput
               placeholder="내용을 입력하세요(300자 이하)"
@@ -192,33 +197,6 @@ const AddContent = () => {
           <View>
             <Text>{contentText.length}/100</Text>
           </View>
-          <View style={styles.fileInput}>
-            <View style={styles.fileupload}>
-              {openCamera && (
-                <TouchableOpacity
-                  style={styles.openPicker}
-                  onPress={openPicker}>
-                  <Text style={styles.openText}>댕댕🐶 사진넣기</Text>
-                </TouchableOpacity>
-              )}
-              {!openCamera && (
-                <TouchableOpacity
-                  style={styles.openPicker2}
-                  onPress={openAgainPicker}>
-                  <Text style={styles.openText}>댕댕🐶 사진넣기</Text>
-                </TouchableOpacity>
-              )}
-            </View>
-
-            <FlatList
-              data={images}
-              keyExtractor={(item, index) =>
-                (item?.filename ?? item?.path) + index
-              }
-              renderItem={renderItem}
-              horizontal={true}
-            />
-          </View>
           <View style={styles.buttonRow}>
             <CancelButton>Cancel</CancelButton>
             <YellowButton onPress={onSendFormData}>Done</YellowButton>
@@ -231,10 +209,7 @@ const AddContent = () => {
 
 export default AddContent;
 
-// 코드 손보기
-// const {width} = Dimensions.get('window');
-
-const IMAGE_WIDTH = 100;
+const IMAGE_WIDTH = 960;
 
 const styles = StyleSheet.create({
   containerBox: {
@@ -276,32 +251,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  openText: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: '#fff',
-    paddingVertical: 12,
-  },
 
   openPicker: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000',
+    backgroundColor: '#000000',
   },
   openPicker2: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#5b5b5b',
   },
+  openText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#ffffff',
+    paddingVertical: 12,
+  },
   imageView: {
     flexDirection: 'column',
     flexWrap: 'nowrap',
     position: 'relative',
     marginRight: 6,
+    borderWidth: 1,
   },
   media: {
-    width: IMAGE_WIDTH,
-    height: IMAGE_WIDTH,
+    width: 100,
+    height: 540,
     backgroundColor: 'rgba(0,0,0,0.2)',
   },
   buttonDelete: {
