@@ -4,7 +4,6 @@ import {API_URL} from '@env';
 
 const http = axios.create({
   baseURL: `${API_URL}`,
-
   timeout: 100000,
   headers: {
     'content-type': 'application/json;charset=UTF-8',
@@ -13,7 +12,6 @@ const http = axios.create({
 });
 
 http.interceptors.request.use(async function (config) {
-  console.log('Api', `${API_URL}`);
   const storedToken = await AsyncStorage.getItem('authorization');
 
   if (storedToken !== null || storedToken !== undefined) {

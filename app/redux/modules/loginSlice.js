@@ -22,16 +22,12 @@ const initialState = {
 export const __postLogin = createAsyncThunk(
   'POST_LOGIN',
   async (payload, thunkAPI) => {
-    console.log('payload', payload);
     try {
       const data = await http.post('/auth/login', payload).then(res => {
         AsyncStorage.setItem('authorization', res.headers.authorization);
         return res;
       });
       AsyncStorage.setItem('nickname', data.data.nickname);
-      if (data.status === 200) {
-        Alert.alert('로그인 성공');
-      }
 
       // 직렬화 에러 해결하기 위해서 sendData 선언
       const sendData = {
@@ -42,12 +38,8 @@ export const __postLogin = createAsyncThunk(
       };
       return thunkAPI.fulfillWithValue(sendData);
     } catch (error) {
-      console.log('error', error);
-      Alert.alert('로그인 실패');
-
-      if (error.response.status === 401) {
-      }
-      return thunkAPI.rejectWithValue(error);
+      // console.log(error.response.data.data);
+      return thunkAPI.rejectWithValue(error.response.data.data);
     }
   },
 );
@@ -120,6 +112,9 @@ const loginSlice = createSlice({
     checkLogout: (state, action) => {
       state.isLogin = false;
     },
+    deleteFailLog: (state, action) => {
+      state.isSuccessLogin = true;
+    },
   },
   extraReducers: {
     //post
@@ -179,5 +174,5 @@ const loginSlice = createSlice({
     // },
   },
 });
-export const {checkLogin, checkLogout} = loginSlice.actions;
+export const {checkLogin, checkLogout, deleteFailLog} = loginSlice.actions;
 export default loginSlice.reducer;
