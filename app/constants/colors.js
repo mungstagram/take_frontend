@@ -1,7 +1,7 @@
 export const Colors = {
-  primary100: '#f9beda',
-  primary500: '#c30b64',
-  primary800: '#610440',
-  error100: '#fcdcbf',
-  error500: '#f37c13',
+  pointColorBright: '#f5cec7',
+  pointColorDark: '#e79796',
+  mainColorBright: '#ffc988', //대체적으로 3,4번 색깔
+  mainColorDark: '#ffb284',
+  userDataColor: '#c6c09c',
 };

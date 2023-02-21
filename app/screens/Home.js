@@ -2,33 +2,11 @@ import React from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
 
 function Home({navigation}) {
-  // const onInsert = text => {
-  //   const nextId =
-  //     todos.length > 0 ? Math.max(...todos.map(todo => todo.id)) + 1 : 1;
-  //   const todo = {
-  //     id: nextId,
-  //     text,
-  //     done: false,
-  //   };
-  //   setTodos(todos.concat(todo));
-  // };
-
-  // const onToggle = id => {
-  //   const nextTodos = todos.map(todo =>
-  //     todo.id === id ? {...todo, done: !todo.done} : todo,
-  //   );
-  //   setTodos(nextTodos);
-  // };
-
-  // const onRemove = id => {
-  //   const nextTodos = todos.filter(todo => todo.id !== id);
-  //   setTodos(nextTodos);
-  // };
-
   return (
-    <View>
-      <View>
+    <>
+      <View style={styles.homeProfile}>
         <Button
+          style={styles.goToProfile}
           title="profile page 열기"
           onPress={() => navigation.navigate('Profile')}
         />
@@ -45,8 +23,31 @@ function Home({navigation}) {
         )} */}
         {/* <WriteTodo onInsert={onInsert} /> */}
       </View>
-    </View>
+    </>
   );
 }
+
+const styles = StyleSheet.create({
+  homeProfile: {
+    flex: 1,
+    backgroundColor: '#acacac',
+  },
+  homeProfileInner: {
+    borderWidth: 1,
+  },
+  goToProfile: {
+    width: 50,
+    height: 50,
+  },
+  homeTodo: {
+    flex: 2,
+    backgroundColor: '#949494',
+  },
+  introduce: {
+    height: 100,
+    borderWidth: 1,
+    backgroundColor: '#b6b6b6',
+  },
+});
 
 export default Home;
