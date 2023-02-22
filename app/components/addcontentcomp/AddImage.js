@@ -20,7 +20,7 @@
 // const AddContent = () => {
 //   // 제목 인풋상태
 //   const [titleText, setTitleText] = useState('');
-//   //제목 인풋 핸들러
+//   //제목 인풋 핸들러gi
 //   const titleTextHandler = e => {
 //     console.log('제목', e);
 //     setTitleText(e.target.value);
