@@ -36,7 +36,6 @@ const AddImage = () => {
   // 내용 인풋 핸들러
   const contentTextHandler = event => {
     //console.log('내용', event.nativeEvent.text);
-
     setContentText(event.nativeEvent.text);
   };
   //사진넣기버튼의 사용가능여부조절
@@ -44,7 +43,6 @@ const AddImage = () => {
   // //사진업로드 버튼 눌렀을 때 권한묻기
   // // useEffect는 처음 화면이 렌더링 됐을 때도 실행되기 떄문에 사용할 수 없음.
   // // Dependecy에 변수지정하기 // 마운트할때는 무조건 실행되는거!
-
   // 온클릭을 했을때 퍼미션을 실행할거냐 게시글작성 마운트될때 실행할거냐!
 
   useEffect(() => {
@@ -154,7 +152,7 @@ const AddImage = () => {
       type: images[0].mime,
       uri: `file://${images[0].realPath}`,
     });
-    console.log(formData);
+
     dispatch(__postAddContentFormData(formData));
   };
   // 이미지파일 넣는 부분
