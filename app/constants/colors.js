@@ -8,5 +8,5 @@ export const Colors = {
 export const BasicColors = {
   blackColor: '#000000',
   whiteColor: '#ffffff',
-  grayColor: 'rgba(38, 38, 38, 0)',
+  grayColor: 'rgba(38, 38, 38, 0.25)',
 };

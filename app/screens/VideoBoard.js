@@ -1,10 +1,20 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  useWindowDimensions,
+} from 'react-native';
 
 import SelectBox from '../components/common/SelectBox';
-import VideoPreviewCard from '../components/videoBoardComp/VideoPreviewCard';
+import VideoPreviewCard from '../components/videoboardcomp/VideoPreviewCard';
+import {Colors, BasicColors} from '../constants/colors';
 
 const VideoBoard = () => {
+  // 높이, 너비를 자동으로 업데이트 해준다.
+  const {height, width} = useWindowDimensions();
+
   //최신순 or 좋아요순 결정하는 state (초깃값을 설정, 서버에 보낼 값을 배열에 담고, 그때의 인덱스)
   const [dataSortSelector, setDataSortSelector] = useState(0);
   //SelectBox에 표시될 이름
@@ -20,16 +30,14 @@ const VideoBoard = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.selectContainer}>
-        <View style={styles.contentGetterLayout}>
-          <View style={styles.selectBoxHolder}>
-            <SelectBox
-              dataSortSelector={dataSortSelector}
-              dateSortSelectorHandler={dateSortSelectorHandler}
-              selectParameter={selectParameter}
-            />
-          </View>
+        <View style={styles.selectBoxHolder}>
+          <SelectBox
+            dataSortSelector={dataSortSelector}
+            dateSortSelectorHandler={dateSortSelectorHandler}
+            selectParameter={selectParameter}
+          />
         </View>
       </View>
       <View style={styles.preCards}>
@@ -46,27 +54,26 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const videoCardWidth = windowWidth - 40;
-const videoCardHeight = videoCardWidth * 0.8;
+//const videoCardHeight = videoCardWidth;
 
 const styles = StyleSheet.create({
-  contentGetterLayout: {
-    position: 'absolute',
-    height: '86%',
-    width: '100%',
-    bottom: 0,
-    backgroundColor: 'white',
-    zIndex: 4,
+  container: {
+    flex: 1,
+    backgroundColor: Colors.mainColorDark,
+  },
+  selectContainer: {
+    width: videoCardWidth,
+    alignItems: 'flex-end',
+    top: '2%',
+    left: '4%',
+    zIndex: 10,
   },
   selectBoxHolder: {
-    position: 'absolute',
     width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
-    right: '4%',
-    top: '2%',
-    zIndex: 8,
   },
   preCards: {
-    width: videoCardWidth,
-    justifyContent: 'center',
+    top: '8%',
+    alignItems: 'center',
   },
-  preCard: {marginTop: 10},
+  preCard: {},
 });
