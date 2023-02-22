@@ -48,12 +48,12 @@ const AuthenticatedStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: {backgroundColor: Colors.primary500},
+        headerStyle: {backgroundColor: Colors.mainColorBright},
         headerTintColor: 'white',
-        contentStyle: {backgroundColor: Colors.primary100},
+        contentStyle: {backgroundColor: Colors.mainColorBright},
       }}>
       <Stack.Screen
-        name="Home"
+        name="BottomTabNav"
         component={BottomTabNav}
         options={{headerShown: false}}
       />

@@ -2,14 +2,16 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
 import UserBoardWrap from '../components/userdetail/UserBoardWrap';
-
+import UserDetailProf from '../components/userdetail/UserDetailProf';
 // import {Colors} from '../constants/colors';
 
 const UserDetail = () => {
   return (
     <View style={styles.Wrapper}>
       <View style={styles.Container1}>
-        <Text> 로그인 성공~</Text>
+        <View>
+          <UserDetailProf />
+        </View>
       </View>
       <View style={styles.Container2}>
         <UserBoardWrap />
@@ -25,11 +27,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   Container1: {
-    flex: 1,
-    backgroundColor: 'blue',
+    flex: 302,
   },
   Container2: {
-    flex: 3,
+    flex: 498,
   },
   UserBoardWrap,
 });
