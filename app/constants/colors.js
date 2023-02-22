@@ -5,3 +5,8 @@ export const Colors = {
   mainColorDark: '#ffb284',
   userDataColor: '#c6c09c',
 };
+export const BasicColors = {
+  blackColor: '#000000',
+  whiteColor: '#ffffff',
+  grayColor: 'rgba(38, 38, 38, 0)',
+};
