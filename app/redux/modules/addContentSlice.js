@@ -4,7 +4,7 @@ import {Alert} from 'react-native';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
-  ContentList: [],
+  contentList: [],
   isLoading: false,
   error: null,
 };
@@ -43,13 +43,13 @@ export const __postAddContentFormData = createAsyncThunk(
 export const __getPostData = createAsyncThunk(
   'GET_POST_DATA',
   async (payload, thunkAPI) => {
-    console.log(payload, 'payload');
+    // console.log(payload, 'payload');
     //payload에서는 객체형식으로  {order :  ,category : }  가 있어야함.
     try {
       const {data} = await http.get(
         `/posts?order=${payload.order}&category=${payload.category}`,
       );
-      console.log(data, '서버응답');
+      // console.log(data, '서버응답');
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -83,7 +83,7 @@ const addContentSlice = createSlice({
     },
     [__getPostData.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-      //TODO: action.payload 받아서 저장해야함
+      state.contentList = action.payload;
     },
     [__getPostData.rejected]: (state, action) => {
       state.isLoading = false;
