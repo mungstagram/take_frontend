@@ -184,7 +184,7 @@ const AddImage = () => {
             />
           </View>
           <View>
-            <Text>{contentText.length}/100</Text>
+            <Text>{contentText.length}/300</Text>
           </View>
           <View style={styles.fileInput}>
             <View style={styles.fileupload}>
