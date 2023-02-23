@@ -201,7 +201,7 @@ const Signup = () => {
             value={passwordCheck}
             secure={secureSetter}
             setSecureSetter={setSecureSetter}
-            isInvalid={password === passwordCheck}
+            isInvalid={password === passwordCheck && passwordCheck !== ''}
           />
         </View>
         <View style={styles.submitButtonPositioner}>
