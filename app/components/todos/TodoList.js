@@ -24,7 +24,7 @@ const TodoList = () => {
     dispatch(__getTodos());
   }, [dispatch]);
 
-  const todos = useSelector(state => state.todos.todo);
+  // const todos = useSelector(state => state.todos.todo);
   // console.log('todos', todos);
 
   return (

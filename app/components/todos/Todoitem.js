@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {__deleteTodos, __editTodos} from '../../redux/modules/todoSlice';
 
 const Todoitem = ({id, text, done}) => {
