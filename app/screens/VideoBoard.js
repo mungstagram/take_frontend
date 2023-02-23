@@ -1,11 +1,5 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  useWindowDimensions,
-} from 'react-native';
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
 
 import SelectBox from '../components/common/SelectBox';
 import VideoPreviewCard from '../components/videoboardcomp/VideoPreviewCard';
@@ -13,7 +7,7 @@ import {Colors, BasicColors} from '../constants/colors';
 
 const VideoBoard = () => {
   // 높이, 너비를 자동으로 업데이트 해준다.
-  const {height, width} = useWindowDimensions();
+  // const {height, width} = useWindowDimensions();
 
   //최신순 or 좋아요순 결정하는 state (초깃값을 설정, 서버에 보낼 값을 배열에 담고, 그때의 인덱스)
   const [dataSortSelector, setDataSortSelector] = useState(0);
@@ -41,6 +35,7 @@ const VideoBoard = () => {
         </View>
       </View>
       <View style={styles.preCards}>
+        <VideoPreviewCard style={styles.preCard} />
         <VideoPreviewCard style={styles.preCard} />
         <VideoPreviewCard style={styles.preCard} />
       </View>

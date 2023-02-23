@@ -85,7 +85,6 @@ const dynamicStyles = value =>
       left: 0,
       bottom: 0,
       backgroundColor: 'white',
-
       borderTopStartRadius: 12,
       borderTopEndRadius: 12,
       zIndex: value ? 2 : 1,
