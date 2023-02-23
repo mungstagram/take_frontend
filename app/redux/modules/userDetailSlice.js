@@ -2,7 +2,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import http from '../api/http';
 
 const initialState = {
-  user: [],
+  userDetail: [],
   error: null,
   isLoading: false,
 };
@@ -13,7 +13,7 @@ export const __getUserDetail = createAsyncThunk(
   'GET_USER_DETAIL',
   async (payload, thunkAPI) => {
     try {
-      const {data} = await http.get('/todos');
+      const {data} = await http.get(`/users/${payload}`);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -22,7 +22,7 @@ export const __getUserDetail = createAsyncThunk(
 );
 
 export const userDetailSlice = createSlice({
-  name: 'todos',
+  name: 'userDetail',
   initialState,
   reducers: {},
   extraReducers: {
@@ -31,7 +31,7 @@ export const userDetailSlice = createSlice({
     },
     [__getUserDetail.fulfilled]: (state, action) => {
       state.isLoading = false;
-      //   state.todo = action.payload;
+      state.userDetail = action.payload;
     },
     [__getUserDetail.rejected]: (state, action) => {
       state.isLoading = false;

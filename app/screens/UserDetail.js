@@ -27,10 +27,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   Container1: {
-    flex: 302,
+    flex: 272,
   },
   Container2: {
-    flex: 498,
+    flex: 528,
   },
   UserBoardWrap,
 });
