@@ -29,7 +29,6 @@ const UserBoardWrap = () => {
   // 아래 배열에 인덱스값(dataSortSelector를 넣어서 어떤 요청할 지 결정(최신순, 좋아요순))
   const selectDispatchParameter = ['recent', 'likescount'];
 
-  // console.log(selectParameter[0]); // "최신 순으로 보기"
   const dateSortSelectorHandler = selector => {
     setDataSortSelector(selector);
   };
@@ -145,14 +144,13 @@ const dynamicStyles = value =>
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: 'transparent', // 여백있는지 표시
   },
   tabWrapper: {
     height: '15%',
     width: '100%',
     position: 'absolute',
     top: 0,
-    backgroundColor: 'white',
+    backgroundColor: Colors.mainColorBright,
   },
 
   contentWrapper: {

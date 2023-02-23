@@ -13,7 +13,11 @@ const BottomTabNav = () => {
   return (
     <Tab.Navigator initialRouteName="UserDetail">
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="UserDetail" component={UserDetail} />
+      <Tab.Screen
+        name="UserDetail"
+        component={UserDetail}
+        options={{headerShown: false}}
+      />
       <Tab.Screen name="AddContent " component={AddContent} />
       <Tab.Screen name="ImageBoard" component={ImageBoard} />
       <Tab.Screen name="VideoBoard" component={VideoBoard} />
