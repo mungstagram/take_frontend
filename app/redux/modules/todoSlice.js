@@ -12,7 +12,7 @@ const initialState = {
 export const __addTodos = createAsyncThunk(
   'ADD_TODO',
   async (payload, thunkAPI) => {
-    console.log('payload', payload);
+    // console.log('1payload', payload);
     try {
       const data = await http.post('/todos', {content: payload});
       console.log('data', data);
@@ -39,8 +39,9 @@ export const __editTodos = createAsyncThunk(
   'EDIT_TODO',
   async (payload, thunkAPI) => {
     try {
-      const {data} = http.patch(`/todos/${payload.id}`, payload);
-      // console.log(payload);
+      const {data} = http.put(`/todos/${payload.id}`, payload);
+      // console.log('edit payload', payload);
+      console.log('edit data', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);

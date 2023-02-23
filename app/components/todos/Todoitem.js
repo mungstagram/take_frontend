@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {__deleteTodos, __editTodos} from '../../redux/modules/todoSlice';
 
 const Todoitem = ({id, text, done}) => {
@@ -19,6 +19,7 @@ const Todoitem = ({id, text, done}) => {
 
   const [edit, setEdit] = useState();
   const [isEdit, setIsEdit] = useState(false);
+  // const todos = useSelector(state => state.todos.text);
 
   const onPressIsEdit = () => {
     setIsEdit(true);
@@ -33,7 +34,8 @@ const Todoitem = ({id, text, done}) => {
   };
   const onPressTodoEdit = () => {
     console.log('edit', edit);
-    dispatch(__editTodos(id));
+    // dispatch(__editTodos({id, done: isEdit, content: edit}));
+    dispatch(__editTodos({id, content: edit}));
   };
 
   const onPressTodoRemove = () => {

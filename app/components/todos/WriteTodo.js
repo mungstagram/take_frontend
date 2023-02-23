@@ -28,9 +28,6 @@ const WriteTodo = () => {
   return (
     <View style={styles.block}>
       <View>
-        <View style={styles.editBlock}>
-          <Text>우리 강아지에게 해줘야해요</Text>
-        </View>
         <View style={styles.todoInputBlock}>
           <TextInput
             placeholder="할 일을 입력하세요"
@@ -50,13 +47,7 @@ const styles = StyleSheet.create({
     margin: 10,
     backgroundColor: '#ffffff',
   },
-  editBlock: {
-    borderWidth: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
-  },
+
   todoInputBlock: {
     borderWidth: 1,
     padding: 10,
