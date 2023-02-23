@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
-import AddImage from '../components/addcontentcomp/AddVideo';
+import AddImage from '../components/addcontentcomp/AddImage';
 import AddVideo from '../components/addcontentcomp/AddVideo';
 const AddContent = () => {
   const Tab = createMaterialTopTabNavigator();
