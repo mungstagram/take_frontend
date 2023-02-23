@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
-import TodoList from '../components/todos/TodoList';
-import WriteTodo from '../components/todos/WriteTodo';
+// import TodoList from '../components/todos/TodoList';
+// import WriteTodo from '../components/todos/WriteTodo';
 
 function Home({navigation}) {
   return (
@@ -27,8 +27,8 @@ function Home({navigation}) {
           <Text>강아지종/나이/몸무게</Text>
         </View>
         <View>
-          <WriteTodo />
-          <TodoList />
+          {/* <WriteTodo />
+          <TodoList /> */}
         </View>
       </View>
     </>
