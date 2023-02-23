@@ -20,7 +20,7 @@ const TodoList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // console.log('되어라 제발');
+    console.log('되어라 제발');
     dispatch(__getTodos());
   }, [dispatch]);
 
@@ -28,24 +28,28 @@ const TodoList = () => {
   console.log('todos', todos);
 
   return (
-    <ScrollView>
-      {todos.map(item => (
-        <Todoitem
-          key={item.id}
-          id={item.id}
-          text={item.content}
-          done={item.done}
-        />
-      ))}
-    </ScrollView>
+    <View style={styles.todoListWrap}>
+      <ScrollView>
+        {todos
+          ?.map(item => (
+            <Todoitem
+              key={item.id}
+              id={item.id}
+              text={item.content}
+              done={item.done}
+            />
+          ))
+          .reverse()}
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  list: {
-    flex: 1,
-    margin: 20,
-    backgroundColor: 'gray',
+  todoListWrap: {
+    margin: 5,
+    padding: 5,
+    left: 20,
   },
 });
 

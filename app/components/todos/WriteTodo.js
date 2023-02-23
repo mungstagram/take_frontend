@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -12,32 +12,33 @@ import {__addTodos} from '../../redux/modules/todoSlice';
 
 const WriteTodo = () => {
   const dispatch = useDispatch();
-  const addTodoRef = useRef();
 
-  const onChangeAddRefHandler = e => {
-    addTodoRef.current = e;
+  const [todo, setTodo] = useState('');
+
+  const addInputHandler = e => {
+    setTodo(e);
   };
 
-  const onPress = e => {
-    console.log('onPress 안에', addTodoRef.current);
-    dispatch(
-      __addTodos({
-        content: addTodoRef.current,
-      }),
-    );
+  // console.log('되나?', todo);
+  const onPressAdd = () => {
+    dispatch(__addTodos(todo));
+    setTodo('');
   };
-  // console.log('add to do에', addTodoRef);
+
+  useEffect(() => {}, [todo]);
 
   return (
     <View style={styles.block}>
-      <TextInput
-        placeholder="할 일을 입력하세요"
-        style={styles.todoInput}
-        onChangeText={onChangeAddRefHandler}
-      />
-
-      <View style={styles.todoBtn}>
-        <Button title="저장" onPress={onPress} />
+      <View>
+        <View style={styles.todoInputBlock}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="할 일을 입력하세요"
+            onChangeText={addInputHandler}
+            value={todo}
+          />
+          <Button style={styles.saveBtn} title="저장" onPress={onPressAdd} />
+        </View>
       </View>
     </View>
   );
@@ -46,24 +47,38 @@ const WriteTodo = () => {
 const styles = StyleSheet.create({
   block: {
     margin: 10,
-    backgroundColor: 'gray',
-    alignItems: 'center',
-    flexDirection: 'row',
+    backgroundColor: '#ffffff',
   },
-  todoInput: {
-    flex: 3,
-    fontSize: 15,
-    margin: 5,
-    paddingVertical: 8,
-    backgroundColor: 'white',
-  },
-  todoBtn: {
-    flex: 1,
-    width: 50,
+
+  todoInputBlock: {
+    position: 'relative',
+    width: '90%',
     height: 50,
-    backgroundColor: '#c0c0c0',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: '#9b9b9b',
+    flexDirection: 'row',
+    left: 20,
+  },
+  textInput: {
+    width: '90%',
+    height: 50,
+    borderRadius: 5,
+    paddingTop: 5,
+    paddingBottom: 5,
+    backgroundColor: '#ffffff',
+    shadowColor: '#575757',
+    shadowOffset: {
+      width: 2,
+      height: 0,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  saveBtn: {
+    position: 'absolute',
+    zIndex: 1,
   },
 });
 
