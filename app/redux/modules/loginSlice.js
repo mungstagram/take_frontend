@@ -16,6 +16,9 @@ const initialState = {
   error: null,
   myNick: '',
   isSuccessLogin: true,
+  isEmailChecked: false,
+  isNickNameChecked: false,
+  isSuccessedSignup: false,
 };
 
 //로그인 POST요청
@@ -55,51 +58,39 @@ export const __postUsers = createAsyncThunk(
     } catch (error) {
       console.log(error);
       if (error.response.status === 409) {
-        Alert.alert('이미 사용중인 닉네임 및 비밀번호 입니다.');
+        Alert.alert('이미 가입되어있습니다.');
       }
       //   if (error.response.status === 404) {
       //     // alert('작성 조건을 지켜주세요.');
       //   }
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.response.data.data);
     }
   },
 );
-// //아이디 중복확인
-// export const __checkMemberId = createAsyncThunk(
-//   'CHECK_MEMBERID',
-//   async (payload, thunkAPI) => {
-//     console.log(payload);
-//     try {
-//       const {data} = await http.post('/members/join/check/Id', {
-//         memberId: payload,
-//       });
-//       return thunkAPI.fulfillWithValue(data);
-//     } catch (error) {
-//       if (error.response.status === 409) {
-//         alert('이미 존재하는 아이디입니다.');
-//       }
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   },
-// );
-// // 닉네임 중복확인
-// export const __checkMemberNick = createAsyncThunk(
-//   'CHECK_MEMBERNICK',
-//   async (payload, thunkAPI) => {
-//     try {
-//       const {data} = await http.post('/members/join/check/nickname', {
-//         nickname: payload,
-//       });
-//       return thunkAPI.fulfillWithValue(data);
-//     } catch (error) {
-//       if (error.response.status === 409) {
-//         alert('이미 존재하는 닉네임입니다.');
-//       }
+//아이디 중복확인
+export const __checkUser = createAsyncThunk(
+  'CHECK_USER',
+  async (payload, thunkAPI) => {
+    try {
+      const {data} = await http.post('/users/signup/check', payload);
+      // console.log(data);
+      const keyOfPayload = Object.keys(payload);
+      console.log(keyOfPayload[0]);
+      Alert.alert('사용 가능합니다');
 
-//       return thunkAPI.rejectWithValue(error);
-//     }
-//   },
-// );
+      return thunkAPI.fulfillWithValue(keyOfPayload[0]);
+    } catch (error) {
+      if (error.code === 'ECONNABORTED') {
+        Alert.alert('요청에 실패했습니다.');
+      }
+      if (error.response.status === 409) {
+        Alert.alert('이미 존재합니다');
+      }
+
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
 
 const loginSlice = createSlice({
   name: 'login',
@@ -109,11 +100,23 @@ const loginSlice = createSlice({
     checkLogin: (state, action) => {
       state.isLogin = true;
     },
+    // 로그인 스테이트 해제(false)
     checkLogout: (state, action) => {
       state.isLogin = false;
     },
+    // 로그인 실패 상태 초기화
     deleteFailLog: (state, action) => {
       state.isSuccessLogin = true;
+    },
+    //중복확인 관리
+    uncheckEmail: (state, action) => {
+      state.isEmailChecked = false;
+    },
+    uncheckNick: (state, action) => {
+      state.isNickNameChecked = false;
+    },
+    newSignup: (state, action) => {
+      state.isSuccessedSignup = false;
     },
   },
   extraReducers: {
@@ -124,6 +127,7 @@ const loginSlice = createSlice({
     [__postUsers.fulfilled]: (state, action) => {
       state.isLoading = false;
       Alert.alert('회원가입이 완료되었습니다.');
+      state.isSuccessedSignup = true;
     },
     [__postUsers.rejected]: (state, action) => {
       state.isLoading = false;
@@ -143,36 +147,30 @@ const loginSlice = createSlice({
       state.error = action.payload;
       state.isSuccessLogin = false;
     },
-    ////아이디와 닉네임부분
-    // [__checkMemberId.pending]: state => {
-    //   state.isLoading = true;
-    // },
-    // [__checkMemberId.fulfilled]: (state, action) => {
-    //   state.isLoading = false;
-    //   state.idNotChecked = false;
-
-    // },
-    // [__checkMemberId.rejected]: (state, action) => {
-    //   state.isLoading = false;
-    //   state.idNotChecked = true;
-
-    //   state.error = action.payload;
-    // },
-    // [__checkMemberNick.pending]: state => {
-    //   state.isLoading = true;
-    // },
-    // [__checkMemberNick.fulfilled]: (state, action) => {
-    //   state.isLoading = false;
-    //   state.nickNotChecked = false;
-    //   alert('중복 확인 되었습니다.');
-    // },
-    // [__checkMemberNick.rejected]: (state, action) => {
-    //   state.isLoading = false;
-    //   state.nickNotChecked = true;
-
-    //   state.error = action.payload;
-    // },
+    //아이디와 닉네임부분
+    [__checkUser.pending]: state => {
+      state.isLoading = true;
+    },
+    [__checkUser.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      // email 중복확인시 이메일 체크했다, 아니면 닉네임 체크했다
+      action.payload === 'email'
+        ? (state.isEmailChecked = true)
+        : (state.isNickNameChecked = true);
+    },
+    [__checkUser.rejected]: (state, action) => {
+      state.isLoading = false;
+      // state.idNotChecked = true;
+      state.error = action.payload;
+    },
   },
 });
-export const {checkLogin, checkLogout, deleteFailLog} = loginSlice.actions;
+export const {
+  checkLogin,
+  checkLogout,
+  deleteFailLog,
+  uncheckEmail,
+  uncheckNick,
+  newSignup,
+} = loginSlice.actions;
 export default loginSlice.reducer;

@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import AuthButton from '../components/common/AuthButton';
 import ForceLoginButton from '../components/common/ForceLoginButton';
-
+import {newSignup} from '../redux/modules/loginSlice';
+import {useDispatch} from 'react-redux';
 const AuthStartScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   // navigate 함수
   const navigateLoginHandler = () => {
@@ -14,6 +16,11 @@ const AuthStartScreen = () => {
   const navigateSignUpHandler = () => {
     navigation.navigate('Signup');
   };
+
+  //회원가입 성공시 true로 변경된 isSuccessedSignup 전역변수를 다시 false로 초기화
+  useEffect(() => {
+    dispatch(newSignup());
+  }, []);
 
   return (
     <View style={styles.Wrapper}>
@@ -26,7 +33,9 @@ const AuthStartScreen = () => {
           <AuthButton onPress={navigateLoginHandler}> 로그인</AuthButton>
         </View>
         <View style={styles.ButtonContainer}>
-          <AuthButton onPress={navigateSignUpHandler}> 회원가입</AuthButton>
+          <AuthButton border={true} onPress={navigateSignUpHandler}>
+            회원가입
+          </AuthButton>
         </View>
       </View>
     </View>

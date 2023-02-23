@@ -53,7 +53,7 @@ const AuthenticatedStack = () => {
         contentStyle: {backgroundColor: Colors.primary100},
       }}>
       <Stack.Screen
-        name="Home"
+        name="BottomTabNav"
         component={BottomTabNav}
         options={{headerShown: false}}
       />

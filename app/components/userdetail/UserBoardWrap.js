@@ -22,15 +22,12 @@ const UserBoardWrap = () => {
   const [dataSortSelector, setDataSortSelector] = useState(0);
   // SelectBox에 표시될 이름
   const selectParameter = [
-    {id: 0, content: '최신순으로 보기'},
-    {id: 1, content: '좋아요순으로 보기'},
+    {id: 0, content: '최신 순으로 보기'},
+    {id: 1, content: '인기 순으로 보기'},
   ];
 
   // 아래 배열에 인덱스값(dataSortSelector를 넣어서 어떤 요청할 지 결정(최신순, 좋아요순))
   const selectDispatchParameter = ['recent', 'likescount'];
-  // 어떤 게시판 (데이터 카테고리)인지 선언
-  const imageCategory = 'image'; //image or video
-  const videoCategory = 'video';
 
   // console.log(selectParameter[0]); // "최신 순으로 보기"
   const dateSortSelectorHandler = selector => {
@@ -66,8 +63,7 @@ const UserBoardWrap = () => {
         <View style={styles.dataGetterWrapper}>
           {mainSelector ? (
             <ImageGetter
-              order={selectDispatchParameter[dataSortSelector]}
-              category={imageCategory}></ImageGetter>
+              order={selectDispatchParameter[dataSortSelector]}></ImageGetter>
           ) : (
             <></>
           )}
@@ -189,6 +185,6 @@ const styles = StyleSheet.create({
     height: '87%',
     width: '100%',
     zIndex: 5,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
   },
 });
