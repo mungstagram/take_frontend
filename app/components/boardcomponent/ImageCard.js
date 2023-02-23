@@ -13,7 +13,7 @@ const ImageCard = ({imageContent}) => {
       <FastImage
         style={styles.imageWrapper}
         source={{
-          uri: imageContent.content_url[0],
+          uri: imageContent.contentUrl[0],
           priority: FastImage.priority.normal,
         }}
         resizeMode={FastImage.resizeMode.contain}
