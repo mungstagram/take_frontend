@@ -16,7 +16,7 @@ export const __addTodos = createAsyncThunk(
     // console.log('payload', payload);
     try {
       const data = await http.post('/todos', {content: payload});
-      console.log('data', data);
+      // console.log('data', data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -41,7 +41,7 @@ export const __editTodos = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const {data} = await http.put(`/todos/${payload.id}`, payload);
-      console.log('edit payload', payload);
+      // console.log('edit payload', payload);
       // console.log('edit data', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -102,13 +102,13 @@ export const todoSlice = createSlice({
     },
     [__editTodos.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log('payload', action.payload);
+      // console.log('payload', action.payload);
       // const data = state.todo.filter(todo => todo.id !== action.payload);
       const target = state.todo.findIndex(
         todo => todo.id === action.payload.id,
       );
       state.todo.splice(target, 1, action.payload);
-      console.log('state.to', state.todo);
+      // console.log('state.to', state.todo);
       // state.todo = action.payload;
     },
     [__editTodos.pending]: state => {

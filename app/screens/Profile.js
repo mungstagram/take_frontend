@@ -2,14 +2,16 @@ import React from 'react';
 import {StyleSheet, View, Text, Pressable, Modal} from 'react-native';
 import {Button} from 'react-native-paper';
 
-import Logout from '../components/Logout';
+import DogProfileCard from '../components/profile/DogProfileCard';
+import PersonProfileCard from '../components/profile/PersonProfileCard';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   console.log('profile');
   return (
     <View>
-      <Text>profile</Text>
-      <Logout />
+      <PersonProfileCard />
+      <DogProfileCard />
+      <Text>하단탭네비 자리</Text>
     </View>
   );
 };
