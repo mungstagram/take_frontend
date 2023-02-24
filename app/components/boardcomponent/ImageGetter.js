@@ -14,7 +14,6 @@ import ImageCard from './ImageCard';
 const ImageGetter = ({order}) => {
   // 요청할 데이터 정렬 순서 , 카테고리 프룹스로 받기
   const imageContentList = useSelector(state => state.addContent.contentList);
-  console.log(imageContentList, '게터 이미지리스트');
   const dispatch = useDispatch();
 
   // 마운트 될 때, 데이터의 정렬 순서 카테고리가 바뀔때 , 요청하기 (기본 요청은 최신순이 되도록 props받기)
