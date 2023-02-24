@@ -84,7 +84,6 @@ const Signup = () => {
   //중복확인 여부 스테이트
   const {isEmailChecked} = useSelector(state => state.login);
   const {isNickNameChecked} = useSelector(state => state.login);
-  console.log(isEmailChecked, '모듈 스테이트 확인');
   //아이디 및 닉네임 중복확인 기능 함수
   const onCheckUsabilityHandler = (name, value) => {
     if (
@@ -96,11 +95,11 @@ const Signup = () => {
   };
   // 이메일 및 닉네임 값 업데이트시 체크 state해제
   useEffect(() => {
-    dispatch(uncheckEmail);
+    dispatch(uncheckEmail());
   }, [email]);
 
   useEffect(() => {
-    dispatch(uncheckNick);
+    dispatch(uncheckNick());
   }, [nickname]);
   // 제출버튼
   const onSubmitUserHandler = e => {

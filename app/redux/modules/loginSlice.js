@@ -56,7 +56,6 @@ export const __postUsers = createAsyncThunk(
       // console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
-      console.log(error);
       if (error.response.status === 409) {
         Alert.alert('이미 가입되어있습니다.');
       }
@@ -73,9 +72,7 @@ export const __checkUser = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const {data} = await http.post('/users/signup/check', payload);
-      // console.log(data);
       const keyOfPayload = Object.keys(payload);
-      console.log(keyOfPayload[0]);
       Alert.alert('사용 가능합니다');
 
       return thunkAPI.fulfillWithValue(keyOfPayload[0]);
