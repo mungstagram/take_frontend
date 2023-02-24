@@ -62,6 +62,11 @@ const AuthenticatedStack = () => {
         component={Profile}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="UserDetail"
+        component={UserDetail}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };

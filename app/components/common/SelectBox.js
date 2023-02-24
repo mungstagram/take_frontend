@@ -14,8 +14,6 @@ const SelectBox = ({
   //selectParameter에는 [{id:0,content:~~}] 형식으로
   // 셀렉트 박스의 전체크기는 불러오는 곳에서 결정 (UserBoardWrap의 스타일 참고)
 
-  //   console.log(selectParameter);
-
   // SelectBox 여닫는 state (false면 닫힌 상태)
   const [listOpener, setListOpener] = useState(false);
   // SelectBox 여닫기
@@ -88,12 +86,13 @@ const styles = StyleSheet.create({
   selectOpener: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // backgroundColor: 'red',
   },
   iconSetter: {
+    postion: 'absolute',
     justifyContent: 'center',
     alignItems: 'flex-end',
+    right: 0,
     padding: '7%',
-    // backgroundColor: 'red',
+    backgroundColor: 'transparent',
   },
 });
