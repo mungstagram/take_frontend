@@ -7,7 +7,7 @@ import CommentImg from '../svg/CommentImg';
 import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
 const ImageCard = ({imageContent}) => {
-  console.log(imageContent);
+  console.log('이미지내용', imageContent);
   return (
     <View style={styles.cardWrapper}>
       <FastImage

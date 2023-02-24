@@ -124,9 +124,9 @@ const AddVideo = () => {
   // 폼데이터 선언 및 전송
   const formData = new FormData();
   const onSendFormData = () => {
-    console.log('videos', videos[0]);
+    // console.log('videos', videos[0]);
 
-    console.log('videos.real', videos[0].realPath);
+    // console.log('videos.real', videos[0].realPath);
     const formList = {
       category: 'video',
       title: titleText,

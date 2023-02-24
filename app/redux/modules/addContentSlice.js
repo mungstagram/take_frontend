@@ -43,13 +43,14 @@ export const __postAddContentFormData = createAsyncThunk(
 export const __getPostData = createAsyncThunk(
   'GET_POST_DATA',
   async (payload, thunkAPI) => {
-    // console.log(payload, 'payload');
     //payload에서는 객체형식으로  {order :  ,category : }  가 있어야함.
+
     try {
       const {data} = await http.get(
         `/posts?order=${payload.order}&category=${payload.category}`,
       );
       // console.log(data, '서버응답');
+
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
