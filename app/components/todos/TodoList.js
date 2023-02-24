@@ -20,12 +20,12 @@ const TodoList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('되어라 제발');
+    // console.log('되어라 제발');
     dispatch(__getTodos());
   }, [dispatch]);
 
   const todos = useSelector(state => state.todos.todo);
-  console.log('todos', todos);
+  // console.log('todos', todos);
 
   return (
     <View style={styles.todoListWrap}>
