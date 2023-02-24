@@ -7,6 +7,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Colors} from '../../constants/colors';
 import {__getUserDetail} from '../../redux/modules/userDetailSlice';
 import GoBackButton from '../common/GoBackButton';
+import AccountCircle from '../svg/AccountCircle';
+import MailDm from '../svg/MailDm';
 
 const UserDetailProf = () => {
   const dispatch = useDispatch();
@@ -35,8 +37,12 @@ const UserDetailProf = () => {
               resizeMode={FastImage.resizeMode.contain}
             />
             <View style={styles.userImgIconContainer}>
-              <Text>프버튼</Text>
-              <Text>디버튼</Text>
+              <View style={styles.iconAligner}>
+                <AccountCircle />
+              </View>
+              <View style={styles.iconAligner}>
+                <MailDm />
+              </View>
             </View>
           </View>
           <View style={styles.userTextWrapper}>
@@ -45,13 +51,17 @@ const UserDetailProf = () => {
               <Text style={styles.textIntroduce}>{userDetail.introduce}</Text>
             </View>
             <View style={styles.userContentCountWrapper}>
-              <View>
-                <Text>{userDetail.postsCount}</Text>
-                <Text>게시글 수</Text>
+              <View style={styles.userContentCounterContainer}>
+                <Text style={styles.userContetCounterMainText}>
+                  {userDetail.postsCount}
+                </Text>
+                <Text style={styles.userContetCounterSubText}>게시글 수</Text>
               </View>
-              <View>
-                <Text>{userDetail.dogsCount}마리의</Text>
-                <Text>댕댕이 집사</Text>
+              <View style={styles.userContentCounterContainer}>
+                <Text style={styles.userContetCounterMainText}>
+                  {userDetail.dogsCount}마리의
+                </Text>
+                <Text style={styles.userContetCounterSubText}>댕댕이 집사</Text>
               </View>
             </View>
           </View>
@@ -79,40 +89,76 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     top: '22%',
-    backgroundColor: 'red',
     height: '100%',
     width: '100%',
   },
   userImgWrapper: {
     flex: 1,
     flexDirection: 'column',
-    paddingLeft: '1.8%',
+    paddingLeft: '3%',
     alignItems: 'center',
   },
   imageSizer: {
-    width: 100,
-    height: 100,
+    width: 108,
+    height: 108,
     backgroundColor: 'gray',
     overflow: 'hidden',
     borderRadius: 50,
   },
   userImgIconContainer: {
     flexDirection: 'row',
+    marginTop: '7%',
+  },
+  iconAligner: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 40,
+    height: 40,
+    backgroundColor: 'white',
+    borderRadius: 50,
+    elevation: 10,
+    margin: '4.5%',
   },
   userTextWrapper: {
     flex: 2,
     height: '100%',
   },
-  userIntroWrapper: {backgroundColor: 'green', flex: 402},
-  userContentCountWrapper: {backgroundColor: 'blue', flex: 598},
+  userIntroWrapper: {flex: 402, paddingLeft: '5%'},
+  userContentCountWrapper: {
+    flex: 598,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    paddingRight: '10%',
+  },
+  userContentCounterContainer: {
+    paddingTop: '5%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '50%',
+    height: '100%',
+    // backgroundColor: 'red',
+  },
+  userContetCounterMainText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  userContetCounterSubText: {
+    fontSize: 14,
+    fontWeight: 'normal',
+    color: 'white',
+  },
   textNickName: {
     fontSize: 22,
     fontWeight: 'bold',
+    color: 'white',
+
     marginBottom: 8,
   },
   textIntroduce: {
     fontSize: 16,
     flexWrap: 'wrap',
+    color: 'white',
   },
   introduceBox: {
     paddingRight: 8,

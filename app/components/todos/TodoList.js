@@ -25,27 +25,31 @@ const TodoList = () => {
   }, [dispatch]);
 
   const todos = useSelector(state => state.todos.todo);
-  console.log('todos', todos);
+  // console.log('todos', todos);
 
   return (
-    <ScrollView>
-      {todos.map(item => (
-        <Todoitem
-          key={item.id}
-          id={item.id}
-          text={item.content}
-          done={item.done}
-        />
-      ))}
-    </ScrollView>
+    <View style={styles.todoListWrap}>
+      <ScrollView>
+        {todos
+          ?.map(item => (
+            <Todoitem
+              key={item.id}
+              id={item.id}
+              text={item.content}
+              done={item.done}
+            />
+          ))
+          .reverse()}
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  list: {
-    flex: 1,
-    margin: 20,
-    backgroundColor: 'gray',
+  todoListWrap: {
+    margin: 5,
+    padding: 5,
+    left: 20,
   },
 });
 

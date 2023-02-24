@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   FlatList,
   View,
@@ -11,11 +11,35 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import {__deleteTodos} from '../../redux/modules/todoSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {__deleteTodos, __editTodos} from '../../redux/modules/todoSlice';
 
 const Todoitem = ({id, text, done}) => {
   const dispatch = useDispatch();
+
+  const [edit, setEdit] = useState();
+  const [isEdit, setIsEdit] = useState(false);
+
+  const todos = useSelector(state => state.todos.todo);
+  // console.log('todos', todos);
+
+  const onPressIsEdit = () => {
+    setIsEdit(true);
+  };
+
+  const onPressChangeBtn = () => {
+    setIsEdit(false);
+  };
+
+  const onPressChangeEdit = e => {
+    setEdit(e);
+  };
+
+  const onPressTodoEdit = () => {
+    // console.log('edit', edit);
+    // dispatch(__editTodos({id, done: isEdit, content: edit}));
+    dispatch(__editTodos({id, content: edit}));
+  };
 
   const onPressTodoRemove = () => {
     Alert.alert(
@@ -38,24 +62,38 @@ const Todoitem = ({id, text, done}) => {
     );
   };
 
-  // const onToggleStatusTodo = id => {
-  //   dispatch(toggleStatusTodo(id));
-  // };
-
   return (
     <View style={styles.item}>
       <TouchableOpacity>
         <View style={[styles.checkBox, done && styles.filled]} />
       </TouchableOpacity>
 
-      <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
-
+      {isEdit ? (
+        <TextInput
+          style={styles.textInput}
+          value={edit}
+          onChangeText={onPressChangeEdit}
+        />
+      ) : (
+        <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
+      )}
       <Button
         title="삭제"
         style={styles.removeBtn}
         onPress={onPressTodoRemove}
       />
-
+      {isEdit ? (
+        <Button
+          title="완료"
+          onPress={() => {
+            onPressIsEdit();
+            onPressChangeBtn();
+            onPressTodoEdit();
+          }}
+        />
+      ) : (
+        <Button title="수정" onPress={onPressIsEdit} />
+      )}
       <View style={styles.removePlaceholder} />
     </View>
   );
@@ -80,9 +118,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
   },
   text: {
-    flex: 1,
     fontSize: 16,
-    color: '##000000',
+    color: '#000000',
+    width: '55%',
   },
 
   lineThrough: {
@@ -96,6 +134,9 @@ const styles = StyleSheet.create({
   removeBtn: {
     width: 20,
     height: 20,
+  },
+  textInput: {
+    width: '55%',
   },
 });
 

@@ -16,7 +16,7 @@ const Logout = () => {
   return (
     <View>
       <Pressable onPress={onLogoutHandelr}>
-        <Text style={styles.textStyle}>로그아웃(꾸며주세요)</Text>
+        <Text style={styles.textStyle}>로그아웃</Text>
       </Pressable>
     </View>
   );
@@ -26,7 +26,10 @@ export default Logout;
 
 const styles = StyleSheet.create({
   textStyle: {
-    fontSize: 16,
+    fontSize: 12,
+    width: 50,
+    left: 10,
+    top: 10,
     backgroundColor: 'yellow',
   },
 });

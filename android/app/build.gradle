@@ -79,6 +79,8 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
+    bundleInDebug: true, // gradle에게 번들링한 JS와 assets을 개발 서버가 아니라 APK에 패키징 하라고 명령하는 것
+
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
