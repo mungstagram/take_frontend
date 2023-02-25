@@ -57,11 +57,7 @@ const AuthenticatedStack = () => {
         component={BottomTabNav}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="Profile"
-        component={Profile}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen
         name="UserDetail"
         component={UserDetail}

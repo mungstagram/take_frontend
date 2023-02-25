@@ -21,7 +21,7 @@ const Todoitem = ({id, text, done}) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const todos = useSelector(state => state.todos.todo);
-  console.log('todos', todos);
+  // console.log('todos', todos);
 
   const onPressIsEdit = () => {
     setIsEdit(true);
@@ -36,7 +36,7 @@ const Todoitem = ({id, text, done}) => {
   };
 
   const onPressTodoEdit = () => {
-    console.log('edit', edit);
+    // console.log('edit', edit);
     // dispatch(__editTodos({id, done: isEdit, content: edit}));
     dispatch(__editTodos({id, content: edit}));
   };
