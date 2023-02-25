@@ -41,7 +41,9 @@ export const __postLogin = createAsyncThunk(
       };
       return thunkAPI.fulfillWithValue(sendData);
     } catch (error) {
-      // console.log(error.response.data.data);
+      if (error.response.status === 500) {
+        ('서버가 닫혀 있습니다.');
+      }
       return thunkAPI.rejectWithValue(error.response.data.data);
     }
   },
@@ -51,7 +53,6 @@ export const __postUsers = createAsyncThunk(
   'POST_SIGNUP',
   async (payload, thunkAPI) => {
     try {
-      // console.log(payload);
       const {data} = await http.post('/users/signup', payload);
       // console.log(data);
       return thunkAPI.fulfillWithValue(data);
@@ -59,9 +60,9 @@ export const __postUsers = createAsyncThunk(
       if (error.response.status === 409) {
         Alert.alert('이미 가입되어있습니다.');
       }
-      //   if (error.response.status === 404) {
-      //     // alert('작성 조건을 지켜주세요.');
-      //   }
+      if (error.response.status === 500) {
+        ('서버가 닫혀 있습니다.');
+      }
       return thunkAPI.rejectWithValue(error.response.data.data);
     }
   },
@@ -82,6 +83,9 @@ export const __checkUser = createAsyncThunk(
       }
       if (error.response.status === 409) {
         Alert.alert('이미 존재합니다');
+      }
+      if (error.response.status === 500) {
+        ('서버가 닫혀 있습니다.');
       }
 
       return thunkAPI.rejectWithValue(error.response.data);

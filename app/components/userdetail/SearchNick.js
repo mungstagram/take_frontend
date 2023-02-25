@@ -2,12 +2,20 @@ import React from 'react';
 import {View, Text, Pressable, FlatList, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import SearchNone from './SearchNone';
+import {useNavigation} from '@react-navigation/core';
+import {UserDetailScreen} from '../BottomTabNav';
+import UserDetail from '../../screens/UserDetail';
 const SearchNick = ({searchData}) => {
-  console.log(searchData);
+  const navigation = useNavigation();
+
+  const moveToUserDetail = nickname => {
+    navigation.push('UserDetail', {nickname});
+  };
+
+  //검색값이 없을때, 보여지는 컴퍼넌트
   if (searchData.length === 0) {
     return <SearchNone></SearchNone>;
   }
-  //   console.log(searchData[0].contentUrl[0]);
   return (
     <View>
       <FlatList
@@ -16,24 +24,25 @@ const SearchNick = ({searchData}) => {
           <View style={styles.searchDataWrapper}>
             <View style={styles.searchDataContainer} imageContent={item}>
               <View style={styles.searchTextContainer}>
-                <View>
-                  <Text style={styles.searchTextNick}>{item.nickname}</Text>
-                </View>
-                <View>
-                  <Text
-                    style={styles.searchTextIntro}
-                    numberOfLines={2}
-                    ellipsizeMode="tail">
-                    {item.introduce}
-                    ddddddddddddddddddddddddddddddddddddddddddsfsf
-                  </Text>
-                </View>
+                <Pressable onPress={() => moveToUserDetail(item.nickname)}>
+                  <View>
+                    <Text style={styles.searchTextNick}>{item.nickname}</Text>
+                  </View>
+                  <View>
+                    <Text
+                      style={styles.searchTextIntro}
+                      numberOfLines={2}
+                      ellipsizeMode="tail">
+                      {item.introduce}
+                    </Text>
+                  </View>
+                </Pressable>
               </View>
               <View style={styles.profileImgPositioner}>
                 <FastImage
                   style={{width: 80, height: 80, backgroundColor: 'gray'}}
                   source={{
-                    uri: item.contentUrl[0],
+                    uri: item.contentUrl.length === 0 ? '' : item.contentUrl[0],
                     priority: FastImage.priority.normal,
                   }}
                   resizeMode={FastImage.resizeMode.contain}
@@ -80,5 +89,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  profileImgPositioner: {},
 });

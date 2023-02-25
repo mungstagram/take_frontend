@@ -12,13 +12,15 @@ const initialState = {
 export const __getSearchData = createAsyncThunk(
   'GET_SEARCH_DATA',
   async (payload, thunkAPI) => {
-    // console.log(payload, 'search슬라이스');
+    console.log(payload, 'search슬라이스');
     try {
       const {data} = await http.get(
         `/searches?search=${payload.search}&category=${payload.category}`,
       );
+      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
+      console.log(error);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   },
