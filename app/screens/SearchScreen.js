@@ -1,11 +1,19 @@
-import React, {useState} from 'react';
-import {View, Text, Pressable, Button, StyleSheet} from 'react-native';
+import React, {useState, useRef, useEffect} from 'react';
+import {
+  View,
+  Text,
+  Pressable,
+  Button,
+  StyleSheet,
+  TextInput,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
-import UserDetail from './UserDetail';
 import GoBackButton from '../components/common/GoBackButton';
 import SelectBox from '../components/common/SelectBox';
+import Search from '../components/svg/Search';
+import {__getSearchData} from '../redux/modules/searchSlice';
 
 const SearchScreen = () => {
   const navigation = useNavigation();
@@ -21,35 +29,50 @@ const SearchScreen = () => {
     {id: 2, content: '동영상'},
   ];
 
-  // 아래 배열에 인덱스값(dataSortSelector를 넣어서 어떤 요청할 지 결정(최신순, 좋아요순))
-  // const selectDispatchParameter = ['recent', 'likescount'];
+  const selectDispatchParameter = ['nickname', 'image', 'video'];
+  const refSearch = useRef();
+
+  const onSearchHandler = () => {
+    dispatch(
+      __getSearchData({
+        search: refSearch.current,
+        category: selectDispatchParameter[dataSortSelector],
+      }),
+    );
+  };
+
+  const onChangeRefHandler = e => {
+    refSearch.current = e;
+  };
 
   const dateSortSelectorHandler = selector => {
     setDataSortSelector(selector);
   };
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.goBackButton}>
         <GoBackButton />
       </View>
 
-      {/* <Button
-        title="Go to Details"
-        onPress={() => {
-          navigation.navigate('UserDetail', {
-            nickname: 'Seeder1',
-          });
-        }}
-      /> */}
       <View style={styles.inputContainer}>
-        <View>
-          <Text>SearchScreen</Text>
+        <View style={styles.textBox}>
+          <TextInput
+            style={styles.textStyle}
+            autoCapitalize={false}
+            onChangeText={onChangeRefHandler}
+            placeholder="검색하기"
+          />
+          <Pressable onPress={onSearchHandler} style={styles.searchIconBox}>
+            <Search />
+          </Pressable>
         </View>
         <View style={styles.selectBoxHolder}>
           <SelectBox
             dataSortSelector={dataSortSelector}
             dateSortSelectorHandler={dateSortSelectorHandler}
             selectParameter={selectParameter}
+            border
           />
         </View>
       </View>
@@ -85,13 +108,43 @@ const styles = StyleSheet.create({
     right: '4%',
     top: '2%',
     zIndex: 8,
-    // height: 43,
-    backgroundColor: 'red',
+    height: 56,
+    borderRadius: 4,
+    elevation: 5,
+  },
+  selectInputHolder: {
+    position: 'absolute',
+    width: '40%',
+    top: '2%',
+    height: '100%',
   },
   selectInputBox: {
     position: 'absolute',
-    width: '40%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
+    width: '40%', //
     left: '4%',
     top: '2%',
+    justifyContent: 'center',
+  },
+  textBox: {
+    position: 'absolute',
+    left: '4%',
+    width: '47%',
+    borderRadius: 4,
+    height: 56,
+    top: '2%',
+    backgroundColor: 'white',
+    // justifyContent: 'center',
+    flexDirection: 'row',
+    elevation: 5,
+  },
+  textStyle: {fontSize: 14, marginLeft: '3%'},
+  searchIconBox: {
+    width: 24,
+    height: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: '5%',
+    top: 16,
   },
 });

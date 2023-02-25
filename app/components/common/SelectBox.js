@@ -64,6 +64,7 @@ const dynamicStyles = value =>
       position: 'absolute',
       right: 0,
       width: '100%',
+      height: 56,
       zIndex: 2,
       backgroundColor: value ? 'gray' : 'white',
       borderRadius: 4,
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
     backgroundColor: 'white',
     borderRadius: 4,
-    elevation: 5,
+    elevation: 10,
   },
   selectBoxText: {
     fontWeight: 'bold',
@@ -86,6 +87,8 @@ const styles = StyleSheet.create({
   selectOpener: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingTop: '4%',
+    elevation: 4,
   },
   iconSetter: {
     postion: 'absolute',
