@@ -133,9 +133,6 @@ const AddImage = () => {
   // 폼데이터 선언 및 전송
   const formData = new FormData();
   const onSendFormData = () => {
-    console.log('images', images);
-
-    console.log('images.real', images[0].realPath);
     const formList = {
       category: 'image',
       title: titleText,
