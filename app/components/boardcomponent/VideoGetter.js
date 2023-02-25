@@ -16,7 +16,7 @@ import {startDetecting} from 'react-native/Libraries/Utilities/PixelRatio';
 
 const VideoGetter = ({order}) => {
   const videoContentList = useSelector(state => state.addContent.contentList);
-
+  console.log('contentList22', videoContentList);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(__getPostData({category: 'video', order}));
@@ -32,7 +32,7 @@ const VideoGetter = ({order}) => {
               <VideoCard videoContent={item} title={item.title} />
             </View>
           )}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.postId}
           horizontal={false}
         />
       </SafeAreaView>

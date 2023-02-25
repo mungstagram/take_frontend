@@ -24,7 +24,14 @@ const VideoCard = ({videoContent}) => {
       <SafeAreaView>
         <View style={styles.container}>
           <View style={styles.contentTop}>
-            <View style={styles.profileimg}></View>
+            <FastImage
+              style={styles.profileimg}
+              source={{
+                uri: videoContent.profileUrl[0],
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={'contain'}
+            />
             <View>
               <Text style={styles.nicknameText}>{videoContent.nickname}</Text>
               <Text style={styles.timeText}>{videoContent.createdAt}</Text>
@@ -88,18 +95,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: videoCardHeight * 0.1,
     shadowColor: BasicColors.blackColor,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
     elevation: 4,
   },
   contentTop: {
     backgroundColor: BasicColors.whiteColor,
     flexDirection: 'row',
-    alignItems: 'center',
+
     padding: '2%',
     borderTopRightRadius: 4,
     borderTopLeftRadius: 4,
