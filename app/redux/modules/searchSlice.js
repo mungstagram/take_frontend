@@ -17,7 +17,6 @@ export const __getSearchData = createAsyncThunk(
       const {data} = await http.get(
         `/searches?search=${payload.search}&category=${payload.category}`,
       );
-      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

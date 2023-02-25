@@ -14,6 +14,7 @@ import GoBackButton from '../components/common/GoBackButton';
 import SelectBox from '../components/common/SelectBox';
 import Search from '../components/svg/Search';
 import {__getSearchData} from '../redux/modules/searchSlice';
+import SearchNick from '../components/userdetail/SearchNick';
 
 const SearchScreen = () => {
   const navigation = useNavigation();
@@ -29,8 +30,10 @@ const SearchScreen = () => {
     {id: 2, content: '동영상'},
   ];
 
-  const selectDispatchParameter = ['nickname', 'image', 'video'];
+  const selectDispatchParameter = ['users', 'image', 'video'];
   const refSearch = useRef();
+
+  const {searchData} = useSelector(state => state.searchData);
 
   const onSearchHandler = () => {
     dispatch(
@@ -75,6 +78,9 @@ const SearchScreen = () => {
             border
           />
         </View>
+      </View>
+      <View style={styles.contentPositioner}>
+        {dataSortSelector === 0 && <SearchNick searchData={searchData} />}
       </View>
     </View>
   );
@@ -146,5 +152,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: '5%',
     top: 16,
+  },
+  contentPositioner: {
+    position: 'absolute',
+    top: '18%',
+    // height: '10%',
+    width: ' 100%',
+    height: '100%',
   },
 });

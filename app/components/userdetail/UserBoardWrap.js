@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
     right: '4%',
-    top: '0%',
+    top: '%',
     zIndex: 8,
   },
   dataGetterWrapper: {
