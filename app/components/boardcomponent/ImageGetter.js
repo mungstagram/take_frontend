@@ -11,17 +11,22 @@ import {useDispatch, useSelector} from 'react-redux';
 import {__getPostData} from '../../redux/modules/addContentSlice';
 
 import ImageCard from './ImageCard';
-const ImageGetter = ({order}) => {
+const ImageGetter = ({order, nickname}) => {
   // 요청할 데이터 정렬 순서 , 카테고리 프룹스로 받기
   const imageContentList = useSelector(state => state.addContent.contentList);
   const dispatch = useDispatch();
+  // console.log(imageContentList, '이미지 게터의 image리스트');
 
   // 마운트 될 때, 데이터의 정렬 순서 카테고리가 바뀔때 , 요청하기 (기본 요청은 최신순이 되도록 props받기)
   useEffect(() => {
-    dispatch(__getPostData({category: 'image', order}));
+    nickname
+      ? dispatch(__getPostData({category: 'image', order, nickname}))
+      : dispatch(__getPostData({category: 'image', order}));
   }, [order]);
 
   //FlatList 사용시 파라미터명 item이어야 함,. 아닐 때 undefined?
+  //
+
   return (
     <View style={styles.getterWrapper}>
       <SafeAreaView>
@@ -32,7 +37,7 @@ const ImageGetter = ({order}) => {
               <ImageCard imageContent={item} title={item.title} />
             </View>
           )}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.postId}
           numColumns={2}
           horizontal={false}
         />

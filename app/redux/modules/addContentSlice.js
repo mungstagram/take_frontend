@@ -47,9 +47,10 @@ export const __getPostData = createAsyncThunk(
 
     try {
       const {data} = await http.get(
-        `/posts?order=${payload.order}&category=${payload.category}`,
+        payload.nickname
+          ? `/posts?order=${payload.order}&category=${payload.category}&nickname=${payload.nickname}`
+          : `/posts?order=${payload.order}&category=${payload.category}`,
       );
-      // console.log(data, '서버응답');
 
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {

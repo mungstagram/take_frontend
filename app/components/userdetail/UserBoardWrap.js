@@ -4,10 +4,11 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {Colors} from '../../constants/colors';
 import SelectBox from '../common/SelectBox';
 import ImageGetter from '../boardcomponent/ImageGetter';
-const UserBoardWrap = () => {
+
+const UserBoardWrap = ({nickname}) => {
+  console.log(nickname, '유저보드랩마운트되면 닉네임임');
   // 사진 동영상 중 어떤 페이진지 선택하는 탭
   const [mainSelector, setMainSelector] = useState(true);
-
   // 사진 선택
   const showImageBoard = () => {
     setMainSelector(true);
@@ -62,7 +63,8 @@ const UserBoardWrap = () => {
         <View style={styles.dataGetterWrapper}>
           {mainSelector ? (
             <ImageGetter
-              order={selectDispatchParameter[dataSortSelector]}></ImageGetter>
+              order={selectDispatchParameter[dataSortSelector]}
+              nickname={nickname}></ImageGetter>
           ) : (
             <></>
           )}
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
     right: '4%',
-    top: '2%',
+    top: '0%',
     zIndex: 8,
   },
   dataGetterWrapper: {
