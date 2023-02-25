@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 
 import SelectBox from '../components/common/SelectBox';
-import VideoPreviewCard from '../components/videoboardcomp/VideoPreviewCard';
 import {Colors, BasicColors} from '../constants/colors';
+import VideoGetter from '../components/boardcomponent/VideoGetter';
 
 const VideoBoard = () => {
   // 높이, 너비를 자동으로 업데이트 해준다.
@@ -13,8 +13,8 @@ const VideoBoard = () => {
   const [dataSortSelector, setDataSortSelector] = useState(0);
   //SelectBox에 표시될 이름
   const selectParameter = [
-    {id: 0, content: '최신순으로 보기'},
-    {id: 1, content: '인기순으로 보기'},
+    {id: 0, content: '최신 순으로 보기'},
+    {id: 1, content: '인기 순으로 보기'},
   ];
   //아래 배열에 인덱스값(dataSortSelector를 넣어서 어떤 요청할 지 결정! 최신순으로할지, 인기순으로할지)
   const selectDispatchParameter = ['recent', 'likescount'];
@@ -35,9 +35,7 @@ const VideoBoard = () => {
         </View>
       </View>
       <View style={styles.preCards}>
-        <VideoPreviewCard style={styles.preCard} />
-        <VideoPreviewCard style={styles.preCard} />
-        <VideoPreviewCard style={styles.preCard} />
+        <VideoGetter order={selectDispatchParameter[dataSortSelector]} />
       </View>
     </View>
   );
