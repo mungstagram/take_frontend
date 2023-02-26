@@ -82,13 +82,14 @@ const styles = StyleSheet.create({
   },
   selectBoxText: {
     fontWeight: 'bold',
-    padding: '7%',
+    paddingLeft: '7%',
+    paddingVertical: '7%',
+    width: '75%',
   },
   selectOpener: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: '4%',
-    elevation: 4,
   },
   iconSetter: {
     postion: 'absolute',
@@ -97,5 +98,6 @@ const styles = StyleSheet.create({
     right: 0,
     padding: '7%',
     backgroundColor: 'transparent',
+    zIndex: 4,
   },
 });
