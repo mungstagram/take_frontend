@@ -91,7 +91,7 @@ const Todoitem = ({id, text, done}) => {
         }}
         style={{
           ...styles.checkBox,
-          backgroundColor: isDone ? 'black' : 'white',
+          backgroundColor: isDone ? '#e79796' : 'white',
         }}
         value={isDone}>
         <View />
@@ -100,28 +100,32 @@ const Todoitem = ({id, text, done}) => {
       {isEdit ? (
         <TextInput
           style={styles.textInput}
+          maxLength={15}
           value={edit}
           onChangeText={onPressChangeEdit}
+          autoFocus
         />
       ) : (
         <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
       )}
-      <Button
-        title="삭제"
-        style={styles.removeBtn}
-        onPress={onPressTodoRemove}
-      />
+      <TouchableOpacity style={styles.utilBtn} onPress={onPressTodoRemove}>
+        <Text>삭제</Text>
+      </TouchableOpacity>
+
       {isEdit ? (
-        <Button
-          title="완료"
+        <TouchableOpacity
+          style={styles.utilBtn}
           onPress={() => {
             onPressIsEdit();
             onPressChangeBtn();
             onPressTodoEdit();
-          }}
-        />
+          }}>
+          <Text>완료</Text>
+        </TouchableOpacity>
       ) : (
-        <Button title="수정" onPress={onPressIsEdit} />
+        <TouchableOpacity style={styles.utilBtn} onPress={onPressIsEdit}>
+          <Text>수정</Text>
+        </TouchableOpacity>
       )}
       <View style={styles.removePlaceholder} />
     </View>
@@ -131,32 +135,45 @@ const Todoitem = ({id, text, done}) => {
 const styles = StyleSheet.create({
   item: {
     flexDirection: 'row',
-    padding: 16,
+    marginTop: '5%',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   checkBox: {
     width: 20,
     height: 20,
-    borderWidth: 1,
     marginRight: 10,
+    borderRadius: 3,
+    borderWidth: 2,
+    borderColor: '#e79796',
   },
 
   text: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#000000',
-    width: '55%',
+    width: 180,
+    height: 30,
+    top: 5,
   },
 
   removePlaceholder: {
     width: 32,
     height: 32,
   },
-  removeBtn: {
-    width: 20,
-    height: 20,
-  },
   textInput: {
-    width: '55%',
+    fontSize: 14,
+    color: '#000000',
+    width: 180,
+    height: 40,
+    paddingVertical: 8,
+  },
+  utilBtn: {
+    borderWidth: 1,
+    width: 30,
+    height: 20,
+    left: '80%',
+    margin: 5,
+    zIndex: 2,
   },
 });
 

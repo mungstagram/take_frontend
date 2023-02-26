@@ -31,7 +31,7 @@ function Home({navigation}) {
             <View style={styles.dogNameBox}>
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: '600',
                   color: 'black',
                   textAlign: 'center',
@@ -56,29 +56,28 @@ function Home({navigation}) {
         </View>
 
         <View style={styles.homeTodoBox}>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: '600',
-              color: 'black',
-              marginTop: 15,
-              marginLeft: 10,
-              left: 15,
-            }}>
-            강아지종/나이/몸무게
-          </Text>
-          <View
-            style={{
-              borderBottomWidth: 2,
-              borderBottomColor: '#cdcdcd',
-              width: 380,
-              left: 10,
-              margin: 10,
-            }}
-          />
-          <View>
-            <WriteTodo />
-            <TodoList />
+          <View style={styles.homeTodoBoxInner}>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 'bold',
+
+                right: '27%',
+              }}>
+              강아지종/나이/몸무게
+            </Text>
+            <View
+              style={{
+                borderBottomWidth: 2,
+                borderBottomColor: '#c9c9c9',
+                marginTop: 15,
+                width: '95%',
+              }}
+            />
+            <View style={{width: 360}}>
+              <WriteTodo />
+              <TodoList />
+            </View>
           </View>
         </View>
       </View>
@@ -91,7 +90,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#ffc988',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
+
   goToProfileBtn: {
     borderRadius: 50,
     backgroundColor: '#ffffff',
@@ -118,16 +120,22 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: '#ffffff',
     position: 'relative',
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 5,
   },
   personProfileImg: {
     width: 50,
     height: 50,
     borderRadius: 50,
-    top: 50,
-    left: 80,
+    top: 40,
+    left: 90,
     zIndex: 2,
     backgroundColor: '#eeeeee',
     position: 'absolute',
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 5,
   },
   profileInner: {
     justifyContent: 'center',
@@ -136,10 +144,13 @@ const styles = StyleSheet.create({
   },
   dogNameBox: {
     borderRadius: 20,
-    width: 100,
+    width: 120,
     height: 30,
     backgroundColor: '#ffffff',
     alignItems: 'center',
+    shadowOpacity: 2,
+    shadowRadius: 4,
+    elevation: 5,
   },
   dDayBox: {
     borderRadius: 20,
@@ -148,6 +159,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     alignItems: 'center',
     margin: 5,
+    shadowOpacity: 2,
+    shadowRadius: 4,
+    elevation: 5,
   },
 
   homeTodoBox: {
@@ -156,6 +170,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+  },
+  homeTodoBoxInner: {
+    flex: 1,
+
+    alignItems: 'center',
+    margin: '5%',
   },
 });
 

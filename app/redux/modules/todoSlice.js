@@ -149,21 +149,21 @@ export const todoSlice = createSlice({
       // console.log('state.todo data', doneData);
       // // state.todo = data;
     },
-  },
-  [__doneTodos.pending]: state => {
-    state.isLoading = true;
-  },
-  [__doneTodos.rejected]: (state, action) => {
-    state.isLoading = false;
-    state.error = action.payload;
-  },
+    [__doneTodos.pending]: state => {
+      state.isLoading = true;
+    },
+    [__doneTodos.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
 
-  [__deleteTodos.fulfilled]: (state, action) => {
-    const target = state.todo.findIndex(todo => todo.id === action.payload);
-    state.todo.splice(target, 1);
+    [__deleteTodos.fulfilled]: (state, action) => {
+      const target = state.todo.findIndex(todo => todo.id === action.payload);
+      state.todo.splice(target, 1);
+    },
+    [__deleteTodos.rejected]: () => {},
+    [__deleteTodos.pending]: () => {},
   },
-  [__deleteTodos.rejected]: () => {},
-  [__deleteTodos.pending]: () => {},
 });
 
 export const {toDos} = todoSlice.actions;
