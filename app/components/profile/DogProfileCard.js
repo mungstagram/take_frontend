@@ -12,17 +12,23 @@ import {
   Alert,
 } from 'react-native';
 
+import AddProfileImg from './AddProfileImg';
+
 const DogProfileCard = () => {
   return (
     <View style={styles.block}>
       <View style={styles.dogCard}>
         <View style={styles.dogImg}>
-          <TouchableOpacity>
+          <View style={styles.dogImgBtn}>
+            <AddProfileImg />
+          </View>
+
+          <View>
             <Text>
               강아지 프로필 사진{'\n'}
               &nbsp;&nbsp;&nbsp;업데이트 하기
             </Text>
-          </TouchableOpacity>
+          </View>
         </View>
 
         <View style={styles.dogProfileInputWrap}>
@@ -258,6 +264,12 @@ const styles = StyleSheet.create({
     width: 280,
     height: 290,
     justifyContent: 'center',
+  },
+  dogImgBtn: {
+    zIndex: 2,
+    position: 'relative',
+    bottom: '20%',
+    left: '30%',
   },
 });
 

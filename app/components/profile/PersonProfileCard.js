@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import Logout from '../Logout';
+import AddProfileImg from '../profile/AddProfileImg';
 
 const PersonProfileCard = () => {
   return (
@@ -41,24 +42,28 @@ const PersonProfileCard = () => {
         </View>
 
         <View style={styles.cardRightWrap}>
-          <TouchableOpacity style={styles.personProfileImg} />
-          <Text
-            style={{
-              fontSize: 12,
-              zIndex: 3,
-              position: 'absolute',
-              top: '25%',
-              color: 'black',
-            }}>
-            사용자 프로필{'\n'}업데이트 하기
-          </Text>
+          <View style={styles.imgBtn}>
+            <AddProfileImg />
+          </View>
+          <View style={styles.personProfileImg}>
+            <Text
+              style={{
+                fontSize: 12,
+                zIndex: 3,
+                color: 'black',
+                position: 'relative',
+              }}>
+              사용자 프로필{'\n'}업데이트 하기
+            </Text>
+          </View>
 
           <Text
             style={{
               fontSize: 12,
-              bottom: '25%',
+              top: '60%',
+              left: '24%',
               color: 'black',
-              position: 'absolute',
+              position: 'relative',
             }}>
             00 마리의 집사
           </Text>
@@ -79,7 +84,7 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
     width: '90%',
-    height: 200,
+    height: 210,
     margin: 10,
     padding: 10,
     backgroundColor: '#ffffff',
@@ -127,34 +132,34 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     width: 190,
-    height: 90,
+    height: 110,
     margin: 5,
     borderColor: 'gray',
   },
   cardRightWrap: {
     // borderWidth: 1,
     width: 140,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   personProfileImg: {
     width: 100,
     height: 100,
-    margin: 10,
     borderRadius: 50,
-    top: 2,
-    zIndex: 1,
+    top: '15%',
+    left: '15%',
     backgroundColor: '#eeeeee',
-    position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'absolute',
   },
   authBtn: {
     // borderWidth: 1,
     width: 140,
     height: 40,
-    top: '35%',
+    top: '60%',
     zIndex: 5,
+  },
+  imgBtn: {
+    left: '60%',
   },
 });
 export default PersonProfileCard;
