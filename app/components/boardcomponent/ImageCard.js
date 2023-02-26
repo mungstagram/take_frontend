@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {bounce} from 'react-native/Libraries/Animated/Easing';
 
 import CommentImg from '../svg/CommentImg';
 import Favorite from '../svg/Favorite';
@@ -84,6 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     elevation: 4,
     marginBottom: 16,
+    borderRadius: 4,
   },
   contentDetailBox: {
     marginTop: 12,
@@ -125,5 +125,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 8,
+    marginTop: 8,
   },
 });

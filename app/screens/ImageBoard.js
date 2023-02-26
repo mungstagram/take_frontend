@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 
 import {Colors} from '../constants/colors';
@@ -13,6 +13,9 @@ const ImageBoard = () => {
     {id: 0, content: '최신 순으로 보기'},
     {id: 1, content: '인기 순으로 보기'},
   ];
+  useEffect(() => {
+    setDataSortSelector(0);
+  }, []);
 
   // 아래 배열에 인덱스값(dataSortSelector를 넣어서 어떤 요청할 지 결정(최신순, 좋아요순))
   const selectDispatchParameter = ['recent', 'likescount'];
@@ -53,18 +56,30 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.mainColorDark,
   },
   selectContainer: {
-    width: videoCardWidth,
-    alignItems: 'flex-end',
-    top: '2%',
-    left: '4%',
-    zIndex: 10,
+    position: 'absolute',
+    top: '8%',
+    // height: '10%',
+    width: ' 100%',
+    // width: videoCardWidth,
+    // alignItems: 'flex-end',
+    // top: '2%',
+    // left: '4%',
+    // zIndex: 10,
   },
   selectBoxHolder: {
-    width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
+    position: 'absolute',
+    width: '50%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
+    right: '4%',
+    top: '2%',
+    zIndex: 8,
+    height: 56,
+    borderRadius: 4,
+    elevation: 5,
+    // width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
   },
   preCards: {
     height: windowHeight,
     justifyContent: 'center',
-    top: '8%',
+    top: '18%',
   },
 });

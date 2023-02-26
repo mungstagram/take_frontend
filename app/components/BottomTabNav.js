@@ -7,7 +7,6 @@ import AddContent from '../screens/AddContent';
 import ImageBoard from '../screens/ImageBoard';
 import VideoBoard from '../screens/VideoBoard';
 import SearchScreen from '../screens/SearchScreen';
-import UserDetail from '../screens/UserDetail';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,7 +24,11 @@ const BottomTabNav = () => {
         options={{headerShown: false}}
       />
       <Tab.Screen name="AddContent " component={AddContent} />
-      <Tab.Screen name="ImageBoard" component={ImageBoard} />
+      <Tab.Screen
+        name="ImageBoard"
+        component={ImageBoard}
+        options={{headerShown: false}}
+      />
       <Tab.Screen name="VideoBoard" component={VideoBoard} />
     </Tab.Navigator>
   );
