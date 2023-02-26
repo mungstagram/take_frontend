@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#000000',
     width: 180,
     height: 30,
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     height: 32,
   },
   textInput: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#000000',
     width: 180,
     height: 40,

@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     position: 'absolute',
     paddingVertical: 8,
+    fontSize: 14,
   },
 
   saveBtn: {

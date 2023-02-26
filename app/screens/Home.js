@@ -31,11 +31,11 @@ function Home({navigation}) {
             <View style={styles.dogNameBox}>
               <Text
                 style={{
-                  fontSize: 14,
+                  fontSize: 16,
                   fontWeight: '600',
                   color: 'black',
                   textAlign: 'center',
-                  top: 5,
+                  top: 4,
                 }}>
                 강아지 이름
               </Text>
@@ -43,11 +43,11 @@ function Home({navigation}) {
             <View style={styles.dDayBox}>
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: 16,
                   fontWeight: '600',
                   color: '#ffb284',
                   textAlign: 'center',
-                  top: 5,
+                  top: 4,
                 }}>
                 우리가 함께한 날 0000일
               </Text>
@@ -62,7 +62,7 @@ function Home({navigation}) {
                 fontSize: 16,
                 fontWeight: 'bold',
 
-                right: '27%',
+                right: '26%',
               }}>
               강아지종/나이/몸무게
             </Text>
@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
   goToProfileBtn: {
     borderRadius: 50,
     backgroundColor: '#ffffff',
-    width: 30,
-    height: 30,
+    width: 24,
+    height: 24,
     top: 25,
     left: 40,
   },
@@ -115,8 +115,8 @@ const styles = StyleSheet.create({
     right: 20,
   },
   dogProfileImg: {
-    width: 100,
-    height: 100,
+    width: 96,
+    height: 96,
     borderRadius: 50,
     backgroundColor: '#ffffff',
     position: 'relative',
@@ -125,8 +125,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   personProfileImg: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     borderRadius: 50,
     top: 40,
     left: 90,
@@ -144,8 +144,8 @@ const styles = StyleSheet.create({
   },
   dogNameBox: {
     borderRadius: 20,
-    width: 120,
-    height: 30,
+    width: 128,
+    height: 28,
     backgroundColor: '#ffffff',
     alignItems: 'center',
     shadowOpacity: 2,
@@ -154,8 +154,8 @@ const styles = StyleSheet.create({
   },
   dDayBox: {
     borderRadius: 20,
-    width: 200,
-    height: 30,
+    width: 208,
+    height: 28,
     backgroundColor: '#ffffff',
     alignItems: 'center',
     margin: 5,
