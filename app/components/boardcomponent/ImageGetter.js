@@ -12,8 +12,6 @@ const ImageGetter = ({order, nickname}) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
-  // console.log(imageContentList, '이미지 게터의 image리스트');
-
   // 마운트 될 때, 데이터의 정렬 순서 카테고리가 바뀔때 , 요청하기 (기본 요청은 최신순이 되도록 props받기)
   useEffect(() => {
     // console.log('리랜더링되나?', imageContentList);

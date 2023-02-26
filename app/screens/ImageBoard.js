@@ -58,24 +58,18 @@ const styles = StyleSheet.create({
   selectContainer: {
     position: 'absolute',
     top: '8%',
-    // height: '10%',
     width: ' 100%',
-    // width: videoCardWidth,
-    // alignItems: 'flex-end',
-    // top: '2%',
-    // left: '4%',
-    // zIndex: 10,
   },
   selectBoxHolder: {
     position: 'absolute',
-    width: '50%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
+    // width: '45%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
     right: '4%',
     top: '2%',
     zIndex: 8,
     height: 56,
     borderRadius: 4,
     elevation: 5,
-    // width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
+    width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
   },
   preCards: {
     height: windowHeight,

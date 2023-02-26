@@ -59,11 +59,11 @@ const AuthenticatedStack = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="UserDetail"
         component={UserDetail}
         options={{headerShown: false}}
-      />
+      /> */}
       <Stack.Screen name="VideoDetail" component={VideoDetail} />
     </Stack.Navigator>
   );
