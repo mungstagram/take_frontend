@@ -12,7 +12,11 @@ import {
   Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {__deleteTodos, __editTodos} from '../../redux/modules/todoSlice';
+import {
+  __deleteTodos,
+  __editTodos,
+  __doneTodos,
+} from '../../redux/modules/todoSlice';
 
 const Todoitem = ({id, text, done}) => {
   const dispatch = useDispatch();
@@ -20,8 +24,12 @@ const Todoitem = ({id, text, done}) => {
   const [edit, setEdit] = useState();
   const [isEdit, setIsEdit] = useState(false);
 
+  //done 을 가져와서 랜더링만 관리만 하는 거니까 done 만 가져와준다.
+  const [isDone, setIsDone] = useState(done);
+
   const todos = useSelector(state => state.todos.todo);
   console.log('todos', todos);
+  // console.log('todos done', todos.done);
 
   const onPressIsEdit = () => {
     setIsEdit(true);
@@ -36,10 +44,21 @@ const Todoitem = ({id, text, done}) => {
   };
 
   const onPressTodoEdit = () => {
-    console.log('edit', edit);
+    // console.log('edit', edit);
     // dispatch(__editTodos({id, done: isEdit, content: edit}));
     dispatch(__editTodos({id, content: edit}));
   };
+
+  //1.현재의 done의 반대 값을 넣어주고
+  //2. 그 다음에 반대값을 dispatch 넣어준다
+
+  const onPressIsDone = () => {
+    setIsDone(!isDone);
+    //변화된 값을 바로 보여주지 않는다.
+    dispatch(__doneTodos({id, done: !isDone}));
+  };
+  console.log('isDone', isDone);
+  //바깥에서 출력해야 볼 수 있다.
 
   const onPressTodoRemove = () => {
     Alert.alert(
@@ -64,8 +83,18 @@ const Todoitem = ({id, text, done}) => {
 
   return (
     <View style={styles.item}>
-      <TouchableOpacity>
-        <View style={[styles.checkBox, done && styles.filled]} />
+      {/* 동적으로 스타일을 바꿔 주고 싶을때는  ...styles 와 삼항연산자 쓰기  */}
+      <TouchableOpacity
+        onPress={() => {
+          onPressIsDone();
+          // onPressTodoDone();
+        }}
+        style={{
+          ...styles.checkBox,
+          backgroundColor: isDone ? 'black' : 'white',
+        }}
+        value={isDone}>
+        <View />
       </TouchableOpacity>
 
       {isEdit ? (
@@ -108,25 +137,16 @@ const styles = StyleSheet.create({
   checkBox: {
     width: 20,
     height: 20,
-    borderColor: '#gray',
     borderWidth: 1,
-    marginRight: 16,
+    marginRight: 10,
   },
-  filled: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#000000',
-  },
+
   text: {
     fontSize: 16,
     color: '#000000',
     width: '55%',
   },
 
-  lineThrough: {
-    color: '#000000',
-    textDecorationLine: 'line-through',
-  },
   removePlaceholder: {
     width: 32,
     height: 32,
