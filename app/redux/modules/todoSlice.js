@@ -141,13 +141,13 @@ export const todoSlice = createSlice({
       //id 가 같지 않은 값을 다시 돌려주기
       // console.log('state.to', state.todos);
       state.isLoading = false;
-      const data = state.todo.map(item => {
-        return item.id === action.payload.id
-          ? {...item, done: action.payload.done}
-          : item;
-      });
-      console.log('state.todo data', data);
-      // state.todo = data;
+      // const doneData = state.todos.map(item => {
+      //   return item.id === action.payload.id
+      //     ? {...item, done: action.payload.done}
+      //     : item;
+      // });
+      // console.log('state.todo data', doneData);
+      // // state.todo = data;
     },
   },
   [__doneTodos.pending]: state => {
