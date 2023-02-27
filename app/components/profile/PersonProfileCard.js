@@ -50,7 +50,7 @@ const PersonProfileCard = () => {
                 fontSize: 8,
                 zIndex: 3,
                 color: 'black',
-                borderWidth: 1,
+                left: '10%',
               }}>
               사용자 프로필{'\n'}업데이트 하기
             </Text>
@@ -100,23 +100,21 @@ const styles = StyleSheet.create({
   },
   textInputWrap: {
     borderWidth: 1,
-    borderColor: 'red',
+    // borderColor: 'red',
+    borderColor: 'gray',
     borderRadius: 5,
     flexDirection: 'row',
     width: 176,
     height: 56,
-    // borderColor: 'gray',
   },
   textInputIntroWrap: {
     flexDirection: 'column',
-    borderWidth: 1,
+    // borderWidth: 1,
     width: 176,
     left: '15%',
     top: '5%',
   },
   textInputBtn: {
-    borderWidth: 1,
-    borderColor: 'red',
     width: 70,
     justifyContent: 'center',
     alignItems: 'center',
@@ -145,8 +143,8 @@ const styles = StyleSheet.create({
     width: 176,
     height: 72,
     marginTop: '3%',
-    // borderColor: 'gray',
-    borderColor: 'red',
+    borderColor: 'gray',
+    // borderColor: 'red',
   },
   cardRightWrap: {
     // borderWidth: 1,
@@ -173,7 +171,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   imgOpenBtn: {
-    borderWidth: 1,
+    // borderWidth: 1,
     borderColor: 'red',
     width: 80,
     height: 80,
