@@ -50,6 +50,24 @@ export const __editTodos = createAsyncThunk(
   },
 );
 
+export const __doneTodos = createAsyncThunk(
+  'DONE_TODO',
+  async (payload, thunkAPI) => {
+    console.log('done payload', payload);
+    try {
+      const response = await http.patch(`/todos/${payload.id}`, {
+        done: payload.done,
+      });
+      // console.log('done data', data);
+      // console.log('done response', response);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      // console.log('done error', error);
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  },
+);
+
 export const __deleteTodos = createAsyncThunk(
   'DELETE_TODO',
   async (payload, thunkAPI) => {
@@ -115,6 +133,26 @@ export const todoSlice = createSlice({
       state.isLoading = true;
     },
     [__editTodos.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [__doneTodos.fulfilled]: (state, action) => {
+      // console.log('payload', action.payload);
+      //id 가 같지 않은 값을 다시 돌려주기
+      // console.log('state.to', state.todos);
+      state.isLoading = false;
+      // const doneData = state.todos.map(item => {
+      //   return item.id === action.payload.id
+      //     ? {...item, done: action.payload.done}
+      //     : item;
+      // });
+      // console.log('state.todo data', doneData);
+      // // state.todo = data;
+    },
+    [__doneTodos.pending]: state => {
+      state.isLoading = true;
+    },
+    [__doneTodos.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
