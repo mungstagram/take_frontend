@@ -33,7 +33,8 @@ const UserDetailProf = ({nickname}) => {
   //{nickname: 'Seeder1', introduce: 'seed1 introduce', contentUrl: 'https://spartabecool.s3.amazonaws.com/image/1676984268618_image3.png', postsCount: 3, dogsCount: 2, …}
 
   const openDirectMessageHandler = () => {
-    navigation.push('MessageBox', myNickName);
+    console.log('userDetailprof의', myNickName);
+    navigation.push('MessageBox', {myNick: myNickName});
   };
 
   return (
