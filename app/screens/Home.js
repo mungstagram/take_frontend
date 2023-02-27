@@ -13,7 +13,7 @@ import WriteTodo from '../components/todos/WriteTodo';
 
 function Home({navigation}) {
   return (
-    <>
+    //수정해야 함
       <View style={styles.homeProfile}>
         <View style={styles.homeProfileInner}>
           <TouchableOpacity
