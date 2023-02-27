@@ -19,21 +19,6 @@ const SearchTab = () => {
         component={UserDetail}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="AddContent "
-        component={AddContent}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="VideoBoard"
-        component={VideoBoard}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="VideoDetail"
-        component={VideoDetail}
-        options={{headerShown: false}}
-      />
     </Stack.Navigator>
   );
 };

@@ -5,6 +5,7 @@ import {Alert} from 'react-native';
 
 const initialState = {
   contentList: [],
+  detail: {},
   isLoading: false,
   error: null,
 };
@@ -60,12 +61,11 @@ export const __getPostData = createAsyncThunk(
 );
 
 export const __getPostDetailData = createAsyncThunk(
-  'GET_POST_DATA',
+  'GET_POST_DETAIL_DATA',
   async (payload, thunkAPI) => {
-    console.log('p', payload);
     try {
       const {data} = await http.get(`/posts/${payload}`);
-      console.log('data', data);
+      //console.log('data', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -104,6 +104,17 @@ const addContentSlice = createSlice({
     [__getPostData.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
+    },
+    [__getPostDetailData.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__getPostDetailData.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.detail = action.payload;
+    },
+    [__getPostDetailData.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.erre = action.payload;
     },
   },
 });

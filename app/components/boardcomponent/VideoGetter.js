@@ -50,7 +50,11 @@ export default VideoGetter;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const videoCardWidth = windowWidth - 40;
+const videoCardWidth = windowWidth * 0.9;
 const videoCardHeight = videoCardWidth * 0.8;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    width: videoCardWidth,
+  },
+});

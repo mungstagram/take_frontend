@@ -47,7 +47,7 @@ export default VideoBoard;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const videoCardWidth = windowWidth - 40;
+const videoCardWidth = windowWidth * 0.9;
 //const videoCardHeight = videoCardWidth;
 
 const styles = StyleSheet.create({
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
   },
   preCards: {
     height: windowHeight,
+    width: windowWidth,
     justifyContent: 'center',
     alignItems: 'center',
     top: '18%',
