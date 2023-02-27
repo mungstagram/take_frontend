@@ -1,20 +1,22 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import {useRoute} from '@react-navigation/native';
 
 import UserBoardWrap from '../components/userdetail/UserBoardWrap';
 import UserDetailProf from '../components/userdetail/UserDetailProf';
 // import {Colors} from '../constants/colors';
-
 const UserDetail = () => {
+  const route = useRoute();
+  const {nickname} = route.params;
   return (
-    <View style={styles.Wrapper}>
-      <View style={styles.Container1}>
+    <View style={styles.wrapper}>
+      <View style={styles.container1}>
         <View>
-          <UserDetailProf />
+          <UserDetailProf nickname={nickname} />
         </View>
       </View>
-      <View style={styles.Container2}>
-        <UserBoardWrap />
+      <View style={styles.container2}>
+        <UserBoardWrap nickname={nickname} />
       </View>
     </View>
   );
@@ -23,13 +25,13 @@ const UserDetail = () => {
 export default UserDetail;
 
 const styles = StyleSheet.create({
-  Wrapper: {
+  wrapper: {
     flex: 1,
   },
-  Container1: {
+  container1: {
     flex: 272,
   },
-  Container2: {
+  container2: {
     flex: 528,
   },
   UserBoardWrap,

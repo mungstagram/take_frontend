@@ -16,6 +16,7 @@ import LoginChecker from './components/LoginChecker';
 import BottomTabNav from './components/BottomTabNav';
 import Home from './screens/Home';
 import Profile from './screens/Profile';
+import VideoDetail from './screens/VideoDetail';
 
 const Stack = createNativeStackNavigator();
 
@@ -58,6 +59,12 @@ const AuthenticatedStack = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen name="Profile" component={Profile} />
+      {/* <Stack.Screen
+        name="UserDetail"
+        component={UserDetail}
+        options={{headerShown: false}}
+      /> */}
+      <Stack.Screen name="VideoDetail" component={VideoDetail} />
     </Stack.Navigator>
   );
 };

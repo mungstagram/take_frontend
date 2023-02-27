@@ -4,8 +4,10 @@ import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import SelectBox from '../components/common/SelectBox';
 import {Colors, BasicColors} from '../constants/colors';
 import VideoGetter from '../components/boardcomponent/VideoGetter';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import VideoDetail from './VideoDetail';
 
-const VideoBoard = () => {
+const VideoBoard = ({navigation}) => {
   // 높이, 너비를 자동으로 업데이트 해준다.
   // const {height, width} = useWindowDimensions();
 
@@ -22,6 +24,9 @@ const VideoBoard = () => {
   const dateSortSelectorHandler = selector => {
     setDataSortSelector(selector);
   };
+  const onVDetailHandler = () => {
+    navigation.navigate('VideoDetail');
+  };
 
   return (
     <View style={styles.container}>
@@ -35,7 +40,9 @@ const VideoBoard = () => {
         </View>
       </View>
       <View style={styles.preCards}>
-        <VideoGetter order={selectDispatchParameter[dataSortSelector]} />
+        <Pressable onPress={onVDetailHandler}>
+          <VideoGetter order={selectDispatchParameter[dataSortSelector]} />
+        </Pressable>
       </View>
     </View>
   );

@@ -10,16 +10,15 @@ import GoBackButton from '../common/GoBackButton';
 import AccountCircle from '../svg/AccountCircle';
 import MailDm from '../svg/MailDm';
 
-const UserDetailProf = () => {
+const UserDetailProf = ({nickname}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(__getUserDetail('Seeder1'));
+    dispatch(__getUserDetail(nickname));
   }, []);
 
   const {userDetail} = useSelector(state => state.userDetail);
   //{nickname: 'Seeder1', introduce: 'seed1 introduce', contentUrl: 'https://spartabecool.s3.amazonaws.com/image/1676984268618_image3.png', postsCount: 3, dogsCount: 2, …}
-
   return (
     <>
       <View style={styles.userWrapper}>
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
     height: 108,
     backgroundColor: 'gray',
     overflow: 'hidden',
-    borderRadius: 50,
+    borderRadius: 100,
   },
   userImgIconContainer: {
     flexDirection: 'row',
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     backgroundColor: 'white',
-    borderRadius: 50,
+    borderRadius: 300,
     elevation: 10,
     margin: '4.5%',
   },
@@ -152,7 +151,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: 'white',
-
     marginBottom: 8,
   },
   textIntroduce: {
