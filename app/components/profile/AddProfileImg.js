@@ -74,9 +74,7 @@ const AddProfileImg = () => {
     setImages(data);
   };
   return (
-    <TouchableOpacity onPress={openPicker} style={styles.openImg}>
-      <Text>열기</Text>
-    </TouchableOpacity>
+    <TouchableOpacity style={styles.personProfileImg} onPress={openPicker} />
   );
 };
 
@@ -85,6 +83,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 50,
     height: 20,
+  },
+
+  personProfileImg: {
+    width: 80,
+    height: 80,
+    borderRadius: 50,
+
+    backgroundColor: '#eeeeee',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
   },
 });
 

@@ -12,16 +12,12 @@ import {
   Alert,
 } from 'react-native';
 
-import AddProfileImg from './AddProfileImg';
-
 const DogProfileCard = () => {
   return (
     <View style={styles.block}>
       <View style={styles.dogCard}>
         <View style={styles.dogImg}>
-          <View style={styles.dogImgBtn}>
-            <AddProfileImg />
-          </View>
+          <View style={styles.dogImgBtn}></View>
 
           <View>
             <Text>
