@@ -1,12 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, Dimensions, SafeAreaView} from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
 
 import {Colors, BasicColors} from '../constants/colors';
 import Favorite from '../components/svg/Favorite';
 import NotFavorite from '../components/svg/NotFavorite';
+import {useDispatch, useSelector} from 'react-redux';
+import {__getPostDetailData} from '../redux/modules/addContentSlice';
 
-const VideoDetail = ({videoContent}) => {
+const VideoDetail = ({navigation: {navigate}, route}) => {
+  // const {navigation} = this.props;
+  //const postId = navigation.getParam('postId');
+  console.log('route', route.params.postId);
+
+  const dispatch = useDispatch();
+  //useSelector로.. postId 불러야할것 같음
+  //const videoContentList = useSelector(state => state.addContent.contentList);
   //const videoUrl = videoContent.contentUrl[0];
+
+  //console.log('Id', postId);
+  const isFocused = useIsFocused();
+
+  //postId를 보내준다.
+  useEffect(() => {
+    if (isFocused) {
+      dispatch(__getPostDetailData(route.params.postId));
+    }
+  }, [isFocused]);
 
   return (
     <SafeAreaView>

@@ -6,75 +6,76 @@ import {
   StyleSheet,
   FlatList,
   SafeAreaView,
+  Pressable,
 } from 'react-native';
 import {Colors, BasicColors} from '../../constants/colors';
 import Video from 'react-native-video';
 import FastImage from 'react-native-fast-image';
+import {useNavigation} from '@react-navigation/native';
 
 import CommentImg from '../svg/CommentImg';
 import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
+import VideoDetail from '../../screens/VideoDetail';
 
 const VideoCard = ({videoContent}) => {
+  const navigation = useNavigation();
   const videoUrl = videoContent.contentUrl[0];
-  //console.log('비디오내용', videoContent);
 
+  const onDetailHandler = () => {
+    console.log('vc.postId', videoContent.postId);
+    navigation.navigate('VideoDetail', {postId: videoContent.postId});
+  };
   return (
-    <>
+    <View style={styles.wrapper}>
       <SafeAreaView>
         <View style={styles.container}>
-          <View style={styles.contentTop}>
-            <FastImage
-              style={styles.profileimg}
-              source={{
-                uri: videoContent.profileUrl[0],
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={'contain'}
-            />
-            <View>
-              <Text style={styles.nicknameText}>{videoContent.nickname}</Text>
-              <Text style={styles.timeText}>{videoContent.createdAt}</Text>
+          <Pressable onPress={onDetailHandler}>
+            <View style={styles.contentTop}>
+              <FastImage
+                style={styles.profileimg}
+                source={{
+                  uri: videoContent.profileUrl[0],
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={'contain'}
+              />
+              <View>
+                <Text style={styles.nicknameText}>{videoContent.nickname}</Text>
+                <Text style={styles.timeText}>{videoContent.createdAt}</Text>
+              </View>
             </View>
-          </View>
-          <View>
-            {/* <Video
-              style={styles.videoScreen}
-              source={{
-                uri: videoUrl,
-              }}
-              paused={true}
-              resizeMode={'cover'}
-            /> */}
-            <FastImage
-              style={styles.videoScreen}
-              source={{
-                uri: videoUrl,
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={'contain'}
-            />
-          </View>
-          <View style={styles.preContent}>
-            <Text style={styles.titleText}>{videoContent.title}</Text>
-            <View style={styles.subBox}>
-              <View style={styles.iconCount}>
-                <View style={styles.iconRow}>
-                  <NotFavorite />
-                  <Text style={styles.text}>{videoContent.likesCount}</Text>
-                  {/* likesCount */}
-                </View>
-                <View style={styles.iconRow}>
-                  <CommentImg />
-                  <Text style={styles.text}>{videoContent.commentCount}</Text>
-                  {/* commentCount */}
+            <View>
+              <FastImage
+                style={styles.videoScreen}
+                source={{
+                  uri: videoUrl,
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={'contain'}
+              />
+            </View>
+            <View style={styles.preContent}>
+              <Text style={styles.titleText}>{videoContent.title}</Text>
+              <View style={styles.subBox}>
+                <View style={styles.iconCount}>
+                  <View style={styles.iconRow}>
+                    <NotFavorite />
+                    <Text style={styles.text}>{videoContent.likesCount}</Text>
+                    {/* likesCount */}
+                  </View>
+                  <View style={styles.iconRow}>
+                    <CommentImg />
+                    <Text style={styles.text}>{videoContent.commentCount}</Text>
+                    {/* commentCount */}
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
+          </Pressable>
         </View>
       </SafeAreaView>
-    </>
+    </View>
   );
 };
 
@@ -87,20 +88,21 @@ const videoCardWidth = windowWidth - 40;
 const videoCardHeight = videoCardWidth * 0.8;
 
 const styles = StyleSheet.create({
+  wrapper: {
+    top: 18,
+  },
   container: {
     width: videoCardWidth,
     height: videoCardHeight,
     backgroundColor: BasicColors.blackColor,
     borderRadius: 4,
     justifyContent: 'center',
-    marginTop: videoCardHeight * 0.1,
+    marginBottom: videoCardHeight * 0.2,
     shadowColor: BasicColors.blackColor,
-    elevation: 4,
   },
   contentTop: {
     backgroundColor: BasicColors.whiteColor,
     flexDirection: 'row',
-
     padding: '2%',
     borderTopRightRadius: 4,
     borderTopLeftRadius: 4,
@@ -130,6 +132,7 @@ const styles = StyleSheet.create({
     borderBottomEndRadius: 4,
     padding: '2%',
     justifyContent: 'center',
+    elevation: 4,
   },
   iconCount: {
     flexDirection: 'row',
