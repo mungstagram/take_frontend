@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {View, Text, StyleSheet, Dimensions, Pressable} from 'react-native';
 
 import SelectBox from '../components/common/SelectBox';
 import {Colors, BasicColors} from '../constants/colors';
 import VideoGetter from '../components/boardcomponent/VideoGetter';
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import VideoDetail from './VideoDetail';
 
-const VideoBoard = ({navigation}) => {
+const VideoBoard = () => {
   // 높이, 너비를 자동으로 업데이트 해준다.
   // const {height, width} = useWindowDimensions();
 
@@ -24,9 +23,6 @@ const VideoBoard = ({navigation}) => {
   const dateSortSelectorHandler = selector => {
     setDataSortSelector(selector);
   };
-  const onVDetailHandler = () => {
-    navigation.navigate('VideoDetail');
-  };
 
   return (
     <View style={styles.container}>
@@ -40,9 +36,7 @@ const VideoBoard = ({navigation}) => {
         </View>
       </View>
       <View style={styles.preCards}>
-        <Pressable onPress={onVDetailHandler}>
-          <VideoGetter order={selectDispatchParameter[dataSortSelector]} />
-        </Pressable>
+        <VideoGetter order={selectDispatchParameter[dataSortSelector]} />
       </View>
     </View>
   );
@@ -62,18 +56,26 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.mainColorDark,
   },
   selectContainer: {
-    width: videoCardWidth,
-    alignItems: 'flex-end',
-    top: '2%',
-    left: '4%',
-    zIndex: 10,
+    position: 'absolute',
+    top: '8%',
+    width: ' 100%',
   },
   selectBoxHolder: {
+    position: 'absolute',
+    // width: '45%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
+    right: '4%',
+    top: '2%',
+    zIndex: 8,
+    height: 56,
+    borderRadius: 4,
+    elevation: 5,
     width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
   },
   preCards: {
-    top: '8%',
+    height: windowHeight,
+    justifyContent: 'center',
     alignItems: 'center',
+    top: '18%',
   },
   preCard: {},
 });

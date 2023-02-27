@@ -13,14 +13,19 @@ import {Colors, BasicColors} from '../../constants/colors';
 import VideoCard from './VideoCard';
 import {__getPostData} from '../../redux/modules/addContentSlice';
 import {startDetecting} from 'react-native/Libraries/Utilities/PixelRatio';
+import {useIsFocused} from '@react-navigation/native';
 
 const VideoGetter = ({order}) => {
   const videoContentList = useSelector(state => state.addContent.contentList);
-  console.log('contentList22', videoContentList);
+
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    dispatch(__getPostData({category: 'video', order}));
-  }, [order]);
+    if (isFocused) {
+      dispatch(__getPostData({category: 'video', order}));
+    }
+  }, [order, isFocused]);
 
   return (
     <>
@@ -28,7 +33,7 @@ const VideoGetter = ({order}) => {
         <FlatList
           data={videoContentList}
           renderItem={({item}) => (
-            <View style={styles.container}>
+            <View>
               <VideoCard videoContent={item} title={item.title} />
             </View>
           )}
@@ -48,8 +53,4 @@ const windowHeight = Dimensions.get('window').height;
 const videoCardWidth = windowWidth - 40;
 const videoCardHeight = videoCardWidth * 0.8;
 
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: videoCardHeight * 0.05,
-  },
-});
+const styles = StyleSheet.create({});
