@@ -14,10 +14,11 @@ import {
 
 const DogProfileCard = () => {
   return (
+    //수정해야됨
     <View style={styles.block}>
       <View style={styles.dogCard}>
         <View style={styles.dogImg}>
-          <View style={styles.dogImgBtn}></View>
+          <View style={styles.dogImgBtn} />
 
           <View>
             <Text>
@@ -229,8 +230,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dogCard: {
-    width: 280,
-    height: 460,
+    width: 264,
+    height: 452,
     margin: 10,
     borderRadius: 15,
     shadowOpacity: 0.25,
