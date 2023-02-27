@@ -2,10 +2,12 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 import useRoute from '@react-navigation/core';
-import io from 'socket.io-client';
+import {io} from 'socket.io-client';
 
 import GoBackButton from '../components/common/GoBackButton';
 const MessageBox = ({myNickName}) => {
+  const socket = io('https://server-domain.com');
+
   const navigation = useNavigation();
   const route = useRoute();
   const {nickname} = route.params;

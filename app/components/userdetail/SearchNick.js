@@ -1,10 +1,8 @@
 import React from 'react';
 import {View, Text, Pressable, FlatList, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import SearchNone from './SearchNone';
 import {useNavigation} from '@react-navigation/core';
-import {UserDetailScreen} from '../BottomTabNav';
-import UserDetail from '../../screens/UserDetail';
+
 const SearchNick = ({searchData}) => {
   const navigation = useNavigation();
 
@@ -12,10 +10,6 @@ const SearchNick = ({searchData}) => {
     navigation.push('UserDetail', {nickname});
   };
 
-  //검색값이 없을때, 보여지는 컴퍼넌트
-  if (searchData.length === 0) {
-    return <SearchNone></SearchNone>;
-  }
   return (
     <View>
       <FlatList

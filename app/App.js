@@ -12,9 +12,9 @@ import UserDetail from './screens/UserDetail';
 import {Colors} from './constants/colors';
 import {Provider} from 'react-redux';
 import store from './redux/store/configStore';
+
 import LoginChecker from './components/LoginChecker';
 import BottomTabNav from './components/BottomTabNav';
-import Home from './screens/Home';
 import Profile from './screens/Profile';
 import VideoDetail from './screens/VideoDetail';
 

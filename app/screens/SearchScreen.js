@@ -1,25 +1,20 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {
-  View,
-  Text,
-  Pressable,
-  Button,
-  StyleSheet,
-  TextInput,
-} from 'react-native';
+import {View, Pressable, StyleSheet, TextInput} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 
 import GoBackButton from '../components/common/GoBackButton';
 import SelectBox from '../components/common/SelectBox';
 import Search from '../components/svg/Search';
 import {__getSearchData} from '../redux/modules/searchSlice';
 import SearchNick from '../components/userdetail/SearchNick';
+import SearchNone from '../components/userdetail/SearchNone';
 
 const SearchScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
+  const isFocused = useIsFocused();
   //샐랙트 박스 파라미터 설정
   // 유저닉네임, 사진 동영상 요청 데이터 결정하는 state (초깃값 설정 서버에 보낼 값을 배열에 담고, 그때의 인덱스)
   const [dataSortSelector, setDataSortSelector] = useState(0);
@@ -31,10 +26,19 @@ const SearchScreen = () => {
   ];
 
   const selectDispatchParameter = ['users', 'image', 'video'];
+  // 검색창 내용
   const refSearch = useRef();
-
+  // 검색된 데이터 내용을 받기
   const {searchData} = useSelector(state => state.searchData);
 
+  //검색을 했는지 안했는지
+  const [startSearch, setStartSearch] = useState(false);
+
+  useEffect(() => {
+    if (isFocused) {
+      setStartSearch(false);
+    }
+  }, [isFocused]);
   const onSearchHandler = () => {
     dispatch(
       __getSearchData({
@@ -42,6 +46,7 @@ const SearchScreen = () => {
         category: selectDispatchParameter[dataSortSelector],
       }),
     );
+    setStartSearch(true);
   };
 
   const onChangeRefHandler = e => {
@@ -51,6 +56,7 @@ const SearchScreen = () => {
   const dateSortSelectorHandler = selector => {
     setDataSortSelector(selector);
   };
+  //검색값이 없을때, 보여지는 컴퍼넌트
 
   return (
     <View style={styles.wrapper}>
@@ -80,7 +86,10 @@ const SearchScreen = () => {
         </View>
       </View>
       <View style={styles.contentPositioner}>
-        {dataSortSelector === 0 && <SearchNick searchData={searchData} />}
+        {searchData.length === 0 && startSearch && <SearchNone />}
+        {searchData.length !== 0 && dataSortSelector === 0 && (
+          <SearchNick searchData={searchData} />
+        )}
       </View>
     </View>
   );

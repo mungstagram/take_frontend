@@ -4,6 +4,8 @@ import {useRoute} from '@react-navigation/native';
 
 import UserBoardWrap from '../components/userdetail/UserBoardWrap';
 import UserDetailProf from '../components/userdetail/UserDetailProf';
+import {useNavigation} from '@react-navigation/native';
+
 // import {Colors} from '../constants/colors';
 const UserDetail = () => {
   const route = useRoute();

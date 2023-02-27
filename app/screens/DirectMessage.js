@@ -10,3 +10,10 @@ const DirectMessage = () => {
 };
 
 export default DirectMessage;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    height: '100%',
+    width: '100%',
+  },
+});
