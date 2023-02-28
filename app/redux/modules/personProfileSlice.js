@@ -13,7 +13,8 @@ const initialState = {
 export const __getProfile = createAsyncThunk(
   'GET_PROFILE',
   async (payload, thunkAPI) => {
-    console.log('3.get payload', payload);
+    console.log('1.payload', payload);
+    //여기서 undefined 면 절대통신이 안된다는 뜻!
     try {
       const {data} = await http.get(`/profile/${payload}`);
       return thunkAPI.fulfillWithValue(data);

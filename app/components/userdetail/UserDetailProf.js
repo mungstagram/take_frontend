@@ -13,6 +13,7 @@ import MailDm from '../svg/MailDm';
 const UserDetailProf = ({nickname}) => {
   const dispatch = useDispatch();
 
+  console.log('nickname', nickname);
   useEffect(() => {
     dispatch(__getUserDetail(nickname));
   }, []);
