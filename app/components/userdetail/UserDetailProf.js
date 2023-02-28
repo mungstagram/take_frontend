@@ -13,28 +13,28 @@ import MailDm from '../svg/MailDm';
 const UserDetailProf = ({nickname}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [myNickName, setMyNickName] = useState('');
+  const [myToken, setMyToken] = useState('');
 
   useEffect(() => {
     dispatch(__getUserDetail(nickname));
   }, []);
 
   useEffect(() => {
-    async function fetctNick() {
-      const myNick = await AsyncStorage.getItem('nickname');
-      if (myNick) {
-        setMyNickName(myNick);
+    async function fetctmyToken() {
+      const token = await AsyncStorage.getItem('authorization');
+      if (token) {
+        setMyToken(token);
       }
     }
-    fetctNick();
+    fetctmyToken();
   }, []);
 
   const {userDetail} = useSelector(state => state.userDetail);
   //{nickname: 'Seeder1', introduce: 'seed1 introduce', contentUrl: 'https://spartabecool.s3.amazonaws.com/image/1676984268618_image3.png', postsCount: 3, dogsCount: 2, …}
 
   const openDirectMessageHandler = () => {
-    console.log('userDetailprof의', myNickName);
-    navigation.push('MessageBox', {myNick: myNickName});
+    // console.log('userDetailprof의', myNickName);
+    navigation.push('MessageBox', {token: myToken});
   };
 
   return (
