@@ -5,7 +5,7 @@ import {Alert} from 'react-native';
 
 const initialState = {
   contentList: [],
-  detail: {},
+  detail: {contentUrl: ['']},
   isLoading: false,
   error: null,
 };

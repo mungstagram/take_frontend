@@ -14,9 +14,9 @@ const VideoDetail = ({route}) => {
   const detail = useSelector(state => state.addContent.detail);
   // 최초 마운트시 빈값이 들어오는 것에 대한 에러를 해결하기 위해
   // 에러나는 부분에서 빈값을 허용하도록 코드를 짠다. 나중에 state가 바뀌면서 제대로 된 값이 들어오기 때문에
-  if (Object.keys(detail).length !== 0) {
-    return (videoUrl = detail.contentUrl[0]);
-  }
+
+  const videoUrl = detail.contentUrl[0];
+
   const isFocused = useIsFocused();
 
   const dispatch = useDispatch();
