@@ -2,17 +2,23 @@ import React from 'react';
 import {StyleSheet, View, Text, Pressable, Modal} from 'react-native';
 import {Button} from 'react-native-paper';
 
-import DogProfileCard from '../components/profile/DogProfileCard';
+//사람
+import InputPersonProfileCard from '../components/profile/InputPersonProfileCard';
 import PersonProfileCard from '../components/profile/PersonProfileCard';
+//강아지
+import InputDogProfileCard from '../components/profile/InputDogProfileCard';
+import AddDogProfile from '../components/profile/AddDogProfile';
+import DogProfile from '../components/profile/DogProfile';
 
 const Profile = ({navigation}) => {
-  console.log('profile');
   return (
-    <View>
+    <>
       <PersonProfileCard />
-      <DogProfileCard />
-      <Text>하단탭네비 자리</Text>
-    </View>
+      {/* <InputPersonProfileCard /> */}
+      {/* <AddDogProfile /> */}
+      {/* <InputDogProfileCard /> */}
+      {/* <DogProfile /> */}
+    </>
   );
 };
 
