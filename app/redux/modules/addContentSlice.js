@@ -73,7 +73,7 @@ export const __getPostDetailData = createAsyncThunk(
   },
 );
 
-//게시글작성
+//게시글작성 // 리듀서
 const addContentSlice = createSlice({
   name: 'addContent',
   initialState,
@@ -110,11 +110,12 @@ const addContentSlice = createSlice({
     },
     [__getPostDetailData.fulfilled]: (state, action) => {
       state.isLoading = false;
+      //console.log('ac', action.payload);
       state.detail = action.payload;
     },
     [__getPostDetailData.rejected]: (state, action) => {
       state.isLoading = false;
-      state.erre = action.payload;
+      state.error = action.payload;
     },
   },
 });

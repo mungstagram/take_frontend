@@ -16,18 +16,13 @@ import {useNavigation} from '@react-navigation/native';
 import CommentImg from '../svg/CommentImg';
 import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
-import VideoDetailTop from '../detailcomp/VideoDetailTop';
-import VideoTab from '../../tabcomponent/VideoTab';
 
 const VideoCard = ({videoContent}) => {
   const navigation = useNavigation();
   const videoUrl = videoContent.contentUrl[0];
 
   const onDetailHandler = () => {
-    navigation.navigate('VideoTab', {
-      screen: 'VideoDetail',
-      params: {postId: videoContent.postId},
-    });
+    navigation.navigate('VideoDetail', {postId: videoContent.postId});
   };
   return (
     <View style={styles.wrapper}>

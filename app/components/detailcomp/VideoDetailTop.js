@@ -8,11 +8,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Colors, BasicColors} from '../../constants/colors';
 import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
-
 import GoBackButton from '../common/GoBackButton';
 
-const VideoDetailTop = ({detail}) => {
-  const videoUrl = detail.contentUrl[0];
+const VideoDetailTop = ({detail, videoUrl}) => {
+  // 에러발생 왜 에러나는지 찾아봐야함 났다 안났다;;
 
   return (
     <SafeAreaView>
