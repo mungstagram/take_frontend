@@ -4,13 +4,6 @@ import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
-  users: [
-    {
-      email: '',
-      nickname: '',
-      password: '',
-    },
-  ],
   isLogin: false,
   isLoading: false,
   error: null,
@@ -32,9 +25,8 @@ export const __postLogin = createAsyncThunk(
       });
       AsyncStorage.setItem('nickname', data.data.nickname);
 
-      // 직렬화 에러 해결하기 위해서 sendData 선언
+      // 직렬화 에러 해결하기 위해서 sendData 선언// 토큰을 보내다가 이제 보내지 않음.
       const sendData = {
-        token: data.headers.authorization,
         nickname: data.data.nickname,
         // data.data.nickname 은 바디에 오는 닉네임
         //data.headers.authorization 헤더에 담겨오는 인증 토큰
@@ -119,6 +111,9 @@ const loginSlice = createSlice({
     newSignup: (state, action) => {
       state.isSuccessedSignup = false;
     },
+    setMyNick: (state, action) => {
+      state.myNick = action.payload;
+    },
   },
   extraReducers: {
     //post
@@ -141,7 +136,7 @@ const loginSlice = createSlice({
       state.isLoading = false;
       state.isLogin = true;
       state.isSuccessLogin = true;
-      state.nickname = action.payload.nickname;
+      state.myNick = action.payload.nickname;
     },
     [__postLogin.rejected]: (state, action) => {
       state.isLoading = false;
@@ -173,5 +168,6 @@ export const {
   uncheckEmail,
   uncheckNick,
   newSignup,
+  setMyNick,
 } = loginSlice.actions;
 export default loginSlice.reducer;
