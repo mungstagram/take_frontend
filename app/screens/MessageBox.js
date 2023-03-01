@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
   wrapper: {
     height: '100%',
     width: '100%',
+    // backgroundColor: 'blue',
   },
   userButton: {
     position: 'absolute',
