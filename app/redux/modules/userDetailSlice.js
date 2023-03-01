@@ -12,6 +12,7 @@ const initialState = {
 export const __getUserDetail = createAsyncThunk(
   'GET_USER_DETAIL',
   async (payload, thunkAPI) => {
+    console.log('user payload', payload);
     try {
       const {data} = await http.get(`/users/${payload}`);
       return thunkAPI.fulfillWithValue(data);

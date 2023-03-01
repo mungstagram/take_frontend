@@ -24,6 +24,7 @@ export const __postLogin = createAsyncThunk(
         return res;
       });
       AsyncStorage.setItem('nickname', data.data.nickname);
+      console.log('data.nickname', data.data.nickname);
 
       // 직렬화 에러 해결하기 위해서 sendData 선언// 토큰을 보내다가 이제 보내지 않음.
       const sendData = {
@@ -31,6 +32,7 @@ export const __postLogin = createAsyncThunk(
         // data.data.nickname 은 바디에 오는 닉네임
         //data.headers.authorization 헤더에 담겨오는 인증 토큰
       };
+
       return thunkAPI.fulfillWithValue(sendData);
     } catch (error) {
       if (error.response.status === 500) {
