@@ -10,79 +10,77 @@ import {
 
 import TodoList from '../components/todos/TodoList';
 import WriteTodo from '../components/todos/WriteTodo';
+import ServicesPinkImg from '../components/svg/ServicesPinkImg';
 
 function Home({navigation}) {
   return (
-    <>
-      <View style={styles.homeProfile}>
-        <View style={styles.homeProfileInner}>
-          <TouchableOpacity
-            style={styles.goToProfileBtn}
-            onPress={() => navigation.navigate('Profile')}>
-            <Text>열기</Text>
-          </TouchableOpacity>
+    <View style={styles.homeProfile}>
+      <View style={styles.homeProfileInner}>
+        <TouchableOpacity
+          style={styles.goToProfileBtn}
+          onPress={() => navigation.navigate('Profile')}>
+          <ServicesPinkImg />
+        </TouchableOpacity>
 
-          <View style={styles.profileImg}>
-            <View style={styles.dogProfileImg} />
-            <View style={styles.personProfileImg} />
-          </View>
-
-          <View style={styles.profileInner}>
-            <View style={styles.dogNameBox}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: '600',
-                  color: 'black',
-                  textAlign: 'center',
-                  top: 5,
-                }}>
-                강아지 이름
-              </Text>
-            </View>
-            <View style={styles.dDayBox}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: '600',
-                  color: '#ffb284',
-                  textAlign: 'center',
-                  top: 5,
-                }}>
-                우리가 함께한 날 0000일
-              </Text>
-            </View>
-          </View>
+        <View style={styles.profileImg}>
+          <View style={styles.dogProfileImg} />
+          <View style={styles.personProfileImg} />
         </View>
 
-        <View style={styles.homeTodoBox}>
+        <View style={styles.profileInner}>
+          <View style={styles.dogNameBox}>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: '600',
+                color: 'black',
+                textAlign: 'center',
+                top: '4%',
+              }}>
+              강아지 이름
+            </Text>
+          </View>
+          <View style={styles.dDayBox}>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: '600',
+                color: '#ffb284',
+                textAlign: 'center',
+                top: '4%',
+              }}>
+              우리가 함께한 날 0000일
+            </Text>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.homeTodoBox}>
+        <View style={styles.homeTodoBoxInner}>
           <Text
             style={{
-              fontSize: 15,
-              fontWeight: '600',
-              color: 'black',
-              marginTop: 15,
-              marginLeft: 10,
-              left: 15,
+              fontSize: 16,
+              fontWeight: 'bold',
+              right: '26%',
+              color: '#000000',
             }}>
             강아지종/나이/몸무게
           </Text>
           <View
             style={{
               borderBottomWidth: 2,
-              borderBottomColor: '#cdcdcd',
-              width: 380,
-              left: 10,
-              margin: 10,
+              borderBottomColor: '#c9c9c9',
+              marginTop: '4%',
+              width: '96%',
             }}
           />
-          <View>
+          <View style={{width: 320}}>
             <WriteTodo />
             <TodoList />
           </View>
         </View>
       </View>
-    </>
+    </View>
   );
 }
 
@@ -91,18 +89,23 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#ffc988',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
+
   goToProfileBtn: {
-    borderRadius: 50,
+    borderRadius: 100,
     backgroundColor: '#ffffff',
-    width: 30,
-    height: 30,
-    top: 25,
-    left: 40,
+    width: 24,
+    height: 24,
+    top: '12%',
+    left: '10%',
+    margin: '2%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   homeProfileInner: {
     width: '100%',
-    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -110,24 +113,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    right: 20,
+    right: '5%',
   },
   dogProfileImg: {
-    width: 100,
-    height: 100,
+    width: 96,
+    height: 96,
     borderRadius: 50,
     backgroundColor: '#ffffff',
     position: 'relative',
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 5,
   },
   personProfileImg: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     borderRadius: 50,
-    top: 50,
-    left: 80,
+    top: 40,
+    left: 90,
     zIndex: 2,
     backgroundColor: '#eeeeee',
     position: 'absolute',
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 5,
   },
   profileInner: {
     justifyContent: 'center',
@@ -136,26 +145,41 @@ const styles = StyleSheet.create({
   },
   dogNameBox: {
     borderRadius: 20,
-    width: 100,
-    height: 30,
+    width: 128,
+    height: 28,
+    paddingTop: 2,
     backgroundColor: '#ffffff',
     alignItems: 'center',
+    shadowOpacity: 2,
+    shadowRadius: 4,
+    elevation: 5,
   },
   dDayBox: {
     borderRadius: 20,
-    width: 200,
-    height: 30,
+    width: 208,
+    height: 28,
+    paddingTop: 2,
     backgroundColor: '#ffffff',
     alignItems: 'center',
-    margin: 5,
+    margin: 4,
+    shadowOpacity: 2,
+    shadowRadius: 4,
+    elevation: 5,
   },
 
   homeTodoBox: {
-    flex: 1,
-    marginTop: 15,
+    // borderWidth: 1,
+    width: '100%',
+    height: 548,
     backgroundColor: '#ffffff',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+  },
+  homeTodoBoxInner: {
+    // borderWidth: 1,
+    alignItems: 'center',
+    margin: '5%',
+    height: '100%',
   },
 });
 

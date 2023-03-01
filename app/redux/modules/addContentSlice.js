@@ -59,6 +59,20 @@ export const __getPostData = createAsyncThunk(
   },
 );
 
+export const __getPostDetailData = createAsyncThunk(
+  'GET_POST_DATA',
+  async (payload, thunkAPI) => {
+    console.log('p', payload);
+    try {
+      const {data} = await http.get(`/posts/${payload}`);
+      console.log('data', data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
 //게시글작성
 const addContentSlice = createSlice({
   name: 'addContent',
@@ -76,17 +90,6 @@ const addContentSlice = createSlice({
       state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
       state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
       //console.log('전송실패 action.payload', action.payload);
-    },
-    [__getPostData.pending]: state => {
-      state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
-    },
-    [__getPostData.fulfilled]: (state, action) => {
-      state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-      //TODO: action.payload 받아서 저장해야함
-    },
-    [__getPostData.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
     },
     [__getPostData.pending]: state => {
       state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.

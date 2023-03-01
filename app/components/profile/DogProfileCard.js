@@ -14,15 +14,18 @@ import {
 
 const DogProfileCard = () => {
   return (
+    //수정해야됨
     <View style={styles.block}>
       <View style={styles.dogCard}>
         <View style={styles.dogImg}>
-          <TouchableOpacity>
+          <View style={styles.dogImgBtn} />
+
+          <View>
             <Text>
               강아지 프로필 사진{'\n'}
               &nbsp;&nbsp;&nbsp;업데이트 하기
             </Text>
-          </TouchableOpacity>
+          </View>
         </View>
 
         <View style={styles.dogProfileInputWrap}>
@@ -227,8 +230,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dogCard: {
-    width: 280,
-    height: 460,
+    width: 264,
+    height: 452,
     margin: 10,
     borderRadius: 15,
     shadowOpacity: 0.25,
@@ -258,6 +261,12 @@ const styles = StyleSheet.create({
     width: 280,
     height: 290,
     justifyContent: 'center',
+  },
+  dogImgBtn: {
+    zIndex: 2,
+    position: 'relative',
+    bottom: '20%',
+    left: '30%',
   },
 });
 

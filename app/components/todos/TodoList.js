@@ -47,9 +47,10 @@ const TodoList = () => {
 
 const styles = StyleSheet.create({
   todoListWrap: {
-    margin: 5,
-    padding: 5,
-    left: 20,
+    // borderWidth: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
