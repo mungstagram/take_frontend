@@ -12,7 +12,6 @@ import MailDm from '../svg/MailDm';
 
 const UserDetailProf = ({myNick}) => {
   const dispatch = useDispatch();
-  console.log('profile myNick', myNick);
 
   const {userDetail} = useSelector(state => state.userDetail);
   useEffect(() => {

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Button} from 'react-native-paper';
+import {useDispatch, useSelector} from 'react-redux';
 import {__getProfile} from '../redux/modules/profileSlice';
 
 //사람
@@ -17,25 +18,25 @@ import PersonProfileCard from '../components/profile/PersonProfileCard';
 import InputDogProfileCard from '../components/profile/InputDogProfileCard';
 import AddDogProfile from '../components/profile/AddDogProfile';
 import DogProfile from '../components/profile/DogProfile';
-import {useDispatch, useSelector} from 'react-redux';
 
 const Profile = ({navigation, route}) => {
   const dispatch = useDispatch();
 
   const {myNick} = route.params;
-  console.log('profile nick', myNick);
+  // console.log('profile nick', myNick);
 
   useEffect(() => {
-    console.log('왔을까');
+    // console.log('왔을까');
     dispatch(__getProfile(myNick));
-  }, []);
+  }, [myNick]);
 
-  // const profile = useSelector(state => state.profile);
-  // console.log(profile);
+  const profile = useSelector(state => state.profile.profile);
+  // console.log('stateProfile', profile);
+  // console.log('stateProfile user', profile[0].user);
   return (
     <>
       <View style={{borderWidth: 2, borderColor: 'blue'}}>
-        <PersonProfileCard />
+        <PersonProfileCard myInfo={profile} />
         {/* <InputPersonProfileCard /> */}
       </View>
       <View style={{borderWidth: 2, borderColor: 'red'}}>

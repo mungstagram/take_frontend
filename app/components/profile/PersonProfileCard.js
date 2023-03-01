@@ -12,22 +12,30 @@ import {
   Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import FastImage from 'react-native-fast-image';
+
 import {__getProfile} from '../../redux/modules/profileSlice';
 
 import Logout from '../Logout';
 import AddProfileImg from './AddProfileImg';
 
-const PersonProfileCard = ({nickname}) => {
-  const dispatch = useDispatch();
+const PersonProfileCard = ({myInfo}) => {
+  // const dispatch = useDispatch();
 
   // useEffect(() => {
   //   //2.데이터 값을 초기에 실행(마운트될때, 안에 있는 함수을 실행)
-  //   dispatch(__getProfile({nickname}));
+  //   dispatch(__getProfile());
   //   //3. dispatch get 프로필 정보 요청
-  //   console.log('2.2.user', nickname);
+  //   // console.log('2.2.user', nickname);
+  //   console.log('person profile');
   // }, []);
 
-  const profile = useSelector(state => state.profile);
+  // const {profile} = useSelector(state => state.profile);
+  // console.log('state.profile', profile);
+
+  console.log('user myNick', myInfo[0].user);
+  // console.log('user dog', myInfo[1].dogs);
+  // console.log('contentUrl', myInfo[0].user.contentUrl);
 
   return (
     <View style={styles.block}>
@@ -35,11 +43,13 @@ const PersonProfileCard = ({nickname}) => {
         <View style={styles.cardLeftWrap}>
           <View style={styles.textInputIntroWrap}>
             <View style={styles.textInputWrap}>
-              <Text style={{fontSize: 16, fontWeight: '600'}}> {profile}</Text>
+              <Text style={{fontSize: 16, fontWeight: '600'}}>
+                {myInfo[0].user.nickname}
+              </Text>
             </View>
 
-            <Text>성격,산책 시간,</Text>
-            <Text>거주지 등의 소개(0/25)</Text>
+            <Text>{myInfo[0].user.introduce}</Text>
+            <Text>(0/25)</Text>
           </View>
         </View>
 
@@ -56,7 +66,6 @@ const PersonProfileCard = ({nickname}) => {
             <Text>수정</Text>
           </TouchableOpacity>
           <View style={styles.imgOpenBtn}>
-            <AddProfileImg />
             <Text
               style={{
                 width: 60,
@@ -67,6 +76,14 @@ const PersonProfileCard = ({nickname}) => {
               }}>
               사용자 프로필{'\n'}업데이트 하기
             </Text>
+            <FastImage
+              style={styles.personImg}
+              source={{
+                uri: myInfo[0].user.contentUrl,
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={FastImage.resizeMode.contain}
+            />
           </View>
 
           <Text
@@ -77,7 +94,7 @@ const PersonProfileCard = ({nickname}) => {
               color: 'black',
               position: 'relative',
             }}>
-            00 마리의 집사
+            {myInfo[0].user.dogsCount} 마리의 집사
           </Text>
 
           <View style={styles.authBtn}>
@@ -172,7 +189,7 @@ const styles = StyleSheet.create({
     zIndex: 5,
   },
 
-  personProfileImg: {
+  personImg: {
     width: 80,
     height: 80,
     borderRadius: 50,
