@@ -13,11 +13,11 @@ const initialState = {
 export const __getProfile = createAsyncThunk(
   'GET_PROFILE',
   async (payload, thunkAPI) => {
-    console.log('1.payload', payload);
+    // console.log('1.payload', payload);
     //여기서 undefined 면 절대통신이 안된다는 뜻!
     try {
       const {data} = await http.get(`/profile/${payload}`);
-      console.log('data', data);
+      // console.log('data', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -55,7 +55,7 @@ export const profileSlice = createSlice({
       state.isLoading = false;
       // console.log(action.payload);
       state.profile = action.payload;
-      console.log('get payload', action.payload);
+      // console.log('payload', action.payload);
     },
     [__getProfile.rejected]: (state, action) => {
       state.isLoading = false;

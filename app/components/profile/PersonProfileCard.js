@@ -19,52 +19,44 @@ import {__getProfile} from '../../redux/modules/profileSlice';
 import Logout from '../Logout';
 import AddProfileImg from './AddProfileImg';
 
-const PersonProfileCard = ({myInfo}) => {
-  // const dispatch = useDispatch();
+const PersonProfileCard = () => {
+  // const PersonProfileCard = ({myInfo}) => {
+  //   console.log('user myNick', myInfo[0].user);
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   //2.데이터 값을 초기에 실행(마운트될때, 안에 있는 함수을 실행)
-  //   dispatch(__getProfile());
-  //   //3. dispatch get 프로필 정보 요청
-  //   // console.log('2.2.user', nickname);
-  //   console.log('person profile');
-  // }, []);
+  useEffect(() => {
+    //2.데이터 값을 초기에 실행(마운트될때, 안에 있는 함수을 실행)
+    dispatch(__getProfile());
+    //3. dispatch get 프로필 정보 요청
+    // console.log('2.2.user', nickname);
+    // console.log('person profile');
+  }, []);
 
-  // const {profile} = useSelector(state => state.profile);
-  // console.log('state.profile', profile);
+  const profile = useSelector(state => state.profile.profile);
+  // console.log('state.profile', profile[0]);
 
-  console.log('user myNick', myInfo[0].user);
   // console.log('user dog', myInfo[1].dogs);
   // console.log('contentUrl', myInfo[0].user.contentUrl);
 
   return (
     <View style={styles.block}>
+      <View style={styles.authBtn}>
+        <Logout />
+      </View>
       <View style={styles.card}>
         <View style={styles.cardLeftWrap}>
           <View style={styles.textInputIntroWrap}>
             <View style={styles.textInputWrap}>
               <Text style={{fontSize: 16, fontWeight: '600'}}>
-                {myInfo[0].user.nickname}
+                {profile[0].user.nickname}
               </Text>
             </View>
 
-            <Text>{myInfo[0].user.introduce}</Text>
-            <Text>(0/25)</Text>
+            <Text>{profile[0].user.introduce}</Text>
           </View>
         </View>
 
         <View style={styles.cardRightWrap}>
-          <TouchableOpacity
-            style={{
-              borderWidth: 1,
-              width: 24,
-              height: 24,
-              left: '60%',
-              top: '5%',
-              zIndex: 2,
-            }}>
-            <Text>수정</Text>
-          </TouchableOpacity>
           <View style={styles.imgOpenBtn}>
             <Text
               style={{
@@ -79,7 +71,7 @@ const PersonProfileCard = ({myInfo}) => {
             <FastImage
               style={styles.personImg}
               source={{
-                uri: myInfo[0].user.contentUrl,
+                uri: profile[0].user.contentUrl,
                 priority: FastImage.priority.normal,
               }}
               resizeMode={FastImage.resizeMode.contain}
@@ -89,17 +81,14 @@ const PersonProfileCard = ({myInfo}) => {
           <Text
             style={{
               fontSize: 12,
-              top: '5%',
+              top: '20%',
               left: '5%',
+              marginTop: '5%',
               color: 'black',
               position: 'relative',
             }}>
-            {myInfo[0].user.dogsCount} 마리의 집사
+            {profile[0].user.dogsCount} 마리의 집사
           </Text>
-
-          <View style={styles.authBtn}>
-            <Logout />
-          </View>
         </View>
       </View>
     </View>
@@ -186,6 +175,7 @@ const styles = StyleSheet.create({
     width: 140,
     height: 40,
     top: '8%',
+    left: '40%',
     zIndex: 5,
   },
 
@@ -207,7 +197,8 @@ const styles = StyleSheet.create({
     height: 80,
     justifyContent: 'center',
     alignItems: 'center',
-    left: '4%',
+    right: '10%',
+    top: '15%',
   },
 });
 

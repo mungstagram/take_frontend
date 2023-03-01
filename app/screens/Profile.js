@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -22,6 +22,8 @@ import DogProfile from '../components/profile/DogProfile';
 const Profile = ({navigation, route}) => {
   const dispatch = useDispatch();
 
+  const [personProf, setPersonProf] = useState(false);
+
   const {myNick} = route.params;
   // console.log('profile nick', myNick);
 
@@ -33,12 +35,22 @@ const Profile = ({navigation, route}) => {
   const profile = useSelector(state => state.profile.profile);
   // console.log('stateProfile', profile);
   // console.log('stateProfile user', profile[0].user);
+
   return (
     <>
       <View style={{borderWidth: 2, borderColor: 'blue'}}>
-        <PersonProfileCard myInfo={profile} />
-        {/* <InputPersonProfileCard /> */}
+        <TouchableOpacity
+          style={styles.editBtn}
+          onPress={() => navigation.navigate('InputPersonProfileCard')}>
+          <Text>수정</Text>
+        </TouchableOpacity>
+        {personProf ? (
+          <InputPersonProfileCard />
+        ) : (
+          <PersonProfileCard myInfo={profile} />
+        )}
       </View>
+
       <View style={{borderWidth: 2, borderColor: 'red'}}>
         <TouchableOpacity
           onPress={() => navigation.navigate('InputDogProfileCard')}>
@@ -51,5 +63,16 @@ const Profile = ({navigation, route}) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  editBtn: {
+    borderWidth: 1,
+    width: 40,
+    height: 30,
+    top: '35%',
+    left: '75%',
+    zIndex: 2,
+  },
+});
 
 export default Profile;
