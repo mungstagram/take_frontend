@@ -55,7 +55,7 @@ export const profileSlice = createSlice({
       state.isLoading = false;
       // console.log(action.payload);
       state.profile = action.payload;
-      console.log('get payload', action.payload);
+      // console.log('payload', action.payload);
     },
     [__getProfile.rejected]: (state, action) => {
       state.isLoading = false;

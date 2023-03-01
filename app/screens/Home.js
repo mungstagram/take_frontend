@@ -28,7 +28,7 @@ function Home({navigation}) {
     };
     getNickName();
   }, [myNick]);
-  // console.log(myNick);
+  console.log('myNick', myNick);
 
   return (
     <View style={styles.homeProfile}>

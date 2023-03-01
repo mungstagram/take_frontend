@@ -12,7 +12,6 @@ import {
   Alert,
 } from 'react-native';
 
-import Logout from '../Logout';
 import AddProfileImg from './AddProfileImg';
 
 const InputPersonProfileCard = () => {
@@ -67,9 +66,7 @@ const InputPersonProfileCard = () => {
             00 마리의 집사
           </Text>
 
-          <View style={styles.authBtn}>
-            <Logout />
-          </View>
+          <View style={styles.authBtn}></View>
         </View>
       </View>
     </View>
