@@ -15,11 +15,11 @@ export const __postComment = createAsyncThunk(
     console.log('pay', payload);
     try {
       const data = await http
-        .post(`/posts/${payload}`)
+        .post(`/comments/${payload.postId}`, {comment: payload.comment})
 
         .then(res => {
           //console.log('요청성공');
-          Alert.alert('업로드성공');
+          Alert.alert('댓글성공');
 
           return res;
         });
@@ -27,7 +27,7 @@ export const __postComment = createAsyncThunk(
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       //console.log('요청실패');
-      Alert.alert('업로드실패');
+      Alert.alert('댓글실패');
       return thunkAPI.rejectWithValue(error);
     }
   },
