@@ -52,7 +52,6 @@ export const __getPostData = createAsyncThunk(
           ? `/posts?order=${payload.order}&category=${payload.category}&nickname=${payload.nickname}`
           : `/posts?order=${payload.order}&category=${payload.category}`,
       );
-
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -65,7 +64,6 @@ export const __getPostDetailData = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const {data} = await http.get(`/posts/${payload}`);
-      //console.log('data', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

@@ -28,7 +28,7 @@ const VideoGetter = ({order}) => {
   }, [order, isFocused]);
 
   return (
-    <>
+    <View style={styles.getterWrapper}>
       <SafeAreaView>
         <FlatList
           data={videoContentList}
@@ -41,7 +41,7 @@ const VideoGetter = ({order}) => {
           horizontal={false}
         />
       </SafeAreaView>
-    </>
+    </View>
   );
 };
 
@@ -51,10 +51,14 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const videoCardWidth = windowWidth * 0.9;
-const videoCardHeight = videoCardWidth * 0.8;
 
 const styles = StyleSheet.create({
-  container: {
-    width: videoCardWidth,
+  getterWrapper: {
+    height: '100%',
+    width: '95%',
+    left: '1.6%',
+    justifyContent: 'center',
+    // backgroundColor: 'green', //TODO : 색 원래대로
   },
+  container: {},
 });

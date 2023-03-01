@@ -11,8 +11,6 @@ import NotFavorite from '../svg/NotFavorite';
 import GoBackButton from '../common/GoBackButton';
 
 const VideoDetailTop = ({detail, videoUrl}) => {
-  // 에러발생 왜 에러나는지 찾아봐야함 났다 안났다;;
-
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -69,7 +67,7 @@ const videoCardHeight = videoCardWidth * 0.8;
 const styles = StyleSheet.create({
   container: {
     width: videoCardWidth,
-    height: videoCardHeight,
+    backgroundColor: BasicColors.whiteColor,
   },
   detailTop: {
     backgroundColor: BasicColors.whiteColor,
