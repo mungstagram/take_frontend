@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,18 +7,35 @@ import {
   Touchable,
   TouchableOpacity,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 
 import TodoList from '../components/todos/TodoList';
 import WriteTodo from '../components/todos/WriteTodo';
 import ServicesPinkImg from '../components/svg/ServicesPinkImg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Home({navigation}) {
+  // const response = useSelector(state => state.login);
+  // console.log('Home nick', myNick);
+  // console.log('response', response);
+
+  // let myNick = '';
+  const [myNick, setMyNick] = useState();
+
+  useEffect(() => {
+    const getNickName = async () => {
+      setMyNick(await AsyncStorage.getItem('nickname'));
+    };
+    getNickName();
+  }, [myNick]);
+  // console.log(myNick);
+
   return (
     <View style={styles.homeProfile}>
       <View style={styles.homeProfileInner}>
         <TouchableOpacity
           style={styles.goToProfileBtn}
-          onPress={() => navigation.navigate('Profile')}>
+          onPress={() => navigation.navigate('Profile', {myNick})}>
           <ServicesPinkImg />
         </TouchableOpacity>
 

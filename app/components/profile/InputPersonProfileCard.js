@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   FlatList,
   View,
@@ -11,61 +11,39 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import FastImage from 'react-native-fast-image';
-
-import {__getProfile} from '../../redux/modules/profileSlice';
 
 import Logout from '../Logout';
 import AddProfileImg from './AddProfileImg';
 
-const PersonProfileCard = ({myInfo}) => {
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   //2.데이터 값을 초기에 실행(마운트될때, 안에 있는 함수을 실행)
-  //   dispatch(__getProfile());
-  //   //3. dispatch get 프로필 정보 요청
-  //   // console.log('2.2.user', nickname);
-  //   console.log('person profile');
-  // }, []);
-
-  // const {profile} = useSelector(state => state.profile);
-  // console.log('state.profile', profile);
-
-  console.log('user myNick', myInfo[0].user);
-  // console.log('user dog', myInfo[1].dogs);
-  // console.log('contentUrl', myInfo[0].user.contentUrl);
-
+const InputPersonProfileCard = () => {
   return (
     <View style={styles.block}>
       <View style={styles.card}>
         <View style={styles.cardLeftWrap}>
           <View style={styles.textInputIntroWrap}>
             <View style={styles.textInputWrap}>
-              <Text style={{fontSize: 16, fontWeight: '600'}}>
-                {myInfo[0].user.nickname}
-              </Text>
+              <TextInput style={{left: 10}} placeholder="Nick Name" />
+              <TouchableOpacity style={styles.textInputBtn}>
+                <Text style={styles.checkBtn}>중복확인</Text>
+              </TouchableOpacity>
             </View>
 
-            <Text>{myInfo[0].user.introduce}</Text>
-            <Text>(0/25)</Text>
+            <TextInput
+              style={styles.textInputIntro}
+              maxLength={25}
+              multiline={true}
+              placeholder="성격, 산책 시간, 거주지 소개"
+            />
+            <Text
+              style={{position: 'absolute', zIndex: 1, left: 130, bottom: 10}}>
+              (0/25)
+            </Text>
           </View>
         </View>
 
         <View style={styles.cardRightWrap}>
-          <TouchableOpacity
-            style={{
-              borderWidth: 1,
-              width: 24,
-              height: 24,
-              left: '60%',
-              top: '5%',
-              zIndex: 2,
-            }}>
-            <Text>수정</Text>
-          </TouchableOpacity>
           <View style={styles.imgOpenBtn}>
+            <AddProfileImg />
             <Text
               style={{
                 width: 60,
@@ -76,25 +54,17 @@ const PersonProfileCard = ({myInfo}) => {
               }}>
               사용자 프로필{'\n'}업데이트 하기
             </Text>
-            <FastImage
-              style={styles.personImg}
-              source={{
-                uri: myInfo[0].user.contentUrl,
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={FastImage.resizeMode.contain}
-            />
           </View>
 
           <Text
             style={{
               fontSize: 12,
-              top: '5%',
-              left: '5%',
+              top: '20%',
+              left: '15%',
               color: 'black',
               position: 'relative',
             }}>
-            {myInfo[0].user.dogsCount} 마리의 집사
+            00 마리의 집사
           </Text>
 
           <View style={styles.authBtn}>
@@ -129,7 +99,7 @@ const styles = StyleSheet.create({
     top: 10,
   },
   textInputWrap: {
-    // borderWidth: 1,
+    borderWidth: 1,
     // borderColor: 'red',
     borderColor: 'gray',
     borderRadius: 5,
@@ -185,11 +155,11 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     width: 140,
     height: 40,
-    top: '8%',
+    top: '16%',
     zIndex: 5,
   },
 
-  personImg: {
+  personProfileImg: {
     width: 80,
     height: 80,
     borderRadius: 50,
@@ -207,8 +177,8 @@ const styles = StyleSheet.create({
     height: 80,
     justifyContent: 'center',
     alignItems: 'center',
-    left: '4%',
+    top: '10%',
+    left: '15%',
   },
 });
-
-export default PersonProfileCard;
+export default InputPersonProfileCard;

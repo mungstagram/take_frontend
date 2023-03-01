@@ -12,20 +12,14 @@ import {
   Alert,
 } from 'react-native';
 
-const DogProfileCard = () => {
+const DogProfile = () => {
   return (
     //수정해야됨
     <View style={styles.block}>
+      <View style={styles.dogCardShadow} />
       <View style={styles.dogCard}>
         <View style={styles.dogImg}>
           <View style={styles.dogImgBtn} />
-
-          <View>
-            <Text>
-              강아지 프로필 사진{'\n'}
-              &nbsp;&nbsp;&nbsp;업데이트 하기
-            </Text>
-          </View>
         </View>
 
         <View style={styles.dogProfileInputWrap}>
@@ -51,17 +45,15 @@ const DogProfileCard = () => {
                 }}>
                 강아지이름
               </Text>
-              <TextInput
+              <Text
                 style={{
                   position: 'relative',
-                  borderWidth: 1,
                   borderRadius: 5,
                   borderColor: 'gray',
                   width: '45%',
                   height: 50,
                   left: 5,
                 }}
-                placeholder="김댕댕"
               />
               <Text
                 style={{
@@ -90,21 +82,20 @@ const DogProfileCard = () => {
                   fontSize: 13,
                   top: 0,
                   left: '15%',
-                  // borderWidth: 1,
+
                   backgroundColor: '#ffffff',
                 }}>
                 종류
               </Text>
-              <TextInput
+              <Text
                 style={{
                   position: 'relative',
-                  borderWidth: 1,
+
                   borderRadius: 5,
                   borderColor: 'gray',
                   width: '40%',
                   height: 50,
                 }}
-                placeholder="요크셔테리어"
               />
               <Text
                 style={{
@@ -114,22 +105,21 @@ const DogProfileCard = () => {
                   fontSize: 13,
                   top: 0,
                   right: '25%',
-                  // borderWidth: 1,
+
                   backgroundColor: '#ffffff',
                 }}>
                 몸무게
               </Text>
 
-              <TextInput
+              <Text
                 style={{
                   position: 'relative',
-                  borderWidth: 1,
+
                   borderRadius: 5,
                   borderColor: 'gray',
                   width: '40%',
                   height: 50,
                 }}
-                placeholder="00kg"
               />
             </View>
 
@@ -147,20 +137,18 @@ const DogProfileCard = () => {
                   fontSize: 13,
                   top: 0,
                   left: '15%',
-                  // borderWidth: 1,
+
                   backgroundColor: '#ffffff',
                 }}>
                 강아지소개
               </Text>
-              <TextInput
+              <Text
                 style={{
-                  borderWidth: 1,
                   borderRadius: 5,
                   borderColor: 'gray',
                   width: '85%',
                   height: 50,
                 }}
-                placeholder="집사바라기"
               />
             </View>
 
@@ -183,9 +171,8 @@ const DogProfileCard = () => {
                 }}>
                 태어난 날
               </Text>
-              <TextInput
+              <Text
                 style={{
-                  borderWidth: 1,
                   borderRadius: 5,
                   borderColor: 'gray',
                   width: '40%',
@@ -205,10 +192,10 @@ const DogProfileCard = () => {
                 }}>
                 데려온 날
               </Text>
-              <TextInput
+              <Text
                 style={{
                   position: 'relative',
-                  borderWidth: 1,
+
                   borderRadius: 5,
                   borderColor: 'gray',
                   width: '40%',
@@ -229,15 +216,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   dogCard: {
     width: 264,
     height: 452,
     margin: 10,
     borderRadius: 15,
-    shadowOpacity: 0.25,
+    position: 'absolute',
+  },
+  dogCardShadow: {
+    width: 264,
+    height: 452,
+    borderRadius: 15,
+    left: '2%',
+    top: '2%',
+    shadowOpacity: 1,
     shadowRadius: 3.84,
-    elevation: 5,
-    position: 'relative',
+    elevation: 2,
   },
 
   dogProfileInputWrap: {
@@ -270,4 +265,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DogProfileCard;
+export default DogProfile;
