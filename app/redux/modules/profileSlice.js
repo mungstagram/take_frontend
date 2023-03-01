@@ -17,6 +17,7 @@ export const __getProfile = createAsyncThunk(
     //여기서 undefined 면 절대통신이 안된다는 뜻!
     try {
       const {data} = await http.get(`/profile/${payload}`);
+      // console.log('data', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -38,8 +39,8 @@ export const __editProfile = createAsyncThunk(
   },
 );
 
-export const todoSlice = createSlice({
-  name: 'todos',
+export const profileSlice = createSlice({
+  name: 'profile',
   initialState,
   reducers: {
     // clearTodo: state => {
@@ -52,7 +53,8 @@ export const todoSlice = createSlice({
   extraReducers: {
     [__getProfile.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.todo = action.payload;
+      console.log(action.payload);
+      // state.profile = action.payload;
       // console.log('payload', action.payload);
     },
     [__getProfile.rejected]: (state, action) => {
@@ -66,7 +68,7 @@ export const todoSlice = createSlice({
       state.isLoading = false;
       // console.log('payload', action.payload);
       // const data = state.todo.filter(todo => todo.id !== action.payload);
-      const target = state.todo.findIndex(
+      const target = state.profile.findIndex(
         todo => todo.id === action.payload.id,
       );
       state.todo.splice(target, 1, action.payload);
@@ -83,5 +85,5 @@ export const todoSlice = createSlice({
   },
 });
 
-export const {toDos} = todoSlice.actions;
-export default todoSlice.reducer;
+export const {} = profileSlice.actions;
+export default profileSlice.reducer;

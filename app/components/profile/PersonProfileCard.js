@@ -12,7 +12,7 @@ import {
   Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {__getProfile} from '../../redux/modules/personProfileSlice';
+import {__getProfile} from '../../redux/modules/profileSlice';
 
 import Logout from '../Logout';
 import AddProfileImg from './AddProfileImg';
@@ -20,12 +20,12 @@ import AddProfileImg from './AddProfileImg';
 const PersonProfileCard = ({nickname}) => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    //2.데이터 값을 초기에 실행(마운트될때, 안에 있는 함수을 실행)
-    dispatch(__getProfile({nickname}));
-    //3. dispatch get 프로필 정보 요청
-    console.log('2.2.user', nickname);
-  }, []);
+  // useEffect(() => {
+  //   //2.데이터 값을 초기에 실행(마운트될때, 안에 있는 함수을 실행)
+  //   dispatch(__getProfile({nickname}));
+  //   //3. dispatch get 프로필 정보 요청
+  //   console.log('2.2.user', nickname);
+  // }, []);
 
   const profile = useSelector(state => state.profile);
 

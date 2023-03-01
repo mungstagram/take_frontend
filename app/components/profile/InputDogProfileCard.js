@@ -18,6 +18,9 @@ const InputDogProfileCard = () => {
     <View style={styles.block}>
       <View style={styles.dogCardShadow} />
       <View style={styles.dogCard}>
+        <TouchableOpacity style={styles.saveBtn}>
+          <Text>저장</Text>
+        </TouchableOpacity>
         <View style={styles.dogImg}>
           <View style={styles.dogImgBtn} />
 
@@ -243,7 +246,7 @@ const styles = StyleSheet.create({
     height: 452,
     borderRadius: 15,
     left: '2%',
-    top: '2%',
+    top: '8%',
     shadowOpacity: 1,
     shadowRadius: 3.84,
     elevation: 2,
@@ -276,6 +279,15 @@ const styles = StyleSheet.create({
     position: 'relative',
     bottom: '20%',
     left: '30%',
+  },
+  saveBtn: {
+    width: 30,
+    height: 24,
+    borderWidth: 1,
+    zIndex: 2,
+    position: 'relative',
+    top: '10%',
+    left: '85%',
   },
 });
 

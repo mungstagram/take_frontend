@@ -12,7 +12,7 @@ import {
   Alert,
 } from 'react-native';
 
-const AddDogProfile = () => {
+const AddDogProfile = ({navigation}) => {
   return (
     <View style={styles.addDogCard}>
       <TouchableOpacity style={styles.addDogCardText}>
