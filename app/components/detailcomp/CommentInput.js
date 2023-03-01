@@ -15,7 +15,6 @@ import WriteComment from '../svg/WriteComment';
 import {__postComment} from '../../redux/modules/commetsSlice';
 
 const CommentInput = ({detail}) => {
-  console.log('detail', detail);
   const dispatch = useDispatch();
   // 댓글 인풋창 상태
   const [inputText, setInputText] = useState('');
@@ -38,7 +37,6 @@ const CommentInput = ({detail}) => {
     };
     getNickName();
   }, [myNick]);
-  console.log('myNick', myNick);
 
   return (
     <View style={styles.container}>

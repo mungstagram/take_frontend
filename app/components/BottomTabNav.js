@@ -4,7 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Home from '../screens/Home';
 import AddContent from '../screens/AddContent';
-import ImageBoard from '../screens/ImageBoard';
+import ImageTab from '../tabcomponent/ImageTab';
 import SearchTab from '../tabcomponent/SearchTab';
 import VideoTab from '../tabcomponent/VideoTab';
 
@@ -25,8 +25,8 @@ const BottomTabNav = () => {
         options={{headerShown: false}}
       />
       <Tab.Screen
-        name="ImageBoard"
-        component={ImageBoard}
+        name="ImageTab"
+        component={ImageTab}
         options={{headerShown: false}}
       />
       <Tab.Screen
