@@ -39,20 +39,16 @@ const Profile = ({navigation, route}) => {
   return (
     <>
       <View style={{borderWidth: 2, borderColor: 'blue'}}>
+        <TouchableOpacity
+          style={styles.editBtn}
+          onPress={() => navigation.navigate('InputPersonProfileCard')}>
+          <Text>수정</Text>
+        </TouchableOpacity>
         {personProf ? (
           <InputPersonProfileCard />
         ) : (
           <PersonProfileCard myInfo={profile} />
         )}
-        <TouchableOpacity
-          style={{
-            borderWidth: 1,
-            width: 50,
-            height: 30,
-          }}
-          onPress={() => navigation.navigate('InputPersonProfileCard')}>
-          <Text>수정</Text>
-        </TouchableOpacity>
       </View>
 
       <View style={{borderWidth: 2, borderColor: 'red'}}>
@@ -67,5 +63,16 @@ const Profile = ({navigation, route}) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  editBtn: {
+    borderWidth: 1,
+    width: 40,
+    height: 30,
+    top: '35%',
+    left: '75%',
+    zIndex: 2,
+  },
+});
 
 export default Profile;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   View,
@@ -11,10 +11,22 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+
+import {__getProfile} from '../../redux/modules/profileSlice';
 
 import AddProfileImg from './AddProfileImg';
 
 const InputPersonProfileCard = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // console.log('input profile');
+    dispatch(__getProfile());
+  }, []);
+  const profile = useSelector(state => state.profile.profile);
+  // console.log('input profile', profile[0]);
+
   return (
     <View style={styles.block}>
       <View style={styles.card}>
@@ -41,6 +53,9 @@ const InputPersonProfileCard = () => {
         </View>
 
         <View style={styles.cardRightWrap}>
+          <TouchableOpacity style={styles.saveBtn}>
+            <Text>저장</Text>
+          </TouchableOpacity>
           <View style={styles.imgOpenBtn}>
             <AddProfileImg />
             <Text
@@ -176,6 +191,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     top: '10%',
     left: '15%',
+  },
+  saveBtn: {
+    borderWidth: 1,
+    width: 40,
+    height: 30,
+    left: '50%',
+    top: '10%',
+    zIndex: 1,
   },
 });
 export default InputPersonProfileCard;
