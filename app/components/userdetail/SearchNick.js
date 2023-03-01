@@ -36,7 +36,8 @@ const SearchNick = ({searchData}) => {
                 <FastImage
                   style={{width: 80, height: 80, backgroundColor: 'gray'}}
                   source={{
-                    uri: item.contentUrl.length === 0 ? '' : item.contentUrl[0],
+                    // uri: item.contentUrl.length === 0 ? '' : item.contentUrl[0],
+                    uri: item.contentUrl,
                     priority: FastImage.priority.normal,
                   }}
                   resizeMode={FastImage.resizeMode.contain}

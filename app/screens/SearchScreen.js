@@ -39,6 +39,7 @@ const SearchScreen = () => {
       setStartSearch(false);
     }
   }, [isFocused]);
+
   const onSearchHandler = () => {
     dispatch(
       __getSearchData({
