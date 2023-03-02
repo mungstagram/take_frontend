@@ -21,7 +21,6 @@ const SearchTab = () => {
         component={UserDetail}
         options={{headerShown: false}}
       />
-<<<<<<< HEAD
       <Stack.Screen
         name="MessageBox"
         component={MessageBox}
@@ -32,8 +31,6 @@ const SearchTab = () => {
         component={DirectMessage}
         options={{headerShown: false}}
       />
-=======
->>>>>>> develop
     </Stack.Navigator>
   );
 };
