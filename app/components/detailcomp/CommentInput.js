@@ -25,7 +25,9 @@ const CommentInput = ({detail}) => {
   const commentEnterHandler = e => {
     e.preventDefault();
     if (inputText === '') return; // 아무것도 입력하지 않았을 때 dispatch 하지 않음
-    dispatch(__postComment({postId: detail.postid, comment: inputText}));
+    dispatch(
+      __postComment({postId: detail.postId, comment: inputText, target: 0}),
+    );
     setInputText('');
   };
   // 다른 유저가 입장할때마다 상태를 바꿔주기 위해 존재?
