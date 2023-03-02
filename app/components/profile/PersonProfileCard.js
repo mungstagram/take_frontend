@@ -33,7 +33,7 @@ const PersonProfileCard = () => {
   }, []);
 
   const profile = useSelector(state => state.profile.profile);
-  console.log('state.profile', profile[0]);
+  // console.log('state.profile', profile[0]);
 
   // console.log('user dog', myInfo[1].dogs);
   // console.log('contentUrl', myInfo[0].user.contentUrl);
@@ -57,17 +57,6 @@ const PersonProfileCard = () => {
         </View>
 
         <View style={styles.cardRightWrap}>
-          <TouchableOpacity
-            style={{
-              borderWidth: 1,
-              width: 24,
-              height: 24,
-              left: '60%',
-              top: '5%',
-              zIndex: 2,
-            }}>
-            <Text>수정</Text>
-          </TouchableOpacity>
           <View style={styles.imgOpenBtn}>
             <Text
               style={{
@@ -92,8 +81,9 @@ const PersonProfileCard = () => {
           <Text
             style={{
               fontSize: 12,
-              top: '5%',
+              top: '20%',
               left: '5%',
+              marginTop: '5%',
               color: 'black',
               position: 'relative',
             }}>
@@ -207,7 +197,8 @@ const styles = StyleSheet.create({
     height: 80,
     justifyContent: 'center',
     alignItems: 'center',
-    left: '4%',
+    right: '10%',
+    top: '15%',
   },
 });
 
