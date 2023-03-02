@@ -24,6 +24,7 @@ import {
 import {Colors} from '../constants/colors';
 import GoBackButton from '../components/common/GoBackButton';
 import SendDM from '../components/svg/SendDM';
+import {SafeAreaView} from 'react-native-safe-area-context';
 const DirectMessage = () => {
   const dispatch = useDispatch();
   const route = useRoute();
@@ -92,33 +93,47 @@ const DirectMessage = () => {
 
   console.log(userDM, ' 최종메시지');
   return (
-    <KeyboardAvoidingView behavior="heigth">
-      <View style={styles.wrapper}>
-        <View style={styles.userButton}>
-          <GoBackButton />
-        </View>
-        <View style={styles.targetProfileBox}>
-          <FastImage
-            style={styles.targetProfileImage}
-            source={{
-              uri: value.profileUrl,
-              priority: FastImage.priority.normal,
-            }}
-            resizeMode={FastImage.resizeMode.contain}
-          />
-          <Text style={styles.targetFont}>{value.nickname}</Text>
-        </View>
+    <SafeAreaView>
+      <KeyboardAvoidingView
+        behavior="heigth"
+        // style={{flex: 1}}
+        // keyboardVerticalOffset={60}
+      >
+        <View style={styles.wrapper}>
+          <View style={styles.userButton}>
+            <GoBackButton />
+          </View>
+          <View style={styles.targetProfileBox}>
+            <FastImage
+              style={styles.targetProfileImage}
+              source={{
+                uri: value.profileUrl,
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+            <Text style={styles.targetFont}>{value.nickname}</Text>
+          </View>
 
-        <View style={styles.chatListWrapper}>
-          {userDM && (
-            <FlatList
-              data={userDM}
-              inverted={true}
-              renderItem={({item, index}) => (
-                <View>
-                  {userDM.length > index + 1 &&
-                    userDM[index].createdAt.substr(0, 10) !==
-                      userDM[index + 1].createdAt.substr(0, 10) && (
+          <View style={styles.chatListWrapper}>
+            {userDM && (
+              <FlatList
+                data={userDM}
+                inverted={true}
+                renderItem={({item, index}) => (
+                  <View>
+                    {userDM.length > index + 1 &&
+                      userDM[index].createdAt.substr(0, 10) !==
+                        userDM[index + 1].createdAt.substr(0, 10) && (
+                        <View style={styles.dateTeller}>
+                          <Text style={{fontSize: 8}}>
+                            {userDM[index].createdAt.substr(0, 4)}년{' '}
+                            {userDM[index].createdAt.substr(5, 2)}월{' '}
+                            {userDM[index].createdAt.substr(8, 2)}일{' '}
+                          </Text>
+                        </View>
+                      )}
+                    {userDM.length === index + 1 && (
                       <View style={styles.dateTeller}>
                         <Text style={{fontSize: 8}}>
                           {userDM[index].createdAt.substr(0, 4)}년{' '}
@@ -127,60 +142,53 @@ const DirectMessage = () => {
                         </Text>
                       </View>
                     )}
-                  {userDM.length === index + 1 && (
-                    <View style={styles.dateTeller}>
-                      <Text style={{fontSize: 8}}>
-                        {userDM[index].createdAt.substr(0, 4)}년{' '}
-                        {userDM[index].createdAt.substr(5, 2)}월{' '}
-                        {userDM[index].createdAt.substr(8, 2)}일{' '}
-                      </Text>
-                    </View>
-                  )}
-                  <View
-                    style={
-                      dynamicStyles(value.nickname === item.receiver.nickname)
-                        .userConversationWrapper
-                    }>
                     <View
                       style={
                         dynamicStyles(value.nickname === item.receiver.nickname)
-                          .userConversationBox
+                          .userConversationWrapper
                       }>
-                      <Text numberOfLines={10} style={styles.textContent}>
-                        {item.message} fdsafdas fds fa
+                      <View
+                        style={
+                          dynamicStyles(
+                            value.nickname === item.receiver.nickname,
+                          ).userConversationBox
+                        }>
+                        <Text numberOfLines={10} style={styles.textContent}>
+                          {item.message} fdsafdas fds fa
+                        </Text>
+                      </View>
+                      <Text style={styles.textCreatedAt}>
+                        {item.createdAt.substr(11, 2)}시{' '}
+                        {item.createdAt.substr(14, 2)}분
                       </Text>
                     </View>
-                    <Text style={styles.textCreatedAt}>
-                      {item.createdAt.substr(11, 2)}시{' '}
-                      {item.createdAt.substr(14, 2)}분
-                    </Text>
                   </View>
-                </View>
-              )}
-              keyExtractor={(item, index) => index}
-              horizontal={false}
-            />
-          )}
-        </View>
+                )}
+                keyExtractor={(item, index) => index}
+                horizontal={false}
+              />
+            )}
+          </View>
 
-        <View style={styles.KeyboardView}>
-          <View style={styles.textInputContainer}>
-            <TextInput
-              style={styles.textInputStyler}
-              placeholder="메시지 입력하기"
-              value={myDM}
-              onChangeText={onChangeInputHandler}
-              maxLength={150}
-            />
-            <Pressable style={styles.sendMsgArea} onPress={handleSendMessage}>
-              <View style={styles.sendIconPositioner}>
-                <SendDM />
-              </View>
-            </Pressable>
+          <View style={styles.KeyboardView}>
+            <View style={styles.textInputContainer}>
+              <TextInput
+                style={styles.textInputStyler}
+                placeholder="메시지 입력하기"
+                value={myDM}
+                onChangeText={onChangeInputHandler}
+                maxLength={150}
+              />
+              <Pressable style={styles.sendMsgArea} onPress={handleSendMessage}>
+                <View style={styles.sendIconPositioner}>
+                  <SendDM />
+                </View>
+              </Pressable>
+            </View>
           </View>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

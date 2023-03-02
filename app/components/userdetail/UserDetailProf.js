@@ -10,14 +10,15 @@ import GoBackButton from '../common/GoBackButton';
 import AccountCircle from '../svg/AccountCircle';
 import MailDm from '../svg/MailDm';
 
-const UserDetailProf = ({myNick}) => {
+const UserDetailProf = ({nickname}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [myToken, setMyToken] = useState('');
+  console.log(nickname);
 
   const {userDetail} = useSelector(state => state.userDetail);
   useEffect(() => {
-    dispatch(__getUserDetail());
+    dispatch(__getUserDetail(nickname));
   }, []);
 
   useEffect(() => {
@@ -66,7 +67,7 @@ const UserDetailProf = ({myNick}) => {
           </View>
           <View style={styles.userTextWrapper}>
             <View style={styles.userIntroWrapper}>
-              <Text style={styles.textNickName}>{myNick}</Text>
+              <Text style={styles.textNickName}>{nickname}</Text>
               <Text style={styles.textIntroduce}>{userDetail.introduce}</Text>
             </View>
             <View style={styles.userContentCountWrapper}>
