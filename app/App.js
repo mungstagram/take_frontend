@@ -18,6 +18,9 @@ import BottomTabNav from './components/BottomTabNav';
 import Profile from './screens/Profile';
 import VideoDetail from './screens/VideoDetail';
 
+import InputDogProfileCard from './components/profile/InputDogProfileCard';
+import InputPersonProfileCard from './components/profile/InputPersonProfileCard';
+
 const Stack = createNativeStackNavigator();
 
 //그인전 이용하는 스크린
@@ -65,6 +68,14 @@ const AuthenticatedStack = () => {
         options={{headerShown: false}}
       /> */}
       <Stack.Screen name="VideoDetail" component={VideoDetail} />
+      <Stack.Screen
+        name="InputDogProfileCard"
+        component={InputDogProfileCard}
+      />
+      <Stack.Screen
+        name="InputPersonProfileCard"
+        component={InputPersonProfileCard}
+      />
     </Stack.Navigator>
   );
 };

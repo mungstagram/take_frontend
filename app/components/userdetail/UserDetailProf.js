@@ -10,13 +10,14 @@ import GoBackButton from '../common/GoBackButton';
 import AccountCircle from '../svg/AccountCircle';
 import MailDm from '../svg/MailDm';
 
-const UserDetailProf = ({nickname}) => {
+const UserDetailProf = ({myNick}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [myToken, setMyToken] = useState('');
 
+  const {userDetail} = useSelector(state => state.userDetail);
   useEffect(() => {
-    dispatch(__getUserDetail(nickname));
+    dispatch(__getUserDetail());
   }, []);
 
   useEffect(() => {
@@ -29,7 +30,6 @@ const UserDetailProf = ({nickname}) => {
     fetctmyToken();
   }, []);
 
-  const {userDetail} = useSelector(state => state.userDetail);
   //{nickname: 'Seeder1', introduce: 'seed1 introduce', contentUrl: 'https://spartabecool.s3.amazonaws.com/image/1676984268618_image3.png', postsCount: 3, dogsCount: 2, …}
 
   const openDirectMessageHandler = () => {
@@ -66,7 +66,7 @@ const UserDetailProf = ({nickname}) => {
           </View>
           <View style={styles.userTextWrapper}>
             <View style={styles.userIntroWrapper}>
-              <Text style={styles.textNickName}>{userDetail.nickname}</Text>
+              <Text style={styles.textNickName}>{myNick}</Text>
               <Text style={styles.textIntroduce}>{userDetail.introduce}</Text>
             </View>
             <View style={styles.userContentCountWrapper}>
