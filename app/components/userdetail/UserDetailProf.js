@@ -1,8 +1,8 @@
-import {wrap} from 'module';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, Pressable, Modal} from 'react-native';
 import FastImage from 'react-native-fast-image';
-
+import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch, useSelector} from 'react-redux';
 import {Colors} from '../../constants/colors';
 import {__getUserDetail} from '../../redux/modules/userDetailSlice';
@@ -10,15 +10,34 @@ import GoBackButton from '../common/GoBackButton';
 import AccountCircle from '../svg/AccountCircle';
 import MailDm from '../svg/MailDm';
 
-const UserDetailProf = ({myNick}) => {
+const UserDetailProf = ({nickname}) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const [myToken, setMyToken] = useState('');
+  console.log(nickname);
 
   const {userDetail} = useSelector(state => state.userDetail);
   useEffect(() => {
-    dispatch(__getUserDetail());
+    dispatch(__getUserDetail(nickname));
+  }, []);
+
+  useEffect(() => {
+    async function fetctmyToken() {
+      const token = await AsyncStorage.getItem('authorization');
+      if (token) {
+        setMyToken(token);
+      }
+    }
+    fetctmyToken();
   }, []);
 
   //{nickname: 'Seeder1', introduce: 'seed1 introduce', contentUrl: 'https://spartabecool.s3.amazonaws.com/image/1676984268618_image3.png', postsCount: 3, dogsCount: 2, …}
+
+  const openDirectMessageHandler = () => {
+    // console.log('userDetailprof의', myNickName);
+    navigation.push('MessageBox', {token: myToken});
+  };
+
   return (
     <>
       <View style={styles.userWrapper}>
@@ -39,14 +58,16 @@ const UserDetailProf = ({myNick}) => {
               <View style={styles.iconAligner}>
                 <AccountCircle />
               </View>
-              <View style={styles.iconAligner}>
+              <Pressable
+                onPress={openDirectMessageHandler}
+                style={styles.iconAligner}>
                 <MailDm />
-              </View>
+              </Pressable>
             </View>
           </View>
           <View style={styles.userTextWrapper}>
             <View style={styles.userIntroWrapper}>
-              <Text style={styles.textNickName}>{myNick}</Text>
+              <Text style={styles.textNickName}>{nickname}</Text>
               <Text style={styles.textIntroduce}>{userDetail.introduce}</Text>
             </View>
             <View style={styles.userContentCountWrapper}>

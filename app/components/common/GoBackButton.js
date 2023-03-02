@@ -22,5 +22,6 @@ export default GoBackButton;
 const styles = StyleSheet.create({
   textContainer: {
     alignItems: 'center',
+    backgroundColor: 'transparent',
   },
 });
