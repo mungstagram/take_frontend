@@ -1,26 +1,24 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
-import SearchScreen from '../screens/SearchScreen';
-import UserDetail from '../screens/UserDetail';
+import ImageBoard from '../screens/ImageBoard';
+import ImageDetail from '../screens/ImageDetail';
 
 const Stack = createNativeStackNavigator();
 
-const SearchTab = () => {
+const ImageTab = () => {
   return (
-    <Stack.Navigator initialRouteName="SearchScreen">
+    <Stack.Navigator initialRouteName="ImageBoard">
       <Stack.Screen
-        name="SearchScreen"
-        component={SearchScreen}
+        name="ImageBoard"
+        component={ImageBoard}
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="UserDetail"
-        component={UserDetail}
+        name="ImageDetail"
+        component={ImageDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
 };
-
-export default SearchTab;
+export default ImageTab;
