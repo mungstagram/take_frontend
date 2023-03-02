@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 
-import {Colors} from '../constants/colors';
+import {Colors, BasicColors} from '../constants/colors';
 import SelectBox from '../components/common/SelectBox';
 import ImageGetter from '../components/boardcomponent/ImageGetter';
+import GoBackButton from '../components/common/GoBackButton';
 
 const ImageBoard = () => {
   // 최신순 or 좋아요 순 결정하는 state (초깃값 설정 서버에 보낼 값을 배열에 담고, 그때의 인덱스)
@@ -26,6 +27,9 @@ const ImageBoard = () => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.goBackButton}>
+        <GoBackButton />
+      </View>
       <View style={styles.selectContainer}>
         <View style={styles.selectBoxHolder}>
           <SelectBox
@@ -54,6 +58,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.mainColorDark,
+  },
+  goBackButton: {
+    position: 'absolute',
+    height: '7.48%',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginLeft: '7%',
   },
   selectContainer: {
     position: 'absolute',

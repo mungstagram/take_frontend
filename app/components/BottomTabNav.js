@@ -3,10 +3,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Home from '../screens/Home';
 import AddContent from '../screens/AddContent';
-import ImageBoard from '../screens/ImageBoard';
-import VideoBoard from '../screens/VideoBoard';
+import ImageTab from '../tabcomponent/ImageTab';
 import SearchTab from '../tabcomponent/SearchTab';
-import VideoDetail from '../screens/VideoDetail';
+import VideoTab from '../tabcomponent/VideoTab';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,13 +24,13 @@ const BottomTabNav = () => {
         options={{headerShown: false}}
       />
       <Tab.Screen
-        name="ImageBoard"
-        component={ImageBoard}
+        name="ImageTab"
+        component={ImageTab}
         options={{headerShown: false}}
       />
       <Tab.Screen
-        name="VideoBoard"
-        component={VideoBoard}
+        name="VideoTab"
+        component={VideoTab}
         options={{headerShown: false}}
       />
     </Tab.Navigator>
