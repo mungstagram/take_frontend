@@ -3,6 +3,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import SearchScreen from '../screens/SearchScreen';
 import UserDetail from '../screens/UserDetail';
+import DirectMessage from '../screens/DirectMessage';
+import MessageBox from '../screens/MessageBox';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +21,19 @@ const SearchTab = () => {
         component={UserDetail}
         options={{headerShown: false}}
       />
+<<<<<<< HEAD
+      <Stack.Screen
+        name="MessageBox"
+        component={MessageBox}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="DirectMessage"
+        component={DirectMessage}
+        options={{headerShown: false}}
+      />
+=======
+>>>>>>> develop
     </Stack.Navigator>
   );
 };
