@@ -34,7 +34,6 @@ const PersonProfileCard = () => {
 
   const profile = useSelector(state => state.profile.profile);
   // console.log('state.profile', profile[0]);
-
   // console.log('user dog', myInfo[1].dogs);
   // console.log('contentUrl', myInfo[0].user.contentUrl);
 

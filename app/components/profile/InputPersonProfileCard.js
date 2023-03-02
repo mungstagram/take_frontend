@@ -13,19 +13,26 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {__getProfile} from '../../redux/modules/profileSlice';
+import {__getProfile, __editProfile} from '../../redux/modules/profileSlice';
 
 import AddProfileImg from './AddProfileImg';
 
-const InputPersonProfileCard = () => {
+const InputPersonProfileCard = ({}) => {
   const dispatch = useDispatch();
 
+  const [profEdit, setProfEdit] = useState();
+
   useEffect(() => {
-    // console.log('input profile');
+    console.log('input profile');
     dispatch(__getProfile());
   }, []);
+
   const profile = useSelector(state => state.profile.profile);
-  // console.log('input profile', profile[0]);
+  console.log('input profile', profile[0]);
+
+  // const onPressProfEdit = () => {
+  //   dispatch(__editTodos({id}));
+  // };
 
   return (
     <View style={styles.block}>
@@ -33,7 +40,10 @@ const InputPersonProfileCard = () => {
         <View style={styles.cardLeftWrap}>
           <View style={styles.textInputIntroWrap}>
             <View style={styles.textInputWrap}>
-              <TextInput style={{left: 10}} placeholder="Nick Name" />
+              <TextInput style={{left: 10}} placeholder="Nick Name">
+                <Text> {profile[0].user.nickname}</Text>
+              </TextInput>
+
               <TouchableOpacity style={styles.textInputBtn}>
                 <Text style={styles.checkBtn}>중복확인</Text>
               </TouchableOpacity>
@@ -78,7 +88,7 @@ const InputPersonProfileCard = () => {
               color: 'black',
               position: 'relative',
             }}>
-            00 마리의 집사
+            {profile[0].user.dogsCount}마리의 집사
           </Text>
 
           <View style={styles.authBtn}></View>

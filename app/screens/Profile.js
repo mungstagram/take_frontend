@@ -45,7 +45,7 @@ const Profile = ({navigation, route}) => {
           <Text>수정</Text>
         </TouchableOpacity>
         {personProf ? (
-          <InputPersonProfileCard />
+          <InputPersonProfileCard myInfo={profile} />
         ) : (
           <PersonProfileCard myInfo={profile} />
         )}
