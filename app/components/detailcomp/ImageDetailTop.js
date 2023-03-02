@@ -6,6 +6,7 @@ import {
   Dimensions,
   SafeAreaView,
   FlatList,
+  ScrollView,
 } from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
@@ -15,32 +16,31 @@ import {Colors, BasicColors} from '../../constants/colors';
 import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
 import GoBackButton from '../common/GoBackButton';
+import {Item} from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 
 const ImageDetailTop = ({detail}) => {
   const imageList = detail.contentUrl;
+  // const images = imageList.map(item => item);
 
-  //   const imageUrl = detail.contentUrl.map((item, index) => {
-  //     return item;
-  //   });
-  const images = item => {
-    detail.contentUrl.map(item => {
-      // console.log('detail', item, index);
-      return item;
-    });
-  };
+  // console.log('images', images);
 
-  //   const renderItem = item => {
-  //     return (
-  //       <View>
-  //         <FastImage
-  //           source={{
-  //             uri: imageUrl[0],
-  //           }}
-  //           keyExtractor={item => item.imageUrl}
-  //         />
-  //       </View>
-  //     );
-  //   };
+  // const renderItem = () => {
+  //   const images = imageList.map(item => item);
+  //   return <FastImage source={{uri: images}} />;
+  // };
+  // const renderItem = ({item, index}) => {
+  //   return (
+  //     <ScrollView style={styles.imageView}>
+  //       <Image
+  //         width={IMAGE_WIDTH}
+  //         source={{
+  //           uri: imageList[item],
+  //         }}
+  //         style={styles.media}
+  //       />
+  //     </ScrollView>
+  //   );
+  // };
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -52,28 +52,20 @@ const ImageDetailTop = ({detail}) => {
               uri: detail.profileUrl,
               priority: FastImage.priority.normal,
             }}
-            resizeMode={'contain'}
+            resizeMode={'cover'}
           />
           <View>
             <Text style={styles.nicknameText}>{detail.nickname}</Text>
             <Text style={styles.timeText}>{detail.createdAt}</Text>
           </View>
         </View>
-        <FlatList
-          style={styles.imageScreen}
-          data={imageList}
-          renderItem={images}
-          keyExtractor={item => item.postId}
+        {/* <FlatList
+          data={images}
+          keyExtractor={(item, index) => (item?.filename ?? item?.path) + index}
+          renderItem={renderItem}
           horizontal={true}
-        />
-        {/* <FastImage
-          style={styles.imageScreen}
-          source={{
-            uri: imageUrl[0],
-          }}
-          keyExtractor={item => item.imageUrl}
-          resizeMode={FastImage.resizeMode.contain}
         /> */}
+
         <View style={styles.detailBottom}>
           <View style={styles.preContent}>
             <Text>{detail.title}</Text>
