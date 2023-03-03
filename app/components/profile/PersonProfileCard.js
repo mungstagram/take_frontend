@@ -25,7 +25,7 @@ const PersonProfileCard = () => {
   const dispatch = useDispatch();
 
   const profile = useSelector(state => state.profile.profile);
-  console.log('input profile', profile[0]);
+  // console.log('input profile', profile[0]);
   //input
   const [profNickEdit, setProfNickEdit] = useState(profile[0].user.nickname);
   const [profIntroEdit, setProfIntroEdit] = useState(profile[0].user.introduce);
@@ -36,7 +36,7 @@ const PersonProfileCard = () => {
   };
 
   useEffect(() => {
-    console.log('data를 가져오자');
+    // console.log('data를 가져오자');
     //2.데이터 값을 초기에 실행(마운트될때, 안에 있는 함수을 실행)
     dispatch(__getProfile());
     //3. dispatch get 프로필 정보 요청
@@ -74,12 +74,12 @@ const PersonProfileCard = () => {
   const onPresschangeNickEdit = e => {
     setProfNickEdit(e);
   };
-  console.log('input profile profNickEdit', profNickEdit);
+  // console.log('input profile profNickEdit', profNickEdit);
 
   const onPresschangeProfEdit = e => {
     setProfIntroEdit(e);
   };
-  console.log('input profile profIntroEdit', profIntroEdit);
+  // console.log('input profile profIntroEdit', profIntroEdit);
 
   return (
     <View style={styles.block}>
