@@ -4,12 +4,12 @@ import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
-  isLogin: false,
+  isLogin: false, //로그인 상태 관리 변수
   isLoading: false,
   error: null,
   myNick: '',
-  isSuccessLogin: true,
-  isEmailChecked: false,
+  isSuccessLogin: true, //실패로그 관리 변수
+  isEmailChecked: false, //중복확인 변수들
   isNickNameChecked: false,
   isSuccessedSignup: false,
 };
@@ -35,6 +35,30 @@ export const __postLogin = createAsyncThunk(
 
       return thunkAPI.fulfillWithValue(sendData);
     } catch (error) {
+      if (error.response.status === 500) {
+        ('서버가 닫혀 있습니다.');
+      }
+      return thunkAPI.rejectWithValue(error.response.data.data);
+    }
+  },
+);
+
+//카카오로그인
+export const __postKaKaoLogin = createAsyncThunk(
+  'POST_KAKAOLOGIN',
+  async (payload, thunkAPI) => {
+    console.log(payload, '카카오로그인의 페이로드');
+    try {
+      const data = await http.post('/auth/kakao', payload).then(res => {
+        AsyncStorage.setItem('authorization', res.headers.authorization);
+        return res;
+      });
+      // AsyncStorage.setItem('nickname', data.data.nickname);
+      console.log('카카오로그인시 응답', data);
+
+      // return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log(error, '카카오로그인시 애러');
       if (error.response.status === 500) {
         ('서버가 닫혀 있습니다.');
       }
@@ -144,6 +168,7 @@ const loginSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
       state.isSuccessLogin = false;
+      state.isLogin = false;
     },
     //아이디와 닉네임부분
     [__checkUser.pending]: state => {
@@ -160,6 +185,22 @@ const loginSlice = createSlice({
       state.isLoading = false;
       // state.idNotChecked = true;
       state.error = action.payload;
+    },
+    [__postKaKaoLogin.pending]: state => {
+      state.isLoading = true;
+    },
+    [__postKaKaoLogin.fulfilled]: (state, action) => {
+      console.log('성공시에만 실행되야함.');
+      state.isLoading = false;
+      state.isLogin = true;
+      // state.myNick = action.payload.nickname;
+    },
+    [__postKaKaoLogin.rejected]: (state, action) => {
+      console.log('실패시에만 실행해야함.');
+      state.isLoading = false;
+      state.error = action.payload;
+      state.isLogin = false;
+      Alert.alert('카카오 로그인에 실패하였습니다.');
     },
   },
 });

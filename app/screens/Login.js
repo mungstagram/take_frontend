@@ -6,6 +6,7 @@ import AuthInput from '../components/AuthInput';
 import AuthButton from '../components/common/AuthButton';
 import {__postLogin, deleteFailLog} from '../redux/modules/loginSlice';
 import AuthNavigateButton from '../components/AuthNavigateButton';
+import KaKaoLogin from '../components/kakaologin/KaKaoLogin';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -58,6 +59,9 @@ const Login = () => {
 
           <AuthButton onPress={onSubmitLogin}>입력 완료</AuthButton>
         </View>
+      </View>
+      <View>
+        <KaKaoLogin></KaKaoLogin>
       </View>
     </View>
   );

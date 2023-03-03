@@ -77,7 +77,7 @@ const AuthenticatedStack = () => {
 
 export const Navigation = () => {
   const {isLogin} = useSelector(state => state.login);
-  // console.log(isLogin);
+  console.log(isLogin, '네비게이션에서 확인하기');
   useEffect(() => {
     SplashScreen.hide();
   }, []);
