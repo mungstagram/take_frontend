@@ -3,7 +3,16 @@ import {useDispatch} from 'react-redux';
 import http from '../api/http';
 
 const initialState = {
-  profile: [],
+  profile: [
+    {
+      user: {
+        nickname: '',
+        contentUrl: '',
+        introduce: '',
+        dogsCount: '',
+      },
+    },
+  ],
   isLoading: false,
   error: null,
 };
@@ -13,7 +22,7 @@ const initialState = {
 export const __getProfile = createAsyncThunk(
   'GET_PROFILE',
   async (payload, thunkAPI) => {
-    console.log('1.payload', payload);
+    // console.log('1.payload', payload);
     //여기서 undefined 면 절대통신이 안된다는 뜻!
     try {
       const {data} = await http.get(`/profile/${payload}`);
@@ -29,11 +38,18 @@ export const __editProfile = createAsyncThunk(
   'EDIT_PROFILE',
   async (payload, thunkAPI) => {
     try {
-      const {data} = await http.put(`/profile/${payload}`, payload);
-      // console.log('edit payload', payload);
-      // console.log('edit data', data);
+      console.log('edit payload', payload);
+      const {data} = await http.put(`/profile/${payload.nickname}`, payload, {
+        // changeNickname: payload.changeNickname,
+        // introduce: payload.introduce,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('edit data', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
+      console.log('edit error', error);
       return thunkAPI.rejectWithValue(error.code);
     }
   },
@@ -66,14 +82,14 @@ export const profileSlice = createSlice({
     },
     [__editProfile.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log('payload', action.payload);
+      console.log('payload', action.payload);
       // const data = state.todo.filter(todo => todo.id !== action.payload);
       const target = state.profile.findIndex(
         profile => profile.id === action.payload.id,
       );
       state.profile.splice(target, 1, action.payload);
       // console.log('state.to', state.todo);
-      // state.todo = action.payload;
+      state.profile = action.payload;
     },
     [__editProfile.pending]: state => {
       state.isLoading = true;

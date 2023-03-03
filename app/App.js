@@ -19,7 +19,6 @@ import Profile from './screens/Profile';
 import VideoDetail from './screens/VideoDetail';
 
 import InputDogProfileCard from './components/profile/InputDogProfileCard';
-import InputPersonProfileCard from './components/profile/InputPersonProfileCard';
 
 const Stack = createNativeStackNavigator();
 
@@ -71,10 +70,6 @@ const AuthenticatedStack = () => {
       <Stack.Screen
         name="InputDogProfileCard"
         component={InputDogProfileCard}
-      />
-      <Stack.Screen
-        name="InputPersonProfileCard"
-        component={InputPersonProfileCard}
       />
     </Stack.Navigator>
   );

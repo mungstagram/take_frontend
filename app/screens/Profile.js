@@ -11,8 +11,9 @@ import {Button} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import {__getProfile} from '../redux/modules/profileSlice';
 
+import Logout from '../components/Logout';
+
 //사람
-import InputPersonProfileCard from '../components/profile/InputPersonProfileCard';
 import PersonProfileCard from '../components/profile/PersonProfileCard';
 //강아지
 import InputDogProfileCard from '../components/profile/InputDogProfileCard';
@@ -38,17 +39,14 @@ const Profile = ({navigation, route}) => {
 
   return (
     <>
-      <View style={{borderWidth: 2, borderColor: 'blue'}}>
-        <TouchableOpacity
+      <Logout />
+      <View style={{borderWidth: 2, borderColor: 'blue', top: 10}}>
+        {/* <TouchableOpacity
           style={styles.editBtn}
           onPress={() => navigation.navigate('InputPersonProfileCard')}>
           <Text>수정</Text>
-        </TouchableOpacity>
-        {personProf ? (
-          <InputPersonProfileCard myInfo={profile} />
-        ) : (
-          <PersonProfileCard myInfo={profile} />
-        )}
+        </TouchableOpacity> */}
+        <PersonProfileCard myInfo={profile} />
       </View>
 
       <View style={{borderWidth: 2, borderColor: 'red'}}>
