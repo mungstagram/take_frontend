@@ -11,8 +11,9 @@ import {Button} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import {__getProfile} from '../redux/modules/profileSlice';
 
+import Logout from '../components/Logout';
+
 //사람
-import InputPersonProfileCard from '../components/profile/InputPersonProfileCard';
 import PersonProfileCard from '../components/profile/PersonProfileCard';
 //강아지
 import InputDogProfileCard from '../components/profile/InputDogProfileCard';
@@ -22,7 +23,11 @@ import DogProfile from '../components/profile/DogProfile';
 const Profile = ({navigation, route}) => {
   const dispatch = useDispatch();
 
-  const [personProf, setPersonProf] = useState(false);
+  const [addDogProf, setAddDogProf] = useState(false);
+
+  const onPressAddDog = () => {
+    setAddDogProf(true);
+  };
 
   const {myNick} = route.params;
   // console.log('profile nick', myNick);
@@ -38,33 +43,35 @@ const Profile = ({navigation, route}) => {
 
   return (
     <>
-      <View style={{borderWidth: 2, borderColor: 'blue'}}>
-        <TouchableOpacity
+      <Logout />
+      <View style={{borderWidth: 2, borderColor: 'blue', top: 10}}>
+        {/* <TouchableOpacity
           style={styles.editBtn}
           onPress={() => navigation.navigate('InputPersonProfileCard')}>
           <Text>수정</Text>
-        </TouchableOpacity>
-        {personProf ? (
-          <InputPersonProfileCard />
-        ) : (
-          <PersonProfileCard myInfo={profile} />
-        )}
+        </TouchableOpacity> */}
+        <PersonProfileCard myInfo={profile} />
       </View>
 
-      <View style={{borderWidth: 2, borderColor: 'red'}}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('InputDogProfileCard')}>
-          <AddDogProfile />
-        </TouchableOpacity>
+      <View style={styles.dogBlock}>
+        <View style={{marginTop: '10%', marginLeft: '10%'}}>
+          <TouchableOpacity onPress={onPressAddDog}>
+            {addDogProf ? <InputDogProfileCard /> : <AddDogProfile />}
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {/* <InputDogProfileCard /> */}
       {/* <DogProfile /> */}
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  dogBlock: {
+    borderWidth: 2,
+    borderColor: 'red',
+    flex: 1,
+  },
   editBtn: {
     borderWidth: 1,
     width: 40,

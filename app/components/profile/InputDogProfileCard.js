@@ -14,8 +14,7 @@ import {
 
 const InputDogProfileCard = () => {
   return (
-    //수정해야됨
-    <View style={styles.block}>
+    <View style={styles.dogBlock}>
       <View style={styles.dogCardShadow} />
       <View style={styles.dogCard}>
         <TouchableOpacity style={styles.saveBtn}>
@@ -23,13 +22,6 @@ const InputDogProfileCard = () => {
         </TouchableOpacity>
         <View style={styles.dogImg}>
           <View style={styles.dogImgBtn} />
-
-          <View>
-            <Text>
-              강아지 프로필 사진{'\n'}
-              &nbsp;&nbsp;&nbsp;업데이트 하기
-            </Text>
-          </View>
         </View>
 
         <View style={styles.dogProfileInputWrap}>
@@ -229,49 +221,48 @@ const InputDogProfileCard = () => {
 };
 
 const styles = StyleSheet.create({
-  block: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  dogBlock: {
+    flex: 1,
   },
 
   dogCard: {
     width: 264,
-    height: 452,
-    margin: 10,
+    height: 444,
     borderRadius: 15,
     position: 'absolute',
+    opacity: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   dogCardShadow: {
     width: 264,
-    height: 452,
+    height: 440,
     borderRadius: 15,
-    left: '2%',
-    top: '8%',
-    shadowOpacity: 1,
-    shadowRadius: 3.84,
-    elevation: 2,
+    top: '10%',
+    shadowOpacity: 0.9,
+    shadowRadius: 15,
+    elevation: 5,
   },
 
   dogProfileInputWrap: {
-    width: 280,
-    height: 296,
     borderRadius: 15,
     backgroundColor: '#ffffff',
     bottom: 10,
   },
 
   dogImg: {
-    width: 280,
-    height: 170,
+    width: 264,
+    height: 160,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     backgroundColor: '#d0d0d0',
     justifyContent: 'center',
     alignItems: 'center',
+    opacity: 0.9,
   },
   dogInputWrapInner: {
-    width: 280,
-    height: 290,
+    width: 264,
+    height: 284,
     justifyContent: 'center',
   },
   dogImgBtn: {
@@ -287,7 +278,6 @@ const styles = StyleSheet.create({
     zIndex: 2,
     position: 'relative',
     top: '10%',
-    left: '85%',
   },
 });
 

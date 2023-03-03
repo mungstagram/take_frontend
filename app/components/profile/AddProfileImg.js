@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
+  Platform,
   View,
   StyleSheet,
   TextInput,
@@ -14,9 +15,12 @@ import {
 import {useDispatch} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 
+import {__addProfileImgFormData} from '../../redux/modules/profileImgSlice';
+
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 
-const AddProfileImg = () => {
+const AddProfileImg = ({item, index}) => {
+  const dispatch = useDispatch();
   const [openCamera, setOpenCamera] = useState(false);
 
   useEffect(() => {
@@ -40,6 +44,7 @@ const AddProfileImg = () => {
   }, []);
   // * 사진관련 코드
   const [images, setImages] = useState([]);
+
   // 사진넣기 버튼 클릭시 작동하는 이벤트
   const openPicker = async () => {
     try {
@@ -52,31 +57,47 @@ const AddProfileImg = () => {
         isCrop: true,
         isCropCircle: true,
       });
-      // console.log('response: ', response);
+      console.log('response: ', response);
       setImages(response);
     } catch (e) {
-      // console.log(e.code, e.message);
+      console.log(e.code, e.message);
     }
   };
-  // 권한 거절 후 다시 시도할때
-  const openAgainPicker = () => {
-    setOpenCamera(true);
-    openPicker();
-  };
-  //remove 라는 이름을 많이 쓴다고 한다.
 
-  const onDelete = value => {
-    const data = images.filter(
-      item =>
-        item?.localIdentifier &&
-        item?.localIdentifier !== value?.localIdentifier,
-    );
-    setImages(data);
+  // 폼데이터 선언 및 전송
+  const formData = new FormData();
+
+  const onSendFormData = () => {
+    formData.append('image', {
+      uri: uri,
+      type: 'image/jpeg',
+      name: 'image.jpg',
+    });
+    dispatch(__addProfileImgFormData(formData));
   };
+
   return (
-    <TouchableOpacity style={styles.personProfileImg} onPress={openPicker} />
+    <View>
+      <TouchableOpacity
+        style={styles.personProfileImg}
+        onPress={openPicker}
+        vlue={openCamera}
+      />
+
+      <Image
+        width={IMAGE_WIDTH}
+        style={styles.media}
+        // source={uri: 'file://' + (item?.crop?.cropPath ?? item.realPath)}
+      />
+
+      <TouchableOpacity onPress={onSendFormData}>
+        <Text>저장이미지</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
+
+const IMAGE_WIDTH = 50;
 
 const styles = StyleSheet.create({
   openImg: {
@@ -86,14 +107,23 @@ const styles = StyleSheet.create({
   },
 
   personProfileImg: {
-    width: 80,
-    height: 80,
-    borderRadius: 50,
+    // width: 80,
+    // height: 80,
+    // borderRadius: 50,
+    borderWidth: 1,
+    width: 50,
+    height: 30,
+    backgroundColor: 'red',
 
-    backgroundColor: '#eeeeee',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
+    // backgroundColor: '#eeeeee',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // position: 'absolute',
+  },
+  media: {
+    width: IMAGE_WIDTH,
+    height: IMAGE_WIDTH,
+    backgroundColor: 'rgba(155, 155, 155, 0.2)',
   },
 });
 
