@@ -12,10 +12,12 @@ const initialState = {
 export const __postComment = createAsyncThunk(
   'POST_COMMENT',
   async (payload, thunkAPI) => {
-    console.log('pay', payload);
     try {
       const data = await http
-        .post(`/comments/${payload.postId}`, {comment: payload.comment})
+        .post(`/comments/${payload.postId}`, {
+          comment: payload.comment,
+          target: payload.target,
+        })
 
         .then(res => {
           //console.log('요청성공');

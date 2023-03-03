@@ -7,10 +7,12 @@ import {
   SafeAreaView,
   FlatList,
   ScrollView,
+  Image,
 } from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import {useDispatch, useSelector} from 'react-redux';
+import {SwiperFlatList} from 'react-native-swiper-flatlist';
 
 import {Colors, BasicColors} from '../../constants/colors';
 import Favorite from '../svg/Favorite';
@@ -20,27 +22,24 @@ import {Item} from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 
 const ImageDetailTop = ({detail}) => {
   const imageList = detail.contentUrl;
-  // const images = imageList.map(item => item);
 
-  // console.log('images', images);
+  const imageGroup = imageList.map((item, index) => {
+    return {key: index, item};
+  });
 
-  // const renderItem = () => {
-  //   const images = imageList.map(item => item);
-  //   return <FastImage source={{uri: images}} />;
-  // };
-  // const renderItem = ({item, index}) => {
-  //   return (
-  //     <ScrollView style={styles.imageView}>
-  //       <Image
-  //         width={IMAGE_WIDTH}
-  //         source={{
-  //           uri: imageList[item],
-  //         }}
-  //         style={styles.media}
-  //       />
-  //     </ScrollView>
-  //   );
-  // };
+  const renderItem = ({item}) => {
+    return (
+      <ScrollView style={styles.imageView}>
+        <Image
+          source={{
+            uri: item.item,
+          }}
+          style={styles.imageScreen}
+        />
+      </ScrollView>
+    );
+  };
+  //console.log('imageG', imageGroup);
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -59,12 +58,24 @@ const ImageDetailTop = ({detail}) => {
             <Text style={styles.timeText}>{detail.createdAt}</Text>
           </View>
         </View>
-        {/* <FlatList
-          data={images}
-          keyExtractor={(item, index) => (item?.filename ?? item?.path) + index}
-          renderItem={renderItem}
-          horizontal={true}
-        /> */}
+        <View style={styles.scrollBox}>
+          {/* <FlatList
+            data={imageGroup}
+            renderItem={renderItem}
+            keyExtractor={item => item.key}
+          /> */}
+          <SwiperFlatList
+            autoplay
+            autoplayDelay={2}
+            autoplayLoop
+            index={0}
+            showPagination
+            data={imageGroup}
+            renderItem={renderItem}
+            renderAll={true}
+            paginationStyleItem={styles.dot}
+          />
+        </View>
 
         <View style={styles.detailBottom}>
           <View style={styles.preContent}>
@@ -118,6 +129,15 @@ const styles = StyleSheet.create({
   timeText: {
     fontSize: 8,
   },
+  imageView: {
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    position: 'relative',
+  },
+  scrollBox: {
+    width: videoCardWidth,
+    height: videoCardHeight * 0.703,
+  },
   imageScreen: {
     width: videoCardWidth,
     height: videoCardHeight * 0.703,
@@ -139,5 +159,11 @@ const styles = StyleSheet.create({
   },
   contentBox: {
     flexDirection: 'row',
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderColor: BasicColors.grayColor,
+    borderWidth: 1,
   },
 });
