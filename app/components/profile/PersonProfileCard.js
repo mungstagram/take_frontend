@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   View,
@@ -14,7 +14,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import FastImage from 'react-native-fast-image';
 
-import {__getProfile} from '../../redux/modules/profileSlice';
+import {__getProfile, __editProfile} from '../../redux/modules/profileSlice';
 
 import Logout from '../Logout';
 import AddProfileImg from './AddProfileImg';
@@ -24,7 +24,19 @@ const PersonProfileCard = () => {
   //   console.log('user myNick', myInfo[0].user);
   const dispatch = useDispatch();
 
+  const profile = useSelector(state => state.profile.profile);
+  // console.log('input profile', profile[0]);
+  //input
+  const [profNickEdit, setProfNickEdit] = useState(profile[0].user.nickname);
+  const [profIntroEdit, setProfIntroEdit] = useState(profile[0].user.introduce);
+  const [isEdit, setIsEdit] = useState(false);
+
+  const onPressInputEdit = () => {
+    setIsEdit(true);
+  };
+
   useEffect(() => {
+    // console.log('data를 가져오자');
     //2.데이터 값을 초기에 실행(마운트될때, 안에 있는 함수을 실행)
     dispatch(__getProfile());
     //3. dispatch get 프로필 정보 요청
@@ -32,42 +44,48 @@ const PersonProfileCard = () => {
     // console.log('person profile');
   }, []);
 
-  const profile = useSelector(state => state.profile.profile);
   // console.log('state.profile', profile[0]);
-
   // console.log('user dog', myInfo[1].dogs);
   // console.log('contentUrl', myInfo[0].user.contentUrl);
+  //input 폼 데이터
+  // const formData = new FormData();
+
+  // const sendEditFormData = () => {
+  //   const objProfile = {
+  //     nickname: profile[0].user.nickname,
+  //     changeNickname: profNickEdit,
+  //     introduce: profIntroEdit,
+  //   };
+
+  //   for (let key in objProfile) {
+  //     formData.append(key, objProfile[key]);
+  //     formData.append('files', {
+  //       name: images[0].fileName,
+  //       type: images[0].mime,
+  //       uri: `file://${images[0].realPath}`,
+  //     });
+  //   }
+
+  //   console.log('edit profile');
+  //   dispatch(__editProfile(formData));
+  //   console.log('objProfile', objProfile);
+  // };
+
+  const onPresschangeNickEdit = e => {
+    setProfNickEdit(e);
+  };
+  // console.log('input profile profNickEdit', profNickEdit);
+
+  const onPresschangeProfEdit = e => {
+    setProfIntroEdit(e);
+  };
+  // console.log('input profile profIntroEdit', profIntroEdit);
 
   return (
     <View style={styles.block}>
-      <View style={styles.authBtn}>
-        <Logout />
-      </View>
       <View style={styles.card}>
         <View style={styles.cardLeftWrap}>
-          <View style={styles.textInputIntroWrap}>
-            <View style={styles.textInputWrap}>
-              <Text style={{fontSize: 16, fontWeight: '600'}}>
-                {profile[0].user.nickname}
-              </Text>
-            </View>
-
-            <Text>{profile[0].user.introduce}</Text>
-          </View>
-        </View>
-
-        <View style={styles.cardRightWrap}>
           <View style={styles.imgOpenBtn}>
-            <Text
-              style={{
-                width: 60,
-                fontSize: 8,
-                zIndex: 3,
-                color: 'black',
-                left: '10%',
-              }}>
-              사용자 프로필{'\n'}업데이트 하기
-            </Text>
             <FastImage
               style={styles.personImg}
               source={{
@@ -81,14 +99,51 @@ const PersonProfileCard = () => {
           <Text
             style={{
               fontSize: 12,
-              top: '20%',
-              left: '5%',
-              marginTop: '5%',
-              color: 'black',
-              position: 'relative',
+              color: 'white',
+              zIndex: 2,
+              marginTop: '12%',
             }}>
             {profile[0].user.dogsCount} 마리의 집사
           </Text>
+        </View>
+
+        <View style={styles.cardRightWrap}>
+          <View style={styles.textInputWrap}>
+            <View>
+              {isEdit ? (
+                <TextInput
+                  style={{left: 10}}
+                  placeholder="Nick Name"
+                  onChangeText={onPresschangeNickEdit}
+                  value={profNickEdit}
+                  autoFocus
+                />
+              ) : (
+                <Text style={{fontSize: 20, color: 'white', fontWeight: '600'}}>
+                  {profile[0].user.nickname}
+                </Text>
+              )}
+            </View>
+            <TouchableOpacity style={styles.editBtn} onPress={onPressInputEdit}>
+              <Text>수정</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            {isEdit ? (
+              <TextInput
+                placeholder="성격, 산책 시간, 거주지 소개"
+                maxLength={25}
+                style={styles.textInputIntro}
+                multiline={true}
+                value={profIntroEdit}
+                onChangeText={onPresschangeProfEdit}
+              />
+            ) : (
+              <Text style={{fontSize: 16, color: 'white'}}>
+                {profile[0].user.introduce}
+              </Text>
+            )}
+          </View>
         </View>
       </View>
     </View>
@@ -101,38 +156,41 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    borderRadius: 10,
+    // borderWidth: 5,
+    // borderColor: 'red',
     width: 320,
-    height: 168,
-    margin: 10,
-    backgroundColor: '#ffffff',
+    height: 132,
     flexDirection: 'row',
-    justifyContent: 'center',
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   cardLeftWrap: {
-    // borderWidth: 1,
-    width: 210,
-    top: 10,
+    // borderWidth: 3,
+    // borderColor: 'blue',
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  cardRightWrap: {
+    // borderWidth: 3,
+    // borderColor: 'green',
+    width: 190,
+    left: '16%',
+    padding: '4%',
+  },
+  editBtn: {
+    borderWidth: 1,
+    // width: 24,
+    width: 30,
+    height: 24,
+    zIndex: 1,
+  },
+
   textInputWrap: {
     // borderWidth: 1,
     // borderColor: 'red',
-    borderColor: 'gray',
-    borderRadius: 5,
     flexDirection: 'row',
-    width: 176,
-    height: 56,
+    justifyContent: 'space-between',
   },
-  textInputIntroWrap: {
-    flexDirection: 'column',
-    // borderWidth: 1,
-    width: 176,
-    left: '15%',
-    top: '5%',
-  },
+
   textInputBtn: {
     width: 70,
     justifyContent: 'center',
@@ -141,44 +199,6 @@ const styles = StyleSheet.create({
     top: '12%',
     position: 'absolute',
   },
-  checkBtn: {
-    // borderWidth: 1,
-    borderRadius: 5,
-    backgroundColor: '#e79796',
-    width: 64,
-    height: 36,
-    color: '#ffffff',
-    textAlign: 'center',
-    padding: 5,
-    zIndex: 1,
-    left: '5%',
-    top: '2%',
-    position: 'relative',
-  },
-  textInputIntro: {
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 5,
-    width: 176,
-    height: 72,
-    marginTop: '3%',
-    borderColor: 'gray',
-    // borderColor: 'red',
-  },
-  cardRightWrap: {
-    // borderWidth: 1,
-    width: 140,
-  },
-
-  authBtn: {
-    // borderWidth: 1,
-    width: 140,
-    height: 40,
-    top: '8%',
-    left: '40%',
-    zIndex: 5,
-  },
-
   personImg: {
     width: 80,
     height: 80,
@@ -191,14 +211,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   imgOpenBtn: {
-    // borderWidth: 1,
-    borderColor: 'red',
     width: 80,
     height: 80,
     justifyContent: 'center',
     alignItems: 'center',
     right: '10%',
-    top: '15%',
   },
 });
 

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import FastImage from 'react-native-fast-image';
 
 import TodoList from '../components/todos/TodoList';
 import WriteTodo from '../components/todos/WriteTodo';
@@ -41,7 +42,23 @@ function Home({navigation}) {
 
         <View style={styles.profileImg}>
           <View style={styles.dogProfileImg} />
+          {/* <FastImage
+            style={styles.personImg}
+            source={{
+              uri: profile[1].dogs.contentUrl,
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.contain}
+          /> */}
           <View style={styles.personProfileImg} />
+          {/* <FastImage
+            style={styles.personImg}
+            source={{
+              uri: profile[0].user.contentUrl,
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.contain}
+          /> */}
         </View>
 
         <View style={styles.profileInner}>

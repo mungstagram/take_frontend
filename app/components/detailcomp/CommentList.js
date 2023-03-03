@@ -1,23 +1,46 @@
-import {StyleSheet, Text, View, Dimensions, FlatList} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  FlatList,
+  ScrollView,
+} from 'react-native';
 import React from 'react';
+import FastImage from 'react-native-fast-image';
 
 import {Colors, BasicColors} from '../../constants/colors';
 import CommentImg from '../svg/CommentImg';
 
 const CommentList = ({detail}) => {
-  //댓글 리스트
+  console.log('detail', detail);
+  // //댓글 리스트
+  const commentList = detail.comments;
+  console.log('list', commentList);
+
   const renderItem = ({item}) => {
     return (
-      <View style={styles.commentBox}>
-        <View style={styles.profileImg}></View>
-        <View style={styles.profileData}>
-          <View style={styles.profileRow}>
-            <Text>UserName</Text>
-            <Text>Time</Text>
+      <ScrollView style={styles.commentView}>
+        <View style={styles.commentBox}>
+          <View style={styles.profileImg}>
+            <FastImage
+              style={styles.profileImg}
+              source={{
+                uri: item.profileUrl,
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={'contain'}
+            />
           </View>
-          <Text>text</Text>
+          <View style={styles.profileData}>
+            <View style={styles.profileRow}>
+              <Text>{item.userId}</Text>
+              <Text>{item.createdAt}</Text>
+            </View>
+            <Text>{item.comment}</Text>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     );
   };
   return (
@@ -28,8 +51,14 @@ const CommentList = ({detail}) => {
         </View>
         <Text>{detail.commentsCount}</Text>
       </View>
-      <View>
-        <FlatList data={detail} renderItem={renderItem} />
+      <View style={styles.listBox}>
+        <FlatList
+          data={commentList}
+          renderItem={renderItem}
+          keyExtractor={index => index}
+          style={styles.listinBox}
+          contentContainerStyle={{flexGrow: 1}}
+        />
       </View>
     </View>
   );
@@ -46,6 +75,7 @@ const videoCardWidth = windowWidth * 0.9;
 const styles = StyleSheet.create({
   container: {
     width: windowWidth,
+    height: windowHeight,
   },
   commentCountBox: {
     flexDirection: 'row',
@@ -56,6 +86,11 @@ const styles = StyleSheet.create({
   },
   commentIcon: {
     marginRight: '2%',
+  },
+  commentView: {
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    position: 'relative',
   },
   commentBox: {
     height: 80,
@@ -77,5 +112,8 @@ const styles = StyleSheet.create({
   profileRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  listBox: {
+    height: windowHeight,
   },
 });
