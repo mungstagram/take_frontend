@@ -23,7 +23,11 @@ import DogProfile from '../components/profile/DogProfile';
 const Profile = ({navigation, route}) => {
   const dispatch = useDispatch();
 
-  const [personProf, setPersonProf] = useState(false);
+  const [addDogProf, setAddDogProf] = useState(false);
+
+  const onPressAddDog = () => {
+    setAddDogProf(true);
+  };
 
   const {myNick} = route.params;
   // console.log('profile nick', myNick);
@@ -49,20 +53,25 @@ const Profile = ({navigation, route}) => {
         <PersonProfileCard myInfo={profile} />
       </View>
 
-      <View style={{borderWidth: 2, borderColor: 'red'}}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('InputDogProfileCard')}>
-          <AddDogProfile />
-        </TouchableOpacity>
+      <View style={styles.dogBlock}>
+        <View style={{marginTop: '10%', marginLeft: '10%'}}>
+          <TouchableOpacity onPress={onPressAddDog}>
+            {addDogProf ? <InputDogProfileCard /> : <AddDogProfile />}
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {/* <InputDogProfileCard /> */}
       {/* <DogProfile /> */}
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  dogBlock: {
+    borderWidth: 2,
+    borderColor: 'red',
+    flex: 1,
+  },
   editBtn: {
     borderWidth: 1,
     width: 40,

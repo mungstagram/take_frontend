@@ -160,7 +160,7 @@ const AddImage = () => {
           <View style={styles.titleInput}>
             <TextInput
               placeholder="제목을 입력하세요(20자 이하)"
-              maxLength={20}
+              maxLength={15}
               // returnKeyType="next"
               value={titleText}
               onChange={titleTextHandler}
@@ -170,7 +170,7 @@ const AddImage = () => {
           <View style={styles.contentInput}>
             <TextInput
               placeholder="내용을 입력하세요(300자 이하)"
-              maxLength={300}
+              maxLength={2000}
               // 확인하기
               multiline={true}
               value={contentText}
@@ -178,7 +178,7 @@ const AddImage = () => {
             />
           </View>
           <View>
-            <Text>{contentText.length}/300</Text>
+            <Text>{contentText.length}/2000</Text>
           </View>
           <View style={styles.fileInput}>
             <View style={styles.fileupload}>
