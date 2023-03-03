@@ -33,7 +33,7 @@ const VideoCard = ({videoContent}) => {
               <FastImage
                 style={styles.profileimg}
                 source={{
-                  uri: videoContent.profileUrl[0],
+                  uri: videoContent.profileUrl,
                   priority: FastImage.priority.normal,
                 }}
                 resizeMode={'contain'}
