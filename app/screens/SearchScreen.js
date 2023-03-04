@@ -10,6 +10,7 @@ import Search from '../components/svg/Search';
 import {__getSearchData} from '../redux/modules/searchSlice';
 import SearchNick from '../components/userdetail/SearchNick';
 import SearchNone from '../components/userdetail/SearchNone';
+import ImageGetter from '../components/boardcomponent/ImageGetter';
 
 const SearchScreen = () => {
   const navigation = useNavigation();
@@ -91,6 +92,9 @@ const SearchScreen = () => {
         {searchData.length !== 0 && dataSortSelector === 0 && (
           <SearchNick searchData={searchData} />
         )}
+        {searchData.length !== 0 && dataSortSelector === 1 && (
+          <ImageGetter searchData={searchData} />
+        )}
       </View>
     </View>
   );
@@ -104,19 +108,20 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   goBackButton: {
-    position: 'absolute',
-    height: '7.48%',
+    marginTop: 8,
+    height: 40,
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginLeft: '7%',
   },
   inputContainer: {
-    position: 'absolute',
-    top: '8%',
+    // backgroundColor: 'blue',
+    marginTop: 20,
     // height: '10%',
     width: ' 100%',
     flexDirection: 'row',
     alignItems: 'center',
+    height: 56,
   },
   selectBoxHolder: {
     position: 'absolute',
@@ -127,6 +132,7 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 4,
     elevation: 5,
+    zIndex: 20,
   },
   selectInputHolder: {
     position: 'absolute',
@@ -162,10 +168,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: '5%',
     top: 16,
+    backgroundColor: 'white',
   },
   contentPositioner: {
-    position: 'absolute',
-    top: '18%',
+    marginTop: 16,
     // height: '10%',
     width: ' 100%',
     height: '100%',
