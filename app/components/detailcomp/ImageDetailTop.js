@@ -24,6 +24,7 @@ import {__putLikes} from '../../redux/modules/addContentSlice';
 import Delete from '../svg/Delete';
 import ServicesImg from '../svg/ServicesImg';
 import {__deletePostDetailData} from '../../redux/modules/addContentSlice';
+import CommentList from './CommentList';
 
 const ImageDetailTop = ({detail}) => {
   const imageList = detail.contentUrl;
@@ -31,6 +32,15 @@ const ImageDetailTop = ({detail}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [isLiked, setIsLiked] = useState(false);
+
+  const [line, setLine] = useState(2);
+  const [isActivated, setIsActivated] = useState(false);
+
+  const handleLine = () => {
+    console.log('ac', isActivated);
+    isActivated ? setLine(2) : setLine(Number.MAX_SAFE_INTEGER);
+    setIsActivated(prev => !prev);
+  };
 
   // 좋아요 버튼
   const onIsLikeHandler = () => {
@@ -71,6 +81,7 @@ const ImageDetailTop = ({detail}) => {
     dispatch(__putLikes({postId: detail.postId, isLiked}));
   }, [isLiked]);
 
+  //사진 미리보기
   const renderItem = ({item}) => {
     return (
       <ScrollView style={styles.imageView}>
@@ -83,14 +94,7 @@ const ImageDetailTop = ({detail}) => {
       </ScrollView>
     );
   };
-  //console.log('imageG', imageGroup);
-  const [line, setLine] = useState(2);
-  const [isActivated, setIsActivated] = useState(false);
 
-  const handleLine = () => {
-    isActivated ? setLine(2) : setLine(Number.MAX_SAFE_INTEGER);
-    setIsActivated();
-  };
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -127,26 +131,55 @@ const ImageDetailTop = ({detail}) => {
           />
         </View>
 
-        <View style={styles.detailBottom}>
-          <View style={styles.preContent}>
-            <Text style={styles.titleText}>{detail.title}</Text>
-            <View style={styles.favoritBox}>
-              <Pressable onPress={onIsLikeHandler}>
-                {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
-              </Pressable>
-              <Text>{detail.likesCount}</Text>
+        {isActivated ? (
+          <>
+            <ScrollView style={styles.contentScroll} nestedScrollEnabled={true}>
+              <View style={styles.detailBottom}>
+                <View style={styles.preContent}>
+                  <Text style={styles.titleText}>{detail.title}</Text>
+                  <View style={styles.favoritBox}>
+                    <Pressable onPress={onIsLikeHandler}>
+                      {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
+                    </Pressable>
+                    <Text>{detail.likesCount}</Text>
+                  </View>
+                </View>
+                <Text
+                  style={styles.contentText}
+                  numberOfLines={line}
+                  ellipsizeMode="tail"
+                  onPress={() => handleLine()}>
+                  {detail.content}
+                </Text>
+              </View>
+            </ScrollView>
+          </>
+        ) : (
+          <>
+            <View style={styles.detailBottom}>
+              <View style={styles.preContent}>
+                <Text style={styles.titleText}>{detail.title}</Text>
+                <View style={styles.favoritBox}>
+                  <Pressable onPress={onIsLikeHandler}>
+                    {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
+                  </Pressable>
+                  <Text>{detail.likesCount}</Text>
+                </View>
+              </View>
+              <View style={styles.contentText}>
+                <Text numberOfLines={line} ellipsizeMode="tail">
+                  {detail.content}
+                </Text>
+                <Pressable onPress={prev => handleLine(!prev[0], prev[1])}>
+                  <Text>더보기</Text>
+                </Pressable>
+              </View>
             </View>
-          </View>
-
-          <Text
-            style={styles.contentText}
-            numberOfLines={line}
-            ellipsizeMode="tail"
-            onPress={() => handleLine()}>
-            {detail.content}
-          </Text>
-          {/* <Text>더보기</Text> */}
-        </View>
+            <View style={styles.conmmentList}>
+              <CommentList />
+            </View>
+          </>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -221,14 +254,14 @@ const styles = StyleSheet.create({
   },
   detailBottom: {
     backgroundColor: BasicColors.whiteColor,
-    height: videoCardHeight * 0.3,
+    //height: videoCardHeight * 0.3,
     padding: '2%',
   },
   preContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '60%',
+    //height: '60%',
   },
   titleText: {
     fontSize: 20,
@@ -237,9 +270,16 @@ const styles = StyleSheet.create({
   favoritBox: {
     alignItems: 'center',
   },
+  contentScroll: {
+    height: windowHeight,
+  },
   contentText: {
     fontSize: 14,
     flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+  conmmentList: {
+    padding: '2%',
   },
   dot: {
     width: 8,

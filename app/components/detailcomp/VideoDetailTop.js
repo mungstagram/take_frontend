@@ -15,7 +15,6 @@ import {useNavigation} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import {useDispatch, useSelector} from 'react-redux';
 import VideoPlayer from 'react-native-video-controls';
-import {List} from 'react-native-paper';
 
 import {Colors, BasicColors} from '../../constants/colors';
 import Favorite from '../svg/Favorite';
@@ -109,29 +108,41 @@ const VideoDetailTop = ({detail, videoUrl}) => {
         <View style={styles.controlbox}>
           <VideoPlayer source={{uri: videoUrl}} disableBack disableFullscreen />
         </View>
-        <View style={styles.detailBottom}>
-          <View style={styles.preContent}>
-            <Text>{detail.title}</Text>
-            <View style={styles.favoritBox}>
-              <Pressable onPress={onIsLikeHandler}>
-                {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
-              </Pressable>
-              <Text>{detail.likesCount}</Text>
-            </View>
-          </View>
-          {isActivated ? (
-            <>
-              {/* <ScrollView style={styles.contentScroll}> */}
-              <View style={styles.contentText}>
-                <Text numberOfLines={line} ellipsizeMode="tail">
-                  {detail.content}
-                </Text>
+
+        {isActivated ? (
+          <>
+            <ScrollView style={styles.contentScroll} nestedScrollEnabled={true}>
+              <View style={styles.detailBottom}>
+                <View style={styles.preContent}>
+                  <Text style={styles.titleText}>{detail.title}</Text>
+                  <View style={styles.favoritBox}>
+                    <Pressable onPress={onIsLikeHandler}>
+                      {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
+                    </Pressable>
+                    <Text>{detail.likesCount}</Text>
+                  </View>
+                </View>
+                <View style={styles.contentText}>
+                  <Text numberOfLines={line} ellipsizeMode="tail">
+                    {detail.content}
+                  </Text>
+                </View>
+                <CommentList />
               </View>
-              <CommentList />
-              {/* </ScrollView> */}
-            </>
-          ) : (
-            <>
+            </ScrollView>
+          </>
+        ) : (
+          <>
+            <View style={styles.detailBottom}>
+              <View style={styles.preContent}>
+                <Text style={styles.titleText}>{detail.title}</Text>
+                <View style={styles.favoritBox}>
+                  <Pressable onPress={onIsLikeHandler}>
+                    {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
+                  </Pressable>
+                  <Text>{detail.likesCount}</Text>
+                </View>
+              </View>
               <View style={styles.contentText}>
                 <Text numberOfLines={line} ellipsizeMode="tail">
                   {detail.content}
@@ -140,12 +151,12 @@ const VideoDetailTop = ({detail, videoUrl}) => {
                   <Text>더보기</Text>
                 </Pressable>
               </View>
-              <View style={styles.conmmentList}>
-                <CommentList />
-              </View>
-            </>
-          )}
-        </View>
+            </View>
+            <View style={styles.conmmentList}>
+              <CommentList />
+            </View>
+          </>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -171,6 +182,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: '4%',
     borderTopRightRadius: 4,
     borderTopLeftRadius: 4,
+
     width: '100%',
     alignItems: 'center',
   },
@@ -225,14 +237,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     //height: '60%',
   },
+  titleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
   favoritBox: {
     alignItems: 'center',
   },
-  contentScroll: {},
+  contentScroll: {
+    height: windowHeight,
+  },
   contentText: {
     fontSize: 14,
     flexDirection: 'row',
     alignItems: 'flex-end',
   },
-  conmmentList: {},
+  conmmentList: {
+    padding: '2%',
+  },
 });

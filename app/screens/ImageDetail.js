@@ -45,9 +45,9 @@ const ImageDetail = ({route}) => {
             <View style={styles.contentBox}>
               <ImageDetailTop detail={detail} />
             </View>
-            <View style={styles.commentListBox}>
+            {/* <View style={styles.commentListBox}>
               <CommentList detail={detail} />
-            </View>
+            </View> */}
             <View style={styles.commentInputBox}>
               <CommentInput detail={detail} />
             </View>
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginLeft: '7%',
+    zIndex: 20,
   },
   imageContainer: {
     position: 'absolute',
@@ -86,18 +87,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   contentBox: {
-    flex: 5,
-    zIndex: 10,
+    flex: 9,
   },
   commentListBox: {
-    flex: 4.3,
-    zIndex: 5,
+    // flex: 4.3,
+    // zIndex: 5,
   },
   commentInputBox: {
     flex: 1,
     height: windowHeight,
     bottom: '8%',
-    zIndex: 5,
     justifyContent: 'flex-end',
   },
 });

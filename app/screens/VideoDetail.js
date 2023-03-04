@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: windowHeight,
     bottom: '8%',
-
     justifyContent: 'flex-end',
   },
 });

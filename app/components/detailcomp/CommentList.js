@@ -100,6 +100,7 @@ const CommentList = ({detail}) => {
           keyExtractor={item => item.id}
           style={styles.listinBox}
           horizontal={false}
+          nestedScrollEnabled={true}
         />
       </View>
     </View>
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   commentCountBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    // paddingHorizontal: '4%',
+    height: 24,
     backgroundColor: BasicColors.whiteColor,
   },
   commentIcon: {
