@@ -24,7 +24,6 @@ export const __postLogin = createAsyncThunk(
         return res;
       });
       AsyncStorage.setItem('nickname', data.data.nickname);
-      console.log('data.nickname', data.data.nickname);
 
       // 직렬화 에러 해결하기 위해서 sendData 선언// 토큰을 보내다가 이제 보내지 않음.
       const sendData = {
@@ -48,7 +47,6 @@ export const __postLogin = createAsyncThunk(
 export const __postKaKaoLogin = createAsyncThunk(
   'POST_KAKAOLOGIN',
   async (payload, thunkAPI) => {
-    console.log(payload, '카카오로그인의 페이로드');
     try {
       const data = await http.post('/auth/kakao', payload).then(res => {
         AsyncStorage.setItem('authorization', res.headers.authorization);
@@ -56,11 +54,9 @@ export const __postKaKaoLogin = createAsyncThunk(
       });
       if (data.data.nickname === null) {
         AsyncStorage.setItem('nickname', '');
-        console.log('카카오로그인시 응답 기존회원아닐떄', data);
         return thunkAPI.fulfillWithValue({nickname: ''});
       } else {
         AsyncStorage.setItem('nickname', data.data.nickname);
-        console.log(data.data.nickname, ' 기존회원일경우');
       }
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -68,7 +64,7 @@ export const __postKaKaoLogin = createAsyncThunk(
       if (error.response.status === 500) {
         ('서버가 닫혀 있습니다.');
       }
-      return thunkAPI.rejectWithValue(error.response.data.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   },
 );
@@ -113,6 +109,22 @@ export const __checkUser = createAsyncThunk(
       }
 
       return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const __kakaoNick = createAsyncThunk(
+  'KAKAO_NICK',
+  async (payload, thunkAPI) => {
+    try {
+      const data = await http.put('/auth/nickname', payload);
+      AsyncStorage.setItem('nickname', payload.nickname);
+      return thunkAPI.fulfillWithValue(payload.nickname);
+    } catch (error) {
+      if (error.response.status === 400) {
+        Alert.alert('중복된 닉네임입니다.');
+      }
+      return thunkAPI.rejectWithValue(error.response);
     }
   },
 );
@@ -197,17 +209,27 @@ const loginSlice = createSlice({
       state.isLoading = true;
     },
     [__postKaKaoLogin.fulfilled]: (state, action) => {
-      console.log('성공시에만 실행되야함.');
       state.isLoading = false;
       state.isLogin = true;
       state.myNick = action.payload.nickname;
     },
     [__postKaKaoLogin.rejected]: (state, action) => {
-      console.log('실패시에만 실행해야함.');
       state.isLoading = false;
       state.error = action.payload;
       state.isLogin = false;
       Alert.alert('카카오 로그인에 실패하였습니다.');
+    },
+    [__kakaoNick.pending]: state => {
+      state.isLoading = true;
+    },
+    [__kakaoNick.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.myNick = action.payload;
+    },
+    [__kakaoNick.rejected]: (state, action) => {
+      state.isLoading = false;
+      // state.idNotChecked = true;
+      state.error = action.payload;
     },
   },
 });

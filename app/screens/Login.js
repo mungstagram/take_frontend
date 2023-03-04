@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import AuthInput from '../components/AuthInput';
@@ -32,6 +32,13 @@ const Login = () => {
     <View style={styles.wrapper}>
       <View style={styles.buttonPosionter}>
         <AuthNavigateButton />
+      </View>
+      <View style={styles.imageContainer}>
+        <Image
+          source={require('../assets/LogoMedium.png')}
+          resizeMode={'cover'}
+        />
+        <Text style={styles.imageText}>로그인하기</Text>
       </View>
       <View style={styles.inputWrapper}>
         <AuthInput
@@ -79,12 +86,21 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginLeft: '7%',
   },
-  inputContainer: {},
-
+  imageContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  imageText: {
+    marginTop: 4,
+    fontSize: 20,
+    lineHeight: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   inputWrapper: {
     width: '90%',
     backgroundColor: 'white',
-    marginTop: 220,
+    marginTop: 40,
   },
   helperMessageBox: {
     alignItems: 'center',

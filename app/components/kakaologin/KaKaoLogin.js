@@ -17,7 +17,6 @@ const KaKaoLogin = () => {
       dispatch(__postKaKaoLogin({accessToken: token.accessToken}));
     } catch (err) {
       Alert.alert('login err');
-      console.error('login err', err);
     }
   };
 
