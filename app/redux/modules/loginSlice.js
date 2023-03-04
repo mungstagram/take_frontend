@@ -35,6 +35,7 @@ export const __postLogin = createAsyncThunk(
 
       return thunkAPI.fulfillWithValue(sendData);
     } catch (error) {
+      console.log(error);
       if (error.response.status === 500) {
         ('서버가 닫혀 있습니다.');
       }

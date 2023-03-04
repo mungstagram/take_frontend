@@ -18,7 +18,6 @@ const KaKaoLogin = () => {
       const token = await login();
       console.log(token);
       console.log(token.accessToken);
-      dispatch(__postKaKaoLogin({accessToken: token.accessToken}));
       setResult(JSON.stringify(token));
     } catch (err) {
       console.error('login err', err);
@@ -39,6 +38,8 @@ const KaKaoLogin = () => {
   const getProfile = async () => {
     try {
       const profile = await getKakaoProfile();
+      console.log(profile.id, '프로필값');
+      dispatch(__postKaKaoLogin({id: profile.id}));
 
       setResult(JSON.stringify(profile));
     } catch (err) {
@@ -59,22 +60,22 @@ const KaKaoLogin = () => {
   return (
     <View style={styles.container}>
       <ResultView result={result} />
-      <Pressable
+      {/* <Pressable
         style={styles.button}
         onPress={() => {
           signInWithKakao();
         }}>
         <Text style={styles.text}>카카오 로그인</Text>
-      </Pressable>
-      {/* <Pressable style={styles.button} onPress={() => getProfile()}>
+      </Pressable> */}
+      <Pressable style={styles.button} onPress={() => getProfile()}>
         <Text style={styles.text}>프로필 조회</Text>
       </Pressable>
-      <Pressable style={styles.button} onPress={() => unlinkKakao()}>
+      {/* <Pressable style={styles.button} onPress={() => unlinkKakao()}>
         <Text style={styles.text}>링크 해제</Text>
       </Pressable>
       <Pressable style={styles.button} onPress={() => signOutWithKakao()}>
         <Text style={styles.text}>카카오 로그아웃</Text>
-      </Pressable> */}
+      </Pressable>{' '} */}
     </View>
   );
 };
