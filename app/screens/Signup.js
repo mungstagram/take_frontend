@@ -1,10 +1,11 @@
-import {View, Text, StyleSheet, Alert, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Alert, Pressable, Image} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
 import AuthInput from '../components/AuthInput';
 import AuthButton from '../components/common/AuthButton';
+import KaKaoLogin from '../components/kakaologin/KaKaoLogin';
 import AuthNavigateButton from '../components/AuthNavigateButton';
 import {
   uncheckEmail,
@@ -40,7 +41,7 @@ const Signup = () => {
   // 입력 조건 정규식 validation?
   const regEmail =
     /^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$/;
-  const regNickname = /^[a-zA-Z0-9]{3,}$/;
+  const regNickname = /^[a-zA-Z0-9]{3,10}$/;
   const regPassword =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])?[A-Za-z\d$@$!%*#?&]{8,}$/;
   //유효성 검사 및 유즈스테이트 작성
@@ -52,17 +53,17 @@ const Signup = () => {
         : setEmailInput('');
     if (name === 'nickname')
       !regNickname.test(value)
-        ? setNicknameInput(`영문과 숫자로 된 3글자 이상의 닉네임`)
+        ? setNicknameInput('영문 또는 숫자 3~10자를 입력해야합니다.')
         : setNicknameInput('');
 
     if (name === 'password')
       !regPassword.test(value)
-        ? setPassInput(`@$!%*#?&와 영어 숫자로 된 8글자 이상의 비밀번호`)
+        ? setPassInput(`영문,숫자, !,@로 구성된 8글자 이상으로 입력해야합니다.`)
         : setPassInput('');
 
     if (name === 'passwordCheck')
       password !== value
-        ? setPassCheckInput('비밀번호가 불일치합니다')
+        ? setPassCheckInput('비밀번호가 일치하지 않습니다.')
         : setPassCheckInput('');
   };
 
@@ -143,6 +144,13 @@ const Signup = () => {
       <View style={styles.buttonPosionter}>
         <AuthNavigateButton />
       </View>
+      <View style={styles.imageContainer}>
+        <Image
+          source={require('../assets/LogoMedium.png')}
+          resizeMode={'cover'}
+        />
+        <Text style={styles.imageText}>로그인하기</Text>
+      </View>
       <View style={styles.inputWrapper}>
         <View>
           <View>
@@ -153,7 +161,6 @@ const Signup = () => {
               onUpdateValue={onChangeUserHandler.bind(this, 'email')}
               value={email}
               isInvalid={regEmail.test(email)}
-              // keyboardType="email-address"
             />
             <View style={styles.buttonResizer}>
               <View style={dynamicStyles().buttonPositioner}>
@@ -209,6 +216,9 @@ const Signup = () => {
           </AuthButton>
         </View>
       </View>
+      <View style={styles.socialLoginBox}>
+        <KaKaoLogin />
+      </View>
     </View>
   );
 };
@@ -218,14 +228,26 @@ export default Signup;
 const styles = StyleSheet.create({
   wrapper: {
     alignItems: 'center',
-    // backgroundColor: 'black',
+    backgroundColor: 'white',
     // width: width,
     flex: 1,
   },
+  imageContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  imageText: {
+    marginTop: 4,
+    fontSize: 20,
+    lineHeight: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   buttonPosionter: {
-    position: 'absolute',
-    top: '3%',
-    left: '5%',
+    width: '100%',
+    alignItems: 'flex-start',
+    marginTop: 16,
+    marginLeft: '7%',
   },
   inputContainer: {
     justifyContent: 'center',
@@ -234,8 +256,7 @@ const styles = StyleSheet.create({
   inputWrapper: {
     width: '90%',
     // backgroundColor: 'red',
-    position: 'absolute',
-    top: '25%',
+    marginTop: 20,
   },
   buttonResizer: {
     position: 'absolute',
@@ -245,7 +266,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   submitButtonPositioner: {
-    marginTop: 18,
+    marginTop: 40,
+  },
+  socialLoginBox: {
+    width: '100%',
+    marginTop: 60,
   },
 });
 
