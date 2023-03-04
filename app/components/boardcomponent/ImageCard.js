@@ -8,6 +8,7 @@ import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
 
 const ImageCard = ({imageContent}) => {
+  console.log(imageContent);
   const navigation = useNavigation();
   const onDetailHandler = () => {
     navigation.navigate('ImageDetail', {postId: imageContent.postId});

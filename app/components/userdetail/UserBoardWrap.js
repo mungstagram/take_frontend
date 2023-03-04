@@ -4,7 +4,7 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {Colors} from '../../constants/colors';
 import SelectBox from '../common/SelectBox';
 import ImageGetter from '../boardcomponent/ImageGetter';
-
+import VideoGetter from '../boardcomponent/VideoGetter';
 const UserBoardWrap = ({nickname}) => {
   console.log(nickname, '유저보드랩마운트되면 닉네임임');
   // 사진 동영상 중 어떤 페이진지 선택하는 탭
@@ -66,7 +66,12 @@ const UserBoardWrap = ({nickname}) => {
               order={selectDispatchParameter[dataSortSelector]}
               nickname={nickname}></ImageGetter>
           ) : (
-            <></>
+            <View style={{alignItems: 'center'}}>
+              <VideoGetter
+                order={selectDispatchParameter[dataSortSelector]}
+                nickname={nickname}
+              />
+            </View>
           )}
         </View>
       </View>
