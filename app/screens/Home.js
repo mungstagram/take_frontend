@@ -17,6 +17,7 @@ import {__getHomeProfile} from '../redux/modules/profileSlice';
 import TodoList from '../components/todos/TodoList';
 import WriteTodo from '../components/todos/WriteTodo';
 import ServicesPinkImg from '../components/svg/ServicesPinkImg';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Home({navigation}) {
@@ -32,7 +33,7 @@ function Home({navigation}) {
   //data 불러옴
   const profile = useSelector(state => state.profile.profile);
 
-  console.log('home profile', profile);
+  // console.log('home profile', profile);
 
   useEffect(() => {
     const getNickName = async () => {
@@ -49,22 +50,28 @@ function Home({navigation}) {
 
   return (
     <View style={styles.homeProfile}>
-      <View style={styles.homeProfileInner}>
+      <View style={styles.goToLink}>
         <TouchableOpacity
-          style={styles.goToProfileBtn}
           onPress={() => navigation.navigate('Profile', {myNick})}>
-          <ServicesPinkImg />
+          <Text style={styles.homeFontStyle}>프로필</Text>
         </TouchableOpacity>
-
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+          <Text style={styles.homeFontStyle}>게시글</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+          <Text style={styles.homeFontStyle}>메시지</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.homeProfileInner}>
         <View style={styles.profileImg}>
-          {/* <FastImage
+          <FastImage
             style={styles.dogProfileImg}
             source={{
-              uri: profile[1].dogs[1].contentUrl,
+              uri: profile[1]?.dogs[1]?.contentUrl,
               priority: FastImage.priority.normal,
             }}
             resizeMode={FastImage.resizeMode.contain}
-          /> */}
+          />
 
           <FastImage
             style={styles.personProfileImg}
@@ -86,7 +93,7 @@ function Home({navigation}) {
                 textAlign: 'center',
                 top: '4%',
               }}>
-              {/* {profile[1].dogs[1].name} */}
+              {profile[1]?.dogs[1]?.name}
             </Text>
           </View>
           <View style={styles.dDayBox}>
@@ -98,7 +105,7 @@ function Home({navigation}) {
                 textAlign: 'center',
                 top: '4%',
               }}>
-              {/* 우리가 함께한 날 {profile[1].dogs[1].daysWithin}일 */}
+              우리가 함께한 날 {profile[1]?.dogs[1]?.daysWithin}일
             </Text>
           </View>
         </View>
@@ -106,26 +113,29 @@ function Home({navigation}) {
 
       <View style={styles.homeTodoBox}>
         <View style={styles.homeTodoBoxInner}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: 'bold',
-              right: '26%',
-              color: '#000000',
-            }}>
-            {/* {profile[1].dogs[1].species}/{profile[1].dogs[1].age}/
-            {profile[1].dogs[1].weight}Kg */}
-          </Text>
-          <View
-            style={{
-              borderBottomWidth: 2,
-              borderBottomColor: '#c9c9c9',
-              marginTop: '4%',
-              width: '96%',
-            }}
-          />
-          <View style={{width: 320}}>
+          <View style={styles.toDoText}>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 'bold',
+                color: '#000000',
+              }}>
+              {profile[1]?.dogs[1]?.species}/{profile[1]?.dogs[1]?.age}/
+              {profile[1]?.dogs[1]?.weight}Kg
+            </Text>
+          </View>
+
+          <View style={styles.listBox}>
+            <View
+              style={{
+                borderBottomWidth: 2,
+                borderBottomColor: '#c9c9c9',
+                marginTop: '4%',
+                width: 320,
+              }}
+            />
             <WriteTodo />
+
             <TodoList />
           </View>
         </View>
@@ -136,65 +146,66 @@ function Home({navigation}) {
 
 const styles = StyleSheet.create({
   homeProfile: {
-    width: '100%',
-    height: '100%',
+    borderWidth: 1,
     backgroundColor: '#ffc988',
     justifyContent: 'center',
     alignContent: 'center',
   },
-
-  goToProfileBtn: {
-    borderRadius: 100,
-    backgroundColor: '#ffffff',
-    width: 24,
-    height: 24,
-    top: '12%',
-    left: '10%',
-    margin: '2%',
-    justifyContent: 'center',
-    alignItems: 'center',
+  goToLink: {
+    borderWidth: 1,
+    flexDirection: 'row',
+    left: '36%',
+    marginBottom: 26,
   },
   homeProfileInner: {
     width: '100%',
+    borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  homeFontStyle: {
+    fontSize: 11,
+    width: 40,
+    height: 24,
+    color: '#ffffff',
+  },
   profileImg: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 120,
+    borderWidth: 1,
     flexDirection: 'row',
-    right: '5%',
+    alignItems: 'center',
   },
   dogProfileImg: {
     width: 96,
     height: 96,
     borderRadius: 50,
-    backgroundColor: '#291c1c',
-    position: 'relative',
+    backgroundColor: '#ffffff',
+    opacity: 0.8,
     shadowOpacity: 1,
     shadowRadius: 4,
     elevation: 5,
   },
   personProfileImg: {
-    width: 40,
-    height: 40,
+    width: 48,
+    height: 48,
     borderRadius: 50,
-    top: 40,
-    left: 90,
-    zIndex: 2,
     backgroundColor: '#ffffff',
-    position: 'absolute',
+    opacity: 0.8,
+    zIndex: 1,
+    top: '20%',
+    right: '24%',
     shadowOpacity: 1,
     shadowRadius: 4,
     elevation: 5,
   },
   profileInner: {
+    borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10,
+    margin: 8,
   },
   dogNameBox: {
-    borderRadius: 20,
+    borderRadius: 14,
     width: 128,
     height: 28,
     paddingTop: 2,
@@ -205,7 +216,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   dDayBox: {
-    borderRadius: 20,
+    borderRadius: 14,
     width: 208,
     height: 28,
     paddingTop: 2,
@@ -216,20 +227,34 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-
   homeTodoBox: {
-    // borderWidth: 1,
-    width: '100%',
-    height: 548,
     backgroundColor: '#ffffff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    alignItems: 'center',
+    marginTop: '4%',
   },
   homeTodoBoxInner: {
-    // borderWidth: 1,
+    borderWidth: 1,
+    borderColor: 'red',
+    width: 320,
+    marginBottom: '8%',
     alignItems: 'center',
-    margin: '5%',
-    height: '100%',
+    justifyContent: 'center',
+  },
+  toDoText: {
+    right: '26%',
+    color: '#000000',
+    height: 47,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: '8%',
+  },
+  listBox: {
+    borderWidth: 1,
+    width: 321,
+    height: 408,
   },
 });
 

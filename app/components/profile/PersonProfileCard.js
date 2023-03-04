@@ -22,11 +22,11 @@ import {__getProfile, __editProfile} from '../../redux/modules/profileSlice';
 
 import Logout from '../Logout';
 
-const PersonProfileCard = ({item, index, myNick}) => {
+const PersonProfileCard = ({item}) => {
   // const PersonProfileCard = ({myInfo}) => {
   //   console.log('user myNick', myInfo[0].user);
   const dispatch = useDispatch();
-  console.log('item', item);
+  // console.log('item', item);
 
   //카메라
   const [openCamera, setOpenCamera] = useState(false);
@@ -70,12 +70,12 @@ const PersonProfileCard = ({item, index, myNick}) => {
   const onPresschangeNickEdit = e => {
     setProfNickEdit(e);
   };
-  console.log('input profile profNickEdit', profNickEdit);
+  // console.log('input profile profNickEdit', profNickEdit);
 
   const onPresschangeProfEdit = e => {
     setProfIntroEdit(e);
   };
-  console.log('input profile profIntroEdit', profIntroEdit);
+  // console.log('input profile profIntroEdit', profIntroEdit);
 
   //이미지,권한 설정
   useEffect(() => {
@@ -115,10 +115,13 @@ const PersonProfileCard = ({item, index, myNick}) => {
         });
     }
 
-    console.log('edit profile');
-    console.log('formData', formData);
+    // console.log('edit profile');
+    // console.log('formData', formData);
 
-    dispatch(__editProfile({nickname: myNick, formData: formData}));
+    dispatch(
+      __editProfile({nickname: profile[0]?.user.nickname, formData: formData}),
+    );
+    if (error === null) setIsEdit(false);
   };
 
   //이미지 클릭시 갤러리를 여는 이벤트
@@ -139,7 +142,7 @@ const PersonProfileCard = ({item, index, myNick}) => {
       console.log(e.code, e.message);
     }
   };
-  console.log(images);
+  // console.log(images);
 
   return (
     <View style={styles.block}>
@@ -170,7 +173,7 @@ const PersonProfileCard = ({item, index, myNick}) => {
               <FastImage
                 style={styles.personImg}
                 source={{
-                  uri: profile[0].user.contentUrl,
+                  uri: profile[0]?.user.contentUrl,
                   priority: FastImage.priority.normal,
                 }}
                 resizeMode={FastImage.resizeMode.contain}
@@ -185,7 +188,7 @@ const PersonProfileCard = ({item, index, myNick}) => {
               zIndex: 2,
               marginTop: '12%',
             }}>
-            {profile[0].user.dogsCount} 마리의 집사
+            {profile[0]?.user.dogsCount} 마리의 집사
           </Text>
         </View>
 

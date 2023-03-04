@@ -13,6 +13,8 @@ import {__getProfile} from '../redux/modules/profileSlice';
 
 import Logout from '../components/Logout';
 
+import {SwiperFlatList} from 'react-native-swiper-flatlist';
+
 //사람
 import PersonProfileCard from '../components/profile/PersonProfileCard';
 //강아지
@@ -22,10 +24,10 @@ import AddDogProfile from '../components/profile/AddDogProfile';
 const Profile = ({navigation, route}) => {
   const dispatch = useDispatch();
 
-  const [addDogProf, setAddDogProf] = useState(false);
+  const [addDogProf, setAddDogProf] = useState(true);
 
   const onPressAddDog = () => {
-    setAddDogProf(true);
+    setAddDogProf(!addDogProf);
   };
 
   const {myNick} = route.params;
@@ -48,14 +50,14 @@ const Profile = ({navigation, route}) => {
       </View>
 
       <View style={styles.dogBlock}>
-        <View style={{marginTop: '10%', marginLeft: '10%'}}>
+        {addDogProf ? (
+          <InputDogProfileCard />
+        ) : (
           <TouchableOpacity onPress={onPressAddDog}>
-            {addDogProf ? <InputDogProfileCard /> : <AddDogProfile />}
+            <AddDogProfile />
           </TouchableOpacity>
-        </View>
+        )}
       </View>
-
-      {/* <DogProfile /> */}
     </>
   );
 };
@@ -65,6 +67,8 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: 'red',
     flex: 1,
+    flexDirection: 'row',
+    margin: '8%',
   },
   editBtn: {
     borderWidth: 1,

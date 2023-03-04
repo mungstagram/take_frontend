@@ -17,7 +17,7 @@ const initialState = {
 };
 
 // Thunk 함수
-export const __addProfile = createAsyncThunk(
+export const __addDogProfile = createAsyncThunk(
   'ADD_PROFILE',
   async (payload, thunkAPI) => {
     // console.log('payload', payload);
@@ -69,16 +69,16 @@ export const dogProfileSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    [__addProfile.pending]: state => {
+    [__addDogProfile.pending]: state => {
       state.isSuccess = false;
       state.isLoading = true;
     },
-    [__addProfile.fulfilled]: (state, action) => {
+    [__addDogProfile.fulfilled]: (state, action) => {
       state.isSuccess = true;
       state.isLoading = false;
       state.todo.push(action.payload);
     },
-    [__addProfile.rejected]: (state, action) => {
+    [__addDogProfile.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

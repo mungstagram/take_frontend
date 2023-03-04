@@ -21,7 +21,11 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 
-import {__addProfile, __addDogImg} from '../../redux/modules/dogProfileSlice';
+import {
+  __addDogProfile,
+  __addDogImg,
+} from '../../redux/modules/dogProfileSlice';
+import {__getProfile, __editDogProfile} from '../../redux/modules/profileSlice';
 
 import FastImage from 'react-native-fast-image';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
@@ -29,16 +33,26 @@ import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 const InputDogProfileCard = ({item, index}) => {
   const dispatch = useDispatch();
 
+  //Profile Data 가져오기
+  const profile = useSelector(state => state.profile.profile);
+  console.log('dog profile', profile[1]);
+
   //카메라
   const [openCamera, setOpenCamera] = useState(false);
 
   //이미지
   const [images, setImages] = useState([]);
 
-  //input에서 text
-  const [isEdit, setIsEdit] = useState(false);
+  //data 값을 get
+  useEffect(() => {
+    console.log('강아지 data를 가져오자');
+    dispatch(__getProfile());
+  }, []);
 
-  //Input
+  //ainput에서 text 로 바뀜
+  const [isEdit, setIsEdit] = useState(true);
+
+  //Add Input
   const inputRef = useRef();
 
   const [input, setInput] = useState({
@@ -58,14 +72,19 @@ const InputDogProfileCard = ({item, index}) => {
     setInput({
       ...input,
       [keyvalue]: text,
-    }),
-      setIsEdit(true);
+    });
   };
 
+  //수정과 저장 버튼
+  const onPressEdit = () => {
+    setIsEdit(!isEdit);
+  };
+
+  //Add dog profile
   const onPressAdd = e => {
     console.log('onPressAdd 안에', inputRef.current);
     dispatch(
-      __addProfile({
+      __addDogProfile({
         name: inputRef.current,
         introduce: inputRef.current,
         species: inputRef.current,
@@ -100,25 +119,31 @@ const InputDogProfileCard = ({item, index}) => {
   }, []);
 
   //input 수정 폼 데이터
-  const formData = new FormData();
 
   const sendEditFormData = () => {
+    const formData = new FormData();
     console.log('images[0]', images[0]);
 
     formData.append('name', name);
-    formData.append('introduce', introduce);
     formData.append('species', species);
     formData.append('weight', weight);
+    formData.append('introduce', introduce);
     formData.append('birthday', birthday);
     formData.append('bringDate', bringDate);
-    formData.append('files', {
-      name: images[0].fileName,
-      type: images[0].mime,
-      uri: `file://${images[0].realPath}`,
-    });
+    {
+      images.length !== 0 &&
+        formData.append('files', {
+          name: images[0].fileName,
+          type: images[0].mime,
+          uri: `file://${images[0]?.realPath}`,
+        });
+    }
 
-    console.log('edit profile');
-    dispatch(__addDogImg({formData: formData}));
+    console.log('dog edit profile');
+    console.log('dog formData', formData);
+
+    dispatch(__editDogProfile({id, formData: formData}));
+    if (error === null) setIsEdit(false);
   };
 
   //이미지 클릭시 갤러리를 여는 이벤트
@@ -143,30 +168,51 @@ const InputDogProfileCard = ({item, index}) => {
   return (
     <View style={styles.dogBlock}>
       <View style={styles.dogCardShadow} />
+
       <View style={styles.dogCard}>
-        <TouchableOpacity style={styles.saveBtn} onPress={onPressAdd}>
-          <Text>저장</Text>
+        {/* <TouchableOpacity style={styles.saveBtn}>
+            <Text>수정</Text>
+          </TouchableOpacity>
+   */}
+        <TouchableOpacity
+          style={styles.saveBtn}
+          onPress={() => {
+            onPressAdd();
+            onPressEdit();
+          }}>
+          {isEdit ? <Text>수정</Text> : <Text>저장</Text>}
         </TouchableOpacity>
 
-        <View>
-          <TouchableOpacity
+        {isEdit ? (
+          <FastImage
             style={styles.dogImg}
-            onPress={openPicker}
-            vlue={openCamera}>
-            {images.length !== 0 ? (
-              <Image
-                width={IMAGE_WIDTH}
-                height={IMAGE_HEIGHT}
-                style={styles.media}
-                source={{
-                  uri: `file:// ${images[0]?.realPath}`,
-                }}
-              />
-            ) : (
-              <Text>사진등록</Text>
-            )}
-          </TouchableOpacity>
-        </View>
+            source={{
+              uri: profile[1]?.dogs[1]?.contentUrl,
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.contain}
+          />
+        ) : (
+          <View>
+            <TouchableOpacity
+              style={styles.dogImg}
+              onPress={openPicker}
+              vlue={openCamera}>
+              {images.length !== 0 ? (
+                <Image
+                  width={IMAGE_WIDTH}
+                  height={IMAGE_HEIGHT}
+                  style={styles.media}
+                  source={{
+                    uri: `file:// ${images[0]?.realPath}`,
+                  }}
+                />
+              ) : (
+                <Text>사진등록</Text>
+              )}
+            </TouchableOpacity>
+          </View>
+        )}
 
         <View style={styles.dogProfileInputWrap}>
           <View style={styles.dogInputWrapInner}>
@@ -184,13 +230,13 @@ const InputDogProfileCard = ({item, index}) => {
                   zIndex: 2,
                   position: 'absolute',
                   fontSize: 13,
-                  top: 0,
                   left: '15%',
-                  // borderWidth: 1,
+                  top: '10%',
                   backgroundColor: '#ffffff',
                 }}>
                 강아지이름
               </Text>
+
               {isEdit ? (
                 <Text
                   style={{
@@ -200,8 +246,9 @@ const InputDogProfileCard = ({item, index}) => {
                     width: '45%',
                     height: 50,
                     left: 5,
-                  }}
-                />
+                  }}>
+                  {profile[1].dogs[1].name}
+                </Text>
               ) : (
                 <TextInput
                   style={{
@@ -220,7 +267,6 @@ const InputDogProfileCard = ({item, index}) => {
                   ref={inputRef}
                 />
               )}
-
               <Text
                 style={{
                   borderColor: 'gray',
@@ -263,8 +309,10 @@ const InputDogProfileCard = ({item, index}) => {
                     borderColor: 'gray',
                     width: '40%',
                     height: 50,
-                  }}
-                />
+                    marginTop: '5%',
+                  }}>
+                  {profile[1].dogs[1].species}
+                </Text>
               ) : (
                 <TextInput
                   style={{
@@ -300,13 +348,14 @@ const InputDogProfileCard = ({item, index}) => {
                 <Text
                   style={{
                     position: 'relative',
-
                     borderRadius: 5,
                     borderColor: 'gray',
                     width: '40%',
                     height: 50,
-                  }}
-                />
+                    marginTop: '5%',
+                  }}>
+                  {profile[1].dogs[1].weight}
+                </Text>
               ) : (
                 <TextInput
                   style={{
@@ -353,8 +402,10 @@ const InputDogProfileCard = ({item, index}) => {
                     borderColor: 'gray',
                     width: '85%',
                     height: 50,
-                  }}
-                />
+                    marginTop: '5%',
+                  }}>
+                  {profile[1].dogs[1].introduce}
+                </Text>
               ) : (
                 <TextInput
                   style={{
@@ -399,9 +450,11 @@ const InputDogProfileCard = ({item, index}) => {
                     borderColor: 'gray',
                     width: '40%',
                     height: 50,
+                    marginTop: '5%',
                   }}
-                  placeholder="00.00.00"
-                />
+                  placeholder="00.00.00">
+                  {profile[1].dogs[1].birthday}
+                </Text>
               ) : (
                 <TextInput
                   style={{
@@ -442,9 +495,11 @@ const InputDogProfileCard = ({item, index}) => {
                     borderColor: 'gray',
                     width: '40%',
                     height: 50,
+                    marginTop: '5%',
                   }}
-                  placeholder="00.00.00"
-                />
+                  placeholder="yyyy-mm-dd">
+                  {profile[1].dogs[1].bringDate}
+                </Text>
               ) : (
                 <TextInput
                   style={{
@@ -455,7 +510,7 @@ const InputDogProfileCard = ({item, index}) => {
                     width: '40%',
                     height: 50,
                   }}
-                  placeholder="00.00.00"
+                  placeholder="yyyy-mm-dd"
                   value={bringDate}
                   keyboardType="numeric"
                   onChange={e => onChange('bringDate', e)}
@@ -489,6 +544,8 @@ const styles = StyleSheet.create({
     opacity: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 3,
+    borderColor: '#00ff00',
   },
   dogCardShadow: {
     width: 264,
@@ -511,7 +568,7 @@ const styles = StyleSheet.create({
     height: 160,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
-    backgroundColor: '#ff1717',
+    backgroundColor: '#ff0000',
     justifyContent: 'center',
     alignItems: 'center',
     opacity: 0.9,
@@ -520,6 +577,7 @@ const styles = StyleSheet.create({
     width: 264,
     height: 284,
     justifyContent: 'center',
+    borderWidth: 3,
   },
 
   saveBtn: {
@@ -528,18 +586,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     zIndex: 2,
     position: 'relative',
-    top: '10%',
+    top: '50%',
+    left: '40%',
   },
   media: {
     width: IMAGE_WIDTH,
     height: IMAGE_HEIGHT,
     backgroundColor: 'rgba(155, 155, 155, 0.2)',
   },
-  checkCircle: {
-    borderWidth: 1,
-    width: 24,
-    height: 24,
-  },
+  // checkCircle: {
+  //   borderWidth: 1,
+  //   width: 24,
+  //   height: 24,
+  // },
 });
 
 export default InputDogProfileCard;
