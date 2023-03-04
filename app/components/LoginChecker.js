@@ -16,6 +16,7 @@ const LoginChecker = () => {
     async function fetchToken() {
       const storedToken = await AsyncStorage.getItem('authorization');
       const myNick = await AsyncStorage.getItem('nickname');
+      console.log(myNick, '체커에서 닉네임');
 
       if (storedToken) {
         dispatch(checkLogin());
