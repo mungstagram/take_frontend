@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import AuthInput from '../components/AuthInput';
 import AuthButton from '../components/common/AuthButton';
+import KaKaoLogin from '../components/kakaologin/KaKaoLogin';
 import AuthNavigateButton from '../components/AuthNavigateButton';
 import {
   uncheckEmail,
@@ -209,6 +210,9 @@ const Signup = () => {
           </AuthButton>
         </View>
       </View>
+      <View style={styles.socialLoginBox}>
+        <KaKaoLogin />
+      </View>
     </View>
   );
 };
@@ -218,14 +222,15 @@ export default Signup;
 const styles = StyleSheet.create({
   wrapper: {
     alignItems: 'center',
-    // backgroundColor: 'black',
+    backgroundColor: 'white',
     // width: width,
     flex: 1,
   },
   buttonPosionter: {
-    position: 'absolute',
-    top: '3%',
-    left: '5%',
+    width: '100%',
+    alignItems: 'flex-start',
+    marginTop: 16,
+    marginLeft: '7%',
   },
   inputContainer: {
     justifyContent: 'center',
@@ -234,8 +239,7 @@ const styles = StyleSheet.create({
   inputWrapper: {
     width: '90%',
     // backgroundColor: 'red',
-    position: 'absolute',
-    top: '25%',
+    marginTop: 192,
   },
   buttonResizer: {
     position: 'absolute',
@@ -246,6 +250,10 @@ const styles = StyleSheet.create({
   },
   submitButtonPositioner: {
     marginTop: 18,
+  },
+  socialLoginBox: {
+    width: '100%',
+    marginTop: 60,
   },
 });
 

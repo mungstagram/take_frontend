@@ -34,34 +34,32 @@ const Login = () => {
         <AuthNavigateButton />
       </View>
       <View style={styles.inputWrapper}>
-        <View style={styles.inputContainer}>
-          <AuthInput
-            placeholder="id"
-            refInput={idInput}
-            isInvalid={isSuccessLogin}
-          />
-          <AuthInput
-            placeholder="password"
-            refInput={passwordInput}
-            secure={secureSetter}
-            setSecureSetter={setSecureSetter}
-            isInvalid={isSuccessLogin}
-          />
-          <View style={styles.helperMessageBox}>
-            {isSuccessLogin ? (
-              <Text> </Text>
-            ) : (
-              <Text style={styles.helperText}>
-                입력하신 정보가 일치하지 않습니다
-              </Text>
-            )}
-          </View>
-
-          <AuthButton onPress={onSubmitLogin}>입력 완료</AuthButton>
+        <AuthInput
+          placeholder="id"
+          refInput={idInput}
+          isInvalid={isSuccessLogin}
+        />
+        <AuthInput
+          placeholder="password"
+          refInput={passwordInput}
+          secure={secureSetter}
+          setSecureSetter={setSecureSetter}
+          isInvalid={isSuccessLogin}
+        />
+        <View style={styles.helperMessageBox}>
+          {isSuccessLogin ? (
+            <Text> </Text>
+          ) : (
+            <Text style={styles.helperText}>
+              입력하신 정보가 일치하지 않습니다
+            </Text>
+          )}
         </View>
+
+        <AuthButton onPress={onSubmitLogin}>입력 완료</AuthButton>
       </View>
-      <View>
-        <KaKaoLogin></KaKaoLogin>
+      <View style={styles.socialLoginBox}>
+        <KaKaoLogin />
       </View>
     </View>
   );
@@ -76,22 +74,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonPosionter: {
-    position: 'absolute',
-    top: '3%',
-    left: '5%',
+    width: '100%',
+    alignItems: 'flex-start',
+    marginTop: 16,
+    marginLeft: '7%',
   },
-  inputContainer: {
-    // width: '90%',
-    // height: '60%',
-    // justifyContent: 'center',
-    // backgroundColor: 'green',
-  },
+  inputContainer: {},
 
   inputWrapper: {
     width: '90%',
     backgroundColor: 'white',
-    position: 'absolute',
-    top: '30%',
+    marginTop: 220,
   },
   helperMessageBox: {
     alignItems: 'center',
@@ -102,5 +95,9 @@ const styles = StyleSheet.create({
     color: 'red',
     position: 'absolute',
     top: '20%',
+  },
+  socialLoginBox: {
+    width: '100%',
+    // marginTop: 100,
   },
 });

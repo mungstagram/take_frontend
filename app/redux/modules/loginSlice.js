@@ -54,10 +54,15 @@ export const __postKaKaoLogin = createAsyncThunk(
         AsyncStorage.setItem('authorization', res.headers.authorization);
         return res;
       });
-      // AsyncStorage.setItem('nickname', data.data.nickname);
-      console.log('카카오로그인시 응답', data);
-
-      // return thunkAPI.fulfillWithValue(data.data);
+      if (data.data.nickname === null) {
+        AsyncStorage.setItem('nickname', '');
+        console.log('카카오로그인시 응답 기존회원아닐떄', data);
+        return thunkAPI.fulfillWithValue({nickname: ''});
+      } else {
+        AsyncStorage.setItem('nickname', data.data.nickname);
+        console.log(data.data.nickname, ' 기존회원일경우');
+      }
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error, '카카오로그인시 애러');
       if (error.response.status === 500) {
@@ -123,6 +128,7 @@ const loginSlice = createSlice({
     // 로그인 스테이트 해제(false)
     checkLogout: (state, action) => {
       state.isLogin = false;
+      state.myNick = '';
     },
     // 로그인 실패 상태 초기화
     deleteFailLog: (state, action) => {
@@ -194,7 +200,7 @@ const loginSlice = createSlice({
       console.log('성공시에만 실행되야함.');
       state.isLoading = false;
       state.isLogin = true;
-      // state.myNick = action.payload.nickname;
+      state.myNick = action.payload.nickname;
     },
     [__postKaKaoLogin.rejected]: (state, action) => {
       console.log('실패시에만 실행해야함.');

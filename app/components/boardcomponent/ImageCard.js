@@ -19,10 +19,7 @@ const ImageCard = ({imageContent}) => {
           <FastImage
             style={styles.profileImageWrapper}
             source={{
-              uri:
-                imageContent.profileUrl.length === 0
-                  ? ''
-                  : imageContent.profileUrl[0],
+              uri: imageContent.profileUrl,
               priority: FastImage.priority.normal,
             }}
             resizeMode={FastImage.resizeMode.contain}

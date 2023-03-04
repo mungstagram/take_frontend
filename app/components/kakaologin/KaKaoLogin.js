@@ -1,4 +1,4 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View, Alert, Image} from 'react-native';
 import React, {useState} from 'react';
 import {
   login,
@@ -6,76 +6,64 @@ import {
   getProfile as getKakaoProfile,
   unlink,
 } from '@react-native-seoul/kakao-login';
-import ResultView from './IntroView';
 import {useDispatch} from 'react-redux';
 import {__postKaKaoLogin} from '../../redux/modules/loginSlice';
 
 const KaKaoLogin = () => {
-  const [result, setResult] = useState('');
   const dispatch = useDispatch();
   const signInWithKakao = async () => {
     try {
       const token = await login();
-      console.log(token);
-      console.log(token.accessToken);
-      setResult(JSON.stringify(token));
+      dispatch(__postKaKaoLogin({accessToken: token.accessToken}));
     } catch (err) {
+      Alert.alert('login err');
       console.error('login err', err);
     }
   };
-  console.log(result);
 
-  const signOutWithKakao = async () => {
-    try {
-      const message = await logout();
+  // const signOutWithKakao = async () => {
+  //   try {
+  //     const message = await logout();
 
-      setResult(message);
-    } catch (err) {
-      console.error('signOut error', err);
-    }
-  };
+  //     setResult(message);
+  //   } catch (err) {
+  //     console.error('signOut error', err);
+  //   }
+  // };
 
-  const getProfile = async () => {
-    try {
-      const profile = await getKakaoProfile();
-      console.log(profile.id, '프로필값');
-      dispatch(__postKaKaoLogin({id: profile.id}));
+  // const getProfile = async () => {
+  //   try {
+  //     const profile = await getKakaoProfile();
 
-      setResult(JSON.stringify(profile));
-    } catch (err) {
-      console.error('signOut error', err);
-    }
-  };
+  //     setResult(JSON.stringify(profile));
+  //   } catch (err) {
+  //     console.error('signOut error', err);
+  //   }
+  // };
 
-  const unlinkKakao = async () => {
-    try {
-      const message = await unlink();
+  // const unlinkKakao = async () => {
+  //   try {
+  //     const message = await unlink();
 
-      setResult(message);
-    } catch (err) {
-      console.error('signOut error', err);
-    }
-  };
-
+  //     setResult(message);
+  //   } catch (err) {
+  //     console.error('signOut error', err);
+  //   }
+  // };
   return (
     <View style={styles.container}>
-      <ResultView result={result} />
-      {/* <Pressable
+      <Text style={styles.text}>간편하게 로그인하기</Text>
+
+      <Pressable
         style={styles.button}
         onPress={() => {
           signInWithKakao();
         }}>
-        <Text style={styles.text}>카카오 로그인</Text>
-      </Pressable> */}
-      <Pressable style={styles.button} onPress={() => getProfile()}>
-        <Text style={styles.text}>프로필 조회</Text>
+        <Image
+          source={require('../../assets/kakao_login_medium_narrow.png')}
+          resizeMode={'cover'}
+        />
       </Pressable>
-      {/* <Pressable style={styles.button} onPress={() => unlinkKakao()}>
-        <Text style={styles.text}>링크 해제</Text>
-      </Pressable>
-      <Pressable style={styles.button} onPress={() => signOutWithKakao()}>
-        <Text style={styles.text}>카카오 로그아웃</Text>
-      </Pressable>{' '} */}
     </View>
   );
 };
@@ -84,24 +72,15 @@ export default KaKaoLogin;
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
     width: '100%',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: 'red',
-    // paddingBottom: 100,
   },
   button: {
-    backgroundColor: '#FEE500',
-    borderRadius: 40,
-    borderWidth: 1,
-    width: 250,
-    height: 40,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginTop: 10,
+    marginTop: 32,
   },
   text: {
     textAlign: 'center',
+    fontSize: 12,
   },
 });
