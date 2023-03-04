@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Pressable,
   Alert,
+  ScrollView,
 } from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import {useNavigation} from '@react-navigation/native';
@@ -23,7 +24,7 @@ import {__putLikes} from '../../redux/modules/addContentSlice';
 import Delete from '../svg/Delete';
 import ServicesImg from '../svg/ServicesImg';
 import {__deletePostDetailData} from '../../redux/modules/addContentSlice';
-import {is} from 'immer/dist/internal';
+import CommentList from './CommentList';
 
 const VideoDetailTop = ({detail, videoUrl}) => {
   const navigation = useNavigation();
@@ -119,20 +120,30 @@ const VideoDetailTop = ({detail, videoUrl}) => {
             </View>
           </View>
           {isActivated ? (
-            <View style={styles.contentText}>
-              <Text numberOfLines={line} ellipsizeMode="tail">
-                {detail.content}
-              </Text>
-            </View>
+            <>
+              {/* <ScrollView style={styles.contentScroll}> */}
+              <View style={styles.contentText}>
+                <Text numberOfLines={line} ellipsizeMode="tail">
+                  {detail.content}
+                </Text>
+              </View>
+              <CommentList />
+              {/* </ScrollView> */}
+            </>
           ) : (
-            <View style={styles.contentText}>
-              <Text numberOfLines={line} ellipsizeMode="tail">
-                {detail.content}
-              </Text>
-              <Pressable onPress={prev => handleLine(!prev[0], prev[1])}>
-                <Text>더보기</Text>
-              </Pressable>
-            </View>
+            <>
+              <View style={styles.contentText}>
+                <Text numberOfLines={line} ellipsizeMode="tail">
+                  {detail.content}
+                </Text>
+                <Pressable onPress={prev => handleLine(!prev[0], prev[1])}>
+                  <Text>더보기</Text>
+                </Pressable>
+              </View>
+              <View style={styles.conmmentList}>
+                <CommentList />
+              </View>
+            </>
           )}
         </View>
       </View>
@@ -217,9 +228,11 @@ const styles = StyleSheet.create({
   favoritBox: {
     alignItems: 'center',
   },
+  contentScroll: {},
   contentText: {
     fontSize: 14,
     flexDirection: 'row',
     alignItems: 'flex-end',
   },
+  conmmentList: {},
 });

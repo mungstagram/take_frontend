@@ -48,40 +48,40 @@ const CommentList = ({detail}) => {
       },
     ]);
 
-  // 플랫리스트 돌리기
+  //플랫리스트 돌리기
   const renderItem = ({item}) => {
     return (
-      <ScrollView style={styles.commentView}>
-        <View style={styles.commentBox}>
-          <View style={styles.profileImg}>
-            <FastImage
-              style={styles.profileImg}
-              source={{
-                uri: item.profileUrl,
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={'contain'}
-            />
-          </View>
-          <View style={styles.profileData}>
-            <View>
-              <View style={styles.profileRow}>
-                <Text>{item.nickname}</Text>
-                <Text style={styles.timeText}>{item.createdAt}</Text>
-              </View>
-              <Text>{item.comment}</Text>
+      // <ScrollView style={styles.commentView}>
+      <View style={styles.commentBox}>
+        <View style={styles.profileImg}>
+          <FastImage
+            style={styles.profileImg}
+            source={{
+              uri: item.profileUrl,
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={'contain'}
+          />
+        </View>
+        <View style={styles.profileData}>
+          <View>
+            <View style={styles.profileRow}>
+              <Text>{item.nickname}</Text>
+              <Text style={styles.timeText}>{item.createdAt}</Text>
             </View>
-          </View>
-          <View style={styles.contentControl}>
-            <Pressable style={styles.editBtn} onPress={onEditHandler}>
-              <ServicesImg />
-            </Pressable>
-            <Pressable style={styles.deleteBtn} onPress={onDeleteHandler}>
-              <Delete />
-            </Pressable>
+            <Text>{item.comment}</Text>
           </View>
         </View>
-      </ScrollView>
+        <View style={styles.contentControl}>
+          <Pressable style={styles.editBtn} onPress={onEditHandler}>
+            <ServicesImg />
+          </Pressable>
+          <Pressable style={styles.deleteBtn} onPress={onDeleteHandler}>
+            <Delete />
+          </Pressable>
+        </View>
+      </View>
+      // </ScrollView>
     );
   };
 
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   commentCountBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: '4%',
+    // paddingHorizontal: '4%',
     backgroundColor: BasicColors.whiteColor,
   },
   commentIcon: {
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     height: 80,
     alignItems: 'center',
     flexDirection: 'row',
-    paddingHorizontal: '4%',
+    // paddingHorizontal: '4%',
     backgroundColor: BasicColors.whiteColor,
   },
   profileImg: {

@@ -15,7 +15,7 @@ import GoBackButton from '../components/common/GoBackButton';
 import {__getPostDetailData} from '../redux/modules/commetsSlice';
 import VideoDetailTop from '../components/detailcomp/VideoDetailTop';
 import CommentInput from '../components/detailcomp/CommentInput';
-import CommentList from '../components/detailcomp/CommentList';
+//import CommentList from '../components/detailcomp/CommentList';
 
 const VideoDetail = ({route}) => {
   //useSelector로.. postId 불러야할것 같음
@@ -48,9 +48,9 @@ const VideoDetail = ({route}) => {
             <View style={styles.contentBox}>
               <VideoDetailTop detail={detail} videoUrl={videoUrl} />
             </View>
-            <View style={styles.commentListBox}>
+            {/* <View style={styles.commentListBox}>
               <CommentList detail={detail} />
-            </View>
+            </View> */}
             <View style={styles.commentInputBox}>
               <CommentInput detail={detail} />
             </View>
@@ -90,16 +90,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   contentBox: {
-    flex: 5,
+    flex: 9,
   },
   commentListBox: {
-    flex: 4,
+    // flex: 4,
   },
   commentInputBox: {
     flex: 1,
     height: windowHeight,
     bottom: '8%',
-    zIndex: 5,
+
     justifyContent: 'flex-end',
   },
 });
