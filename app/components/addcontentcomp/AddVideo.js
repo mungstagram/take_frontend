@@ -173,8 +173,8 @@ const AddVideo = () => {
           </View>
           <View style={styles.titleInput}>
             <TextInput
-              placeholder="제목을 입력하세요(20자 이하)"
-              maxLength={20}
+              placeholder="제목을 입력하세요(15자 이하)"
+              maxLength={15}
               // returnKeyType="next"
               value={titleText}
               onChange={titleTextHandler}
@@ -182,8 +182,8 @@ const AddVideo = () => {
           </View>
           <View style={styles.contentInput}>
             <TextInput
-              placeholder="내용을 입력하세요(300자 이하)"
-              maxLength={300}
+              placeholder="내용을 입력하세요(2000자 이하)"
+              maxLength={2000}
               // 확인하기
               multiline={true}
               value={contentText}
@@ -191,7 +191,7 @@ const AddVideo = () => {
             />
           </View>
           <View>
-            <Text>{contentText.length}/100</Text>
+            <Text>{contentText.length}/2000</Text>
           </View>
           <View style={styles.buttonRow}>
             <CancelButton>Cancel</CancelButton>

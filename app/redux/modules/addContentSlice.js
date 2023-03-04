@@ -3,14 +3,14 @@ import http from '../api/http';
 import {Alert} from 'react-native';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
+//초기상태
 const initialState = {
   contentList: [],
-  detail: {contentUrl: ['']},
   isLoading: false,
   error: null,
 };
 
-//AddContent POST요청
+//게시물 작성
 export const __postAddContentFormData = createAsyncThunk(
   'POST_ADDCONTENT',
   async (payload, thunkAPI) => {
@@ -41,6 +41,7 @@ export const __postAddContentFormData = createAsyncThunk(
   },
 );
 
+// 게시물 조회
 export const __getPostData = createAsyncThunk(
   'GET_POST_DATA',
   async (payload, thunkAPI) => {
@@ -59,11 +60,28 @@ export const __getPostData = createAsyncThunk(
   },
 );
 
-export const __getPostDetailData = createAsyncThunk(
-  'GET_POST_DETAIL_DATA',
+//게시물 삭제
+export const __deletePostDetailData = createAsyncThunk(
+  'DELETE_POST_DETAIL_DATA',
+  async (payload, thunkAPI) => {
+    console.log('payload', payload);
+    try {
+      const {data} = await http.delete(`/posts/${payload.postId}`);
+
+      console.log('deleteData', data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+//게시물 좋아요
+export const __putLikes = createAsyncThunk(
+  'PUT_LIKES',
   async (payload, thunkAPI) => {
     try {
-      const {data} = await http.get(`/posts/${payload}`);
+      const {data} = await http.put(`/posts/likes/${payload.postId}`);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -99,18 +117,6 @@ const addContentSlice = createSlice({
     [__getPostData.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
-    },
-    [__getPostDetailData.pending]: (state, action) => {
-      state.isLoading = true;
-    },
-    [__getPostDetailData.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      //console.log('ac', action.payload);
-      state.detail = action.payload;
-    },
-    [__getPostDetailData.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
     },
   },
 });

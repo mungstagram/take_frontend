@@ -159,7 +159,7 @@ const AddImage = () => {
         <View style={styles.container}>
           <View style={styles.titleInput}>
             <TextInput
-              placeholder="제목을 입력하세요(20자 이하)"
+              placeholder="제목을 입력하세요(15자 이하)"
               maxLength={15}
               // returnKeyType="next"
               value={titleText}
@@ -169,7 +169,7 @@ const AddImage = () => {
 
           <View style={styles.contentInput}>
             <TextInput
-              placeholder="내용을 입력하세요(300자 이하)"
+              placeholder="내용을 입력하세요(2000자 이하)"
               maxLength={2000}
               // 확인하기
               multiline={true}
