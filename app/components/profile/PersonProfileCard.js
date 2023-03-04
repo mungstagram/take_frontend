@@ -36,8 +36,10 @@ const PersonProfileCard = ({item, index, myNick}) => {
   // console.log('input profile', profile[0]);
 
   //input
-  const [profNickEdit, setProfNickEdit] = useState(profile[0].user.nickname);
-  const [profIntroEdit, setProfIntroEdit] = useState(profile[0].user.introduce);
+  const [profNickEdit, setProfNickEdit] = useState(profile[0]?.user.nickname);
+  const [profIntroEdit, setProfIntroEdit] = useState(
+    profile[0]?.user.introduce,
+  );
 
   //수정
   const [isEdit, setIsEdit] = useState(false);
@@ -97,20 +99,25 @@ const PersonProfileCard = ({item, index, myNick}) => {
   }, []);
 
   //input 수정 폼 데이터
-  const formData = new FormData();
 
   const sendEditFormData = () => {
-    console.log('images[0]', images[0]);
+    const formData = new FormData();
+    // console.log('images[0]', images[0]);
 
     formData.append('changeNickname', profNickEdit);
     formData.append('introduce', profIntroEdit);
-    formData.append('files', {
-      name: images[0].fileName,
-      type: images[0].mime,
-      uri: `file://${images[0].realPath}`,
-    });
+    {
+      images.length !== 0 &&
+        formData.append('files', {
+          name: images[0].fileName,
+          type: images[0].mime,
+          uri: `file://${images[0]?.realPath}`,
+        });
+    }
 
     console.log('edit profile');
+    console.log('formData', formData);
+
     dispatch(__editProfile({nickname: myNick, formData: formData}));
   };
 
@@ -145,27 +152,18 @@ const PersonProfileCard = ({item, index, myNick}) => {
                   style={styles.personProfileImg}
                   onPress={openPicker}
                   vlue={openCamera}>
-                  {/* <Image
-                    value={images}
-                    width={IMAGE_WIDTH}
-                    style={styles.media}
-                    source={{
-                      uri: 'file://' + item[0]?.realPath,
-                    }}
-                  /> */}
-
-                  <Image
-                    value={images}
-                    width={IMAGE_WIDTH}
-                    style={styles.media}
-                    source={{
-                      uri:
-                        item[0] === null
-                          ? 'file://' + item[0]?.realPath
-                          : 'file://' + item[0]?.realPath,
-                    }}
-                  />
-                  <Text>사진등록</Text>
+                  {images.length !== 0 ? (
+                    <Image
+                      value={images}
+                      width={IMAGE_WIDTH}
+                      style={styles.media}
+                      source={{
+                        uri: `file:// ${images[0]?.realPath}`,
+                      }}
+                    />
+                  ) : (
+                    <Text>사진등록</Text>
+                  )}
                 </TouchableOpacity>
               </View>
             ) : (

@@ -31,6 +31,7 @@ function Home({navigation}) {
 
   //data 불러옴
   const profile = useSelector(state => state.profile.profile);
+
   console.log('home profile', profile);
 
   useEffect(() => {
@@ -68,7 +69,7 @@ function Home({navigation}) {
           <FastImage
             style={styles.personProfileImg}
             source={{
-              uri: profile[0].user.contentUrl,
+              uri: profile[0]?.user.contentUrl,
               priority: FastImage.priority.normal,
             }}
             resizeMode={FastImage.resizeMode.contain}

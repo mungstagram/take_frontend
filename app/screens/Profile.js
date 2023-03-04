@@ -18,7 +18,6 @@ import PersonProfileCard from '../components/profile/PersonProfileCard';
 //강아지
 import InputDogProfileCard from '../components/profile/InputDogProfileCard';
 import AddDogProfile from '../components/profile/AddDogProfile';
-import DogProfile from '../components/profile/DogProfile';
 
 const Profile = ({navigation, route}) => {
   const dispatch = useDispatch();

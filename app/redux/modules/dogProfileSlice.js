@@ -5,17 +5,13 @@ import http from '../api/http';
 const initialState = {
   profile: [
     {
-      dogs: {
-        name: '',
-        introduce: '',
-        species: '',
-        gender: '',
-        weight: '',
-        birthday: '',
-        bringDate: '',
-      },
+      user: {},
+    },
+    {
+      dogs: [],
     },
   ],
+
   isLoading: false,
   error: null,
 };

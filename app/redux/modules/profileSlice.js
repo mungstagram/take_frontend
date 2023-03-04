@@ -49,11 +49,15 @@ export const __getProfile = createAsyncThunk(
   },
 );
 
+//
 export const __editProfile = createAsyncThunk(
   'EDIT_PROFILE',
   async (payload, thunkAPI) => {
     try {
-      console.log('edit payload', payload);
+      // console.log('edit payload', payload);
+      console.log('edit payload', payload.nickname);
+      console.log('edit payload', payload.formData);
+
       const {data} = await http
         .put(`/profile/${payload.nickname}`, payload.formData, {
           // changeNickname: payload.changeNickname,

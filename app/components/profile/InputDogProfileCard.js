@@ -35,6 +35,9 @@ const InputDogProfileCard = ({item, index}) => {
   //이미지
   const [images, setImages] = useState([]);
 
+  //input에서 text
+  const [isEdit, setIsEdit] = useState(false);
+
   //Input
   const inputRef = useRef();
 
@@ -55,7 +58,8 @@ const InputDogProfileCard = ({item, index}) => {
     setInput({
       ...input,
       [keyvalue]: text,
-    });
+    }),
+      setIsEdit(true);
   };
 
   const onPressAdd = e => {
@@ -149,14 +153,18 @@ const InputDogProfileCard = ({item, index}) => {
             style={styles.dogImg}
             onPress={openPicker}
             vlue={openCamera}>
-            <Image
-              width={IMAGE_WIDTH}
-              height={IMAGE_HEIGHT}
-              style={styles.media}
-              source={{
-                uri: 'file://' + (item?.crop?.cropPath ?? item?.realPath),
-              }}
-            />
+            {images.length !== 0 ? (
+              <Image
+                width={IMAGE_WIDTH}
+                height={IMAGE_HEIGHT}
+                style={styles.media}
+                source={{
+                  uri: `file:// ${images[0]?.realPath}`,
+                }}
+              />
+            ) : (
+              <Text>사진등록</Text>
+            )}
           </TouchableOpacity>
         </View>
 
@@ -183,22 +191,36 @@ const InputDogProfileCard = ({item, index}) => {
                 }}>
                 강아지이름
               </Text>
-              <TextInput
-                style={{
-                  position: 'relative',
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  borderColor: 'gray',
-                  width: '45%',
-                  height: 50,
-                  left: 5,
-                }}
-                placeholder="김댕댕"
-                onChange={e => onChange('name', e)}
-                value={name}
-                onSubmitEditing={() => inputRef.current.focus()}
-                ref={inputRef}
-              />
+              {isEdit ? (
+                <Text
+                  style={{
+                    position: 'relative',
+                    borderRadius: 5,
+                    borderColor: 'gray',
+                    width: '45%',
+                    height: 50,
+                    left: 5,
+                  }}
+                />
+              ) : (
+                <TextInput
+                  style={{
+                    position: 'relative',
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    borderColor: 'gray',
+                    width: '45%',
+                    height: 50,
+                    left: 5,
+                  }}
+                  placeholder="김댕댕"
+                  onChange={e => onChange('name', e)}
+                  value={name}
+                  onSubmitEditing={() => inputRef.current.focus()}
+                  ref={inputRef}
+                />
+              )}
+
               <Text
                 style={{
                   borderColor: 'gray',
@@ -208,6 +230,7 @@ const InputDogProfileCard = ({item, index}) => {
                 }}>
                 대표강아지
               </Text>
+              <View style={styles.checkCircle} />
             </View>
 
             <View
@@ -231,20 +254,34 @@ const InputDogProfileCard = ({item, index}) => {
                 }}>
                 종류
               </Text>
-              <TextInput
-                style={{
-                  position: 'relative',
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  borderColor: 'gray',
-                  width: '40%',
-                  height: 50,
-                }}
-                placeholder="요크셔테리어"
-                value={species}
-                onChange={e => onChange('species', e)}
-                ref={inputRef}
-              />
+              {isEdit ? (
+                <Text
+                  style={{
+                    position: 'relative',
+
+                    borderRadius: 5,
+                    borderColor: 'gray',
+                    width: '40%',
+                    height: 50,
+                  }}
+                />
+              ) : (
+                <TextInput
+                  style={{
+                    position: 'relative',
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    borderColor: 'gray',
+                    width: '40%',
+                    height: 50,
+                  }}
+                  placeholder="요크셔테리어"
+                  value={species}
+                  onChange={e => onChange('species', e)}
+                  ref={inputRef}
+                />
+              )}
+
               <Text
                 style={{
                   color: 'black',
@@ -259,21 +296,34 @@ const InputDogProfileCard = ({item, index}) => {
                 몸무게
               </Text>
 
-              <TextInput
-                style={{
-                  position: 'relative',
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  borderColor: 'gray',
-                  width: '40%',
-                  height: 50,
-                }}
-                placeholder="00kg"
-                value={weight}
-                keyboardType="numeric"
-                onChange={e => onChange('weight', e)}
-                ref={inputRef}
-              />
+              {isEdit ? (
+                <Text
+                  style={{
+                    position: 'relative',
+
+                    borderRadius: 5,
+                    borderColor: 'gray',
+                    width: '40%',
+                    height: 50,
+                  }}
+                />
+              ) : (
+                <TextInput
+                  style={{
+                    position: 'relative',
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    borderColor: 'gray',
+                    width: '40%',
+                    height: 50,
+                  }}
+                  placeholder="00kg"
+                  value={weight}
+                  keyboardType="numeric"
+                  onChange={e => onChange('weight', e)}
+                  ref={inputRef}
+                />
+              )}
             </View>
 
             <View
@@ -295,19 +345,31 @@ const InputDogProfileCard = ({item, index}) => {
                 }}>
                 강아지소개
               </Text>
-              <TextInput
-                style={{
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  borderColor: 'gray',
-                  width: '85%',
-                  height: 50,
-                }}
-                placeholder="집사바라기"
-                value={introduce}
-                onChange={e => onChange('introduce', e)}
-                ref={inputRef}
-              />
+
+              {isEdit ? (
+                <Text
+                  style={{
+                    borderRadius: 5,
+                    borderColor: 'gray',
+                    width: '85%',
+                    height: 50,
+                  }}
+                />
+              ) : (
+                <TextInput
+                  style={{
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    borderColor: 'gray',
+                    width: '85%',
+                    height: 50,
+                  }}
+                  placeholder="집사바라기"
+                  value={introduce}
+                  onChange={e => onChange('introduce', e)}
+                  ref={inputRef}
+                />
+              )}
             </View>
 
             <View
@@ -329,21 +391,35 @@ const InputDogProfileCard = ({item, index}) => {
                 }}>
                 태어난 날
               </Text>
-              <TextInput
-                style={{
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  borderColor: 'gray',
-                  width: '40%',
-                  height: 50,
-                }}
-                placeholder="00.00.00"
-                value={birthday}
-                keyboardType="numeric"
-                autoComplete="birthdate-full"
-                onChange={e => onChange('birthday', e)}
-                ref={inputRef}
-              />
+
+              {isEdit ? (
+                <Text
+                  style={{
+                    borderRadius: 5,
+                    borderColor: 'gray',
+                    width: '40%',
+                    height: 50,
+                  }}
+                  placeholder="00.00.00"
+                />
+              ) : (
+                <TextInput
+                  style={{
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    borderColor: 'gray',
+                    width: '40%',
+                    height: 50,
+                  }}
+                  placeholder="00.00.00"
+                  value={birthday}
+                  keyboardType="numeric"
+                  autoComplete="birthdate-full"
+                  onChange={e => onChange('birthday', e)}
+                  ref={inputRef}
+                />
+              )}
+
               <Text
                 style={{
                   color: 'black',
@@ -356,21 +432,36 @@ const InputDogProfileCard = ({item, index}) => {
                 }}>
                 데려온 날
               </Text>
-              <TextInput
-                style={{
-                  position: 'relative',
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  borderColor: 'gray',
-                  width: '40%',
-                  height: 50,
-                }}
-                placeholder="00.00.00"
-                value={bringDate}
-                keyboardType="numeric"
-                onChange={e => onChange('bringDate', e)}
-                ref={inputRef}
-              />
+
+              {isEdit ? (
+                <Text
+                  style={{
+                    position: 'relative',
+
+                    borderRadius: 5,
+                    borderColor: 'gray',
+                    width: '40%',
+                    height: 50,
+                  }}
+                  placeholder="00.00.00"
+                />
+              ) : (
+                <TextInput
+                  style={{
+                    position: 'relative',
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    borderColor: 'gray',
+                    width: '40%',
+                    height: 50,
+                  }}
+                  placeholder="00.00.00"
+                  value={bringDate}
+                  keyboardType="numeric"
+                  onChange={e => onChange('bringDate', e)}
+                  ref={inputRef}
+                />
+              )}
             </View>
           </View>
         </View>
@@ -443,6 +534,11 @@ const styles = StyleSheet.create({
     width: IMAGE_WIDTH,
     height: IMAGE_HEIGHT,
     backgroundColor: 'rgba(155, 155, 155, 0.2)',
+  },
+  checkCircle: {
+    borderWidth: 1,
+    width: 24,
+    height: 24,
   },
 });
 
