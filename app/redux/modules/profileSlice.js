@@ -19,6 +19,21 @@ const initialState = {
 
 // Thunk 함수
 
+export const __getHomeProfile = createAsyncThunk(
+  'GET_PROFILE_HOME',
+  async (payload, thunkAPI) => {
+    console.log('1.home payload', payload);
+    //여기서 undefined 면 절대통신이 안된다는 뜻!
+    try {
+      const {data} = await http.get(`/profile`);
+      console.log('home data', data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.code);
+    }
+  },
+);
+
 export const __getProfile = createAsyncThunk(
   'GET_PROFILE',
   async (payload, thunkAPI) => {
@@ -26,7 +41,7 @@ export const __getProfile = createAsyncThunk(
     //여기서 undefined 면 절대통신이 안된다는 뜻!
     try {
       const {data} = await http.get(`/profile/${payload}`);
-      console.log('data', data);
+      // console.log('data', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -39,14 +54,18 @@ export const __editProfile = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       console.log('edit payload', payload);
-      const {data} = await http.put(`/profile/${payload.nickname}`, payload, {
-        // changeNickname: payload.changeNickname,
-        // introduce: payload.introduce,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('edit data', data);
+      const {data} = await http
+        .put(`/profile/${payload.nickname}`, payload.formData, {
+          // changeNickname: payload.changeNickname,
+          // introduce: payload.introduce,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then(res => {
+          console.log('성공');
+          return res;
+        });
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log('edit error', error);
@@ -58,15 +77,21 @@ export const __editProfile = createAsyncThunk(
 export const profileSlice = createSlice({
   name: 'profile',
   initialState,
-  reducers: {
-    // clearTodo: state => {
-    //   state.todo = {
-    //     id: 0,
-    //     content: '',
-    //   };
-    // },
-  },
+  reducers: {},
   extraReducers: {
+    [__getHomeProfile.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      // console.log(action.payload);
+      state.profile = action.payload;
+      // console.log('payload', action.payload);
+    },
+    [__getHomeProfile.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [__getHomeProfile.pending]: state => {
+      state.isLoading = true;
+    },
     [__getProfile.fulfilled]: (state, action) => {
       state.isLoading = false;
       // console.log(action.payload);

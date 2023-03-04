@@ -45,12 +45,7 @@ const Profile = ({navigation, route}) => {
     <>
       <Logout />
       <View style={{borderWidth: 2, borderColor: 'blue', top: 10}}>
-        {/* <TouchableOpacity
-          style={styles.editBtn}
-          onPress={() => navigation.navigate('InputPersonProfileCard')}>
-          <Text>수정</Text>
-        </TouchableOpacity> */}
-        <PersonProfileCard myInfo={profile} />
+        <PersonProfileCard myInfo={profile} myNick={myNick} />
       </View>
 
       <View style={styles.dogBlock}>
@@ -68,7 +63,7 @@ const Profile = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
   dogBlock: {
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: 'red',
     flex: 1,
   },

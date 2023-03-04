@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   FlatList,
   View,
@@ -10,18 +10,154 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  Platform,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
 } from 'react-native';
 
-const InputDogProfileCard = () => {
+import {useDispatch, useSelector} from 'react-redux';
+import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
+
+import {__addProfile, __addDogImg} from '../../redux/modules/dogProfileSlice';
+
+import FastImage from 'react-native-fast-image';
+import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
+
+const InputDogProfileCard = ({item, index}) => {
+  const dispatch = useDispatch();
+
+  //카메라
+  const [openCamera, setOpenCamera] = useState(false);
+
+  //이미지
+  const [images, setImages] = useState([]);
+
+  //Input
+  const inputRef = useRef();
+
+  const [input, setInput] = useState({
+    name: '',
+    introduce: '',
+    species: '',
+    weight: '',
+    birthday: '',
+    bringDate: '',
+  });
+
+  const {name, introduce, species, weight, birthday, bringDate} = input;
+
+  console.log('input', input);
+  const onChange = (keyvalue, e) => {
+    const {text} = e.nativeEvent;
+    setInput({
+      ...input,
+      [keyvalue]: text,
+    });
+  };
+
+  const onPressAdd = e => {
+    console.log('onPressAdd 안에', inputRef.current);
+    dispatch(
+      __addProfile({
+        name: inputRef.current,
+        introduce: inputRef.current,
+        species: inputRef.current,
+        weight: inputRef.current,
+        birthday: inputRef.current,
+        bringDate: inputRef.current,
+      }),
+    );
+  };
+
+  // useEffect(() => {}, []);
+
+  //이미지,권한 설정
+  useEffect(() => {
+    if (Platform.OS !== 'ios' && Platform.OS !== 'android') return;
+    const platformPermissions =
+      Platform.OS === 'ios'
+        ? PERMISSIONS.IOS.CAMERA
+        : PERMISSIONS.ANDROID.CAMERA;
+    const requestCameraPermission = async () => {
+      try {
+        const result = await request(platformPermissions);
+        result === RESULTS.GRANTED
+          ? setOpenCamera(true)
+          : Alert.alert('카메라 권한을 허용해주세요!');
+      } catch (error) {
+        Alert.alert('카메라 권한설정이 에러났습니다.');
+        console.warn(error);
+      }
+    };
+    requestCameraPermission();
+  }, []);
+
+  //input 수정 폼 데이터
+  const formData = new FormData();
+
+  const sendEditFormData = () => {
+    console.log('images[0]', images[0]);
+
+    formData.append('name', name);
+    formData.append('introduce', introduce);
+    formData.append('species', species);
+    formData.append('weight', weight);
+    formData.append('birthday', birthday);
+    formData.append('bringDate', bringDate);
+    formData.append('files', {
+      name: images[0].fileName,
+      type: images[0].mime,
+      uri: `file://${images[0].realPath}`,
+    });
+
+    console.log('edit profile');
+    dispatch(__addDogImg({formData: formData}));
+  };
+
+  //이미지 클릭시 갤러리를 여는 이벤트
+  const openPicker = async () => {
+    try {
+      const response = await MultipleImagePicker.openPicker({
+        usedCameraButton: true,
+        mediaType: 'image',
+        maxSelectedAssets: 1,
+        selectedAssets: images,
+        isExportThumbnail: true,
+        isCrop: true,
+        isCropCircle: true,
+      });
+      console.log('response: ', response);
+      setImages(response);
+    } catch (e) {
+      console.log(e.code, e.message);
+    }
+  };
+
   return (
     <View style={styles.dogBlock}>
       <View style={styles.dogCardShadow} />
       <View style={styles.dogCard}>
-        <TouchableOpacity style={styles.saveBtn}>
+        <TouchableOpacity style={styles.saveBtn} onPress={onPressAdd}>
           <Text>저장</Text>
         </TouchableOpacity>
-        <View style={styles.dogImg}>
-          <View style={styles.dogImgBtn} />
+
+        <View>
+          <TouchableOpacity
+            style={styles.dogImg}
+            onPress={openPicker}
+            vlue={openCamera}>
+            <Image
+              width={IMAGE_WIDTH}
+              height={IMAGE_HEIGHT}
+              style={styles.media}
+              source={{
+                uri: 'file://' + (item?.crop?.cropPath ?? item?.realPath),
+              }}
+            />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.dogProfileInputWrap}>
@@ -58,6 +194,10 @@ const InputDogProfileCard = () => {
                   left: 5,
                 }}
                 placeholder="김댕댕"
+                onChange={e => onChange('name', e)}
+                value={name}
+                onSubmitEditing={() => inputRef.current.focus()}
+                ref={inputRef}
               />
               <Text
                 style={{
@@ -101,6 +241,9 @@ const InputDogProfileCard = () => {
                   height: 50,
                 }}
                 placeholder="요크셔테리어"
+                value={species}
+                onChange={e => onChange('species', e)}
+                ref={inputRef}
               />
               <Text
                 style={{
@@ -126,6 +269,10 @@ const InputDogProfileCard = () => {
                   height: 50,
                 }}
                 placeholder="00kg"
+                value={weight}
+                keyboardType="numeric"
+                onChange={e => onChange('weight', e)}
+                ref={inputRef}
               />
             </View>
 
@@ -157,6 +304,9 @@ const InputDogProfileCard = () => {
                   height: 50,
                 }}
                 placeholder="집사바라기"
+                value={introduce}
+                onChange={e => onChange('introduce', e)}
+                ref={inputRef}
               />
             </View>
 
@@ -188,6 +338,11 @@ const InputDogProfileCard = () => {
                   height: 50,
                 }}
                 placeholder="00.00.00"
+                value={birthday}
+                keyboardType="numeric"
+                autoComplete="birthdate-full"
+                onChange={e => onChange('birthday', e)}
+                ref={inputRef}
               />
               <Text
                 style={{
@@ -211,6 +366,10 @@ const InputDogProfileCard = () => {
                   height: 50,
                 }}
                 placeholder="00.00.00"
+                value={bringDate}
+                keyboardType="numeric"
+                onChange={e => onChange('bringDate', e)}
+                ref={inputRef}
               />
             </View>
           </View>
@@ -220,7 +379,13 @@ const InputDogProfileCard = () => {
   );
 };
 
+const IMAGE_WIDTH = 264;
+const IMAGE_HEIGHT = 160;
+
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   dogBlock: {
     flex: 1,
   },
@@ -255,7 +420,7 @@ const styles = StyleSheet.create({
     height: 160,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
-    backgroundColor: '#d0d0d0',
+    backgroundColor: '#ff1717',
     justifyContent: 'center',
     alignItems: 'center',
     opacity: 0.9,
@@ -265,12 +430,7 @@ const styles = StyleSheet.create({
     height: 284,
     justifyContent: 'center',
   },
-  dogImgBtn: {
-    zIndex: 2,
-    position: 'relative',
-    bottom: '20%',
-    left: '30%',
-  },
+
   saveBtn: {
     width: 30,
     height: 24,
@@ -278,6 +438,11 @@ const styles = StyleSheet.create({
     zIndex: 2,
     position: 'relative',
     top: '10%',
+  },
+  media: {
+    width: IMAGE_WIDTH,
+    height: IMAGE_HEIGHT,
+    backgroundColor: 'rgba(155, 155, 155, 0.2)',
   },
 });
 

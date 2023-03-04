@@ -6,9 +6,13 @@ import {
   Button,
   Touchable,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+
 import FastImage from 'react-native-fast-image';
+
+import {__getHomeProfile} from '../redux/modules/profileSlice';
 
 import TodoList from '../components/todos/TodoList';
 import WriteTodo from '../components/todos/WriteTodo';
@@ -20,8 +24,14 @@ function Home({navigation}) {
   // console.log('Home nick', myNick);
   // console.log('response', response);
 
+  const dispatch = useDispatch();
+
   // let myNick = '';
   const [myNick, setMyNick] = useState();
+
+  //data 불러옴
+  const profile = useSelector(state => state.profile.profile);
+  console.log('home profile', profile);
 
   useEffect(() => {
     const getNickName = async () => {
@@ -30,6 +40,11 @@ function Home({navigation}) {
     getNickName();
   }, [myNick]);
   console.log('myNick', myNick);
+
+  useEffect(() => {
+    console.log('home');
+    dispatch(__getHomeProfile());
+  }, []);
 
   return (
     <View style={styles.homeProfile}>
@@ -41,24 +56,23 @@ function Home({navigation}) {
         </TouchableOpacity>
 
         <View style={styles.profileImg}>
-          <View style={styles.dogProfileImg} />
           {/* <FastImage
-            style={styles.personImg}
+            style={styles.dogProfileImg}
             source={{
-              uri: profile[1].dogs.contentUrl,
+              uri: profile[1].dogs[1].contentUrl,
               priority: FastImage.priority.normal,
             }}
             resizeMode={FastImage.resizeMode.contain}
           /> */}
-          <View style={styles.personProfileImg} />
-          {/* <FastImage
-            style={styles.personImg}
+
+          <FastImage
+            style={styles.personProfileImg}
             source={{
               uri: profile[0].user.contentUrl,
               priority: FastImage.priority.normal,
             }}
             resizeMode={FastImage.resizeMode.contain}
-          /> */}
+          />
         </View>
 
         <View style={styles.profileInner}>
@@ -71,7 +85,7 @@ function Home({navigation}) {
                 textAlign: 'center',
                 top: '4%',
               }}>
-              강아지 이름
+              {/* {profile[1].dogs[1].name} */}
             </Text>
           </View>
           <View style={styles.dDayBox}>
@@ -83,7 +97,7 @@ function Home({navigation}) {
                 textAlign: 'center',
                 top: '4%',
               }}>
-              우리가 함께한 날 0000일
+              {/* 우리가 함께한 날 {profile[1].dogs[1].daysWithin}일 */}
             </Text>
           </View>
         </View>
@@ -98,7 +112,8 @@ function Home({navigation}) {
               right: '26%',
               color: '#000000',
             }}>
-            강아지종/나이/몸무게
+            {/* {profile[1].dogs[1].species}/{profile[1].dogs[1].age}/
+            {profile[1].dogs[1].weight}Kg */}
           </Text>
           <View
             style={{
@@ -153,7 +168,7 @@ const styles = StyleSheet.create({
     width: 96,
     height: 96,
     borderRadius: 50,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#291c1c',
     position: 'relative',
     shadowOpacity: 1,
     shadowRadius: 4,
@@ -166,7 +181,7 @@ const styles = StyleSheet.create({
     top: 40,
     left: 90,
     zIndex: 2,
-    backgroundColor: '#eeeeee',
+    backgroundColor: '#ffffff',
     position: 'absolute',
     shadowOpacity: 1,
     shadowRadius: 4,

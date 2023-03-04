@@ -10,31 +10,42 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  Platform,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
+
 import FastImage from 'react-native-fast-image';
+import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 
 import {__getProfile, __editProfile} from '../../redux/modules/profileSlice';
 
 import Logout from '../Logout';
-import AddProfileImg from './AddProfileImg';
 
-const PersonProfileCard = () => {
+const PersonProfileCard = ({item, index, myNick}) => {
   // const PersonProfileCard = ({myInfo}) => {
   //   console.log('user myNick', myInfo[0].user);
   const dispatch = useDispatch();
+  console.log('item', item);
 
+  //카메라
+  const [openCamera, setOpenCamera] = useState(false);
+
+  //data 불러옴
   const profile = useSelector(state => state.profile.profile);
   // console.log('input profile', profile[0]);
+
   //input
   const [profNickEdit, setProfNickEdit] = useState(profile[0].user.nickname);
   const [profIntroEdit, setProfIntroEdit] = useState(profile[0].user.introduce);
+
+  //수정
   const [isEdit, setIsEdit] = useState(false);
 
-  const onPressInputEdit = () => {
-    setIsEdit(true);
-  };
+  //이미지
+  const [images, setImages] = useState([]);
 
+  //data 값 get
   useEffect(() => {
     // console.log('data를 가져오자');
     //2.데이터 값을 초기에 실행(마운트될때, 안에 있는 함수을 실행)
@@ -47,53 +58,126 @@ const PersonProfileCard = () => {
   // console.log('state.profile', profile[0]);
   // console.log('user dog', myInfo[1].dogs);
   // console.log('contentUrl', myInfo[0].user.contentUrl);
-  //input 폼 데이터
-  // const formData = new FormData();
 
-  // const sendEditFormData = () => {
-  //   const objProfile = {
-  //     nickname: profile[0].user.nickname,
-  //     changeNickname: profNickEdit,
-  //     introduce: profIntroEdit,
-  //   };
+  //수정버튼 클릭 이벤트
+  const onPressInputEdit = () => {
+    setIsEdit(true);
+  };
 
-  //   for (let key in objProfile) {
-  //     formData.append(key, objProfile[key]);
-  //     formData.append('files', {
-  //       name: images[0].fileName,
-  //       type: images[0].mime,
-  //       uri: `file://${images[0].realPath}`,
-  //     });
-  //   }
-
-  //   console.log('edit profile');
-  //   dispatch(__editProfile(formData));
-  //   console.log('objProfile', objProfile);
-  // };
-
+  //input 닉네임,자기소개 수정
   const onPresschangeNickEdit = e => {
     setProfNickEdit(e);
   };
-  // console.log('input profile profNickEdit', profNickEdit);
+  console.log('input profile profNickEdit', profNickEdit);
 
   const onPresschangeProfEdit = e => {
     setProfIntroEdit(e);
   };
-  // console.log('input profile profIntroEdit', profIntroEdit);
+  console.log('input profile profIntroEdit', profIntroEdit);
+
+  //이미지,권한 설정
+  useEffect(() => {
+    if (Platform.OS !== 'ios' && Platform.OS !== 'android') return;
+    const platformPermissions =
+      Platform.OS === 'ios'
+        ? PERMISSIONS.IOS.CAMERA
+        : PERMISSIONS.ANDROID.CAMERA;
+    const requestCameraPermission = async () => {
+      try {
+        const result = await request(platformPermissions);
+        result === RESULTS.GRANTED
+          ? setOpenCamera(true)
+          : Alert.alert('카메라 권한을 허용해주세요!');
+      } catch (error) {
+        Alert.alert('카메라 권한설정이 에러났습니다.');
+        console.warn(error);
+      }
+    };
+    requestCameraPermission();
+  }, []);
+
+  //input 수정 폼 데이터
+  const formData = new FormData();
+
+  const sendEditFormData = () => {
+    console.log('images[0]', images[0]);
+
+    formData.append('changeNickname', profNickEdit);
+    formData.append('introduce', profIntroEdit);
+    formData.append('files', {
+      name: images[0].fileName,
+      type: images[0].mime,
+      uri: `file://${images[0].realPath}`,
+    });
+
+    console.log('edit profile');
+    dispatch(__editProfile({nickname: myNick, formData: formData}));
+  };
+
+  //이미지 클릭시 갤러리를 여는 이벤트
+  const openPicker = async () => {
+    try {
+      const response = await MultipleImagePicker.openPicker({
+        usedCameraButton: true,
+        mediaType: 'image',
+        maxSelectedAssets: 1,
+        selectedAssets: images,
+        isExportThumbnail: true,
+        isCrop: true,
+        isCropCircle: true,
+      });
+      console.log('response: ', response);
+      setImages(response);
+    } catch (e) {
+      console.log(e.code, e.message);
+    }
+  };
+  console.log(images);
 
   return (
     <View style={styles.block}>
       <View style={styles.card}>
         <View style={styles.cardLeftWrap}>
           <View style={styles.imgOpenBtn}>
-            <FastImage
-              style={styles.personImg}
-              source={{
-                uri: profile[0].user.contentUrl,
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={FastImage.resizeMode.contain}
-            />
+            {isEdit ? (
+              <View>
+                <TouchableOpacity
+                  style={styles.personProfileImg}
+                  onPress={openPicker}
+                  vlue={openCamera}>
+                  {/* <Image
+                    value={images}
+                    width={IMAGE_WIDTH}
+                    style={styles.media}
+                    source={{
+                      uri: 'file://' + item[0]?.realPath,
+                    }}
+                  /> */}
+
+                  <Image
+                    value={images}
+                    width={IMAGE_WIDTH}
+                    style={styles.media}
+                    source={{
+                      uri:
+                        item[0] === null
+                          ? 'file://' + item[0]?.realPath
+                          : 'file://' + item[0]?.realPath,
+                    }}
+                  />
+                  <Text>사진등록</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <FastImage
+                style={styles.personImg}
+                source={{
+                  uri: profile[0].user.contentUrl,
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+            )}
           </View>
 
           <Text
@@ -124,9 +208,20 @@ const PersonProfileCard = () => {
                 </Text>
               )}
             </View>
-            <TouchableOpacity style={styles.editBtn} onPress={onPressInputEdit}>
-              <Text>수정</Text>
-            </TouchableOpacity>
+
+            {isEdit ? (
+              <TouchableOpacity
+                style={styles.editBtn}
+                onPress={sendEditFormData}>
+                <Text>저장</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.editBtn}
+                onPress={onPressInputEdit}>
+                <Text>수정</Text>
+              </TouchableOpacity>
+            )}
           </View>
           <View>
             {isEdit ? (
@@ -149,6 +244,8 @@ const PersonProfileCard = () => {
     </View>
   );
 };
+
+const IMAGE_WIDTH = 80;
 
 const styles = StyleSheet.create({
   block: {
@@ -210,12 +307,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
   },
+  media: {
+    width: IMAGE_WIDTH,
+    height: IMAGE_WIDTH,
+    backgroundColor: 'rgba(155, 155, 155, 0.2)',
+  },
   imgOpenBtn: {
     width: 80,
     height: 80,
     justifyContent: 'center',
     alignItems: 'center',
     right: '10%',
+  },
+  personProfileImg: {
+    width: 80,
+    height: 80,
+    borderRadius: 50,
+    backgroundColor: '#eeeeee',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

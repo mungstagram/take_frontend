@@ -66,6 +66,7 @@ const AddImage = () => {
   }, []);
   // * 사진관련 코드
   const [images, setImages] = useState([]);
+
   // 사진넣기 버튼 클릭시 작동하는 이벤트
   const openPicker = async () => {
     try {
@@ -82,12 +83,13 @@ const AddImage = () => {
         isCropCircle: true,
         //singleSelectedMode: true,
       });
-      //console.log('response: ', response);
+      console.log('response: ', response);
       setImages(response);
     } catch (e) {
       // console.log(e.code, e.message);
     }
   };
+  // console.log('Add images', images);
   // 권한 거절 후 다시 시도할때
   const openAgainPicker = () => {
     setOpenCamera(true);
