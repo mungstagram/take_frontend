@@ -9,14 +9,14 @@ import Login from './screens/Login';
 import AuthStartScreen from './screens/AuthStartScreen';
 import Signup from './screens/Signup';
 import UserDetail from './screens/UserDetail';
-import {Colors} from './constants/colors';
-import {Provider} from 'react-redux';
-import store from './redux/store/configStore';
-
-import LoginChecker from './components/LoginChecker';
-import BottomTabNav from './components/BottomTabNav';
+import KaKaoSignup from './screens/KaKaoSignup';
 import Profile from './screens/Profile';
 import VideoDetail from './screens/VideoDetail';
+import store from './redux/store/configStore';
+import {Colors} from './constants/colors';
+import {Provider} from 'react-redux';
+import LoginChecker from './components/LoginChecker';
+import BottomTabNav from './components/BottomTabNav';
 
 import InputDogProfileCard from './components/profile/InputDogProfileCard';
 
@@ -75,16 +75,35 @@ const AuthenticatedStack = () => {
   );
 };
 
+const KaKaoAuthStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="KaKaoSignup"
+        component={KaKaoSignup}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+};
+
 export const Navigation = () => {
   const {isLogin} = useSelector(state => state.login);
-  // console.log(isLogin);
+  const {myNick} = useSelector(state => state.login);
+  console.log(myNick, '네비게이션에서');
+  console.log(isLogin, '네비게이션에서 확인하기');
   useEffect(() => {
     SplashScreen.hide();
   }, []);
   return (
     <NavigationContainer>
-      {!isLogin && <AuthStack />}
-      {isLogin && <AuthenticatedStack />}
+      {!isLogin ? (
+        <AuthStack />
+      ) : myNick === '' || myNick === null || myNick === undefined ? (
+        <KaKaoAuthStack />
+      ) : (
+        <AuthenticatedStack />
+      )}
     </NavigationContainer>
   );
 };
