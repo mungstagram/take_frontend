@@ -6,7 +6,7 @@ import {
   Pressable,
   TextInput,
   KeyboardAvoidingView,
-  ScrollView,
+  Image,
 } from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import {useIsFocused} from '@react-navigation/native';
@@ -15,6 +15,7 @@ import FastImage from 'react-native-fast-image';
 import {FlatList} from 'react-native';
 import {SOCKET_URL} from '@env';
 import {useDispatch, useSelector} from 'react-redux';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {
   saveMessages,
@@ -24,7 +25,7 @@ import {
 import {Colors} from '../constants/colors';
 import GoBackButton from '../components/common/GoBackButton';
 import SendDM from '../components/svg/SendDM';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {white} from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 const DirectMessage = () => {
   const dispatch = useDispatch();
   const route = useRoute();
@@ -60,7 +61,7 @@ const DirectMessage = () => {
 
     // Listen for connection success and set the socket state
     newSocket.on('connect', () => {
-      console.log('Connected to server, dm');
+      // console.log('Connected to server, dm');
       setSocket(newSocket);
     });
     //있었던거 전부다.
@@ -73,13 +74,8 @@ const DirectMessage = () => {
 
     // Listen for incoming messages and update the message state
     newSocket.on('newDM', data => {
-      console.log('Received message: ', data);
-      // 방금 작성한 내용.
-      // console.log(totalMessage, '저장된 메시지들');
-      // console.log(data, '나는 데이터');
-      // totalMessage.unshift(data);
-      // console.log(totalMessage, ' unshift는 되냐?');
-      // setTotalMessage(totalMessage);
+      // console.log('Received message: ', data);
+
       dispatch(addRecentMessage(data));
     });
     // Disconnect from the server when the component is unmounted
@@ -87,34 +83,39 @@ const DirectMessage = () => {
       // newSocket.disconnect();
       newSocket.disconnect();
       dispatch(deleteMessageStack());
-      console.log(newSocket.disconnect());
+      // console.log('연결해졔');
     };
   }, []);
 
-  console.log(userDM, ' 최종메시지');
   return (
     <SafeAreaView>
       <KeyboardAvoidingView
-        behavior="heigth"
-        // style={{flex: 1}}
-        // keyboardVerticalOffset={60}
-      >
+        style={{backgroundColor: 'white'}}
+        behavior="heigth">
         <View style={styles.wrapper}>
           <View style={styles.userButton}>
             <GoBackButton />
           </View>
-          <View style={styles.targetProfileBox}>
-            <FastImage
-              style={styles.targetProfileImage}
-              source={{
-                uri: value.profileUrl,
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={FastImage.resizeMode.contain}
-            />
-            <Text style={styles.targetFont}>{value.nickname}</Text>
+          <View style={styles.dmHeaderBox}>
+            <View style={styles.logoWrapper}>
+              <Image
+                source={require('../assets/LogoSmall.png')}
+                resizeMode={'cover'}
+              />
+              <Text style={styles.logoText}>메시지</Text>
+            </View>
+            <View style={styles.targetProfileBox}>
+              <FastImage
+                style={styles.targetProfileImage}
+                source={{
+                  uri: value.profileUrl,
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+              <Text style={styles.targetFont}>{value.nickname}</Text>
+            </View>
           </View>
-
           <View style={styles.chatListWrapper}>
             {userDM && (
               <FlatList
@@ -154,7 +155,7 @@ const DirectMessage = () => {
                           ).userConversationBox
                         }>
                         <Text numberOfLines={10} style={styles.textContent}>
-                          {item.message} fdsafdas fds fa
+                          {item.message}
                         </Text>
                       </View>
                       <Text style={styles.textCreatedAt}>
@@ -198,6 +199,7 @@ const styles = StyleSheet.create({
   wrapper: {
     height: '100%',
     width: '100%',
+    backgroundColor: 'white',
   },
   userButton: {
     position: 'absolute',
@@ -205,16 +207,36 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginLeft: '7%',
-    zIndex: 4,
+    zIndex: 20,
+  },
+  dmHeaderBox: {
+    // backgroundColor: 'red',
+    width: '100%',
+    elevation: 4,
+    zIndex: 15,
+  },
+  logoWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 12,
+    backgroundColor: 'white',
+  },
+  logoText: {
+    marginLeft: 10,
+    lineHeight: 32,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontSize: 28,
+    color: Colors.pointColorDark,
   },
   targetProfileBox: {
     width: '100%',
-    paddingTop: 56,
-    height: 100,
+    paddingTop: 12,
     flexDirection: 'row',
     paddingHorizontal: 28,
     backgroundColor: 'white',
-    elevation: 10,
+    paddingBottom: 8,
   },
   targetProfileWrapper: {
     flexDirection: 'row',
