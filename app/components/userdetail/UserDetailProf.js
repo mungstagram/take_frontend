@@ -4,23 +4,35 @@ import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch, useSelector} from 'react-redux';
+
 import {Colors} from '../../constants/colors';
-import {__getUserDetail} from '../../redux/modules/userDetailSlice';
+import {
+  __getUserDetail,
+  __getRoomId,
+} from '../../redux/modules/userDetailSlice';
 import GoBackButton from '../common/GoBackButton';
 import AccountCircle from '../svg/AccountCircle';
 import MailDm from '../svg/MailDm';
+import SendDM from '../svg/SendDM';
 
 const UserDetailProf = ({nickname}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [myToken, setMyToken] = useState('');
-  console.log(nickname);
-
+  // console.log(myToken, '내 토큰');
+  // console.log(nickname, '보고 있는 프로필대상');
+  const {myNick} = useSelector(state => state.login);
+  // console.log(myNick, '내 닉네임');
   const {userDetail} = useSelector(state => state.userDetail);
+  const {targetRoomId} = useSelector(state => state.userDetail);
+  // console.log(targetRoomId, 'targetRoomId');
+
+  // 해당 프로필패이지 데이터 얻기
   useEffect(() => {
     dispatch(__getUserDetail(nickname));
   }, []);
 
+  // 내 토큰얻기
   useEffect(() => {
     async function fetctmyToken() {
       const token = await AsyncStorage.getItem('authorization');
@@ -31,12 +43,20 @@ const UserDetailProf = ({nickname}) => {
     fetctmyToken();
   }, []);
 
-  //{nickname: 'Seeder1', introduce: 'seed1 introduce', contentUrl: 'https://spartabecool.s3.amazonaws.com/image/1676984268618_image3.png', postsCount: 3, dogsCount: 2, …}
-
+  //내 메시지함 열기
   const openDirectMessageHandler = () => {
-    // console.log('userDetailprof의', myNickName);
     navigation.push('MessageBox', {token: myToken});
   };
+
+  //타인에게 dm보내기
+  const sendDirectMessageHandler = value => {
+    navigation.push('DirectMessage', {value, token: myToken});
+  };
+
+  // 대상과의 소켓 룸아이디 얻기
+  useEffect(() => {
+    dispatch(__getRoomId({receiverNickname: nickname}));
+  }, []);
 
   return (
     <>
@@ -58,11 +78,25 @@ const UserDetailProf = ({nickname}) => {
               <View style={styles.iconAligner}>
                 <AccountCircle />
               </View>
-              <Pressable
-                onPress={openDirectMessageHandler}
-                style={styles.iconAligner}>
-                <MailDm />
-              </Pressable>
+              {myNick === nickname ? (
+                <Pressable
+                  onPress={openDirectMessageHandler}
+                  style={styles.iconAligner}>
+                  <MailDm />
+                </Pressable>
+              ) : (
+                <Pressable
+                  onPress={() =>
+                    sendDirectMessageHandler({
+                      roomId: targetRoomId,
+                      profileUrl: userDetail.contentUrl,
+                      nickname: nickname,
+                    })
+                  }
+                  style={styles.iconAligner}>
+                  <SendDM />
+                </Pressable>
+              )}
             </View>
           </View>
           <View style={styles.userTextWrapper}>

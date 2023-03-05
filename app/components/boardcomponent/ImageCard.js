@@ -8,8 +8,8 @@ import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
 
 const ImageCard = ({imageContent}) => {
-  //console.log(imageContent);
   const navigation = useNavigation();
+  //이미지 상세로 이동
   const onDetailHandler = () => {
     navigation.navigate('ImageDetail', {postId: imageContent.postId});
   };
