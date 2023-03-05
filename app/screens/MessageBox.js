@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Pressable, FlatList} from 'react-native';
+import {View, Text, StyleSheet, Pressable, FlatList, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 import {useRoute} from '@react-navigation/core';
 import {io} from 'socket.io-client';
 import {SOCKET_URL} from '@env';
 import {useIsFocused} from '@react-navigation/core';
 
+import {Colors} from '../constants/colors';
 import FastImage from 'react-native-fast-image';
 import GoBackButton from '../components/common/GoBackButton';
 const MessageBox = () => {
@@ -15,7 +16,6 @@ const MessageBox = () => {
   // useEffect로 받은 본인의 nickname
   const {token} = route.params;
   console.log(token, 'messagebox에서 토큰값확인');
-  //   console.log(myNick, '메시지박스'); //Seeder1 메시지박스
 
   //연결유무
   const [socket, setSocket] = useState(null);
@@ -31,11 +31,11 @@ const MessageBox = () => {
 
     // Listen for connection success and set the socket state
     newSocket.on('connect', () => {
-      console.log('Connected to server');
+      // console.log('Connected to server');
       setSocket(newSocket);
     });
     newSocket.on('DMList', data => {
-      console.log(data, 'DMlist 데이터');
+      // console.log(data, 'DMlist 데이터');
       setDmUserList(data);
     });
 
@@ -43,24 +43,33 @@ const MessageBox = () => {
     //   console.log('Received message: ', data);
     //   setMessage(data);
     // });
+    if (!isFocused) {
+      newSocket.disconnect();
+      console.log('화면 이동시에도 연결해제');
+    }
     //페이지 이동시(disconnect)
     return () => {
       newSocket.disconnect();
       console.log('요청종료, 리스트');
       // 리스트 밖으로 나갈떄만 꺼짐, 들어갈 때는 켜져있음.
     };
-  }, []);
+  }, [isFocused]);
 
   const accessRoomHandler = value => {
     navigation.push('DirectMessage', {value, token});
   };
 
-  //   const socket = io('http://3.35.173.73');
-
   return (
     <View style={styles.wrapper}>
       <View style={styles.userButton}>
         <GoBackButton />
+      </View>
+      <View style={styles.logoWrapper}>
+        <Image
+          source={require('../assets/LogoSmall.png')}
+          resizeMode={'cover'}
+        />
+        <Text style={styles.logoText}>메시지</Text>
       </View>
       <View style={styles.userRoomWrapper}>
         <FlatList
@@ -89,7 +98,10 @@ const MessageBox = () => {
                   <Text style={styles.lastMessageFont}>{item.lastChat}</Text>
                 </View>
                 <View style={styles.detailInformation}>
-                  <Text>{item.timeGap}</Text>
+                  <Text style={styles.timeGapText}>{item.timeGap}</Text>
+                  <View style={styles.unreadCountHolder}>
+                    <Text style={styles.unreadCount}>{item.unreadCount}</Text>
+                  </View>
                 </View>
               </Pressable>
             </View>
@@ -107,14 +119,29 @@ const styles = StyleSheet.create({
   wrapper: {
     height: '100%',
     width: '100%',
-    // backgroundColor: 'blue',
+    backgroundColor: 'white',
   },
   userButton: {
     position: 'absolute',
-    height: '7.48%',
+    height: '7.6%',
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginLeft: '7%',
+    // backgroundColor: 'white',
+  },
+  logoWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 12,
+  },
+  logoText: {
+    marginLeft: 10,
+    lineHeight: 32,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontSize: 28,
+    color: Colors.pointColorDark,
   },
   userRoomWrapper: {
     position: 'absolute',
@@ -156,6 +183,20 @@ const styles = StyleSheet.create({
     right: '4%',
   },
   timeGapText: {
+    fontSize: 8,
+    textAlign: 'center',
+    lineHeight: 20,
+  },
+  unreadCountHolder: {
+    borderRadius: 10,
+    backgroundColor: Colors.pointColorDark,
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 20,
+  },
+  unreadCount: {
     fontSize: 10,
+    color: 'white',
   },
 });

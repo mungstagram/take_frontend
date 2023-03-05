@@ -7,6 +7,7 @@ import userDetail from '../modules/userDetailSlice';
 import searchData from '../modules/searchSlice';
 import userDM from '../modules/userDMSlice';
 import profile from '../modules/profileSlice';
+import comments from '../modules/commetsSlice';
 
 const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
     userDetail,
     searchData,
     userDM,
+    comments,
   },
 });
 

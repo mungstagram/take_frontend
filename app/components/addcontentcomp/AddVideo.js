@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TextInput,
   FlatList,
@@ -10,18 +9,26 @@ import {
   SafeAreaView,
   Platform,
   Alert,
+  Dimensions,
+  Pressable,
+  ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
-
+import {Surface, Text} from 'react-native-paper';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
+import {useNavigation} from '@react-navigation/native';
 
 import {__postAddContentFormData} from '../../redux/modules/addContentSlice';
 import YellowButton from '../YellowButton';
 import CancelButton from '../CancelButton';
+import {Colors, BasicColors} from '../../constants/colors';
+import AddCircle from '../svg/AddCircle';
+
 const AddVideo = () => {
   // 제목 인풋상태
-  const [titleText, setTitleText] = useState();
+  const [titleText, setTitleText] = useState('');
   // console.log(titleText);
   //제목 인풋 핸들러
   const titleTextHandler = event => {
@@ -39,9 +46,6 @@ const AddVideo = () => {
   //사진넣기버튼의 사용가능여부조절
   const [openCamera, setOpenCamera] = useState(false);
   // 사진업로드 버튼 눌렀을 때 권한묻기
-  // useEffect는 처음 화면이 렌더링 됐을 때도 실행되기 떄문에 사용할 수 없음.
-  // Dependecy에 변수지정하기 마운트할때는 무조건 실행되는거!
-  // 온클릭을 했을때 퍼미션을 실행할거냐 게시글작성 마운트될때 실행할거냐!
 
   useEffect(() => {
     if (Platform.OS !== 'ios' && Platform.OS !== 'android') return;
@@ -81,11 +85,8 @@ const AddVideo = () => {
         //singleSelectedMode: true,
       });
 
-      // console.log('response: ', response);
       setVideos(response);
-    } catch (e) {
-      // console.log(e.code, e.message);
-    }
+    } catch (e) {}
   };
   // 권한 거절 후 다시 시도할때
   const openAgainPicker = () => {
@@ -100,22 +101,31 @@ const AddVideo = () => {
         item?.localIdentifier &&
         item?.localIdentifier !== value?.localIdentifier,
     );
-    setImages(data);
+    setVideos(data);
   };
   // 사진 출력
   //출력되는 사진들에 각각 삭제버튼을 만들어 줌.
   const renderItem = ({item, index}) => {
     return (
-      <Image
-        // width={IMAGE_WIDTH}
-        source={{
-          uri:
-            item?.type === 'image'
-              ? 'file://' + (item?.crop?.cropPath ?? item.realPath)
-              : 'file://' + (item?.crop?.cropPath ?? item.realPath),
-        }}
-        style={styles.media}
-      />
+      <ScrollView>
+        <Image
+          // width={IMAGE_WIDTH}
+          source={{
+            uri:
+              item?.type === 'image'
+                ? 'file://' + (item?.crop?.cropPath ?? item.realPath)
+                : 'file://' + (item?.crop?.cropPath ?? item.realPath),
+          }}
+          style={styles.media}
+          resizeMode={'contain'}
+        />
+        <TouchableOpacity
+          onPress={() => onDelete(item)}
+          activeOpacity={0.9}
+          style={styles.buttonDelete}>
+          <Text style={styles.titleDelete}>X</Text>
+        </TouchableOpacity>
+      </ScrollView>
     );
   };
 
@@ -124,172 +134,246 @@ const AddVideo = () => {
   // 폼데이터 선언 및 전송
   const formData = new FormData();
   const onSendFormData = () => {
-    // console.log('videos', videos[0]);
-
-    // console.log('videos.real', videos[0].realPath);
-    const formList = {
-      category: 'video',
-      title: titleText,
-      content: contentText,
-      files: videos,
-    };
-    formData.append('category', 'video');
-    formData.append('title', titleText);
-    formData.append('content', contentText);
-    formData.append('files', {
-      name: videos[0].fileName,
-      type: videos[0].mime,
-      uri: `file://${videos[0].realPath}`,
-    });
-    console.log(formData);
-    dispatch(__postAddContentFormData(formData));
+    if (videos.length === 0) {
+      return Alert.alert('사진을 넣어주세요');
+    } else if (titleText === '') {
+      return Alert.alert('제목을 넣어주세요');
+    } else if (contentText === '') {
+      return Alert.alert('내용을 넣어주세요');
+    } else {
+      const formList = {
+        category: 'video',
+        title: titleText,
+        content: contentText,
+        files: videos,
+      };
+      formData.append('category', 'video');
+      formData.append('title', titleText);
+      formData.append('content', contentText);
+      formData.append('files', {
+        name: videos[0].fileName,
+        type: videos[0].mime,
+        uri: `file://${videos[0].realPath}`,
+      });
+      console.log(formData);
+      dispatch(__postAddContentFormData(formData));
+      setTitleText('');
+      setContentText('');
+      setVideos([]);
+    }
   };
-  // 이미지파일 넣는 부분
-  // formData.append('files', { uri: `file://${profileImg[0].realPath}`, name: profileImg[0].fileName, type: profileImg[0].mime })
+
+  const navigation = useNavigation();
+
+  const onCancelHandler = () => {
+    Alert.alert(
+      '게시글 작성을 정말로 취소하시겠습니까?',
+      '🐾 진짜 취소하실건가요 ~?',
+      [
+        {
+          text: '취소하기',
+          onPress: () => console.log('취소'),
+        },
+        {
+          text: '네',
+          onPress: () => {
+            Alert.alert('게시글 작성을 취소하였습니다.'),
+              navigation.reset('Home');
+          },
+        },
+      ],
+    );
+  };
   return (
     <SafeAreaView style={styles.containerBox}>
-      <View style={styles.box}>
-        <View style={styles.container}>
+      <KeyboardAvoidingView>
+        <View style={styles.box}>
           <View style={styles.fileInput}>
             <View style={styles.fileupload}>
-              <FlatList
-                data={videos}
-                keyExtractor={(item, index) =>
-                  (item?.filename ?? item?.path) + index
-                }
-                renderItem={renderItem}
-                horizontal={true}
-              />
-              <View>
+              <View style={styles.openfileView}>
+                <FlatList
+                  style={styles.videoScreen}
+                  data={videos}
+                  keyExtractor={(item, index) =>
+                    (item?.filename ?? item?.path) + index
+                  }
+                  renderItem={renderItem}
+                  horizontal={true}
+                />
+              </View>
+              <View style={styles.openfileBtn}>
                 {openCamera && (
                   <TouchableOpacity
                     style={styles.openPicker}
                     onPress={openPicker}>
-                    <Text style={styles.openText}>댕댕🐶 영상넣기</Text>
+                    <AddCircle />
                   </TouchableOpacity>
                 )}
+                {!openCamera && (
+                  <TouchableOpacity
+                    style={styles.openPicker2}
+                    onPress={openAgainPicker}>
+                    <AddCircle />
+                  </TouchableOpacity>
+                )}
+                <View style={styles.videoBack}></View>
               </View>
             </View>
           </View>
-          <View style={styles.titleInput}>
-            <TextInput
-              placeholder="제목을 입력하세요(20자 이하)"
-              maxLength={20}
-              // returnKeyType="next"
-              value={titleText}
-              onChange={titleTextHandler}
-            />
-          </View>
-          <View style={styles.contentInput}>
-            <TextInput
-              placeholder="내용을 입력하세요(300자 이하)"
-              maxLength={300}
-              // 확인하기
-              multiline={true}
-              value={contentText}
-              onChange={contentTextHandler}
-            />
-          </View>
-          <View>
-            <Text>{contentText.length}/100</Text>
+          <View style={styles.textBox}>
+            <Surface style={styles.titleInput}>
+              <TextInput
+                placeholder="제목을 입력하세요(15자 이하)"
+                maxLength={15}
+                returnKeyType="next"
+                value={titleText}
+                onChange={titleTextHandler}
+              />
+            </Surface>
+            <Surface style={styles.contentInput}>
+              <TextInput
+                placeholder="내용을 입력하세요(2000자 이하)"
+                maxLength={2000}
+                // 확인하기
+                multiline={true}
+                value={contentText}
+                onChange={contentTextHandler}
+              />
+              <View style={styles.contentCount}>
+                <Text style={styles.textCount}>{contentText.length}/2000</Text>
+              </View>
+            </Surface>
           </View>
           <View style={styles.buttonRow}>
-            <CancelButton>Cancel</CancelButton>
-            <YellowButton onPress={onSendFormData}>Done</YellowButton>
+            <CancelButton style={styles.cancelBtn} onPress={onCancelHandler}>
+              Cancel
+            </CancelButton>
+            <YellowButton style={styles.doneBtn} onPress={onSendFormData}>
+              Done
+            </YellowButton>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
 
 export default AddVideo;
 
-const IMAGE_WIDTH = 960;
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const videoCardWidth = windowWidth * 0.92;
+const videoCardHeight = videoCardWidth * 0.52;
 
 const styles = StyleSheet.create({
-  containerBox: {
-    flex: 1,
-  },
+  containerBox: {},
   box: {
-    flex: 1,
-    backgroundColor: '#e6e6e6',
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-  container: {
-    flex: 1,
-  },
-  titleInput: {
-    flex: 1,
-    border: 1,
-    borderColor: '#ffac53',
-  },
-  contentInput: {
-    flex: 3,
+    height: windowHeight * 0.81,
+    flexDirection: 'column',
+    alignItems: 'center',
+    //backgroundColor: 'red',
   },
   fileInput: {
-    flex: 2,
     flexDirection: 'row',
     flexWrap: 'nowrap',
     justifyContent: 'center',
-    alignItems: 'center',
+    flex: 3,
+    //backgroundColor: 'red',
   },
   fileupload: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 30,
+    marginTop: 20,
+    width: videoCardWidth,
+    height: videoCardHeight,
   },
-  buttonRow: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+  openfileView: {
+    width: videoCardWidth,
+    height: videoCardHeight,
   },
-
+  openfileBtn: {
+    width: videoCardWidth,
+    height: videoCardHeight,
+    //backgroundColor: 'red',
+    zIndex: 20,
+    bottom: '100%',
+  },
   openPicker: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000',
+    width: videoCardWidth,
+    height: videoCardHeight,
   },
   openPicker2: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#5b5b5b',
+    width: videoCardWidth,
+    height: videoCardHeight,
   },
-  openText: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: '#ffffff',
-    paddingVertical: 12,
-  },
-  imageView: {
-    flexDirection: 'column',
-    flexWrap: 'nowrap',
-    position: 'relative',
-    marginRight: 6,
-    borderWidth: 1,
+  videoScreen: {
+    width: videoCardWidth,
+    height: videoCardHeight,
+    zIndex: 10,
+    backgroundColor: BasicColors.grayColor,
   },
   media: {
-    width: 100,
-    height: 540,
-    backgroundColor: 'rgba(0,0,0,0.2)',
+    width: videoCardWidth,
+    height: videoCardHeight,
+    zIndex: 10,
+    backgroundColor: BasicColors.blackColor,
   },
-  buttonDelete: {
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    position: 'absolute',
-    right: 4,
-    top: 4,
-    marginTop: 3,
-    width: 22,
-    height: 22,
-    backgroundColor: '#ffffff92',
+  videoBack: {
+    width: videoCardWidth,
+    height: videoCardHeight,
+  },
+  textBox: {
+    flex: 4,
+    width: videoCardWidth,
+    height: windowHeight * 0.36,
+    alignContent: 'center',
+  },
+  titleInput: {
     borderRadius: 4,
+    marginBottom: 12,
+    flex: 1,
+    paddingHorizontal: '4%',
+    backgroundColor: BasicColors.whiteColor,
   },
-  titleDelete: {
-    fontWeight: 'bold',
-    fontSize: 12,
-    color: '#000',
+  contentInput: {
+    borderRadius: 4,
+    flex: 3,
+    justifyContent: 'space-between',
+    paddingHorizontal: '4%',
+    backgroundColor: BasicColors.whiteColor,
+  },
+  contentCount: {
+    alignItems: 'flex-end',
+    marginBottom: '2%',
+  },
+  textCount: {
+    color: BasicColors.grayColor,
+  },
+  // buttonDelete: {
+  //   paddingHorizontal: 8,
+  //   paddingVertical: 3,
+  //   position: 'absolute',
+  //   right: 4,
+  //   top: 4,
+  //   marginTop: 3,
+  //   width: 22,
+  //   height: 22,
+  //   backgroundColor: '#ffffff92',
+  //   borderRadius: 4,
+  // },
+  // titleDelete: {
+  //   fontWeight: 'bold',
+  //   fontSize: 12,
+  //   color: BasicColors.blackColor,
+  // },
+  buttonRow: {
+    flex: 1,
+    width: videoCardWidth,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

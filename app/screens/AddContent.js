@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet, Dimensions} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 import AddImage from '../components/addcontentcomp/AddImage';
@@ -17,14 +17,27 @@ const AddContent = () => {
         </View>
       </View>
       <Tab.Navigator>
-        <Tab.Screen name="AddImage" component={AddImage} />
-        <Tab.Screen name="AddVideo" component={AddVideo} />
+        <Tab.Screen
+          name="AddImage"
+          component={AddImage}
+          style={styles.tabStyle}
+        />
+        <Tab.Screen
+          name="AddVideo"
+          component={AddVideo}
+          style={styles.tabStyle}
+        />
       </Tab.Navigator>
     </>
   );
 };
 
 export default AddContent;
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const videoCardWidth = windowWidth * 0.9;
 
 const styles = StyleSheet.create({
   container: {},
@@ -34,4 +47,5 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     marginLeft: '7%',
   },
+  tabStyle: {},
 });
