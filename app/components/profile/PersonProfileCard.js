@@ -49,17 +49,17 @@ const PersonProfileCard = ({item}) => {
   //이미지
   const [images, setImages] = useState([]);
 
-  //data 값 get
-  useEffect(() => {
-    // console.log('data를 가져오자');
-    //2.데이터 값을 초기에 실행(마운트될때, 안에 있는 함수을 실행)
-    dispatch(__getProfile());
-    //3. dispatch get 프로필 정보 요청
-    // console.log('2.2.user', nickname);
-    // console.log('person profile');
-  }, []);
+  // //data 값 get
+  // useEffect(() => {
+  //   // console.log('data를 가져오자');
+  //   //2.데이터 값을 초기에 실행(마운트될때, 안에 있는 함수을 실행)
+  //   dispatch(__getProfile());
+  //   //3. dispatch get 프로필 정보 요청
+  //   // console.log('2.2.user', nickname);
+  //   // console.log('person profile');
+  // }, []);
 
-  // console.log('state.profile', profile[0]);
+  // // console.log('state.profile', profile[0]);
   // console.log('user dog', myInfo[1].dogs);
   // console.log('contentUrl', myInfo[0].user.contentUrl);
 
@@ -123,8 +123,7 @@ const PersonProfileCard = ({item}) => {
     dispatch(
       __editProfile({nickname: profile[0]?.user.nickname, formData: formData}),
     );
-    setIsEdit(false);
-    // if (error === null) setIsEdit(false);
+    if (error === null) setIsEdit(false);
   };
 
   //이미지 클릭시 갤러리를 여는 이벤트
@@ -289,7 +288,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: '#ffffff',
     borderColor: '#ffffff',
-    opacity: 0.8,
+    opacity: 0.5,
     padding: '8%',
   },
   saveBtn: {
@@ -329,7 +328,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: '#ffffff',
     borderColor: '#ffffff',
-    opacity: 0.8,
+    opacity: 0.5,
     padding: '4%',
     fontSize: 16,
     marginTop: '4%',

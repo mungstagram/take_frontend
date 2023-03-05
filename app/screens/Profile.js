@@ -13,12 +13,15 @@ import {__getProfile} from '../redux/modules/profileSlice';
 
 import Logout from '../components/Logout';
 
+import GoBackButton from '../components/common/GoBackButton';
+
 import {SwiperFlatList} from 'react-native-swiper-flatlist';
 
 //사람
 import PersonProfileCard from '../components/profile/PersonProfileCard';
 //강아지
 import InputDogProfileCard from '../components/profile/InputDogProfileCard';
+import TextDogProfileCard from '../components/profile/TextDogProfileCard';
 import AddDogProfile from '../components/profile/AddDogProfile';
 
 const Profile = ({navigation, route}) => {
@@ -43,60 +46,93 @@ const Profile = ({navigation, route}) => {
   // console.log('stateProfile user', profile[0].user);
 
   return (
-    <>
-      {/* 헤더로 옮겨야함 */}
-      <View style={styles.linkBtn}>
-        <Text style={{fontSize: 11, paddingRight: '4%'}}>회원탈퇴</Text>
-        <Logout />
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={{width: '100%', height: '50%'}}>
+          <Text>status bar</Text>
+        </View>
+        <View style={{width: '100%', height: '50%'}}>
+          <View style={styles.linkBtn}>
+            <View>
+              <GoBackButton />
+            </View>
+            <View style={{flexDirection: 'row', right: '10%'}}>
+              <Text style={{fontSize: 11, paddingRight: '4%'}}>회원탈퇴</Text>
+              <Logout />
+            </View>
+          </View>
+        </View>
+      </View>
+      <View style={styles.top}>
+        <View style={{bottom: '15%'}}>
+          <PersonProfileCard myInfo={profile} myNick={myNick} />
+        </View>
+      </View>
+      <View style={styles.content} />
+      <View style={{left: '8%', bottom: '10%'}}>
+        <InputDogProfileCard />
+        {/* <TextDogProfileCard /> */}
+
+        {/* <TouchableOpacity onPress={onPressAddDog}>
+          <AddDogProfile />
+        </TouchableOpacity> */}
       </View>
 
-      <View style={styles.personBlock}>
-        <PersonProfileCard myInfo={profile} myNick={myNick} />
-      </View>
-
-      <View style={styles.dogBlock}>
-        {addDogProf ? (
-          <InputDogProfileCard />
-        ) : (
-          <TouchableOpacity onPress={onPressAddDog}>
-            <AddDogProfile />
-          </TouchableOpacity>
-        )}
-      </View>
-    </>
+      <View style={styles.footer} />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    //alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  header: {
+    width: '100%',
+    height: '12%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  top: {
+    width: '100%',
+    height: '35%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffc988',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  footer: {
+    width: '100%',
+    height: '10%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#1ad657',
+  },
+
   linkBtn: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     left: '35%',
+    top: '4%',
   },
-  personBlock: {
-    width: '100%',
-    height: 174,
-    // borderWidth: 1,
-    // borderColor: 'blue',
-    justifyContent: 'center',
-  },
-  dogBlock: {
-    width: '100%',
-    height: 481,
-    // borderWidth: 1,
-    // borderColor: 'red',
-    flex: 1,
-    flexDirection: 'row',
-    paddingLeft: '12%',
-    marginTop: '10%',
-  },
-  editBtn: {
-    borderWidth: 1,
-    width: 40,
-    height: 30,
-    top: '35%',
-    left: '75%',
-    zIndex: 2,
-  },
+
+  // editBtn: {
+  //   borderWidth: 1,
+  //   width: 40,
+  //   height: 30,
+  //   top: '35%',
+  //   left: '75%',
+  //   zIndex: 2,
+  // },
 });
 
 export default Profile;
