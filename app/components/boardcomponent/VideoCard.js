@@ -58,7 +58,7 @@ const VideoCard = ({videoContent}) => {
               <View style={styles.subBox}>
                 <View style={styles.iconCount}>
                   <View style={styles.iconRow}>
-                    <NotFavorite />
+                    {videoContent.isLiked ? <Favorite /> : <NotFavorite />}
                     <Text style={styles.text}>{videoContent.likesCount}</Text>
                     {/* likesCount */}
                   </View>
