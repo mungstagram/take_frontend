@@ -6,7 +6,7 @@ import {
   Pressable,
   TextInput,
   KeyboardAvoidingView,
-  ScrollView,
+  Image,
 } from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import {useIsFocused} from '@react-navigation/native';
@@ -25,6 +25,7 @@ import {
 import {Colors} from '../constants/colors';
 import GoBackButton from '../components/common/GoBackButton';
 import SendDM from '../components/svg/SendDM';
+import {white} from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 const DirectMessage = () => {
   const dispatch = useDispatch();
   const route = useRoute();
@@ -88,23 +89,33 @@ const DirectMessage = () => {
 
   return (
     <SafeAreaView>
-      <KeyboardAvoidingView behavior="heigth">
+      <KeyboardAvoidingView
+        style={{backgroundColor: 'white'}}
+        behavior="heigth">
         <View style={styles.wrapper}>
           <View style={styles.userButton}>
             <GoBackButton />
           </View>
-          <View style={styles.targetProfileBox}>
-            <FastImage
-              style={styles.targetProfileImage}
-              source={{
-                uri: value.profileUrl,
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={FastImage.resizeMode.contain}
-            />
-            <Text style={styles.targetFont}>{value.nickname}</Text>
+          <View style={styles.dmHeaderBox}>
+            <View style={styles.logoWrapper}>
+              <Image
+                source={require('../assets/LogoSmall.png')}
+                resizeMode={'cover'}
+              />
+              <Text style={styles.logoText}>메시지</Text>
+            </View>
+            <View style={styles.targetProfileBox}>
+              <FastImage
+                style={styles.targetProfileImage}
+                source={{
+                  uri: value.profileUrl,
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+              <Text style={styles.targetFont}>{value.nickname}</Text>
+            </View>
           </View>
-
           <View style={styles.chatListWrapper}>
             {userDM && (
               <FlatList
@@ -188,6 +199,7 @@ const styles = StyleSheet.create({
   wrapper: {
     height: '100%',
     width: '100%',
+    backgroundColor: 'white',
   },
   userButton: {
     position: 'absolute',
@@ -195,16 +207,36 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginLeft: '7%',
-    zIndex: 4,
+    zIndex: 20,
+  },
+  dmHeaderBox: {
+    // backgroundColor: 'red',
+    width: '100%',
+    elevation: 4,
+    zIndex: 15,
+  },
+  logoWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 12,
+    backgroundColor: 'white',
+  },
+  logoText: {
+    marginLeft: 10,
+    lineHeight: 32,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontSize: 28,
+    color: Colors.pointColorDark,
   },
   targetProfileBox: {
     width: '100%',
-    paddingTop: 56,
-    height: 100,
+    paddingTop: 12,
     flexDirection: 'row',
     paddingHorizontal: 28,
     backgroundColor: 'white',
-    elevation: 10,
+    paddingBottom: 8,
   },
   targetProfileWrapper: {
     flexDirection: 'row',
