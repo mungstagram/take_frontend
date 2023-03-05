@@ -7,12 +7,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useRoute} from '@react-navigation/native';
 
 import {Colors, BasicColors} from '../../constants/colors';
 import WriteComment from '../svg/WriteComment';
 import {__postComment} from '../../redux/modules/commetsSlice';
+import {__getProfile} from '../../redux/modules/profileSlice';
 
 const CommentInput = ({detail}) => {
   const dispatch = useDispatch();
@@ -28,23 +30,17 @@ const CommentInput = ({detail}) => {
     dispatch(
       __postComment({postId: detail.postId, comment: inputText, target: 0}),
     );
+
     setInputText('');
   };
-  // 다른 유저가 입장할때마다 상태를 바꿔주기 위해 존재?
-  const [myNick, setMyNick] = useState();
-
-  useEffect(() => {
-    const getNickName = async () => {
-      setMyNick(await AsyncStorage.getItem('nickname'));
-    };
-    getNickName();
-  }, [myNick]);
 
   return (
     <View style={styles.container}>
       <View style={styles.commentsInput}>
         <View style={styles.profileImg}></View>
         <TextInput
+          placeholder=" 댓글쓰기 "
+          placeholderTextColor={BasicColors.grayColor}
           value={inputText}
           onChangeText={commentTextEnter}
           style={styles.commentInput}></TextInput>

@@ -1,11 +1,18 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
+import {Colors, BasicColors} from '../constants/colors';
 
 const YellowButton = ({children, onPress}) => {
   return (
     <View>
-      <TouchableOpacity>
-        <Text style={styles.buttonBox} onPress={onPress}>
+      <TouchableOpacity style={styles.buttonBox}>
+        <Text style={styles.button} onPress={onPress}>
           {children}
         </Text>
       </TouchableOpacity>
@@ -15,12 +22,24 @@ const YellowButton = ({children, onPress}) => {
 
 export default YellowButton;
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const videoCardWidth = windowWidth * 0.92;
+const videoCardHeight = videoCardWidth * 0.8;
+
 const styles = StyleSheet.create({
   buttonBox: {
-    backgroundColor: '#f3c054',
-    marginLeft: 20,
-    width: 40,
-    alignContent: 'center',
+    width: videoCardWidth * 0.475,
+    height: 36,
+    borderRadius: 4,
+    backgroundColor: Colors.userDataColor,
+    alignItems: 'center',
     justifyContent: 'center',
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: BasicColors.whiteColor,
   },
 });
