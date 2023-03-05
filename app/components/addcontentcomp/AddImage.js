@@ -26,7 +26,7 @@ import CancelButton from '../CancelButton';
 import {Colors, BasicColors} from '../../constants/colors';
 import AddCircle from '../svg/AddCircle';
 
-const AddImage = ({navigate}) => {
+const AddImage = () => {
   // 제목 인풋상태
   const [titleText, setTitleText] = useState('');
   // console.log(titleText);
@@ -132,7 +132,7 @@ const AddImage = ({navigate}) => {
       </ScrollView>
     );
   };
-
+  const navigation = useNavigation();
   const dispatch = useDispatch();
 
   // 폼데이터 선언 및 전송
@@ -164,10 +164,9 @@ const AddImage = ({navigate}) => {
       setTitleText('');
       setContentText('');
       setImages([]);
-      navigation.reset('userDetail');
+      navigation.navigate('userDetail');
     }
   };
-  const navigation = useNavigation();
 
   const onCancelHandler = () => {
     Alert.alert(
@@ -181,8 +180,7 @@ const AddImage = ({navigate}) => {
         {
           text: '네',
           onPress: () => {
-            Alert.alert('게시글 작성을 취소하였습니다.'),
-              navigation.navigate('Home');
+            Alert.alert('게시글 작성을 취소하였습니다.');
           },
         },
       ],
@@ -191,7 +189,7 @@ const AddImage = ({navigate}) => {
   return (
     <SafeAreaView style={styles.containerBox}>
       <View style={styles.box}>
-        <KeyboardAvoidingView>
+        <KeyboardAvoidingView behavior="position">
           <View style={styles.textBox}>
             <Surface style={styles.titleInput}>
               <TextInput
@@ -241,7 +239,7 @@ const AddImage = ({navigate}) => {
             />
           </View>
           <View style={styles.buttonRow}>
-            <CancelButton onPress={onCancelHandler}>Cancel</CancelButton>
+            <CancelButton>Cancel</CancelButton>
             <YellowButton onPress={onSendFormData}>Done</YellowButton>
           </View>
         </KeyboardAvoidingView>

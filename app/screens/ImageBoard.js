@@ -4,7 +4,8 @@ import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {Colors, BasicColors} from '../constants/colors';
 import SelectBox from '../components/common/SelectBox';
 import ImageGetter from '../components/boardcomponent/ImageGetter';
-import GoBackButton from '../components/common/GoBackButton';
+import GoBackButtonWhite from '../components/common/GoBackButtonWhite';
+import HeaderTitle from '../components/common/HeaderTitle';
 
 const ImageBoard = () => {
   // 최신순 or 좋아요 순 결정하는 state (초깃값 설정 서버에 보낼 값을 배열에 담고, 그때의 인덱스)
@@ -27,8 +28,15 @@ const ImageBoard = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.goBackButton}>
-        <GoBackButton />
+      <View style={styles.headerBox}>
+        <View style={styles.goBackButton}>
+          <GoBackButtonWhite />
+        </View>
+        <View style={styles.headerTitle}>
+          <HeaderTitle />
+          <Text style={styles.title}>사진 갤러리</Text>
+        </View>
+        <View style={styles.flex2}></View>
       </View>
       <View style={styles.selectContainer}>
         <View style={styles.selectBoxHolder}>
@@ -59,12 +67,34 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.mainColorDark,
   },
-  goBackButton: {
-    position: 'absolute',
-    height: '7.48%',
+  headerBox: {
+    width: videoCardWidth,
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
+  },
+  goBackButton: {
+    height: 58,
     alignItems: 'flex-start',
     marginLeft: '7%',
+    paddingTop: 18,
+    zIndex: 20,
+    flex: 1,
+  },
+  headerTitle: {
+    flexDirection: 'row',
+    width: videoCardWidth * 0.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 4,
+  },
+  title: {
+    marginHorizontal: videoCardWidth * 0.05,
+    fontSize: 28,
+    color: BasicColors.whiteColor,
+  },
+  flex2: {
+    flex: 1,
   },
   selectContainer: {
     position: 'absolute',
@@ -87,6 +117,6 @@ const styles = StyleSheet.create({
     width: windowWidth,
     justifyContent: 'center',
     alignItems: 'center',
-    top: '18%',
+    top: '10%',
   },
 });

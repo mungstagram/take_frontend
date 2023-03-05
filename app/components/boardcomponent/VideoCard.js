@@ -90,12 +90,13 @@ const styles = StyleSheet.create({
     top: 18,
   },
   container: {
+    top: 8,
     width: videoCardWidth,
     height: videoCardHeight,
     backgroundColor: BasicColors.blackColor,
     borderRadius: 4,
     justifyContent: 'center',
-    marginBottom: videoCardHeight * 0.2,
+    marginBottom: videoCardHeight * 0.14,
     shadowColor: BasicColors.blackColor,
   },
   contentTop: {

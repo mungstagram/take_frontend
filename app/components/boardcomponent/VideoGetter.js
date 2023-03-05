@@ -41,6 +41,7 @@ const VideoGetter = ({order, nickname}) => {
           )}
           keyExtractor={item => item.postId}
           horizontal={false}
+          style={styles.container}
         />
       </SafeAreaView>
     </View>
@@ -62,5 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     // backgroundColor: 'green', //TODO : 색 원래대로
   },
-  container: {},
+  container: {
+    marginBottom: 4,
+  },
 });

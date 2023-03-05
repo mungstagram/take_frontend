@@ -11,17 +11,16 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 
 import {Colors, BasicColors} from '../constants/colors';
-import GoBackButton from '../components/common/GoBackButton';
+import GoBackButtonWhite from '../components/common/GoBackButtonWhite';
 import {__getPostDetailData} from '../redux/modules/commetsSlice';
 import VideoDetailTop from '../components/detailcomp/VideoDetailTop';
 import CommentInput from '../components/detailcomp/CommentInput';
-//import CommentList from '../components/detailcomp/CommentList';
+import HeaderTitle from '../components/common/HeaderTitle';
 
 const VideoDetail = ({route}) => {
   //useSelector로.. postId 불러야할것 같음
 
   const detail = useSelector(state => state.comments.detail);
-  //console.log('detail', detail);
 
   const videoUrl = detail.contentUrl[0];
   // 최초 마운트시 빈값이 들어오는 것에 대한 에러를 해결하기 위해
@@ -38,23 +37,32 @@ const VideoDetail = ({route}) => {
   }, [isFocused, route]);
 
   return (
-    <SafeAreaView>
-      <KeyboardAvoidingView>
-        <View style={styles.container}>
-          <View style={styles.goBackButton}>
-            <GoBackButton />
-          </View>
-          <View style={styles.videoContainer}>
-            <View style={styles.contentBox}>
-              <VideoDetailTop detail={detail} videoUrl={videoUrl} />
-            </View>
-            <View style={styles.commentInputBox}>
-              <CommentInput detail={detail} />
-            </View>
-          </View>
+    <>
+      <View style={styles.headerBox}>
+        <View style={styles.goBackButton}>
+          <GoBackButtonWhite />
         </View>
+        <View style={styles.headerTitle}>
+          <HeaderTitle />
+          <Text style={styles.title}>동영상 갤러리</Text>
+        </View>
+        <View style={styles.flex2}></View>
+      </View>
+      <KeyboardAvoidingView behavior="position">
+        <SafeAreaView>
+          <View style={styles.container}>
+            <View style={styles.videoContainer}>
+              <View style={styles.contentBox}>
+                <VideoDetailTop detail={detail} videoUrl={videoUrl} />
+              </View>
+              <View style={styles.commentInputBox}>
+                <CommentInput detail={detail} />
+              </View>
+            </View>
+          </View>
+        </SafeAreaView>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </>
   );
 };
 
@@ -71,13 +79,38 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: Colors.mainColorDark,
   },
-  goBackButton: {
+  headerBox: {
     position: 'absolute',
-    height: '7.48%',
+    width: windowWidth,
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 99,
+    height: 58,
+    backgroundColor: Colors.mainColorDark,
+  },
+  goBackButton: {
+    height: 58,
     alignItems: 'flex-start',
     marginLeft: '7%',
+    paddingTop: 18,
     zIndex: 20,
+    flex: 1,
+  },
+  headerTitle: {
+    flexDirection: 'row',
+    width: videoCardWidth * 0.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 4,
+  },
+  title: {
+    marginHorizontal: videoCardWidth * 0.05,
+    fontSize: 28,
+    color: BasicColors.whiteColor,
+  },
+  flex2: {
+    flex: 1,
   },
   videoContainer: {
     position: 'absolute',

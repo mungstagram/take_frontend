@@ -35,7 +35,7 @@ const ModifyVideo = ({route}) => {
   const fileData = useSelector(state => state.comments.detail);
 
   // 제목 인풋상태
-  const [titleText, setTitleText] = useState('');
+  const [titleText, setTitleText] = useState(fileData.title);
   // console.log(titleText);
   //제목 인풋 핸들러
   const titleTextHandler = event => {
@@ -43,7 +43,7 @@ const ModifyVideo = ({route}) => {
     setTitleText(event.nativeEvent.text);
   };
   // 내용 인풋상태
-  const [contentText, setContentText] = useState('');
+  const [contentText, setContentText] = useState(fileData.content);
 
   // 내용 인풋 핸들러
   const contentTextHandler = event => {
@@ -110,64 +110,72 @@ const ModifyVideo = ({route}) => {
   }, [isFocused]);
 
   return (
-    <SafeAreaView style={styles.containerBox}>
-      <View style={styles.goBackButton}>
-        <GoBackButton />
-      </View>
-      <View style={styles.container}>
-        <View style={styles.box}>
-          <View style={styles.fileInput}>
-            <View style={styles.fileupload}>
-              <View style={styles.categoryInfo}>
-                <Text style={styles.categoryInfoText}>등록된 동영상 확인</Text>
-              </View>
-              <View style={styles.openfileView}>
-                <Video
-                  style={styles.videoScreen}
-                  source={{
-                    uri: fileData.contentUrl[0],
-                  }}
-                  resizeMode={'contain'}
-                  repeat={true}
-                />
+    <KeyboardAvoidingView behavior="position">
+      <SafeAreaView style={styles.containerBox}>
+        <View style={styles.goBackButton}>
+          <GoBackButton />
+        </View>
+        <View style={styles.container}>
+          <View style={styles.box}>
+            <View style={styles.fileInput}>
+              <View style={styles.fileupload}>
+                <View style={styles.categoryInfo}>
+                  <Text style={styles.categoryInfoText}>
+                    등록된 동영상 확인
+                  </Text>
+                </View>
+                <View style={styles.openfileView}>
+                  <Video
+                    style={styles.videoScreen}
+                    source={{
+                      uri: fileData.contentUrl[0],
+                    }}
+                    resizeMode={'contain'}
+                    repeat={true}
+                  />
+                </View>
               </View>
             </View>
-          </View>
-          <View style={styles.textBox}>
-            <Surface style={styles.titleInput}>
-              <TextInput
-                placeholder="제목을 입력하세요(15자 이하)"
-                maxLength={15}
-                returnKeyType="next"
-                value={titleText}
-                onChange={titleTextHandler}
-              />
-            </Surface>
-            <Surface style={styles.contentInput}>
-              <TextInput
-                placeholder="내용을 입력하세요(2000자 이하)"
-                maxLength={2000}
-                // 확인하기
-                multiline={true}
-                value={contentText}
-                onChange={contentTextHandler}
-              />
-              <View style={styles.contentCount}>
-                <Text style={styles.textCount}>{contentText.length}/2000</Text>
-              </View>
-            </Surface>
-          </View>
-          <View style={styles.buttonRow}>
-            <CancelButton style={styles.cancelBtn} onPress={onCancelHandler}>
-              취소
-            </CancelButton>
-            <YellowButton style={styles.doneBtn} onPress={onDoneHandler}>
-              수정완료
-            </YellowButton>
+            <View style={styles.textBox}>
+              <Surface style={styles.titleInput}>
+                <TextInput
+                  placeholder="제목을 입력하세요(15자 이하)"
+                  maxLength={15}
+                  returnKeyType="next"
+                  value={titleText}
+                  onChange={titleTextHandler}
+                />
+              </Surface>
+              <Surface style={styles.contentInput}>
+                <TextInput
+                  placeholder="내용을 입력하세요(2000자 이하)"
+                  maxLength={2000}
+                  // 확인하기
+                  multiline={true}
+                  value={contentText}
+                  onChange={contentTextHandler}
+                />
+                <View style={styles.contentCount}>
+                  <Text style={styles.textCount}>
+                    {contentText.length}/2000
+                  </Text>
+                </View>
+              </Surface>
+            </View>
+            <View style={styles.buttonRow}>
+              <TouchableOpacity
+                style={styles.buttonBox}
+                onPress={onCancelHandler}>
+                <Text style={styles.button}>취소</Text>
+              </TouchableOpacity>
+              <YellowButton style={styles.doneBtn} onPress={onDoneHandler}>
+                수정완료
+              </YellowButton>
+            </View>
           </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -273,5 +281,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  buttonBox: {
+    width: videoCardWidth * 0.475,
+    height: 36,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: Colors.userDataColor,
+    backgroundColor: BasicColors.whiteColor,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

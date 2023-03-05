@@ -42,6 +42,7 @@ export const __postComment = createAsyncThunk(
 export const __getPostDetailData = createAsyncThunk(
   'GET_POST_DETAIL_DATA',
   async (payload, thunkAPI) => {
+    //console.log('GetD', payload);
     try {
       const {data} = await http.get(`/posts/${payload}`);
       //console.log('data', data);

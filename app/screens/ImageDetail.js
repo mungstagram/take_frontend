@@ -11,11 +11,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 
 import {Colors, BasicColors} from '../constants/colors';
-import GoBackButton from '../components/common/GoBackButton';
 import CommentInput from '../components/detailcomp/CommentInput';
 import CommentList from '../components/detailcomp/CommentList';
 import {__getPostDetailData} from '../redux/modules/commetsSlice';
 import ImageDetailTop from '../components/detailcomp/ImageDetailTop';
+import GoBackButtonWhite from '../components/common/GoBackButtonWhite';
 
 const ImageDetail = ({route}) => {
   const detail = useSelector(state => state.comments.detail);
@@ -34,8 +34,15 @@ const ImageDetail = ({route}) => {
     <SafeAreaView>
       <KeyboardAvoidingView>
         <View style={styles.container}>
-          <View style={styles.goBackButton}>
-            <GoBackButton />
+          <View style={styles.headerBox}>
+            <View style={styles.goBackButton}>
+              <GoBackButtonWhite />
+            </View>
+            <View style={styles.headerTitle}>
+              <HeaderTitle />
+              <Text style={styles.title}>사진 갤러리</Text>
+            </View>
+            <View style={styles.flex2}></View>
           </View>
           <View style={styles.imageContainer}>
             <View style={styles.contentBox}>
@@ -64,13 +71,34 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: Colors.mainColorDark,
   },
-  goBackButton: {
-    position: 'absolute',
-    height: '7.48%',
+  headerBox: {
+    width: videoCardWidth,
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
+  },
+  goBackButton: {
+    height: 58,
     alignItems: 'flex-start',
     marginLeft: '7%',
+    paddingTop: 18,
     zIndex: 20,
+    flex: 1,
+  },
+  headerTitle: {
+    flexDirection: 'row',
+    width: videoCardWidth * 0.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 4,
+  },
+  title: {
+    marginHorizontal: videoCardWidth * 0.05,
+    fontSize: 28,
+    color: BasicColors.whiteColor,
+  },
+  flex2: {
+    flex: 1,
   },
   imageContainer: {
     position: 'absolute',
