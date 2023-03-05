@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TextInput,
   FlatList,
@@ -11,19 +10,25 @@ import {
   ScrollView,
   Platform,
   Alert,
+  Dimensions,
+  Pressable,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
-
+import {Surface, Text} from 'react-native-paper';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
+import {useNavigation} from '@react-navigation/native';
 
 import {__postAddContentFormData} from '../../redux/modules/addContentSlice';
 import YellowButton from '../YellowButton';
 import CancelButton from '../CancelButton';
+import {Colors, BasicColors} from '../../constants/colors';
+import AddCircle from '../svg/AddCircle';
 
-const AddImage = () => {
+const AddImage = ({navigate}) => {
   // 제목 인풋상태
-  const [titleText, setTitleText] = useState();
+  const [titleText, setTitleText] = useState('');
   // console.log(titleText);
   //제목 인풋 핸들러
   const titleTextHandler = event => {
@@ -109,7 +114,7 @@ const AddImage = () => {
     return (
       <ScrollView style={styles.imageView}>
         <Image
-          width={IMAGE_WIDTH}
+          // width={IMAGE_WIDTH}
           source={{
             uri:
               item?.type === 'video'
@@ -133,73 +138,100 @@ const AddImage = () => {
   // 폼데이터 선언 및 전송
   const formData = new FormData();
   const onSendFormData = () => {
-    const formList = {
-      category: 'image',
-      title: titleText,
-      content: contentText,
-      files: images,
-    };
+    if (titleText === '') {
+      return Alert.alert('제목을 넣어주세요');
+    } else if (contentText === '') {
+      return Alert.alert('내용을 넣어주세요');
+    } else if (images.length === 0) {
+      return Alert.alert('사진을 넣어주세요');
+    } else {
+      const formList = {
+        category: 'image',
+        title: titleText,
+        content: contentText,
+        files: images,
+      };
+      formData.append('category', 'image');
+      formData.append('title', titleText);
+      formData.append('content', contentText);
+      formData.append('files', {
+        name: images[0].fileName,
+        type: images[0].mime,
+        uri: `file://${images[0].realPath}`,
+      });
 
-    formData.append('category', 'image');
-    formData.append('title', titleText);
-    formData.append('content', contentText);
-    formData.append('files', {
-      name: images[0].fileName,
-      type: images[0].mime,
-      uri: `file://${images[0].realPath}`,
-    });
-    console.log(formData);
-
-    dispatch(__postAddContentFormData(formData));
+      dispatch(__postAddContentFormData(formData));
+      setTitleText('');
+      setContentText('');
+      setImages([]);
+      navigation.reset('userDetail');
+    }
   };
-  // 이미지파일 넣는 부분
-  // formData.append('files', { uri: `file://${profileImg[0].realPath}`, name: profileImg[0].fileName, type: profileImg[0].mime })
+  const navigation = useNavigation();
+
+  const onCancelHandler = () => {
+    Alert.alert(
+      '게시글 작성을 정말로 취소하시겠습니까?',
+      '🐾 진짜 취소하실건가요 ~?',
+      [
+        {
+          text: '취소하기',
+          onPress: () => console.log('취소'),
+        },
+        {
+          text: '네',
+          onPress: () => {
+            Alert.alert('게시글 작성을 취소하였습니다.'),
+              navigation.navigate('Home');
+          },
+        },
+      ],
+    );
+  };
   return (
     <SafeAreaView style={styles.containerBox}>
       <View style={styles.box}>
-        <View style={styles.container}>
-          <View style={styles.titleInput}>
-            <TextInput
-              placeholder="제목을 입력하세요(20자 이하)"
-              maxLength={15}
-              // returnKeyType="next"
-              value={titleText}
-              onChange={titleTextHandler}
-            />
-          </View>
-
-          <View style={styles.contentInput}>
-            <TextInput
-              placeholder="내용을 입력하세요(300자 이하)"
-              maxLength={2000}
-              // 확인하기
-              multiline={true}
-              value={contentText}
-              onChange={contentTextHandler}
-            />
-          </View>
-          <View>
-            <Text>{contentText.length}/2000</Text>
+        <KeyboardAvoidingView>
+          <View style={styles.textBox}>
+            <Surface style={styles.titleInput}>
+              <TextInput
+                placeholder="제목을 입력하세요(15자 이하)"
+                maxLength={15}
+                returnKeyType="next"
+                multiline={false}
+                value={titleText}
+                onChange={titleTextHandler}
+              />
+            </Surface>
+            <Surface style={styles.contentInput}>
+              <TextInput
+                placeholder="내용을 입력하세요(2000자 이하)"
+                maxLength={2000}
+                multiline={true}
+                value={contentText}
+                onChange={contentTextHandler}
+              />
+              <View style={styles.contentCount}>
+                <Text style={styles.textCount}>{contentText.length}/2000</Text>
+              </View>
+            </Surface>
           </View>
           <View style={styles.fileInput}>
             <View style={styles.fileupload}>
               {openCamera && (
-                <TouchableOpacity
-                  style={styles.openPicker}
-                  onPress={openPicker}>
-                  <Text style={styles.openText}>댕댕🐶 사진넣기</Text>
-                </TouchableOpacity>
+                <Pressable style={styles.openPicker} onPress={openPicker}>
+                  <AddCircle />
+                </Pressable>
               )}
               {!openCamera && (
-                <TouchableOpacity
-                  style={styles.openPicker2}
-                  onPress={openAgainPicker}>
-                  <Text style={styles.openText}>댕댕🐶 사진넣기</Text>
-                </TouchableOpacity>
+                <Pressable style={styles.openPicker2} onPress={openAgainPicker}>
+                  <AddCircle />
+                </Pressable>
               )}
             </View>
 
             <FlatList
+              style={styles.imagesScreen}
               data={images}
               keyExtractor={(item, index) =>
                 (item?.filename ?? item?.path) + index
@@ -209,10 +241,10 @@ const AddImage = () => {
             />
           </View>
           <View style={styles.buttonRow}>
-            <CancelButton>Cancel</CancelButton>
+            <CancelButton onPress={onCancelHandler}>Cancel</CancelButton>
             <YellowButton onPress={onSendFormData}>Done</YellowButton>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </View>
     </SafeAreaView>
   );
@@ -220,78 +252,95 @@ const AddImage = () => {
 
 export default AddImage;
 
-// 코드 손보기
-// const {width} = Dimensions.get('window');
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
-const IMAGE_WIDTH = 100;
+const videoCardWidth = windowWidth * 0.92;
+const videoCardHeight = videoCardWidth * 0.52;
 
 const styles = StyleSheet.create({
   containerBox: {
-    flex: 1,
+    backgroundColor: BasicColors.whiteColor,
   },
   box: {
-    flex: 1,
-    backgroundColor: '#e6e6e6',
-    alignContent: 'center',
-    justifyContent: 'center',
+    height: windowHeight * 0.81,
+    flexDirection: 'column',
+    alignItems: 'center',
   },
-  container: {
-    flex: 1,
+  textBox: {
+    flex: 4,
+    width: videoCardWidth,
+    height: windowHeight * 0.36,
+    alignContent: 'center',
+    marginTop: 20,
   },
   titleInput: {
+    borderRadius: 4,
+    borderColor: BasicColors.grayColor,
+    marginBottom: 12,
     flex: 1,
-    border: 1,
-    borderColor: '#ffac53',
+    elevation: 1,
+    paddingHorizontal: '4%',
+    backgroundColor: BasicColors.whiteColor,
   },
   contentInput: {
+    borderRadius: 4,
+    borderColor: BasicColors.grayColor,
     flex: 3,
+    borderBottomWidth: 2,
+    justifyContent: 'space-between',
+    paddingHorizontal: '4%',
+    backgroundColor: BasicColors.whiteColor,
+  },
+  contentCount: {
+    alignItems: 'flex-end',
+    marginBottom: '2%',
+  },
+  textCount: {
+    color: BasicColors.grayColor,
   },
   fileInput: {
+    width: videoCardWidth,
+    height: videoCardHeight,
     flex: 2,
     flexDirection: 'row',
-    flexWrap: 'nowrap',
     justifyContent: 'center',
-    alignItems: 'center',
+    paddingTop: 12,
   },
   fileupload: {
-    height: IMAGE_WIDTH,
+    height: windowWidth * 0.245,
     justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 30,
+    backgroundColor: 'white',
   },
-  buttonRow: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  openText: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: '#fff',
-    paddingVertical: 12,
-  },
-
   openPicker: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000',
+    width: windowWidth * 0.245,
+    height: windowWidth * 0.245,
+    backgroundColor: BasicColors.grayColor,
+    marginRight: 6,
   },
   openPicker2: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#5b5b5b',
+    width: windowWidth * 0.245,
+    height: windowWidth * 0.245,
+    backgroundColor: BasicColors.darkGrayColor,
+    marginRight: 6,
   },
   imageView: {
     flexDirection: 'column',
     flexWrap: 'nowrap',
-    position: 'relative',
     marginRight: 6,
+    width: windowWidth * 0.245,
+    height: windowWidth * 0.245,
+  },
+  imagesScreen: {
+    height: windowWidth * 0.245,
   },
   media: {
-    width: IMAGE_WIDTH,
-    height: IMAGE_WIDTH,
-    backgroundColor: 'rgba(0,0,0,0.2)',
+    width: windowWidth * 0.245,
+    height: windowWidth * 0.245,
   },
   buttonDelete: {
     paddingHorizontal: 8,
@@ -308,6 +357,13 @@ const styles = StyleSheet.create({
   titleDelete: {
     fontWeight: 'bold',
     fontSize: 12,
-    color: '#000',
+    color: BasicColors.blackColor,
+  },
+  buttonRow: {
+    flex: 1,
+    width: videoCardWidth,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

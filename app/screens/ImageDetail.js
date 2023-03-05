@@ -14,45 +14,39 @@ import {Colors, BasicColors} from '../constants/colors';
 import GoBackButton from '../components/common/GoBackButton';
 import CommentInput from '../components/detailcomp/CommentInput';
 import CommentList from '../components/detailcomp/CommentList';
-import {__getPostDetailData} from '../redux/modules/addContentSlice';
+import {__getPostDetailData} from '../redux/modules/commetsSlice';
 import ImageDetailTop from '../components/detailcomp/ImageDetailTop';
 
 const ImageDetail = ({route}) => {
-  const detail = useSelector(state => state.addContent.detail);
-
-  //   const imageUrl = detail.contentUrl.map((item, index) => {
-  //     console.log('detail', item, index);
-  //   });
+  const detail = useSelector(state => state.comments.detail);
 
   const isFocused = useIsFocused();
 
   const dispatch = useDispatch();
-  //postId를 보내준다. / 내일 수홍님한테 렌더링 두번 되는 거에 대해 물어보기.
+
   useEffect(() => {
     if (isFocused) {
       dispatch(__getPostDetailData(route.params.postId));
     }
-  }, [isFocused]);
+  }, [isFocused, route]);
 
   return (
     <SafeAreaView>
-      <View style={styles.container}>
-        <View style={styles.goBackButton}>
-          <GoBackButton />
-        </View>
-        <View style={styles.imageContainer}>
-          <View style={styles.CommentBox}>
-            <ImageDetailTop detail={detail} />
-            <CommentList detail={detail} />
+      <KeyboardAvoidingView>
+        <View style={styles.container}>
+          <View style={styles.goBackButton}>
+            <GoBackButton />
+          </View>
+          <View style={styles.imageContainer}>
+            <View style={styles.contentBox}>
+              <ImageDetailTop detail={detail} />
+            </View>
+            <View style={styles.commentInputBox}>
+              <CommentInput detail={detail} />
+            </View>
           </View>
         </View>
-
-        <KeyboardAvoidingView>
-          <View style={styles.imageComment}>
-            <CommentInput detail={detail} />
-          </View>
-        </KeyboardAvoidingView>
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -76,6 +70,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginLeft: '7%',
+    zIndex: 20,
   },
   imageContainer: {
     position: 'absolute',
@@ -84,14 +79,17 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
   },
-  CommentBox: {
-    position: 'relative',
+  contentBox: {
+    flex: 9,
   },
-  imageComment: {
+  commentListBox: {
+    // flex: 4.3,
+    // zIndex: 5,
+  },
+  commentInputBox: {
+    flex: 1,
     height: windowHeight,
-    zIndex: 99,
-    position: 'relative',
-    bottom: '6%',
+    bottom: '8%',
     justifyContent: 'flex-end',
   },
 });

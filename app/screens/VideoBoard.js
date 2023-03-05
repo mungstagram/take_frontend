@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
   },
   preCards: {
-    height: windowHeight * 0.8,
+    height: windowHeight * 0.79,
     width: windowWidth,
     justifyContent: 'center',
     alignItems: 'center',
