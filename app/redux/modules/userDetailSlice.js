@@ -17,6 +17,8 @@ export const __getUserDetail = createAsyncThunk(
       const {data} = await http.get(`/users/${payload}`);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
+      console.log('get과정에 생긴 에러', e);
+
       return thunkAPI.rejectWithValue(e.code);
     }
   },
