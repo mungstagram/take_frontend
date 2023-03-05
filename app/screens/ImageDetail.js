@@ -45,9 +45,6 @@ const ImageDetail = ({route}) => {
             <View style={styles.contentBox}>
               <ImageDetailTop detail={detail} />
             </View>
-            {/* <View style={styles.commentListBox}>
-              <CommentList detail={detail} />
-            </View> */}
             <View style={styles.commentInputBox}>
               <CommentInput detail={detail} />
             </View>

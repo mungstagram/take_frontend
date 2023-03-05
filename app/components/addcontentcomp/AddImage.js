@@ -12,6 +12,7 @@ import {
   Alert,
   Dimensions,
   Pressable,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
@@ -141,7 +142,7 @@ const AddImage = () => {
       return Alert.alert('제목을 넣어주세요');
     } else if (contentText === '') {
       return Alert.alert('내용을 넣어주세요');
-    } else if (images !== []) {
+    } else if (images.length === 0) {
       return Alert.alert('사진을 넣어주세요');
     } else {
       const formList = {
@@ -163,72 +164,87 @@ const AddImage = () => {
       setTitleText('');
       setContentText('');
       setImages([]);
+      navigation.reset('userDetail');
     }
   };
   const navigation = useNavigation();
 
-  const onGoBack = () => {
-    navigation.goBack();
+  const onCancelHandler = () => {
+    Alert.alert(
+      '게시글 작성을 정말로 취소하시겠습니까?',
+      '🐾 진짜 취소하실건가요 ~?',
+      [
+        {
+          text: '취소하기',
+          onPress: () => console.log('취소'),
+        },
+        {
+          text: '네',
+          onPress: () => {
+            Alert.alert('게시글 작성을 취소하였습니다.'),
+              navigation.reset('Home');
+          },
+        },
+      ],
+    );
   };
   return (
     <SafeAreaView style={styles.containerBox}>
       <View style={styles.box}>
-        <View style={styles.textBox}>
-          <Surface style={styles.titleInput}>
-            <TextInput
-              placeholder="제목을 입력하세요(15자 이하)"
-              maxLength={15}
-              returnKeyType="next"
-              multiline={false}
-              value={titleText}
-              onChange={titleTextHandler}
-            />
-          </Surface>
-          <Surface style={styles.contentInput}>
-            <TextInput
-              placeholder="내용을 입력하세요(2000자 이하)"
-              maxLength={2000}
-              multiline={true}
-              value={contentText}
-              onChange={contentTextHandler}
-            />
-            <View style={styles.contentCount}>
-              <Text>{contentText.length}/2000</Text>
-            </View>
-          </Surface>
-        </View>
-        <View style={styles.fileInput}>
-          <View style={styles.fileupload}>
-            {openCamera && (
-              <Pressable style={styles.openPicker} onPress={openPicker}>
-                <AddCircle />
-              </Pressable>
-            )}
-            {!openCamera && (
-              <Pressable style={styles.openPicker2} onPress={openAgainPicker}>
-                <AddCircle />
-              </Pressable>
-            )}
+        <KeyboardAvoidingView>
+          <View style={styles.textBox}>
+            <Surface style={styles.titleInput}>
+              <TextInput
+                placeholder="제목을 입력하세요(15자 이하)"
+                maxLength={15}
+                returnKeyType="next"
+                multiline={false}
+                value={titleText}
+                onChange={titleTextHandler}
+              />
+            </Surface>
+            <Surface style={styles.contentInput}>
+              <TextInput
+                placeholder="내용을 입력하세요(2000자 이하)"
+                maxLength={2000}
+                multiline={true}
+                value={contentText}
+                onChange={contentTextHandler}
+              />
+              <View style={styles.contentCount}>
+                <Text style={styles.textCount}>{contentText.length}/2000</Text>
+              </View>
+            </Surface>
           </View>
+          <View style={styles.fileInput}>
+            <View style={styles.fileupload}>
+              {openCamera && (
+                <Pressable style={styles.openPicker} onPress={openPicker}>
+                  <AddCircle />
+                </Pressable>
+              )}
+              {!openCamera && (
+                <Pressable style={styles.openPicker2} onPress={openAgainPicker}>
+                  <AddCircle />
+                </Pressable>
+              )}
+            </View>
 
-          <FlatList
-            style={styles.imagesScreen}
-            data={images}
-            keyExtractor={(item, index) =>
-              (item?.filename ?? item?.path) + index
-            }
-            renderItem={renderItem}
-            horizontal={true}
-          />
-        </View>
-        <View style={styles.buttonRow}>
-          <CancelButton style={styles.cancelBtn} onPress={onGoBack}>
-            Cancel
-          </CancelButton>
-          <YellowButton style={styles.doneBtn} onPress={onSendFormData}>
-            Done
-          </YellowButton>
-        </View>
+            <FlatList
+              style={styles.imagesScreen}
+              data={images}
+              keyExtractor={(item, index) =>
+                (item?.filename ?? item?.path) + index
+              }
+              renderItem={renderItem}
+              horizontal={true}
+            />
+          </View>
+          <View style={styles.buttonRow}>
+            <CancelButton onPress={onCancelHandler}>Cancel</CancelButton>
+            <YellowButton onPress={onSendFormData}>Done</YellowButton>
+          </View>
+        </KeyboardAvoidingView>
       </View>
     </SafeAreaView>
   );
@@ -247,7 +263,7 @@ const styles = StyleSheet.create({
     backgroundColor: BasicColors.whiteColor,
   },
   box: {
-    height: '100%',
+    height: windowHeight * 0.81,
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -279,6 +295,9 @@ const styles = StyleSheet.create({
   contentCount: {
     alignItems: 'flex-end',
     marginBottom: '2%',
+  },
+  textCount: {
+    color: BasicColors.grayColor,
   },
   fileInput: {
     width: videoCardWidth,

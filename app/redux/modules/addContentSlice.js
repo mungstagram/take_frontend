@@ -28,11 +28,7 @@ export const __postAddContentFormData = createAsyncThunk(
           Alert.alert('게시글 작성을 완료하였습니다.');
           //사진탭을 눌러서 사진을 넣고 완료버튼을 누르면 사진게시판으로 이동하게
           //영상탭을 눌러서 영상 하나 넣고 완료누르면 영상게시판으로 이동
-          const navigation = useNavigation();
-          const userData = ({userDetail}) => {
-            console.log('user', userDetail);
-            // navigation.navigate('UserDetail', userDetail);
-          };
+
           //유저디테일로 보내는걸로 하기!
           //유저디테일페이지로 넘겨버리자! navigate. sa('/userdetail')
 

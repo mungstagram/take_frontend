@@ -48,9 +48,6 @@ const VideoDetail = ({route}) => {
             <View style={styles.contentBox}>
               <VideoDetailTop detail={detail} videoUrl={videoUrl} />
             </View>
-            {/* <View style={styles.commentListBox}>
-              <CommentList detail={detail} />
-            </View> */}
             <View style={styles.commentInputBox}>
               <CommentInput detail={detail} />
             </View>
