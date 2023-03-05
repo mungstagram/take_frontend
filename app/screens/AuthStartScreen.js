@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import AuthButton from '../components/common/AuthButton';
@@ -25,8 +25,10 @@ const AuthStartScreen = () => {
   return (
     <View style={styles.Wrapper}>
       <View style={styles.Container1}>
-        <Text> 로그인 시작</Text>
-        <ForceLoginButton></ForceLoginButton>
+        <Image
+          source={require('../assets/LogoMedium.png')}
+          resizeMode={'cover'}
+        />
       </View>
       <View style={styles.Container2}>
         <View style={styles.ButtonContainer}>
@@ -50,16 +52,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   Container1: {
-    flex: 4,
+    flex: 4.5,
     backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingBottom: 40,
   },
   Container2: {
-    flex: 6,
+    flex: 5.5,
     marginHorizontal: '20%',
     flexDirection: 'column',
     // gap: '100',
   },
   ButtonContainer: {
-    marginVertical: '3%',
+    marginBottom: '6%',
   },
 });

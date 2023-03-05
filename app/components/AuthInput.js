@@ -117,9 +117,10 @@ const styles = StyleSheet.create({
     fontSize: 8,
     borderTopRightRadius: 4,
     borderTopLeftRadius: 4,
-    backgroundColor: Colors.mainColorBright,
+    backgroundColor: '#F4F4F4',
     borderBottomWidth: 1,
     borderBottomColor: Colors.mainColorBright,
+    borderBottomColor: '#8D8D8D',
   },
   inputInvalid: {
     paddingVertical: 8,
@@ -127,13 +128,14 @@ const styles = StyleSheet.create({
     fontSize: 8,
     borderTopRightRadius: 4,
     borderTopLeftRadius: 4,
-    backgroundColor: Colors.mainColorBright,
+    backgroundColor: '#F4F4F4',
     borderBottomWidth: 1,
     borderBottomColor: 'red',
   },
   labelStyle: {
     fontSize: 10,
     color: 'red',
+    paddingLeft: 4,
   },
   inputDirection: {
     flexDirection: 'row',
@@ -144,6 +146,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     flex: 1,
     padding: 0,
+    paddingLeft: 4,
   },
   pressableContainer: {
     alignItems: 'center',

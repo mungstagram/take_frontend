@@ -15,7 +15,7 @@ import {__getPostData} from '../../redux/modules/addContentSlice';
 import {startDetecting} from 'react-native/Libraries/Utilities/PixelRatio';
 import {useIsFocused} from '@react-navigation/native';
 
-const VideoGetter = ({order}) => {
+const VideoGetter = ({order, nickname}) => {
   const videoContentList = useSelector(state => state.addContent.contentList);
 
   const dispatch = useDispatch();
@@ -23,7 +23,9 @@ const VideoGetter = ({order}) => {
 
   useEffect(() => {
     if (isFocused) {
-      dispatch(__getPostData({category: 'video', order}));
+      nickname
+        ? dispatch(__getPostData({category: 'video', order, nickname}))
+        : dispatch(__getPostData({category: 'video', order}));
     }
   }, [order, isFocused]);
 

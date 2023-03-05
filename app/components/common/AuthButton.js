@@ -40,7 +40,7 @@ const styles = value =>
       textAlign: 'center',
       textAlignVertical: 'center',
       color: 'black',
-      fontSize: 12,
+      fontSize: 14,
       fontWeight: 'bold',
     },
     disabled: {

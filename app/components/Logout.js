@@ -10,6 +10,8 @@ const Logout = () => {
 
   const onLogoutHandelr = () => {
     AsyncStorage.removeItem('authorization');
+    AsyncStorage.removeItem('nickname');
+
     dispatch(checkLogout());
   };
 

@@ -150,6 +150,7 @@ const AddImage = () => {
       type: images[0].mime,
       uri: `file://${images[0].realPath}`,
     });
+    console.log(formData);
 
     dispatch(__postAddContentFormData(formData));
   };
