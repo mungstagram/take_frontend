@@ -5,6 +5,7 @@ const initialState = {
   searchData: [],
   error: null,
   isLoading: false,
+  category: '',
 };
 
 // Thunk 함수
@@ -18,7 +19,8 @@ export const __getSearchData = createAsyncThunk(
         `/searches?search=${payload.search}&category=${payload.category}`,
       );
       console.log(data);
-      return thunkAPI.fulfillWithValue(data);
+      const sendData = {category: payload.category, data: data};
+      return thunkAPI.fulfillWithValue(sendData);
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.response.data);
@@ -36,7 +38,8 @@ export const searchSlice = createSlice({
     },
     [__getSearchData.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.searchData = action.payload;
+      state.searchData = action.payload.data;
+      state.category = action.payload.category;
     },
     [__getSearchData.rejected]: (state, action) => {
       state.isLoading = false;

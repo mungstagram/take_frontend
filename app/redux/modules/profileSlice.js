@@ -26,7 +26,6 @@ export const __getProfile = createAsyncThunk(
     //여기서 undefined 면 절대통신이 안된다는 뜻!
     try {
       const {data} = await http.get(`/profile/${payload}`);
-      console.log('data', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);

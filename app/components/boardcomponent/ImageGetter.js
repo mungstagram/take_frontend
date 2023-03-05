@@ -6,7 +6,8 @@ import {useIsFocused} from '@react-navigation/native';
 
 import ImageCard from './ImageCard';
 
-const ImageGetter = ({order, nickname}) => {
+const ImageGetter = ({order, nickname, searchData}) => {
+  // 검색에서 값을 받는 경우 searchData 가 true
   // 요청할 데이터 정렬 순서 , 카테고리 프룹스로 받기
   const imageContentList = useSelector(state => state.addContent.contentList);
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const ImageGetter = ({order, nickname}) => {
   // 마운트 될 때, 데이터의 정렬 순서 카테고리가 바뀔때 , 요청하기 (기본 요청은 최신순이 되도록 props받기)
   useEffect(() => {
     // console.log('리랜더링되나?', imageContentList);
-    if (isFocused) {
+    if (isFocused && !searchData) {
       nickname
         ? dispatch(__getPostData({category: 'image', order, nickname}))
         : dispatch(__getPostData({category: 'image', order}));
@@ -25,17 +26,31 @@ const ImageGetter = ({order, nickname}) => {
   return (
     <View style={styles.getterWrapper}>
       <SafeAreaView>
-        <FlatList
-          data={imageContentList}
-          renderItem={({item}) => (
-            <View style={styles.cardColor}>
-              <ImageCard imageContent={item} title={item.title} />
-            </View>
-          )}
-          keyExtractor={item => item.postId}
-          numColumns={2}
-          horizontal={false}
-        />
+        {searchData ? (
+          <FlatList
+            data={searchData}
+            renderItem={({item}) => (
+              <View style={styles.cardColor}>
+                <ImageCard imageContent={item} title={item.title} />
+              </View>
+            )}
+            keyExtractor={item => item.postId}
+            numColumns={2}
+            horizontal={false}
+          />
+        ) : (
+          <FlatList
+            data={imageContentList}
+            renderItem={({item}) => (
+              <View style={styles.cardColor}>
+                <ImageCard imageContent={item} title={item.title} />
+              </View>
+            )}
+            keyExtractor={item => item.postId}
+            numColumns={2}
+            horizontal={false}
+          />
+        )}
       </SafeAreaView>
     </View>
   );
