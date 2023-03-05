@@ -44,12 +44,13 @@ const Profile = ({navigation, route}) => {
 
   return (
     <>
+      {/* 헤더로 옮겨야함 */}
       <View style={styles.linkBtn}>
         <Text style={{fontSize: 11, paddingRight: '4%'}}>회원탈퇴</Text>
         <Logout />
       </View>
 
-      <View style={{borderWidth: 2, borderColor: 'blue', top: 10}}>
+      <View style={styles.personBlock}>
         <PersonProfileCard myInfo={profile} myNick={myNick} />
       </View>
 
@@ -71,12 +72,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     left: '35%',
   },
+  personBlock: {
+    width: '100%',
+    height: 174,
+    borderWidth: 1,
+    borderColor: 'blue',
+    justifyContent: 'center',
+  },
   dogBlock: {
-    borderWidth: 3,
+    width: '100%',
+    height: 481,
+    borderWidth: 1,
     borderColor: 'red',
     flex: 1,
     flexDirection: 'row',
-    margin: '8%',
+    paddingLeft: '4%',
   },
   editBtn: {
     borderWidth: 1,

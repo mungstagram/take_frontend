@@ -21,6 +21,8 @@ import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import {__getProfile, __editProfile} from '../../redux/modules/profileSlice';
 
 import Emoticon from '../svg/Emoticon';
+import ServicesWhiteImg from '../svg/ServicesWhiteImg';
+import TaskImgWhite from '../svg/TaskImgWhite';
 
 const PersonProfileCard = ({item}) => {
   // const PersonProfileCard = ({myInfo}) => {
@@ -173,7 +175,7 @@ const PersonProfileCard = ({item}) => {
               <FastImage
                 style={styles.personImg}
                 source={{
-                  uri: profile[0]?.user.contentUrl,
+                  uri: profile[0]?.user?.contentUrl,
                   priority: FastImage.priority.normal,
                 }}
                 resizeMode={FastImage.resizeMode.contain}
@@ -188,55 +190,45 @@ const PersonProfileCard = ({item}) => {
               zIndex: 2,
               marginTop: '12%',
             }}>
-            {profile[0]?.user.dogsCount} 마리의 집사
+            {profile[0]?.user?.dogsCount} 마리의 집사
           </Text>
         </View>
 
         <View style={styles.cardRightWrap}>
+          {isEdit ? (
+            <TouchableOpacity onPress={sendEditFormData} style={styles.saveBtn}>
+              <TaskImgWhite />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={onPressInputEdit} style={styles.editBtn}>
+              <ServicesWhiteImg />
+            </TouchableOpacity>
+          )}
           <View style={styles.textInputWrap}>
-            <View>
-              {isEdit ? (
-                <TextInput
-                  style={{left: 10}}
-                  placeholder="Nick Name"
-                  onChangeText={onPresschangeNickEdit}
-                  value={profNickEdit}
-                  autoFocus
-                />
-              ) : (
-                <Text style={{fontSize: 20, color: 'white', fontWeight: '600'}}>
-                  {profile[0].user.nickname}
-                </Text>
-              )}
-            </View>
-
             {isEdit ? (
-              <TouchableOpacity
-                style={styles.editBtn}
-                onPress={sendEditFormData}>
-                <Text>저장</Text>
-              </TouchableOpacity>
+              <TextInput
+                placeholder="Nick Name"
+                onChangeText={onPresschangeNickEdit}
+                value={profNickEdit}
+                style={styles.textNickInput}
+                autoFocus
+              />
             ) : (
-              <TouchableOpacity
-                style={styles.editBtn}
-                onPress={onPressInputEdit}>
-                <Text>수정</Text>
-              </TouchableOpacity>
+              <Text style={styles.textNick}>{profile[0]?.user?.nickname}</Text>
             )}
-          </View>
-          <View>
+
             {isEdit ? (
               <TextInput
                 placeholder="성격, 산책 시간, 거주지 소개"
                 maxLength={25}
-                style={styles.textInputIntro}
                 multiline={true}
                 value={profIntroEdit}
                 onChangeText={onPresschangeProfEdit}
+                style={styles.textIntroInput}
               />
             ) : (
-              <Text style={{fontSize: 16, color: 'white'}}>
-                {profile[0].user.introduce}
+              <Text style={styles.textIntro}>
+                {profile[0]?.user?.introduce}
               </Text>
             )}
           </View>
@@ -254,42 +246,96 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    // borderWidth: 5,
-    // borderColor: 'red',
+    // borderWidth: 1,
     width: 320,
     height: 132,
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   cardLeftWrap: {
-    // borderWidth: 3,
-    // borderColor: 'blue',
-    width: 100,
+    // borderWidth: 1,
+    width: 94,
     justifyContent: 'center',
     alignItems: 'center',
   },
   cardRightWrap: {
-    // borderWidth: 3,
-    // borderColor: 'green',
-    width: 190,
-    left: '16%',
-    padding: '4%',
-  },
-  editBtn: {
-    borderWidth: 1,
-    // width: 24,
-    width: 30,
-    height: 24,
-    zIndex: 1,
+    // borderWidth: 1,
+    width: 226,
   },
 
   textInputWrap: {
     // borderWidth: 1,
-    // borderColor: 'red',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    width: '100%',
+    height: '100%',
+    bottom: '10%',
+  },
+
+  textNick: {
+    // borderWidth: 1,
+    width: 170,
+    height: 56,
+    position: 'absolute',
+    padding: '8%',
+    fontSize: 20,
+    color: 'white',
+    fontWeight: '600',
+  },
+  textNickInput: {
+    width: 170,
+    height: 56,
+    borderWidth: 2,
+    borderRadius: 4,
+    backgroundColor: '#ffffff',
+    borderColor: '#ffffff',
+    opacity: 0.8,
+    padding: '8%',
+  },
+  saveBtn: {
+    // borderWidth: 1,
+    width: 24,
+    height: 24,
+    zIndex: 1,
+    left: '80%',
+    top: '25%',
+  },
+
+  editBtn: {
+    // borderWidth: 1,
+    width: 24,
+    height: 24,
+    zIndex: 1,
+    position: 'relative',
+    left: '80%',
+    top: '25%',
+  },
+
+  textIntro: {
+    // borderWidth: 1,
+    width: 222,
+    height: 72,
+    position: 'relative',
+    top: '44%',
+    padding: '8%',
+    fontSize: 16,
+    color: 'white',
+    marginTop: '4%',
+  },
+  textIntroInput: {
+    width: 222,
+    height: 72,
+    borderWidth: 2,
+    borderRadius: 4,
+    backgroundColor: '#ffffff',
+    borderColor: '#ffffff',
+    opacity: 0.8,
+    padding: '8%',
+    fontSize: 16,
+    marginTop: '4%',
   },
 
   textInputBtn: {
+    // borderWidth: 1,
     width: 70,
     justifyContent: 'center',
     alignItems: 'center',
@@ -298,17 +344,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   personImg: {
+    // borderWidth: 1,
     width: 80,
     height: 80,
     borderRadius: 50,
     top: '10%',
     left: '15%',
-    backgroundColor: '#eeeeee',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
   },
   media: {
+    // borderWidth: 1,
     width: IMAGE_WIDTH,
     height: IMAGE_WIDTH,
     backgroundColor: 'rgba(155, 155, 155, 0.2)',
@@ -324,9 +372,14 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 50,
-    backgroundColor: '#eeeeee',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
+    opacity: 0.6,
+    borderWidth: 1,
+    top: '10%',
+    left: '15%',
+    borderColor: '#ffffff',
   },
 });
 

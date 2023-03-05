@@ -26,7 +26,10 @@ import {
   __addDogImg,
 } from '../../redux/modules/dogProfileSlice';
 import {__getProfile, __editDogProfile} from '../../redux/modules/profileSlice';
+
 import Pets from '../../components/svg/Pets';
+import TaskPinkImg from '../../components/svg/TaskPinkImg';
+import ServicesPinkImg from '../../components/svg/ServicesPinkImg';
 
 import FastImage from 'react-native-fast-image';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
@@ -171,19 +174,6 @@ const InputDogProfileCard = ({item, index}) => {
       <View style={styles.dogCardShadow} />
 
       <View style={styles.dogCard}>
-        {/* <TouchableOpacity style={styles.saveBtn}>
-            <Text>수정</Text>
-          </TouchableOpacity>
-   */}
-        <TouchableOpacity
-          style={styles.saveBtn}
-          onPress={() => {
-            onPressAdd();
-            onPressEdit();
-          }}>
-          {isEdit ? <Text>수정</Text> : <Text>저장</Text>}
-        </TouchableOpacity>
-
         {isEdit ? (
           <FastImage
             style={styles.dogImg}
@@ -209,7 +199,14 @@ const InputDogProfileCard = ({item, index}) => {
                   }}
                 />
               ) : (
-                <Pets />
+                <View
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: '25%',
+                  }}>
+                  <Pets />
+                </View>
               )}
             </TouchableOpacity>
           </View>
@@ -217,50 +214,16 @@ const InputDogProfileCard = ({item, index}) => {
 
         <View style={styles.dogProfileInputWrap}>
           <View style={styles.dogInputWrapInner}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-evenly',
-                margin: 5,
-                paddingTop: 8,
-              }}>
-              <Text
-                style={{
-                  color: 'black',
-                  zIndex: 2,
-                  position: 'absolute',
-                  fontSize: 13,
-                  left: '15%',
-                  top: '10%',
-                  backgroundColor: '#ffffff',
-                }}>
-                강아지이름
-              </Text>
+            <View style={styles.firstLine}>
+              <Text style={styles.dogName}>강아지이름</Text>
 
               {isEdit ? (
-                <Text
-                  style={{
-                    position: 'relative',
-                    borderRadius: 5,
-                    borderColor: 'gray',
-                    width: '45%',
-                    height: 50,
-                    left: 5,
-                  }}>
-                  {profile[1].dogs[1].name}
+                <Text style={styles.dogNameText}>
+                  {profile[1]?.dogs[1]?.name}
                 </Text>
               ) : (
                 <TextInput
-                  style={{
-                    position: 'relative',
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    borderColor: 'gray',
-                    width: '45%',
-                    height: 50,
-                    left: 5,
-                  }}
+                  style={styles.dogNameBox}
                   placeholder="김댕댕"
                   onChange={e => onChange('name', e)}
                   value={name}
@@ -268,62 +231,33 @@ const InputDogProfileCard = ({item, index}) => {
                   ref={inputRef}
                 />
               )}
-              <Text
-                style={{
-                  borderColor: 'gray',
-                  width: '40%',
-                  height: 50,
-                  textAlign: 'center',
-                }}>
-                대표강아지
-              </Text>
-              <View style={styles.checkCircle} />
+
+              <Text style={styles.representDog}>대표 강아지</Text>
+
+              <View style={styles.representDogBox}>
+                <View style={styles.checkCircleBox} />
+                <View style={styles.checkCircle} />
+                <View style={styles.saveBtn}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      onPressAdd();
+                      onPressEdit();
+                    }}>
+                    {isEdit ? <ServicesPinkImg /> : <TaskPinkImg />}
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-evenly',
-                margin: 5,
-                paddingTop: 8,
-              }}>
-              <Text
-                style={{
-                  color: 'black',
-                  zIndex: 2,
-                  position: 'absolute',
-                  fontSize: 13,
-                  top: 0,
-                  left: '15%',
-                  // borderWidth: 1,
-                  backgroundColor: '#ffffff',
-                }}>
-                종류
-              </Text>
+            <View style={styles.secondLine}>
+              <Text style={styles.species}>종류</Text>
               {isEdit ? (
-                <Text
-                  style={{
-                    position: 'relative',
-
-                    borderRadius: 5,
-                    borderColor: 'gray',
-                    width: '40%',
-                    height: 50,
-                    marginTop: '5%',
-                  }}>
-                  {profile[1].dogs[1].species}
+                <Text style={styles.speciesText}>
+                  {profile[1]?.dogs[1]?.species}
                 </Text>
               ) : (
                 <TextInput
-                  style={{
-                    position: 'relative',
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    borderColor: 'gray',
-                    width: '40%',
-                    height: 50,
-                  }}
+                  style={styles.speciesBox}
                   placeholder="요크셔테리어"
                   value={species}
                   onChange={e => onChange('species', e)}
@@ -331,42 +265,15 @@ const InputDogProfileCard = ({item, index}) => {
                 />
               )}
 
-              <Text
-                style={{
-                  color: 'black',
-                  zIndex: 2,
-                  position: 'absolute',
-                  fontSize: 13,
-                  top: 0,
-                  right: '25%',
-                  // borderWidth: 1,
-                  backgroundColor: '#ffffff',
-                }}>
-                몸무게
-              </Text>
+              <Text style={styles.weight}>몸무게</Text>
 
               {isEdit ? (
-                <Text
-                  style={{
-                    position: 'relative',
-                    borderRadius: 5,
-                    borderColor: 'gray',
-                    width: '40%',
-                    height: 50,
-                    marginTop: '5%',
-                  }}>
-                  {profile[1].dogs[1].weight}
+                <Text style={styles.weightText}>
+                  {profile[1]?.dogs[1]?.weight}
                 </Text>
               ) : (
                 <TextInput
-                  style={{
-                    position: 'relative',
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    borderColor: 'gray',
-                    width: '40%',
-                    height: 50,
-                  }}
+                  style={styles.weightBox}
                   placeholder="00kg"
                   value={weight}
                   keyboardType="numeric"
@@ -376,46 +283,16 @@ const InputDogProfileCard = ({item, index}) => {
               )}
             </View>
 
-            <View
-              style={{
-                margin: 5,
-                alignItems: 'center',
-                paddingTop: 8,
-              }}>
-              <Text
-                style={{
-                  color: 'black',
-                  zIndex: 2,
-                  position: 'absolute',
-                  fontSize: 13,
-                  top: 0,
-                  left: '15%',
-                  // borderWidth: 1,
-                  backgroundColor: '#ffffff',
-                }}>
-                강아지소개
-              </Text>
+            <View style={styles.thirdLine}>
+              <Text style={styles.introduce}>강아지소개</Text>
 
               {isEdit ? (
-                <Text
-                  style={{
-                    borderRadius: 5,
-                    borderColor: 'gray',
-                    width: '85%',
-                    height: 50,
-                    marginTop: '5%',
-                  }}>
-                  {profile[1].dogs[1].introduce}
+                <Text style={styles.introduceText}>
+                  {profile[1]?.dogs[1]?.introduce}
                 </Text>
               ) : (
                 <TextInput
-                  style={{
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    borderColor: 'gray',
-                    width: '85%',
-                    height: 50,
-                  }}
+                  style={styles.introduceBox}
                   placeholder="집사바라기"
                   value={introduce}
                   onChange={e => onChange('introduce', e)}
@@ -424,47 +301,16 @@ const InputDogProfileCard = ({item, index}) => {
               )}
             </View>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-evenly',
-                margin: 5,
-                paddingTop: 8,
-              }}>
-              <Text
-                style={{
-                  color: 'black',
-                  zIndex: 2,
-                  position: 'absolute',
-                  fontSize: 13,
-                  top: 0,
-                  left: '12%',
-                  backgroundColor: '#ffffff',
-                }}>
-                태어난 날
-              </Text>
+            <View style={styles.fourthLine}>
+              <Text style={styles.birthday}>태어난 날</Text>
 
               {isEdit ? (
-                <Text
-                  style={{
-                    borderRadius: 5,
-                    borderColor: 'gray',
-                    width: '40%',
-                    height: 50,
-                    marginTop: '5%',
-                  }}
-                  placeholder="00.00.00">
-                  {profile[1].dogs[1].birthday}
+                <Text style={styles.birthdayText} placeholder="00.00.00">
+                  {profile[1]?.dogs[1]?.birthday}
                 </Text>
               ) : (
                 <TextInput
-                  style={{
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    borderColor: 'gray',
-                    width: '40%',
-                    height: 50,
-                  }}
+                  style={styles.birthdayBox}
                   placeholder="00.00.00"
                   value={birthday}
                   keyboardType="numeric"
@@ -474,43 +320,15 @@ const InputDogProfileCard = ({item, index}) => {
                 />
               )}
 
-              <Text
-                style={{
-                  color: 'black',
-                  zIndex: 2,
-                  position: 'absolute',
-                  fontSize: 13,
-                  top: 0,
-                  right: '20%',
-                  backgroundColor: '#ffffff',
-                }}>
-                데려온 날
-              </Text>
+              <Text style={styles.bringDate}>데려온 날</Text>
 
               {isEdit ? (
-                <Text
-                  style={{
-                    position: 'relative',
-
-                    borderRadius: 5,
-                    borderColor: 'gray',
-                    width: '40%',
-                    height: 50,
-                    marginTop: '5%',
-                  }}
-                  placeholder="yyyy-mm-dd">
-                  {profile[1].dogs[1].bringDate}
+                <Text style={styles.bringDateText} placeholder="yyyy-mm-dd">
+                  {profile[1]?.dogs[1]?.bringDate}
                 </Text>
               ) : (
                 <TextInput
-                  style={{
-                    position: 'relative',
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    borderColor: 'gray',
-                    width: '40%',
-                    height: 50,
-                  }}
+                  style={styles.bringDateBox}
                   placeholder="yyyy-mm-dd"
                   value={bringDate}
                   keyboardType="numeric"
@@ -533,73 +351,313 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  dogBlock: {
-    flex: 1,
-  },
-
   dogCard: {
     width: 264,
     height: 444,
-    borderRadius: 15,
+    borderRadius: 12,
     position: 'absolute',
-    opacity: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 3,
-    borderColor: '#00ff00',
+    backgroundColor: '#ffffff',
   },
   dogCardShadow: {
     width: 264,
-    height: 440,
+    height: 444,
     borderRadius: 15,
-    top: '10%',
-    shadowOpacity: 0.9,
-    shadowRadius: 15,
-    elevation: 5,
+    top: '1%',
+    shadowOpacity: 1,
+    shadowRadius: 12,
+    elevation: 1,
   },
 
   dogProfileInputWrap: {
-    borderRadius: 15,
+    width: 264,
+    height: 304,
+    zIndex: 2,
+    borderRadius: 12,
     backgroundColor: '#ffffff',
-    bottom: 10,
+    bottom: '6%',
+    // borderWidth: 1,
+    // borderColor: 'red',
   },
 
   dogImg: {
     width: 264,
     height: 160,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    backgroundColor: '#ff0000',
-    justifyContent: 'center',
-    alignItems: 'center',
-    opacity: 0.9,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    backgroundColor: '#F4F4F4',
   },
   dogInputWrapInner: {
     width: 264,
-    height: 284,
+    height: 304,
     justifyContent: 'center',
-    borderWidth: 3,
+    alignItems: 'center',
+  },
+  firstLine: {
+    width: 226,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    margin: 5,
+    paddingTop: 8,
+    // borderWidth: 1,
+  },
+  dogName: {
+    color: 'black',
+    zIndex: 2,
+    position: 'absolute',
+    fontSize: 12,
+    top: 0,
+    left: '5%',
+    backgroundColor: '#ffffff',
+  },
+  dogNameText: {
+    // borderWidth: 1,
+    // borderColor: 'gray',
+    width: 76,
+    height: 50,
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#000000',
+    paddingTop: '8%',
   },
 
-  saveBtn: {
-    width: 30,
-    height: 24,
+  dogNameBox: {
     borderWidth: 1,
+    borderRadius: 5,
+    borderColor: 'gray',
+    width: 108,
+    height: 50,
+  },
+  representDog: {
+    color: 'black',
     zIndex: 2,
+    position: 'absolute',
+    fontSize: 13,
+    top: 0,
+    right: '20%',
+    backgroundColor: '#ffffff',
+  },
+  representDogBox: {
+    // borderWidth: 1,
+    borderRadius: 5,
+    borderColor: 'gray',
+    width: 108,
+    height: 50,
+    left: '10%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+
+  checkCircleBox: {
+    borderWidth: 2,
+    borderRadius: 50,
+    width: 20,
+    height: 20,
+    borderColor: '#F09090',
+    marginTop: '4%',
+  },
+  checkCircle: {
+    // borderWidth: 1,
+    borderRadius: 50,
+    width: 14,
+    height: 14,
+    backgroundColor: '#F09090',
+    marginTop: '4%',
+  },
+  saveBtn: {
+    width: 24,
+    height: 24,
+    // borderWidth: 1,
+    zIndex: 3,
+    marginTop: '8%',
+  },
+
+  secondLine: {
+    width: 226,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    margin: 5,
+    paddingTop: 8,
+    // borderWidth: 1,
+  },
+
+  species: {
+    color: 'black',
+    zIndex: 2,
+    position: 'absolute',
+    fontSize: 13,
+    top: 0,
+    left: '5%',
+    // borderWidth: 1,
+    backgroundColor: '#ffffff',
+  },
+
+  speciesBox: {
     position: 'relative',
-    top: '50%',
-    left: '40%',
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: 'gray',
+    width: 108,
+    height: 50,
+  },
+
+  speciesText: {
+    // borderWidth: 1,
+    // borderColor: 'gray',
+    width: 76,
+    height: 50,
+    paddingTop: '8%',
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#000000',
+  },
+
+  weight: {
+    color: 'black',
+    zIndex: 2,
+    position: 'absolute',
+    fontSize: 13,
+    top: 0,
+    right: '25%',
+    // borderWidth: 1,
+    backgroundColor: '#ffffff',
+  },
+  weightBox: {
+    position: 'relative',
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: 'gray',
+    width: 108,
+    height: 50,
+  },
+  weightText: {
+    // borderWidth: 1,
+    // borderColor: 'gray',
+    width: 76,
+    height: 50,
+    paddingTop: '8%',
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#000000',
+    left: '20%',
+  },
+
+  thirdLine: {
+    width: 226,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    margin: 5,
+    paddingTop: 8,
+    // borderWidth: 1,
+  },
+
+  introduce: {
+    color: 'black',
+    zIndex: 2,
+    position: 'absolute',
+    fontSize: 13,
+    top: 0,
+    left: '5%',
+    // borderWidth: 1,
+    backgroundColor: '#ffffff',
+  },
+
+  introduceBox: {
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: 'gray',
+    width: 226,
+    height: 50,
+  },
+
+  introduceText: {
+    // borderWidth: 1,
+    // borderColor: 'gray',
+    width: 226,
+    height: 50,
+    textAlign: 'center',
+    paddingTop: '8%',
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#000000',
+    right: '50%',
+  },
+
+  fourthLine: {
+    width: 226,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    margin: 5,
+    paddingTop: 8,
+    // borderWidth: 1,
+  },
+
+  birthday: {
+    color: 'black',
+    zIndex: 2,
+    position: 'absolute',
+    fontSize: 13,
+    top: 0,
+    left: '5%',
+    backgroundColor: '#ffffff',
+  },
+  birthdayBox: {
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: 'gray',
+    width: 108,
+    height: 50,
+  },
+  birthdayText: {
+    // borderWidth: 1,
+    // borderColor: 'gray',
+    width: 76,
+    height: 50,
+    paddingTop: '8%',
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#000000',
+    right: '20%',
+  },
+  bringDate: {
+    color: 'black',
+    zIndex: 2,
+    position: 'absolute',
+    fontSize: 13,
+    top: 0,
+    right: '20%',
+    backgroundColor: '#ffffff',
+  },
+  bringDateText: {
+    // borderWidth: 1,
+    // borderColor: 'gray',
+    width: 76,
+    height: 50,
+    textAlign: 'center',
+    paddingTop: '8%',
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#000000',
+  },
+  bringDateBox: {
+    position: 'relative',
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: 'gray',
+    width: 108,
+    height: 50,
   },
   media: {
     width: IMAGE_WIDTH,
     height: IMAGE_HEIGHT,
-    backgroundColor: 'rgba(155, 155, 155, 0.2)',
+    backgroundColor: '#F4F4F4',
   },
-  // checkCircle: {
-  //   borderWidth: 1,
-  //   width: 24,
-  //   height: 24,
-  // },
 });
 
 export default InputDogProfileCard;
