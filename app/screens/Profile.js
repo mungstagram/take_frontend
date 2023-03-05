@@ -44,7 +44,11 @@ const Profile = ({navigation, route}) => {
 
   return (
     <>
-      <Logout />
+      <View style={styles.linkBtn}>
+        <Text style={{fontSize: 11, paddingRight: '4%'}}>회원탈퇴</Text>
+        <Logout />
+      </View>
+
       <View style={{borderWidth: 2, borderColor: 'blue', top: 10}}>
         <PersonProfileCard myInfo={profile} myNick={myNick} />
       </View>
@@ -63,6 +67,10 @@ const Profile = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+  linkBtn: {
+    flexDirection: 'row',
+    left: '35%',
+  },
   dogBlock: {
     borderWidth: 3,
     borderColor: 'red',

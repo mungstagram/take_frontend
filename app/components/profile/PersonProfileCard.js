@@ -20,7 +20,7 @@ import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 
 import {__getProfile, __editProfile} from '../../redux/modules/profileSlice';
 
-import Logout from '../Logout';
+import Emoticon from '../svg/Emoticon';
 
 const PersonProfileCard = ({item}) => {
   // const PersonProfileCard = ({myInfo}) => {
@@ -165,7 +165,7 @@ const PersonProfileCard = ({item}) => {
                       }}
                     />
                   ) : (
-                    <Text>사진등록</Text>
+                    <Emoticon />
                   )}
                 </TouchableOpacity>
               </View>

@@ -17,6 +17,8 @@ import {__getHomeProfile} from '../redux/modules/profileSlice';
 import TodoList from '../components/todos/TodoList';
 import WriteTodo from '../components/todos/WriteTodo';
 import ServicesPinkImg from '../components/svg/ServicesPinkImg';
+import Pets from '../components/svg/Pets';
+import Emoticon from '../components/svg/Emoticon';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -26,6 +28,9 @@ function Home({navigation}) {
   // console.log('response', response);
 
   const dispatch = useDispatch();
+
+  //이미지
+  const [images, setImages] = useState([]);
 
   // let myNick = '';
   const [myNick, setMyNick] = useState();
@@ -64,23 +69,35 @@ function Home({navigation}) {
       </View>
       <View style={styles.homeProfileInner}>
         <View style={styles.profileImg}>
-          <FastImage
-            style={styles.dogProfileImg}
-            source={{
-              uri: profile[1]?.dogs[1]?.contentUrl,
-              priority: FastImage.priority.normal,
-            }}
-            resizeMode={FastImage.resizeMode.contain}
-          />
+          {images.length !== 0 ? (
+            <View style={styles.dogProfileImg}>
+              <Pets />
+            </View>
+          ) : (
+            <FastImage
+              style={styles.dogProfileImg}
+              source={{
+                uri: profile[1]?.dogs[1]?.contentUrl,
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          )}
 
-          <FastImage
-            style={styles.personProfileImg}
-            source={{
-              uri: profile[0]?.user.contentUrl,
-              priority: FastImage.priority.normal,
-            }}
-            resizeMode={FastImage.resizeMode.contain}
-          />
+          {images.length !== 0 ? (
+            <View style={styles.personProfileImg}>
+              <Emoticon />
+            </View>
+          ) : (
+            <FastImage
+              style={styles.personProfileImg}
+              source={{
+                uri: profile[0]?.user.contentUrl,
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          )}
         </View>
 
         <View style={styles.profileInner}>
@@ -119,6 +136,7 @@ function Home({navigation}) {
                 fontSize: 16,
                 fontWeight: 'bold',
                 color: '#000000',
+                marginTop: '4%',
               }}>
               {profile[1]?.dogs[1]?.species}/{profile[1]?.dogs[1]?.age}/
               {profile[1]?.dogs[1]?.weight}Kg
@@ -135,7 +153,6 @@ function Home({navigation}) {
               }}
             />
             <WriteTodo />
-
             <TodoList />
           </View>
         </View>
@@ -152,14 +169,15 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   goToLink: {
-    borderWidth: 1,
+    // borderWidth: 1,
     flexDirection: 'row',
-    left: '36%',
+    left: '32%',
     marginBottom: 26,
+    marginTop: 56,
   },
   homeProfileInner: {
     width: '100%',
-    borderWidth: 1,
+    // borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -171,7 +189,7 @@ const styles = StyleSheet.create({
   },
   profileImg: {
     width: 120,
-    borderWidth: 1,
+    // borderWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -180,26 +198,34 @@ const styles = StyleSheet.create({
     height: 96,
     borderRadius: 50,
     backgroundColor: '#ffffff',
-    opacity: 0.8,
+    opacity: 0.7,
     shadowOpacity: 1,
     shadowRadius: 4,
     elevation: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#ffffff',
   },
   personProfileImg: {
     width: 48,
     height: 48,
     borderRadius: 50,
     backgroundColor: '#ffffff',
-    opacity: 0.8,
+    opacity: 0.7,
     zIndex: 1,
     top: '20%',
     right: '24%',
     shadowOpacity: 1,
     shadowRadius: 4,
     elevation: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#ffffff',
   },
   profileInner: {
-    borderWidth: 1,
+    // borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
     margin: 8,
@@ -235,24 +261,24 @@ const styles = StyleSheet.create({
     marginTop: '4%',
   },
   homeTodoBoxInner: {
-    borderWidth: 1,
+    // borderWidth: 1,
     borderColor: 'red',
     width: 320,
-    marginBottom: '8%',
+    marginBottom: '12%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   toDoText: {
+    // borderWidth: 1,
     right: '26%',
     color: '#000000',
     height: 47,
-    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: '8%',
   },
   listBox: {
-    borderWidth: 1,
+    // borderWidth: 1,
     width: 321,
     height: 408,
   },

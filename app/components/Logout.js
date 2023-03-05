@@ -26,10 +26,6 @@ export default Logout;
 
 const styles = StyleSheet.create({
   textStyle: {
-    fontSize: 12,
-    width: 50,
-    left: 10,
-    top: 10,
-    backgroundColor: 'yellow',
+    fontSize: 11,
   },
 });

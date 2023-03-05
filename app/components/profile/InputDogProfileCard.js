@@ -26,6 +26,7 @@ import {
   __addDogImg,
 } from '../../redux/modules/dogProfileSlice';
 import {__getProfile, __editDogProfile} from '../../redux/modules/profileSlice';
+import Pets from '../../components/svg/Pets';
 
 import FastImage from 'react-native-fast-image';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
@@ -208,7 +209,7 @@ const InputDogProfileCard = ({item, index}) => {
                   }}
                 />
               ) : (
-                <Text>사진등록</Text>
+                <Pets />
               )}
             </TouchableOpacity>
           </View>
