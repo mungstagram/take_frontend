@@ -117,13 +117,14 @@ const PersonProfileCard = ({item}) => {
         });
     }
 
-    // console.log('edit profile');
-    // console.log('formData', formData);
+    console.log('edit profile');
+    console.log('formData', formData);
 
     dispatch(
       __editProfile({nickname: profile[0]?.user.nickname, formData: formData}),
     );
-    if (error === null) setIsEdit(false);
+    setIsEdit(false);
+    // if (error === null) setIsEdit(false);
   };
 
   //이미지 클릭시 갤러리를 여는 이벤트
@@ -329,7 +330,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderColor: '#ffffff',
     opacity: 0.8,
-    padding: '8%',
+    padding: '4%',
     fontSize: 16,
     marginTop: '4%',
   },
@@ -359,6 +360,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     width: IMAGE_WIDTH,
     height: IMAGE_WIDTH,
+    borderRadius: 50,
     backgroundColor: 'rgba(155, 155, 155, 0.2)',
   },
   imgOpenBtn: {

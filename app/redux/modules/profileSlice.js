@@ -56,9 +56,9 @@ export const __editProfile = createAsyncThunk(
   'EDIT_PROFILE',
   async (payload, thunkAPI) => {
     try {
-      // console.log('edit payload', payload);
-      // console.log('edit payload', payload.nickname);
-      // console.log('edit payload', payload.formData);
+      console.log('edit payload', payload);
+      console.log('edit payload', payload.nickname);
+      console.log('edit payload', payload.formData);
       const {data} = await http.put(
         `/profile/${payload.nickname}`,
         payload.formData,
@@ -83,7 +83,7 @@ export const __editDogProfile = createAsyncThunk(
   'EDIT_DOG_PROFILE',
   async (payload, thunkAPI) => {
     try {
-      console.log('dog edit payload', payload);
+      // console.log('dog edit payload', payload);
       // console.log('dog edit payload', payload.name);
       // console.log('dog edit payload', payload.formData);
       const {data} = await http.put(
@@ -147,15 +147,15 @@ export const profileSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    [__editProfile.fulfilled]: (state, action) => {
+    [__editDogProfile.fulfilled]: (state, action) => {
       // state.profile[0].user = action.payload;
       state.profile[1].dogs = action.payload;
       state.error = null;
     },
-    [__editProfile.pending]: state => {
+    [__editDogProfile.pending]: state => {
       state.isLoading = true;
     },
-    [__editProfile.rejected]: (state, action) => {
+    [__editDogProfile.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

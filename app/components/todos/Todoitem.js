@@ -115,6 +115,7 @@ const Todoitem = ({id, text, done}) => {
       ) : (
         <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
       )}
+
       <TouchableOpacity style={styles.utilBtn} onPress={onPressTodoRemove}>
         <Delete />
       </TouchableOpacity>

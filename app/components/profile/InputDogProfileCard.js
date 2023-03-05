@@ -172,7 +172,6 @@ const InputDogProfileCard = ({item, index}) => {
   return (
     <View style={styles.dogBlock}>
       <View style={styles.dogCardShadow} />
-
       <View style={styles.dogCard}>
         {isEdit ? (
           <FastImage
