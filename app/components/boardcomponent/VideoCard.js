@@ -87,7 +87,7 @@ const videoCardHeight = videoCardWidth * 0.8;
 
 const styles = StyleSheet.create({
   wrapper: {
-    top: 18,
+    top: 12,
   },
   container: {
     top: 8,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor: BasicColors.blackColor,
     borderRadius: 4,
     justifyContent: 'center',
-    marginBottom: videoCardHeight * 0.14,
+    marginBottom: videoCardHeight * 0.16,
     shadowColor: BasicColors.blackColor,
   },
   contentTop: {
