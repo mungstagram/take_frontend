@@ -15,6 +15,7 @@ import FastImage from 'react-native-fast-image';
 import {FlatList} from 'react-native';
 import {SOCKET_URL} from '@env';
 import {useDispatch, useSelector} from 'react-redux';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {
   saveMessages,
@@ -24,7 +25,6 @@ import {
 import {Colors} from '../constants/colors';
 import GoBackButton from '../components/common/GoBackButton';
 import SendDM from '../components/svg/SendDM';
-import {SafeAreaView} from 'react-native-safe-area-context';
 const DirectMessage = () => {
   const dispatch = useDispatch();
   const route = useRoute();
@@ -60,7 +60,7 @@ const DirectMessage = () => {
 
     // Listen for connection success and set the socket state
     newSocket.on('connect', () => {
-      console.log('Connected to server, dm');
+      // console.log('Connected to server, dm');
       setSocket(newSocket);
     });
     //있었던거 전부다.
@@ -73,13 +73,8 @@ const DirectMessage = () => {
 
     // Listen for incoming messages and update the message state
     newSocket.on('newDM', data => {
-      console.log('Received message: ', data);
-      // 방금 작성한 내용.
-      // console.log(totalMessage, '저장된 메시지들');
-      // console.log(data, '나는 데이터');
-      // totalMessage.unshift(data);
-      // console.log(totalMessage, ' unshift는 되냐?');
-      // setTotalMessage(totalMessage);
+      // console.log('Received message: ', data);
+
       dispatch(addRecentMessage(data));
     });
     // Disconnect from the server when the component is unmounted
@@ -87,18 +82,13 @@ const DirectMessage = () => {
       // newSocket.disconnect();
       newSocket.disconnect();
       dispatch(deleteMessageStack());
-      console.log(newSocket.disconnect());
+      // console.log('연결해졔');
     };
   }, []);
 
-  console.log(userDM, ' 최종메시지');
   return (
     <SafeAreaView>
-      <KeyboardAvoidingView
-        behavior="heigth"
-        // style={{flex: 1}}
-        // keyboardVerticalOffset={60}
-      >
+      <KeyboardAvoidingView behavior="heigth">
         <View style={styles.wrapper}>
           <View style={styles.userButton}>
             <GoBackButton />
@@ -154,7 +144,7 @@ const DirectMessage = () => {
                           ).userConversationBox
                         }>
                         <Text numberOfLines={10} style={styles.textContent}>
-                          {item.message} fdsafdas fds fa
+                          {item.message}
                         </Text>
                       </View>
                       <Text style={styles.textCreatedAt}>

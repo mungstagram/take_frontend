@@ -8,8 +8,8 @@ import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
 
 const ImageCard = ({imageContent}) => {
-  console.log(imageContent);
   const navigation = useNavigation();
+  //이미지 상세로 이동
   const onDetailHandler = () => {
     navigation.navigate('ImageDetail', {postId: imageContent.postId});
   };
@@ -48,7 +48,7 @@ const ImageCard = ({imageContent}) => {
           </Text>
           <View style={styles.iconBox}>
             <View style={styles.iconSize}>
-              {imageContent.isLiked ? <NotFavorite /> : <Favorite />}
+              {imageContent.isLiked ? <Favorite /> : <NotFavorite />}
             </View>
             <View style={styles.countBox}>
               <Text style={styles.countFont}>{imageContent.likesCount}</Text>
