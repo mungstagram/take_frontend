@@ -1,7 +1,7 @@
 import React from 'react';
 import Svg, {Path} from 'react-native-svg';
 
-const AccountCircle = () => {
+const AddCircle = () => {
   return (
     <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
       <Path
@@ -12,4 +12,4 @@ const AccountCircle = () => {
   );
 };
 
-export default AccountCircle;
+export default AddCircle;

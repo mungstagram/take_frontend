@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import http from '../api/http';
 import {Alert} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
 export const __postAddContentFormData = createAsyncThunk(
   'POST_ADDCONTENT',
   async (payload, thunkAPI) => {
+    console.log('paylod', payload);
     try {
       const data = await http
         .post('/posts', payload, {
@@ -23,10 +25,14 @@ export const __postAddContentFormData = createAsyncThunk(
         })
         .then(res => {
           //console.log('요청성공');
-          Alert.alert('업로드성공');
+          Alert.alert('게시글 작성을 완료하였습니다.');
           //사진탭을 눌러서 사진을 넣고 완료버튼을 누르면 사진게시판으로 이동하게
           //영상탭을 눌러서 영상 하나 넣고 완료누르면 영상게시판으로 이동
-
+          const navigation = useNavigation();
+          const userData = ({userDetail}) => {
+            console.log('user', userDetail);
+            // navigation.navigate('UserDetail', userDetail);
+          };
           //유저디테일로 보내는걸로 하기!
           //유저디테일페이지로 넘겨버리자! navigate. sa('/userdetail')
 
@@ -35,7 +41,7 @@ export const __postAddContentFormData = createAsyncThunk(
       return thunkAPI.fulfillWithValue();
     } catch (error) {
       //console.log('요청실패');
-      Alert.alert('업로드실패');
+      Alert.alert('게시글 작성에 실패하였습니다.');
       return thunkAPI.rejectWithValue(error);
     }
   },
@@ -45,7 +51,6 @@ export const __getPostData = createAsyncThunk(
   'GET_POST_DATA',
   async (payload, thunkAPI) => {
     //payload에서는 객체형식으로  {order :  ,category : }  가 있어야함.
-
     try {
       const {data} = await http.get(
         payload.nickname
