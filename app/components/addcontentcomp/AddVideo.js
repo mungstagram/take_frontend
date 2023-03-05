@@ -135,14 +135,12 @@ const AddVideo = () => {
   const formData = new FormData();
   const onSendFormData = () => {
     if (videos.length === 0) {
-      return Alert.alert('제목을 넣어주세요');
-    } else if (titleText === '') {
-      return Alert.alert('내용을 넣어주세요');
-    } else if (contentText === '') {
       return Alert.alert('사진을 넣어주세요');
+    } else if (titleText === '') {
+      return Alert.alert('제목을 넣어주세요');
+    } else if (contentText === '') {
+      return Alert.alert('내용을 넣어주세요');
     } else {
-      console.log(formData);
-
       const formList = {
         category: 'video',
         title: titleText,
@@ -269,9 +267,7 @@ const videoCardWidth = windowWidth * 0.92;
 const videoCardHeight = videoCardWidth * 0.52;
 
 const styles = StyleSheet.create({
-  containerBox: {
-    //backgroundColor: BasicColors.whiteColor,
-  },
+  containerBox: {},
   box: {
     height: windowHeight * 0.81,
     flexDirection: 'column',

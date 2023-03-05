@@ -81,8 +81,10 @@ export const __deletePostDetailData = createAsyncThunk(
 export const __putLikes = createAsyncThunk(
   'PUT_LIKES',
   async (payload, thunkAPI) => {
+    console.log('likepay', payload.postId);
     try {
       const {data} = await http.put(`/posts/likes/${payload.postId}`);
+      console.log('likeData', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

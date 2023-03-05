@@ -20,11 +20,12 @@ import {useNavigation} from '@react-navigation/native';
 import {Colors, BasicColors} from '../../constants/colors';
 import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
-import {__putLikes} from '../../redux/modules/addContentSlice';
+import {__getPostDetailData} from '../../redux/modules/commetsSlice';
 import Delete from '../svg/Delete';
 import ServicesImg from '../svg/ServicesImg';
 import {__deletePostDetailData} from '../../redux/modules/addContentSlice';
 import CommentList from './CommentList';
+import {__putLikes} from '../../redux/modules/addContentSlice';
 
 const ImageDetailTop = ({detail}) => {
   const imageList = detail.contentUrl;
@@ -37,7 +38,6 @@ const ImageDetailTop = ({detail}) => {
   const [isActivated, setIsActivated] = useState(false);
 
   const handleLine = () => {
-    console.log('ac', isActivated);
     isActivated ? setLine(2) : setLine(Number.MAX_SAFE_INTEGER);
     setIsActivated(prev => !prev);
   };
@@ -46,13 +46,17 @@ const ImageDetailTop = ({detail}) => {
   const onIsLikeHandler = () => {
     if (isLiked === false) {
       setIsLiked(true);
+      dispatch(__putLikes({postId: detail.postId}));
     } else {
       setIsLiked(false);
+      dispatch(__putLikes({postId: detail.postId}));
     }
   };
 
   //게시물 편집 버튼
-  const onEditHandler = () => {};
+  const onEditHandler = () => {
+    navigation.navigate('ModifyImage', {postId: detail.postId});
+  };
 
   //게시물 삭제 버튼
   const onDeleteHandler = () => {
@@ -78,7 +82,7 @@ const ImageDetailTop = ({detail}) => {
   };
 
   useEffect(() => {
-    dispatch(__putLikes({postId: detail.postId, isLiked}));
+    dispatch(__getPostDetailData({postId: detail.postId, isLiked}));
   }, [isLiked]);
 
   //사진 미리보기
@@ -90,6 +94,7 @@ const ImageDetailTop = ({detail}) => {
             uri: item,
           }}
           style={styles.imageScreen}
+          resizeMode="contain"
         />
       </ScrollView>
     );

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -7,30 +7,33 @@ import {
   Image,
   TouchableOpacity,
   SafeAreaView,
-  ScrollView,
   Platform,
   Alert,
   Dimensions,
   Pressable,
+  ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import {Surface, Text} from 'react-native-paper';
+import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 
-import {__postAddContentFormData} from '../../redux/modules/addContentSlice';
+import {__getPostDetailData} from '../../redux/modules/commetsSlice';
 import YellowButton from '../YellowButton';
 import CancelButton from '../CancelButton';
 import {Colors, BasicColors} from '../../constants/colors';
+import AddCircle from '../svg/AddCircle';
 import GoBackButton from '../common/GoBackButton';
 import FastImage from 'react-native-fast-image';
 import Video from 'react-native-video';
 import {__putPostDetailData} from '../../redux/modules/commetsSlice';
-import {__getPostDetailData} from '../../redux/modules/commetsSlice';
 
-const ModifyImage = ({route}) => {
+const ModifyVideo = ({route}) => {
   const fileData = useSelector(state => state.comments.detail);
+
   // 제목 인풋상태
   const [titleText, setTitleText] = useState('');
   // console.log(titleText);
@@ -61,8 +64,7 @@ const ModifyImage = ({route}) => {
         {
           text: '네',
           onPress: () => {
-            Alert.alert('게시글 작성을 취소하였습니다.'),
-              navigation.navigate('ImageDetail', {});
+            Alert.alert('게시글 작성을 취소하였습니다.'), navigation.goBack();
           },
         },
       ],
@@ -88,7 +90,7 @@ const ModifyImage = ({route}) => {
                 postId: fileData.postId,
                 title: titleText,
                 content: contentText,
-                category: 'image',
+                category: 'video',
               }),
             ),
               navigation.goBack();
@@ -107,20 +109,6 @@ const ModifyImage = ({route}) => {
     }
   }, [isFocused]);
 
-  //사진 미리보기
-  const renderItem = ({item}) => {
-    return (
-      <ScrollView style={styles.imageView}>
-        <Image
-          source={{
-            uri: item,
-          }}
-          style={styles.imageScreen}
-          resizeMode="contain"
-        />
-      </ScrollView>
-    );
-  };
   return (
     <SafeAreaView style={styles.containerBox}>
       <View style={styles.goBackButton}>
@@ -131,15 +119,16 @@ const ModifyImage = ({route}) => {
           <View style={styles.fileInput}>
             <View style={styles.fileupload}>
               <View style={styles.categoryInfo}>
-                <Text style={styles.categoryInfoText}>등록된 사진 확인</Text>
+                <Text style={styles.categoryInfoText}>등록된 동영상 확인</Text>
               </View>
               <View style={styles.openfileView}>
-                <FlatList
-                  style={styles.imagesScreen}
-                  data={fileData.contentUrl}
-                  keyExtractor={item => item}
-                  renderItem={renderItem}
-                  horizontal={true}
+                <Video
+                  style={styles.videoScreen}
+                  source={{
+                    uri: fileData.contentUrl[0],
+                  }}
+                  resizeMode={'contain'}
+                  repeat={true}
                 />
               </View>
             </View>
@@ -182,13 +171,13 @@ const ModifyImage = ({route}) => {
   );
 };
 
-export default ModifyImage;
+export default ModifyVideo;
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const imageCardWidth = windowWidth * 0.92;
-const imageCardHeight = imageCardWidth * 0.52;
+const videoCardWidth = windowWidth * 0.92;
+const videoCardHeight = videoCardWidth * 0.52;
 
 const styles = StyleSheet.create({
   containerBox: {
@@ -197,7 +186,7 @@ const styles = StyleSheet.create({
     //backgroundColor: 'red',
   },
   goBackButton: {
-    width: imageCardWidth,
+    width: videoCardWidth,
     height: 58,
     alignItems: 'flex-start',
     marginLeft: '7%',
@@ -214,7 +203,7 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   box: {
-    width: imageCardWidth,
+    width: videoCardWidth,
     height: windowHeight * 0.8,
     flexDirection: 'column',
     alignItems: 'center',
@@ -223,12 +212,12 @@ const styles = StyleSheet.create({
     flexWrap: 'nowrap',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 4,
-    height: imageCardHeight,
+    flex: 5,
+    height: videoCardHeight,
   },
   fileupload: {
-    width: imageCardWidth,
-    height: imageCardHeight,
+    width: videoCardWidth,
+    height: videoCardHeight,
   },
   categoryInfo: {
     height: 20,
@@ -237,26 +226,24 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   openfileView: {},
-  imageScreen: {
-    width: windowWidth * 0.333,
-    height: windowWidth * 0.333,
+  videoScreen: {
+    width: videoCardWidth,
+    height: videoCardHeight,
     zIndex: 10,
-    marginRight: windowWidth * 0.02,
     backgroundColor: BasicColors.blackColor,
   },
-  imagesScreen: {},
   media: {
-    width: windowWidth * 0.333,
-    height: windowWidth * 0.333,
-
+    width: videoCardWidth,
+    height: videoCardHeight,
     zIndex: 10,
     backgroundColor: BasicColors.blackColor,
   },
   textBox: {
     flex: 7,
-    width: imageCardWidth,
+    width: videoCardWidth,
     height: windowHeight * 0.36,
     alignContent: 'center',
+    marginTop: 24,
   },
   titleInput: {
     borderRadius: 4,
@@ -277,14 +264,12 @@ const styles = StyleSheet.create({
     marginBottom: '2%',
   },
   textCount: {
-    position: 'absolute',
-    bottom: '12%',
     color: BasicColors.grayColor,
   },
   buttonRow: {
     flex: 1,
     marginTop: 28,
-    width: imageCardWidth,
+    width: videoCardWidth,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

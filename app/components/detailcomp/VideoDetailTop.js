@@ -33,7 +33,7 @@ const VideoDetailTop = ({detail, videoUrl}) => {
   const [isActivated, setIsActivated] = useState(false);
 
   const handleLine = () => {
-    console.log('ac', isActivated);
+    //console.log('ac', isActivated);
     isActivated ? setLine(2) : setLine(Number.MAX_SAFE_INTEGER);
     setIsActivated(prev => !prev);
   };
@@ -51,7 +51,9 @@ const VideoDetailTop = ({detail, videoUrl}) => {
   };
 
   //게시물 편집 버튼
-  const onEditHandler = () => {};
+  const onEditHandler = () => {
+    navigation.navigate('ModifyVideo', {postId: detail.postId});
+  };
 
   //게시물 삭제 버튼
   const onDeleteHandler = () => {

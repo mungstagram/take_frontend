@@ -20,19 +20,15 @@ import ImageDetailTop from '../components/detailcomp/ImageDetailTop';
 const ImageDetail = ({route}) => {
   const detail = useSelector(state => state.comments.detail);
 
-  //   const imageUrl = detail.contentUrl.map((item, index) => {
-  //     console.log('detail', item, index);
-  //   });
-
   const isFocused = useIsFocused();
 
   const dispatch = useDispatch();
-  //postId를 보내준다. / 내일 수홍님한테 렌더링 두번 되는 거에 대해 물어보기.
+
   useEffect(() => {
     if (isFocused) {
       dispatch(__getPostDetailData(route.params.postId));
     }
-  }, [isFocused]);
+  }, [isFocused, route]);
 
   return (
     <SafeAreaView>

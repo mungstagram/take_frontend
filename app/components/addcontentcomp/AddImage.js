@@ -26,7 +26,7 @@ import CancelButton from '../CancelButton';
 import {Colors, BasicColors} from '../../constants/colors';
 import AddCircle from '../svg/AddCircle';
 
-const AddImage = () => {
+const AddImage = ({navigate}) => {
   // 제목 인풋상태
   const [titleText, setTitleText] = useState('');
   // console.log(titleText);
@@ -182,7 +182,7 @@ const AddImage = () => {
           text: '네',
           onPress: () => {
             Alert.alert('게시글 작성을 취소하였습니다.'),
-              navigation.reset('Home');
+              navigation.navigate('Home');
           },
         },
       ],

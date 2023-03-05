@@ -13,7 +13,7 @@ const initialState = {
 export const __postComment = createAsyncThunk(
   'POST_COMMENT',
   async (payload, thunkAPI) => {
-    console.log('post_pay', payload);
+    //console.log('post_pay', payload);
     try {
       const {data} = await http
         .post(`/comments/${payload.postId}`, {
@@ -27,7 +27,7 @@ export const __postComment = createAsyncThunk(
 
           return res;
         });
-      console.log('post_data', data);
+      //console.log('post_data', data);
 
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -38,13 +38,32 @@ export const __postComment = createAsyncThunk(
   },
 );
 
-//게시물 상세조회 / postsDetail GET
+//게시물 상세조회 GET/ postsDetail GET
 export const __getPostDetailData = createAsyncThunk(
   'GET_POST_DETAIL_DATA',
   async (payload, thunkAPI) => {
     try {
       const {data} = await http.get(`/posts/${payload}`);
       //console.log('data', data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+//게시물 상세조회 수정 / postsDetail PUT
+export const __putPostDetailData = createAsyncThunk(
+  'PUT_POST_DETAIL_DATA',
+  async (payload, thunkAPI) => {
+    //console.log('putD', payload);
+    try {
+      const {data} = await http.put(`/posts/${payload.postId}`, {
+        title: payload.title,
+        content: payload.content,
+        category: payload.category,
+      });
+      //console.log('putdata', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

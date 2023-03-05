@@ -35,7 +35,7 @@ const VideoDetail = ({route}) => {
     if (isFocused) {
       dispatch(__getPostDetailData(route.params.postId));
     }
-  }, [isFocused]);
+  }, [isFocused, route]);
 
   return (
     <SafeAreaView>

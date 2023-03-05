@@ -2,6 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import VideoBoard from '../screens/VideoBoard';
 import VideoDetail from '../screens/VideoDetail';
+import ModifyVideo from '../components/modifycontentcomp/ModifyVideo';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,11 @@ const VideoTab = () => {
       <Stack.Screen
         name="VideoDetail"
         component={VideoDetail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ModifyVideo"
+        component={ModifyVideo}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

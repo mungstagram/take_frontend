@@ -24,7 +24,6 @@ const CommentList = ({detail}) => {
 
   //댓글 리스트
   const commentList = useSelector(state => state.comments.comments);
-  console.log('Cl', commentList);
   //댓글 수정 상태
   const [edit, setEdit] = useState(false);
 
