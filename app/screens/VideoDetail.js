@@ -48,7 +48,10 @@ const VideoDetail = ({route}) => {
         </View>
         <View style={styles.flex2}></View>
       </View>
-      <KeyboardAvoidingView behavior="position">
+      <KeyboardAvoidingView
+        behavior="position"
+        keyboardVerticalOffset={80}
+        style={styles.avoid}>
         <SafeAreaView>
           <View style={styles.container}>
             <View style={styles.videoContainer}>
@@ -113,22 +116,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   videoContainer: {
-    position: 'absolute',
     top: '8%',
-    width: ' 100%',
-    height: '100%',
+    width: windowWidth,
+    height: windowHeight,
     alignItems: 'center',
   },
   contentBox: {
-    flex: 9,
-  },
-  commentListBox: {
-    // flex: 4,
+    flex: 3,
   },
   commentInputBox: {
     flex: 1,
+    top: 15,
     height: windowHeight,
-    bottom: '8%',
-    justifyContent: 'flex-end',
+    backgroundColor: BasicColors.whiteColor,
   },
+  avoid: {},
 });

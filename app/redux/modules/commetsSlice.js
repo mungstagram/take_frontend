@@ -71,6 +71,23 @@ export const __putPostDetailData = createAsyncThunk(
     }
   },
 );
+//comments PUT
+export const __putComment = createAsyncThunk(
+  'DELETE_COMMENT',
+  async (payload, thunkAPI) => {
+    console.log('putCom', payload);
+    try {
+      const {data} = await http.put(`/comments/${payload.commentId}`, {
+        id,
+        comment,
+      });
+      console.log('putComdata', data);
+      return thunkAPI.fulfillWithValue(payload.commentId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
 
 //comments DELETE
 export const __deleteComment = createAsyncThunk(
@@ -104,6 +121,7 @@ const commetsSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    // 댓글 작성
     [__postComment.pending]: state => {
       state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
     },
@@ -115,17 +133,28 @@ const commetsSlice = createSlice({
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
       state.error = action.payload;
     },
+    // 댓글 수정
+    [__putComment.pending]: state => {
+      state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
+    },
+    [__putComment.fulfilled]: (state, action) => {
+      state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
+      //state.comments.push(action.payload);
+    },
+    [__putComment.rejected]: (state, action) => {
+      state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
+      state.error = action.payload;
+    },
+    // 댓글 삭제
     [__deleteComment.pending]: state => {
       state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
     },
     [__deleteComment.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-
       const target = state.comments.findIndex(
         comment => comment.id === action.payload,
       );
       //console.log('지고 싶은 대상의 인덱스값', target);
-
       state.comments.splice(target, 1);
       //console.log('지워졌을때', state.comments);
     },
