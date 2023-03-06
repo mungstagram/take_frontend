@@ -12,7 +12,6 @@ import {
   Alert,
   Dimensions,
   Pressable,
-  KeyboardAvoidingView,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
@@ -32,9 +31,8 @@ import {__getPostDetailData} from '../../redux/modules/commetsSlice';
 
 const ModifyImage = ({route}) => {
   const fileData = useSelector(state => state.comments.detail);
-  console.log('fi', fileData);
   // 제목 인풋상태
-  const [titleText, setTitleText] = useState(fileData.title);
+  const [titleText, setTitleText] = useState('');
   // console.log(titleText);
   //제목 인풋 핸들러
   const titleTextHandler = event => {
@@ -42,7 +40,7 @@ const ModifyImage = ({route}) => {
     setTitleText(event.nativeEvent.text);
   };
   // 내용 인풋상태
-  const [contentText, setContentText] = useState(fileData.content);
+  const [contentText, setContentText] = useState('');
 
   // 내용 인풋 핸들러
   const contentTextHandler = event => {
@@ -51,7 +49,7 @@ const ModifyImage = ({route}) => {
   };
   const navigation = useNavigation();
 
-  const onCancelHandler = ({route}) => {
+  const onCancelHandler = () => {
     Alert.alert(
       '게시글 수정을 정말로 취소하시겠습니까?',
       '🐾 진짜 취소하실건가요 ~?',
@@ -63,7 +61,8 @@ const ModifyImage = ({route}) => {
         {
           text: '네',
           onPress: () => {
-            Alert.alert('게시글 작성을 취소하였습니다.'), navigation.goBack();
+            Alert.alert('게시글 작성을 취소하였습니다.'),
+              navigation.navigate('ImageDetail', {});
           },
         },
       ],
@@ -123,70 +122,63 @@ const ModifyImage = ({route}) => {
     );
   };
   return (
-    <KeyboardAvoidingView behavior="position">
-      <SafeAreaView style={styles.containerBox}>
-        <View style={styles.goBackButton}>
-          <GoBackButton />
-        </View>
-        <View style={styles.container}>
-          <View style={styles.box}>
-            <View style={styles.fileInput}>
-              <View style={styles.fileupload}>
-                <View style={styles.categoryInfo}>
-                  <Text style={styles.categoryInfoText}>등록된 사진 확인</Text>
-                </View>
-                <View style={styles.openfileView}>
-                  <FlatList
-                    style={styles.imagesScreen}
-                    data={fileData.contentUrl}
-                    keyExtractor={item => item}
-                    renderItem={renderItem}
-                    horizontal={true}
-                  />
-                </View>
+    <SafeAreaView style={styles.containerBox}>
+      <View style={styles.goBackButton}>
+        <GoBackButton />
+      </View>
+      <View style={styles.container}>
+        <View style={styles.box}>
+          <View style={styles.fileInput}>
+            <View style={styles.fileupload}>
+              <View style={styles.categoryInfo}>
+                <Text style={styles.categoryInfoText}>등록된 사진 확인</Text>
               </View>
-            </View>
-            <View style={styles.textBox}>
-              <Surface style={styles.titleInput}>
-                <TextInput
-                  placeholder="제목을 입력하세요(15자 이하)"
-                  maxLength={15}
-                  returnKeyType="next"
-                  value={titleText}
-                  onChange={titleTextHandler}></TextInput>
-              </Surface>
-              <Surface style={styles.contentInput}>
-                <TextInput
-                  placeholder="내용을 입력하세요(2000자 이하)"
-                  maxLength={2000}
-                  // 확인하기
-                  multiline={true}
-                  value={contentText}
-                  onChange={contentTextHandler}
+              <View style={styles.openfileView}>
+                <FlatList
+                  style={styles.imagesScreen}
+                  data={fileData.contentUrl}
+                  keyExtractor={item => item}
+                  renderItem={renderItem}
+                  horizontal={true}
                 />
-                <View style={styles.contentCount}>
-                  <Text style={styles.textCount}>
-                    {contentText.length}/2000
-                  </Text>
-                </View>
-              </Surface>
-            </View>
-            <View style={styles.buttonRow}>
-              <View>
-                <TouchableOpacity
-                  style={styles.buttonBox}
-                  onPress={onCancelHandler}>
-                  <Text style={styles.button}>취소</Text>
-                </TouchableOpacity>
               </View>
-              <YellowButton style={styles.doneBtn} onPress={onDoneHandler}>
-                수정완료
-              </YellowButton>
             </View>
           </View>
+          <View style={styles.textBox}>
+            <Surface style={styles.titleInput}>
+              <TextInput
+                placeholder="제목을 입력하세요(15자 이하)"
+                maxLength={15}
+                returnKeyType="next"
+                value={titleText}
+                onChange={titleTextHandler}
+              />
+            </Surface>
+            <Surface style={styles.contentInput}>
+              <TextInput
+                placeholder="내용을 입력하세요(2000자 이하)"
+                maxLength={2000}
+                // 확인하기
+                multiline={true}
+                value={contentText}
+                onChange={contentTextHandler}
+              />
+              <View style={styles.contentCount}>
+                <Text style={styles.textCount}>{contentText.length}/2000</Text>
+              </View>
+            </Surface>
+          </View>
+          <View style={styles.buttonRow}>
+            <CancelButton style={styles.cancelBtn} onPress={onCancelHandler}>
+              취소
+            </CancelButton>
+            <YellowButton style={styles.doneBtn} onPress={onDoneHandler}>
+              수정완료
+            </YellowButton>
+          </View>
         </View>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -296,19 +288,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  buttonBox: {
-    width: imageCardWidth * 0.475,
-    height: 36,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: Colors.userDataColor,
-    backgroundColor: BasicColors.whiteColor,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
