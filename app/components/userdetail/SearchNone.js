@@ -1,10 +1,14 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Image} from 'react-native';
 
 const SearchNone = () => {
   return (
     <View style={styles.textContainer}>
-      <Text>존재하지 않는 값입니다.</Text>
+      <Text style={styles.textStyle}>검색 단어에 대한 결과가 없습니다.</Text>
+      <Image
+        source={require('../../assets/searchedNone.png')}
+        resizeMode={'cover'}
+      />
     </View>
   );
 };
@@ -13,8 +17,18 @@ export default SearchNone;
 
 const styles = StyleSheet.create({
   textContainer: {
-    flex: 1,
+    marginTop: 60,
+    width: 312,
+    height: 360,
+    backgroundColor: 'white',
     alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: 12,
+  },
+  textStyle: {
+    marginTop: 40,
+    fontSize: 14,
+    lineHeight: 20,
+    textAlign: 'center',
+    marginBottom: 30,
   },
 });

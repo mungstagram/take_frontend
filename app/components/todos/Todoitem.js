@@ -115,6 +115,7 @@ const Todoitem = ({id, text, done}) => {
       ) : (
         <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
       )}
+
       <TouchableOpacity style={styles.utilBtn} onPress={onPressTodoRemove}>
         <Delete />
       </TouchableOpacity>
@@ -180,12 +181,12 @@ const styles = StyleSheet.create({
     height: 32,
   },
   textInput: {
-    // borderWidth: 1,
     fontSize: 16,
     color: '#000000',
     width: 154,
-    height: 24,
     paddingVertical: 8,
+    padding: 0,
+    margin: 0,
   },
   utilBtn: {
     width: 24,

@@ -1,5 +1,13 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {View, Pressable, StyleSheet, TextInput} from 'react-native';
+import {
+  View,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  ImageBackground,
+  Image,
+  Text,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {useIsFocused} from '@react-navigation/native';
@@ -11,11 +19,14 @@ import {__getSearchData} from '../redux/modules/searchSlice';
 import SearchNick from '../components/userdetail/SearchNick';
 import SearchNone from '../components/userdetail/SearchNone';
 import ImageGetter from '../components/boardcomponent/ImageGetter';
+import VideoGetter from '../components/boardcomponent/VideoGetter';
 
 const SearchScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
+  //검색을 했는지 안했는지
+  const [startSearch, setStartSearch] = useState(false);
   //샐랙트 박스 파라미터 설정
   // 유저닉네임, 사진 동영상 요청 데이터 결정하는 state (초깃값 설정 서버에 보낼 값을 배열에 담고, 그때의 인덱스)
   const [dataSortSelector, setDataSortSelector] = useState(0);
@@ -31,15 +42,13 @@ const SearchScreen = () => {
   const refSearch = useRef();
   // 검색된 데이터 내용을 받기
   const {searchData} = useSelector(state => state.searchData);
-
-  //검색을 했는지 안했는지
-  const [startSearch, setStartSearch] = useState(false);
+  const {category} = useSelector(state => state.searchData);
 
   useEffect(() => {
     if (isFocused) {
       setStartSearch(false);
     }
-  }, [isFocused]);
+  }, [isFocused, dataSortSelector]);
 
   const onSearchHandler = () => {
     dispatch(
@@ -50,7 +59,6 @@ const SearchScreen = () => {
     );
     setStartSearch(true);
   };
-
   const onChangeRefHandler = e => {
     refSearch.current = e;
   };
@@ -61,42 +69,59 @@ const SearchScreen = () => {
   //검색값이 없을때, 보여지는 컴퍼넌트
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.goBackButton}>
-        <GoBackButton />
-      </View>
+    <ImageBackground
+      source={require('../assets/pupfluencerBackGround.png')}
+      resizeMode={'cover'}
+      style={{width: '100%'}}>
+      <View style={styles.wrapper}>
+        <View style={styles.header}>
+          <View style={styles.buttonAligner}>
+            <GoBackButton />
+          </View>
+          <View style={styles.logoAligner}>
+            <Image
+              source={require('../assets/LogoSmall.png')}
+              resizeMode={'cover'}
+            />
+            <Text style={styles.logoText}>찾아보기</Text>
+          </View>
+        </View>
 
-      <View style={styles.inputContainer}>
-        <View style={styles.textBox}>
-          <TextInput
-            style={styles.textStyle}
-            autoCapitalize={false}
-            onChangeText={onChangeRefHandler}
-            placeholder="검색하기"
-          />
-          <Pressable onPress={onSearchHandler} style={styles.searchIconBox}>
-            <Search />
-          </Pressable>
+        <View style={styles.inputContainer}>
+          <View style={styles.textBox}>
+            <TextInput
+              style={styles.textStyle}
+              autoCapitalize={false}
+              onChangeText={onChangeRefHandler}
+              placeholder="검색하기"
+            />
+            <Pressable onPress={onSearchHandler} style={styles.searchIconBox}>
+              <Search />
+            </Pressable>
+          </View>
+          <View style={styles.selectBoxHolder}>
+            <SelectBox
+              dataSortSelector={dataSortSelector}
+              dateSortSelectorHandler={dateSortSelectorHandler}
+              selectParameter={selectParameter}
+              border
+            />
+          </View>
         </View>
-        <View style={styles.selectBoxHolder}>
-          <SelectBox
-            dataSortSelector={dataSortSelector}
-            dateSortSelectorHandler={dateSortSelectorHandler}
-            selectParameter={selectParameter}
-            border
-          />
+        <View style={styles.contentPositioner}>
+          {searchData.length === 0 && startSearch && <SearchNone />}
+          {category === 'users' && searchData.length !== 0 && startSearch && (
+            <SearchNick searchData={searchData} />
+          )}
+          {category === 'image' && searchData.length !== 0 && startSearch && (
+            <ImageGetter searchData={searchData} />
+          )}
+          {category === 'video' && searchData.length !== 0 && startSearch && (
+            <VideoGetter searchData={searchData} />
+          )}
         </View>
       </View>
-      <View style={styles.contentPositioner}>
-        {searchData.length === 0 && startSearch && <SearchNone />}
-        {searchData.length !== 0 && dataSortSelector === 0 && (
-          <SearchNick searchData={searchData} />
-        )}
-        {searchData.length !== 0 && dataSortSelector === 1 && (
-          <ImageGetter searchData={searchData} />
-        )}
-      </View>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -107,12 +132,31 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  goBackButton: {
-    marginTop: 8,
+  header: {
+    marginTop: 12,
     height: 40,
-    justifyContent: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: '7%',
+    alignItems: 'center',
+    width: '100%',
+  },
+  buttonAligner: {
     alignItems: 'flex-start',
-    marginLeft: '7%',
+    width: 24,
+  },
+  logoAligner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: 24,
+    flex: 1,
+  },
+  logoText: {
+    lineHeight: 32,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontSize: 28,
+    color: 'white',
   },
   inputContainer: {
     // backgroundColor: 'blue',
@@ -132,7 +176,7 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 4,
     elevation: 5,
-    zIndex: 5,
+    zIndex: 20,
   },
   selectInputHolder: {
     position: 'absolute',
@@ -175,5 +219,6 @@ const styles = StyleSheet.create({
     // height: '10%',
     width: ' 100%',
     height: '100%',
+    alignItems: 'center',
   },
 });

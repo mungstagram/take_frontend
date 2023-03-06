@@ -15,14 +15,14 @@ import {__getPostData} from '../../redux/modules/addContentSlice';
 import {startDetecting} from 'react-native/Libraries/Utilities/PixelRatio';
 import {useIsFocused} from '@react-navigation/native';
 
-const VideoGetter = ({order, nickname}) => {
+const VideoGetter = ({order, nickname, searchData}) => {
   const videoContentList = useSelector(state => state.addContent.contentList);
 
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (isFocused) {
+    if (isFocused && !searchData) {
       nickname
         ? dispatch(__getPostData({category: 'video', order, nickname}))
         : dispatch(__getPostData({category: 'video', order}));
@@ -32,17 +32,29 @@ const VideoGetter = ({order, nickname}) => {
   return (
     <View style={styles.getterWrapper}>
       <SafeAreaView>
-        <FlatList
-          data={videoContentList}
-          renderItem={({item}) => (
-            <View>
-              <VideoCard videoContent={item} title={item.title} />
-            </View>
-          )}
-          keyExtractor={item => item.postId}
-          horizontal={false}
-          style={styles.container}
-        />
+        {searchData ? (
+          <FlatList
+            data={searchData}
+            renderItem={({item}) => (
+              <View>
+                <VideoCard videoContent={item} title={item.title} />
+              </View>
+            )}
+            keyExtractor={item => item.postId}
+            horizontal={false}
+          />
+        ) : (
+          <FlatList
+            data={videoContentList}
+            renderItem={({item}) => (
+              <View>
+                <VideoCard videoContent={item} title={item.title} />
+              </View>
+            )}
+            keyExtractor={item => item.postId}
+            horizontal={false}
+          />
+        )}
       </SafeAreaView>
     </View>
   );
