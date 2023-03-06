@@ -7,7 +7,6 @@ import userDetail from '../modules/userDetailSlice';
 import searchData from '../modules/searchSlice';
 import userDM from '../modules/userDMSlice';
 import profile from '../modules/profileSlice';
-import profileImgSlice from '../modules/profileImgSlice';
 import comments from '../modules/commetsSlice';
 
 const store = configureStore({
@@ -18,7 +17,6 @@ const store = configureStore({
     todos,
     userDetail,
     searchData,
-    profileImgSlice,
     userDM,
     comments,
   },
