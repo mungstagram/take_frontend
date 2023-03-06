@@ -6,13 +6,20 @@ import {
   Button,
   Touchable,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+
 import FastImage from 'react-native-fast-image';
+
+import {__getHomeProfile} from '../redux/modules/profileSlice';
 
 import TodoList from '../components/todos/TodoList';
 import WriteTodo from '../components/todos/WriteTodo';
 import ServicesPinkImg from '../components/svg/ServicesPinkImg';
+import Pets from '../components/svg/Pets';
+import Emoticon from '../components/svg/Emoticon';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Home({navigation}) {
@@ -20,8 +27,18 @@ function Home({navigation}) {
   // console.log('Home nick', myNick);
   // console.log('response', response);
 
+  const dispatch = useDispatch();
+
+  //이미지
+  const [images, setImages] = useState([]);
+
   // let myNick = '';
   const [myNick, setMyNick] = useState();
+
+  //data 불러옴
+  const profile = useSelector(state => state.profile.profile);
+
+  // console.log('home profile', profile);
 
   useEffect(() => {
     const getNickName = async () => {
@@ -31,34 +48,56 @@ function Home({navigation}) {
   }, [myNick]);
   console.log('myNick', myNick);
 
+  useEffect(() => {
+    console.log('home');
+    dispatch(__getHomeProfile());
+  }, []);
+
   return (
     <View style={styles.homeProfile}>
-      <View style={styles.homeProfileInner}>
+      <View style={styles.goToLink}>
         <TouchableOpacity
-          style={styles.goToProfileBtn}
           onPress={() => navigation.navigate('Profile', {myNick})}>
-          <ServicesPinkImg />
+          <Text style={styles.homeFontStyle}>프로필</Text>
         </TouchableOpacity>
-
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+          <Text style={styles.homeFontStyle}>게시글</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+          <Text style={styles.homeFontStyle}>메시지</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.homeProfileInner}>
         <View style={styles.profileImg}>
-          <View style={styles.dogProfileImg} />
-          {/* <FastImage
-            style={styles.personImg}
-            source={{
-              uri: profile[1].dogs.contentUrl,
-              priority: FastImage.priority.normal,
-            }}
-            resizeMode={FastImage.resizeMode.contain}
-          /> */}
-          <View style={styles.personProfileImg} />
-          {/* <FastImage
-            style={styles.personImg}
-            source={{
-              uri: profile[0].user.contentUrl,
-              priority: FastImage.priority.normal,
-            }}
-            resizeMode={FastImage.resizeMode.contain}
-          /> */}
+          {images.length !== 0 ? (
+            <View style={styles.dogProfileImg}>
+              <Pets />
+            </View>
+          ) : (
+            <FastImage
+              style={styles.dogProfileImg}
+              source={{
+                uri: profile[1]?.dogs[1]?.contentUrl,
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          )}
+
+          {images.length !== 0 ? (
+            <View style={styles.personProfileImg}>
+              <Emoticon />
+            </View>
+          ) : (
+            <FastImage
+              style={styles.personProfileImg}
+              source={{
+                uri: profile[0]?.user.contentUrl,
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          )}
         </View>
 
         <View style={styles.profileInner}>
@@ -71,7 +110,7 @@ function Home({navigation}) {
                 textAlign: 'center',
                 top: '4%',
               }}>
-              강아지 이름
+              {profile[1]?.dogs[1]?.name}
             </Text>
           </View>
           <View style={styles.dDayBox}>
@@ -83,7 +122,7 @@ function Home({navigation}) {
                 textAlign: 'center',
                 top: '4%',
               }}>
-              우리가 함께한 날 0000일
+              우리가 함께한 날 {profile[1]?.dogs[1]?.daysWithin}일
             </Text>
           </View>
         </View>
@@ -91,24 +130,28 @@ function Home({navigation}) {
 
       <View style={styles.homeTodoBox}>
         <View style={styles.homeTodoBoxInner}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: 'bold',
-              right: '26%',
-              color: '#000000',
-            }}>
-            강아지종/나이/몸무게
-          </Text>
-          <View
-            style={{
-              borderBottomWidth: 2,
-              borderBottomColor: '#c9c9c9',
-              marginTop: '4%',
-              width: '96%',
-            }}
-          />
-          <View style={{width: 320}}>
+          <View style={styles.toDoText}>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 'bold',
+                color: '#000000',
+                marginTop: '4%',
+              }}>
+              {profile[1]?.dogs[1]?.species}/{profile[1]?.dogs[1]?.age}/
+              {profile[1]?.dogs[1]?.weight}Kg
+            </Text>
+          </View>
+
+          <View style={styles.listBox}>
+            <View
+              style={{
+                borderBottomWidth: 2,
+                borderBottomColor: '#c9c9c9',
+                marginTop: '4%',
+                width: 320,
+              }}
+            />
             <WriteTodo />
             <TodoList />
           </View>
@@ -120,65 +163,75 @@ function Home({navigation}) {
 
 const styles = StyleSheet.create({
   homeProfile: {
-    width: '100%',
-    height: '100%',
+    borderWidth: 1,
     backgroundColor: '#ffc988',
     justifyContent: 'center',
     alignContent: 'center',
   },
-
-  goToProfileBtn: {
-    borderRadius: 100,
-    backgroundColor: '#ffffff',
-    width: 24,
-    height: 24,
-    top: '12%',
-    left: '10%',
-    margin: '2%',
-    justifyContent: 'center',
-    alignItems: 'center',
+  goToLink: {
+    // borderWidth: 1,
+    flexDirection: 'row',
+    left: '32%',
+    marginBottom: 26,
+    marginTop: 56,
   },
   homeProfileInner: {
     width: '100%',
+    // borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  homeFontStyle: {
+    fontSize: 11,
+    width: 40,
+    height: 24,
+    color: '#ffffff',
+  },
   profileImg: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 120,
+    // borderWidth: 1,
     flexDirection: 'row',
-    right: '5%',
+    alignItems: 'center',
   },
   dogProfileImg: {
     width: 96,
     height: 96,
     borderRadius: 50,
     backgroundColor: '#ffffff',
-    position: 'relative',
+    opacity: 0.7,
     shadowOpacity: 1,
     shadowRadius: 4,
     elevation: 5,
-  },
-  personProfileImg: {
-    width: 40,
-    height: 40,
-    borderRadius: 50,
-    top: 40,
-    left: 90,
-    zIndex: 2,
-    backgroundColor: '#eeeeee',
-    position: 'absolute',
-    shadowOpacity: 1,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  profileInner: {
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10,
+    borderWidth: 2,
+    borderColor: '#ffffff',
+  },
+  personProfileImg: {
+    width: 48,
+    height: 48,
+    borderRadius: 50,
+    backgroundColor: '#ffffff',
+    opacity: 0.7,
+    zIndex: 1,
+    top: '20%',
+    right: '24%',
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#ffffff',
+  },
+  profileInner: {
+    // borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 8,
   },
   dogNameBox: {
-    borderRadius: 20,
+    borderRadius: 14,
     width: 128,
     height: 28,
     paddingTop: 2,
@@ -189,7 +242,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   dDayBox: {
-    borderRadius: 20,
+    borderRadius: 14,
     width: 208,
     height: 28,
     paddingTop: 2,
@@ -200,20 +253,34 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-
   homeTodoBox: {
-    // borderWidth: 1,
-    width: '100%',
-    height: 548,
     backgroundColor: '#ffffff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    alignItems: 'center',
+    marginTop: '4%',
   },
   homeTodoBoxInner: {
     // borderWidth: 1,
+    borderColor: 'red',
+    width: 320,
+    marginBottom: '12%',
     alignItems: 'center',
-    margin: '5%',
-    height: '100%',
+    justifyContent: 'center',
+  },
+  toDoText: {
+    // borderWidth: 1,
+    right: '26%',
+    color: '#000000',
+    height: 47,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: '8%',
+  },
+  listBox: {
+    // borderWidth: 1,
+    width: 321,
+    height: 408,
   },
 });
 

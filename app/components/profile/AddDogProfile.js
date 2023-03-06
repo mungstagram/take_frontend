@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-
 const AddDogProfile = ({navigation}) => {
   return (
     <View style={styles.dogBlock}>

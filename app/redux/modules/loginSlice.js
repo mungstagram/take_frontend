@@ -14,7 +14,7 @@ const initialState = {
   isSuccessedSignup: false,
 };
 
-//로그인 POST요청
+// 로그인 POST요청
 export const __postLogin = createAsyncThunk(
   'POST_LOGIN',
   async (payload, thunkAPI) => {

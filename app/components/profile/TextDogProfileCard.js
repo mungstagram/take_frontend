@@ -174,38 +174,23 @@ const InputDogProfileCard = ({item, index}) => {
     <View style={styles.dogBlock}>
       <View style={styles.dogCardShadow} />
       <View style={styles.dogCard}>
-        <View>
-          <TouchableOpacity
-            style={styles.dogImg}
-            onPress={openPicker}
-            vlue={openCamera}>
-            {/* <Image
-              width={IMAGE_WIDTH}
-              height={IMAGE_HEIGHT}
-              style={styles.media}
-              source={{
-                uri: `file:// ${images[0]?.realPath}`,
-              }}
-            /> */}
-            <View style={{alignItems: 'center', top: '35%'}}>
-              <Pets />
-            </View>
-          </TouchableOpacity>
-        </View>
+        <FastImage
+          style={styles.dogImg}
+          source={{
+            uri: profile[1]?.dogs[1]?.contentUrl,
+            priority: FastImage.priority.normal,
+          }}
+          resizeMode={FastImage.resizeMode.contain}
+        />
 
         <View style={styles.dogProfileInputWrap}>
           <View style={styles.dogInputWrapInner}>
             <View style={styles.firstLine}>
               <Text style={styles.dogName}>강아지이름</Text>
 
-              <TextInput
-                style={styles.dogNameBox}
-                placeholder="김댕댕"
-                onChange={e => onChange('name', e)}
-                value={name}
-                onSubmitEditing={() => inputRef.current.focus()}
-                ref={inputRef}
-              />
+              <Text style={styles.dogNameText}>
+                {profile[1]?.dogs[1]?.name}
+              </Text>
 
               <Text style={styles.representDog}>대표 강아지</Text>
 
@@ -227,61 +212,37 @@ const InputDogProfileCard = ({item, index}) => {
             <View style={styles.secondLine}>
               <Text style={styles.species}>종류</Text>
 
-              <TextInput
-                style={styles.speciesBox}
-                placeholder="요크셔테리어"
-                value={species}
-                onChange={e => onChange('species', e)}
-                ref={inputRef}
-              />
+              <Text style={styles.speciesText}>
+                {profile[1]?.dogs[1]?.species}
+              </Text>
 
               <Text style={styles.weight}>몸무게</Text>
 
-              <TextInput
-                style={styles.weightBox}
-                placeholder="00kg"
-                value={weight}
-                keyboardType="numeric"
-                onChange={e => onChange('weight', e)}
-                ref={inputRef}
-              />
+              <Text style={styles.weightText}>
+                {profile[1]?.dogs[1]?.weight}
+              </Text>
             </View>
 
             <View style={styles.thirdLine}>
               <Text style={styles.introduce}>강아지소개</Text>
 
-              <TextInput
-                style={styles.introduceBox}
-                placeholder="집사바라기"
-                value={introduce}
-                onChange={e => onChange('introduce', e)}
-                ref={inputRef}
-              />
+              <Text style={styles.introduceText}>
+                {profile[1]?.dogs[1]?.introduce}
+              </Text>
             </View>
 
             <View style={styles.fourthLine}>
               <Text style={styles.birthday}>태어난 날</Text>
 
-              <TextInput
-                style={styles.birthdayBox}
-                placeholder="00.00.00"
-                value={birthday}
-                keyboardType="numeric"
-                autoComplete="birthdate-full"
-                onChange={e => onChange('birthday', e)}
-                ref={inputRef}
-              />
+              <Text style={styles.birthdayText} placeholder="00.00.00">
+                {profile[1]?.dogs[1]?.birthday}
+              </Text>
 
               <Text style={styles.bringDate}>데려온 날</Text>
 
-              <TextInput
-                style={styles.bringDateBox}
-                placeholder="yyyy-mm-dd"
-                value={bringDate}
-                keyboardType="numeric"
-                onChange={e => onChange('bringDate', e)}
-                ref={inputRef}
-              />
+              <Text style={styles.bringDateText} placeholder="yyyy-mm-dd">
+                {profile[1]?.dogs[1]?.bringDate}
+              </Text>
             </View>
           </View>
         </View>
@@ -356,14 +317,17 @@ const styles = StyleSheet.create({
     left: '5%',
     backgroundColor: '#ffffff',
   },
-
-  dogNameBox: {
-    borderWidth: 1,
-    borderRadius: 5,
+  dogNameText: {
+    // borderWidth: 1,
     borderColor: 'gray',
-    width: 108,
+    width: 76,
     height: 50,
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#000000',
+    paddingTop: '8%',
   },
+
   representDog: {
     color: 'black',
     zIndex: 2,
@@ -394,7 +358,7 @@ const styles = StyleSheet.create({
     marginTop: '4%',
   },
   checkCircle: {
-    // borderWidth: 1,
+    borderWidth: 1,
     borderRadius: 50,
     width: 14,
     height: 14,
@@ -430,14 +394,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
 
-  speciesBox: {
-    position: 'relative',
-    borderWidth: 1,
-    borderRadius: 5,
+  speciesText: {
+    // borderWidth: 1,
     borderColor: 'gray',
-    width: 108,
+    width: 76,
     height: 50,
+    paddingTop: '8%',
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#000000',
   },
+
   weight: {
     color: 'black',
     zIndex: 2,
@@ -448,14 +415,19 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     backgroundColor: '#ffffff',
   },
-  weightBox: {
-    position: 'relative',
-    borderWidth: 1,
-    borderRadius: 5,
+
+  weightText: {
+    // borderWidth: 1,
     borderColor: 'gray',
-    width: 108,
+    width: 76,
     height: 50,
+    paddingTop: '8%',
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#000000',
+    left: '20%',
   },
+
   thirdLine: {
     width: 226,
     flexDirection: 'row',
@@ -477,12 +449,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
 
-  introduceBox: {
-    borderWidth: 1,
-    borderRadius: 5,
+  introduceText: {
+    // borderWidth: 1,
     borderColor: 'gray',
     width: 226,
     height: 50,
+    textAlign: 'center',
+    paddingTop: '8%',
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#000000',
+    right: '50%',
   },
 
   fourthLine: {
@@ -504,14 +481,18 @@ const styles = StyleSheet.create({
     left: '5%',
     backgroundColor: '#ffffff',
   },
-  birthdayBox: {
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: 'gray',
-    width: 108,
-    height: 50,
-  },
 
+  birthdayText: {
+    // borderWidth: 1,
+    borderColor: 'gray',
+    width: 76,
+    height: 50,
+    paddingTop: '8%',
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#000000',
+    right: '20%',
+  },
   bringDate: {
     color: 'black',
     zIndex: 2,
@@ -521,21 +502,22 @@ const styles = StyleSheet.create({
     right: '20%',
     backgroundColor: '#ffffff',
   },
-
-  bringDateBox: {
-    position: 'relative',
-    borderWidth: 1,
-    borderRadius: 5,
+  bringDateText: {
+    // borderWidth: 1,
     borderColor: 'gray',
-    width: 108,
+    width: 76,
     height: 50,
+    textAlign: 'center',
+    paddingTop: '8%',
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#000000',
   },
+
   media: {
     width: IMAGE_WIDTH,
     height: IMAGE_HEIGHT,
     backgroundColor: '#F4F4F4',
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
   },
 });
 
