@@ -7,11 +7,16 @@ import {
   Dimensions,
 } from 'react-native';
 import {Colors, BasicColors} from '../constants/colors';
+import {useNavigation} from '@react-navigation/native';
 
 const CancelButton = ({children}) => {
+  const navigation = useNavigation();
+  const onCancelHandler = () => {
+    navigation.navigate('Home');
+  };
   return (
     <View>
-      <TouchableOpacity style={styles.buttonBox}>
+      <TouchableOpacity style={styles.buttonBox} onPress={onCancelHandler}>
         <Text style={styles.button}>{children}</Text>
       </TouchableOpacity>
     </View>

@@ -186,7 +186,7 @@ const AddVideo = () => {
   };
   return (
     <SafeAreaView style={styles.containerBox}>
-      <KeyboardAvoidingView>
+      <KeyboardAvoidingView behavior="position">
         <View style={styles.box}>
           <View style={styles.fileInput}>
             <View style={styles.fileupload}>

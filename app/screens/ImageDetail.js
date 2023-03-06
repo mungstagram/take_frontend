@@ -11,11 +11,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 
 import {Colors, BasicColors} from '../constants/colors';
-import GoBackButton from '../components/common/GoBackButton';
 import CommentInput from '../components/detailcomp/CommentInput';
 import CommentList from '../components/detailcomp/CommentList';
 import {__getPostDetailData} from '../redux/modules/commetsSlice';
 import ImageDetailTop from '../components/detailcomp/ImageDetailTop';
+import GoBackButtonWhite from '../components/common/GoBackButtonWhite';
+import HeaderTitle from '../components/common/HeaderTitle';
 
 const ImageDetail = ({route}) => {
   const detail = useSelector(state => state.comments.detail);
@@ -31,23 +32,35 @@ const ImageDetail = ({route}) => {
   }, [isFocused, route]);
 
   return (
-    <SafeAreaView>
-      <KeyboardAvoidingView>
-        <View style={styles.container}>
-          <View style={styles.goBackButton}>
-            <GoBackButton />
-          </View>
-          <View style={styles.imageContainer}>
-            <View style={styles.contentBox}>
-              <ImageDetailTop detail={detail} />
-            </View>
-            <View style={styles.commentInputBox}>
-              <CommentInput detail={detail} />
-            </View>
-          </View>
+    <>
+      <View style={styles.headerBox}>
+        <View style={styles.goBackButton}>
+          <GoBackButtonWhite />
         </View>
+        <View style={styles.headerTitle}>
+          <HeaderTitle />
+          <Text style={styles.title}>사진 갤러리</Text>
+        </View>
+        <View style={styles.flex2}></View>
+      </View>
+      <KeyboardAvoidingView
+        behavior="position"
+        keyboardVerticalOffset={80}
+        style={styles.avoid}>
+        <SafeAreaView>
+          <View style={styles.container}>
+            <View style={styles.imageContainer}>
+              <View style={styles.contentBox}>
+                <ImageDetailTop detail={detail} />
+              </View>
+              <View style={styles.commentInputBox}>
+                <CommentInput detail={detail} />
+              </View>
+            </View>
+          </View>
+        </SafeAreaView>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </>
   );
 };
 
@@ -64,32 +77,53 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: Colors.mainColorDark,
   },
-  goBackButton: {
+  headerBox: {
     position: 'absolute',
-    height: '7.48%',
+    width: windowWidth,
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 99,
+    height: 58,
+    backgroundColor: Colors.mainColorDark,
+  },
+  goBackButton: {
+    height: 58,
     alignItems: 'flex-start',
     marginLeft: '7%',
+    paddingTop: 18,
     zIndex: 20,
+    flex: 1,
+  },
+  headerTitle: {
+    flexDirection: 'row',
+    width: videoCardWidth * 0.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 4,
+  },
+  title: {
+    marginHorizontal: videoCardWidth * 0.05,
+    fontSize: 28,
+    color: BasicColors.whiteColor,
+  },
+  flex2: {
+    flex: 1,
   },
   imageContainer: {
-    position: 'absolute',
     top: '8%',
-    width: ' 100%',
-    height: '100%',
+    width: windowWidth,
+    height: windowHeight,
     alignItems: 'center',
   },
   contentBox: {
-    flex: 9,
+    flex: 3,
   },
-  commentListBox: {
-    // flex: 4.3,
-    // zIndex: 5,
-  },
+  commentListBox: {},
   commentInputBox: {
     flex: 1,
+    top: 15,
     height: windowHeight,
-    bottom: '8%',
-    justifyContent: 'flex-end',
+    backgroundColor: BasicColors.whiteColor,
   },
 });

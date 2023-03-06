@@ -17,38 +17,16 @@ import {useDispatch, useSelector} from 'react-redux';
 import VideoPlayer from 'react-native-video-controls';
 
 import {Colors, BasicColors} from '../../constants/colors';
-import Favorite from '../svg/Favorite';
-import NotFavorite from '../svg/NotFavorite';
+import {__getPostDetailData} from '../../redux/modules/commetsSlice';
 import {__putLikes} from '../../redux/modules/addContentSlice';
+import {__deletePostDetailData} from '../../redux/modules/addContentSlice';
 import Delete from '../svg/Delete';
 import ServicesImg from '../svg/ServicesImg';
-import {__deletePostDetailData} from '../../redux/modules/addContentSlice';
 import CommentList from './CommentList';
 
 const VideoDetailTop = ({detail, videoUrl}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
-  const [line, setLine] = useState(2);
-  const [isActivated, setIsActivated] = useState(false);
-
-  const handleLine = () => {
-    //console.log('ac', isActivated);
-    isActivated ? setLine(2) : setLine(Number.MAX_SAFE_INTEGER);
-    setIsActivated(prev => !prev);
-  };
-
-  //좋아요 상태
-  const [isLiked, setIsLiked] = useState(false);
-
-  // 좋아요 버튼
-  const onIsLikeHandler = () => {
-    if (isLiked === false) {
-      setIsLiked(true);
-    } else {
-      setIsLiked(false);
-    }
-  };
 
   //게시물 편집 버튼
   const onEditHandler = () => {
@@ -69,7 +47,7 @@ const VideoDetailTop = ({detail, videoUrl}) => {
         {
           text: '네',
           onPress: () => {
-            Alert.alert('귀여운 댕댕이영상이 지워졌습니다😱'),
+            Alert.alert('귀여운 댕댕이영상이 지워졌습니다😭'),
               dispatch(__deletePostDetailData({postId: detail.postId})),
               navigation.navigate('VideoBoard', {postId: detail.postId});
           },
@@ -78,9 +56,6 @@ const VideoDetailTop = ({detail, videoUrl}) => {
     );
   };
 
-  useEffect(() => {
-    dispatch(__putLikes({postId: detail.postId, isLiked}));
-  }, [isLiked]);
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -100,7 +75,10 @@ const VideoDetailTop = ({detail, videoUrl}) => {
           </View>
           <View style={styles.contentControl}>
             <Pressable style={styles.editBtn} onPress={onEditHandler}>
-              <ServicesImg />
+              <ServicesImg
+                titleText={detail.title}
+                contentText={detail.content}
+              />
             </Pressable>
             <Pressable style={styles.deleteBtn} onPress={onDeleteHandler}>
               <Delete />
@@ -110,55 +88,7 @@ const VideoDetailTop = ({detail, videoUrl}) => {
         <View style={styles.controlbox}>
           <VideoPlayer source={{uri: videoUrl}} disableBack disableFullscreen />
         </View>
-
-        {isActivated ? (
-          <>
-            <ScrollView style={styles.contentScroll} nestedScrollEnabled={true}>
-              <View style={styles.detailBottom}>
-                <View style={styles.preContent}>
-                  <Text style={styles.titleText}>{detail.title}</Text>
-                  <View style={styles.favoritBox}>
-                    <Pressable onPress={onIsLikeHandler}>
-                      {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
-                    </Pressable>
-                    <Text>{detail.likesCount}</Text>
-                  </View>
-                </View>
-                <View style={styles.contentText}>
-                  <Text numberOfLines={line} ellipsizeMode="tail">
-                    {detail.content}
-                  </Text>
-                </View>
-                <CommentList />
-              </View>
-            </ScrollView>
-          </>
-        ) : (
-          <>
-            <View style={styles.detailBottom}>
-              <View style={styles.preContent}>
-                <Text style={styles.titleText}>{detail.title}</Text>
-                <View style={styles.favoritBox}>
-                  <Pressable onPress={onIsLikeHandler}>
-                    {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
-                  </Pressable>
-                  <Text>{detail.likesCount}</Text>
-                </View>
-              </View>
-              <View style={styles.contentText}>
-                <Text numberOfLines={line} ellipsizeMode="tail">
-                  {detail.content}
-                </Text>
-                <Pressable onPress={prev => handleLine(!prev[0], prev[1])}>
-                  <Text>더보기</Text>
-                </Pressable>
-              </View>
-            </View>
-            <View style={styles.conmmentList}>
-              <CommentList />
-            </View>
-          </>
-        )}
+        <CommentList />
       </View>
     </SafeAreaView>
   );
@@ -228,32 +158,32 @@ const styles = StyleSheet.create({
     height: videoCardHeight * 0.703,
     backgroundColor: BasicColors.blackColor,
   },
-  detailBottom: {
-    backgroundColor: BasicColors.whiteColor,
-    //height: videoCardHeight * 0.3,
-    padding: '2%',
-  },
-  preContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    //height: '60%',
-  },
-  titleText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  favoritBox: {
-    alignItems: 'center',
-  },
-  contentScroll: {
-    height: windowHeight,
-  },
-  contentText: {
-    fontSize: 14,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-  },
+  // detailBottom: {
+  //   backgroundColor: BasicColors.whiteColor,
+  //   //height: videoCardHeight * 0.3,
+  //   padding: '2%',
+  // },
+  // preContent: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   alignItems: 'center',
+  //   //height: '60%',
+  // },
+  // titleText: {
+  //   fontSize: 20,
+  //   fontWeight: 'bold',
+  // },
+  // favoritBox: {
+  //   alignItems: 'center',
+  // },
+  // contentScroll: {
+  //   height: windowHeight,
+  // },
+  // contentText: {
+  //   fontSize: 14,
+  //   flexDirection: 'row',
+  //   alignItems: 'flex-end',
+  // },
   conmmentList: {
     padding: '2%',
   },
