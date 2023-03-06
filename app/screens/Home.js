@@ -49,21 +49,21 @@ function Home({navigation}) {
   console.log('myNick', myNick);
 
   useEffect(() => {
-    console.log('home');
+    console.log('home에서 유즈이펙트');
     dispatch(__getHomeProfile());
   }, []);
 
   return (
     <View style={styles.homeProfile}>
       <View style={styles.goToLink}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Profile', {myNick})}>
+        <TouchableOpacity onPress={() => navigation.push('Profile', {myNick})}>
           <Text style={styles.homeFontStyle}>프로필</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+        <TouchableOpacity
+          onPress={() => navigation.push('UserDetail', {myNick})}>
           <Text style={styles.homeFontStyle}>게시글</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+        <TouchableOpacity onPress={() => navigation.push('Profile')}>
           <Text style={styles.homeFontStyle}>메시지</Text>
         </TouchableOpacity>
       </View>
