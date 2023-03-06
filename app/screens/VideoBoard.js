@@ -4,7 +4,8 @@ import {View, Text, StyleSheet, Dimensions, Pressable} from 'react-native';
 import SelectBox from '../components/common/SelectBox';
 import {Colors, BasicColors} from '../constants/colors';
 import VideoGetter from '../components/boardcomponent/VideoGetter';
-import GoBackButton from '../components/common/GoBackButton';
+import GoBackButtonWhite from '../components/common/GoBackButtonWhite';
+import HeaderTitle from '../components/common/HeaderTitle';
 
 const VideoBoard = () => {
   // 높이, 너비를 자동으로 업데이트 해준다.
@@ -26,8 +27,15 @@ const VideoBoard = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.goBackButton}>
-        <GoBackButton />
+      <View style={styles.headerBox}>
+        <View style={styles.goBackButton}>
+          <GoBackButtonWhite />
+        </View>
+        <View style={styles.headerTitle}>
+          <HeaderTitle />
+          <Text style={styles.title}>동영상 갤러리</Text>
+        </View>
+        <View style={styles.flex2}></View>
       </View>
       <View style={styles.selectContainer}>
         <View style={styles.selectBoxHolder}>
@@ -50,7 +58,7 @@ export default VideoBoard;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const videoCardWidth = windowWidth * 0.9;
+const videoCardWidth = windowWidth * 0.92;
 //const videoCardHeight = videoCardWidth;
 
 const styles = StyleSheet.create({
@@ -58,13 +66,36 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.mainColorDark,
   },
-  goBackButton: {
-    position: 'absolute',
-    height: '7.48%',
+  headerBox: {
+    width: videoCardWidth,
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
+  },
+  goBackButton: {
+    height: 58,
     alignItems: 'flex-start',
     marginLeft: '7%',
+    paddingTop: 18,
+    zIndex: 20,
+    flex: 1,
   },
+  headerTitle: {
+    flexDirection: 'row',
+    width: videoCardWidth * 0.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 4,
+  },
+  title: {
+    marginHorizontal: videoCardWidth * 0.05,
+    fontSize: 28,
+    color: BasicColors.whiteColor,
+  },
+  flex2: {
+    flex: 1,
+  },
+
   selectContainer: {
     position: 'absolute',
     top: '8%',
@@ -82,10 +113,10 @@ const styles = StyleSheet.create({
     width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
   },
   preCards: {
-    height: windowHeight * 0.79,
+    height: windowHeight * 0.78,
     width: windowWidth,
     justifyContent: 'center',
     alignItems: 'center',
-    top: '18%',
+    top: '12%',
   },
 });

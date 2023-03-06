@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     width: '95%',
     left: '1.6%',
     justifyContent: 'center',
+    marginBottom: 24,
     // backgroundColor: 'green', //TODO : 색 원래대로
   },
   container: {},

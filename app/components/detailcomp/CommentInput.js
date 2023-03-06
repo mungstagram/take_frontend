@@ -34,6 +34,12 @@ const CommentInput = ({detail}) => {
     setInputText('');
   };
 
+  // 유저 프로필 가져오기 아직 슬라이스가 안만들어져서 기다려야함
+  // useEffect(() => {
+  //   if (isFocused) {
+  //     dispatch(__getProfile());
+  //   }
+  // }, [isFocused]);
   return (
     <View style={styles.container}>
       <View style={styles.commentsInput}>
@@ -73,7 +79,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: '4%',
-    backgroundColor: BasicColors.whiteColor,
   },
   profileImg: {
     width: 40,

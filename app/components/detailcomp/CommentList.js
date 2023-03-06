@@ -7,6 +7,7 @@ import {
   ScrollView,
   Pressable,
   Alert,
+  TextInput,
 } from 'react-native';
 import React, {useState} from 'react';
 import FastImage from 'react-native-fast-image';
@@ -16,19 +17,99 @@ import {Colors, BasicColors} from '../../constants/colors';
 import CommentImg from '../svg/CommentImg';
 import ServicesImg from '../svg/ServicesImg';
 import Delete from '../svg/Delete';
-import {__deleteComment} from '../../redux/modules/commetsSlice';
+import {__deleteComment, __putComment} from '../../redux/modules/commetsSlice';
 import {__getPostDetailData} from '../../redux/modules/commetsSlice';
+import {__putLikes} from '../../redux/modules/addContentSlice';
+import Favorite from '../svg/Favorite';
+import NotFavorite from '../svg/NotFavorite';
+import TaskImg from '../svg/TaskImg';
 
-const CommentList = ({detail}) => {
+const CommentList = () => {
   const dispatch = useDispatch();
 
   //댓글 리스트
   const commentList = useSelector(state => state.comments.comments);
-  //댓글 수정 상태
+  const detail = useSelector(state => state.comments.detail);
+  console.log('de', detail);
+
+  //좋아요 상태
+  const [isLiked, setIsLiked] = useState(false);
+
+  // 좋아요 버튼
+  const onIsLikeHandler = () => {
+    if (isLiked === false) {
+      setIsLiked(true);
+      dispatch(__putLikes({postId: detail.postId}));
+    } else {
+      setIsLiked(false);
+      dispatch(__putLikes({postId: detail.postId}));
+    }
+  };
+
+  const [line, setLine] = useState(2);
+  const [isActivated, setIsActivated] = useState(false);
+
+  const handleLine = () => {
+    isActivated ? setLine(2) : setLine(Number.MAX_SAFE_INTEGER);
+    setIsActivated(prev => !prev);
+  };
+
+  //플랫리스트의 헤더 부분
+  const detailContent = () => {
+    return (
+      <View>
+        <View style={styles.detailBottom}>
+          <View style={styles.preContent}>
+            <Text style={styles.titleText}>{detail.title}</Text>
+            <View style={styles.favoritBox}>
+              <Pressable onPress={onIsLikeHandler}>
+                {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
+              </Pressable>
+              <Text>{detail.likesCount}</Text>
+            </View>
+          </View>
+          <View style={styles.contentText}>
+            <Text numberOfLines={line} ellipsizeMode="tail">
+              {detail.content}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.commentCountBox}>
+          <View style={styles.commentIcon}>
+            <CommentImg />
+          </View>
+          <Text>{commentList.length}</Text>
+        </View>
+      </View>
+    );
+  };
+
+  //댓글 수정 인풋형태 변경 상태
   const [edit, setEdit] = useState(false);
 
   //댓글 수정 버튼
-  const onEditHandler = () => {};
+  const onEditHandler = () => {
+    setEdit(edit => !edit);
+  };
+
+  //댓글 값 변경
+  const [editComment, setEditComment] = useState('');
+
+  const onEditComment = () => {
+    setEditComment();
+  };
+
+  //댓글 수정 완료 버튼
+
+  const onDoneComment = () => {
+    dispatch(
+      __putComment({
+        commentId: detail.comments[0].id,
+        id: detail.comments[0].id,
+        comment: editComment,
+      }),
+    );
+  };
 
   //댓글 삭제 버튼
   const onDeleteHandler = () =>
@@ -50,7 +131,6 @@ const CommentList = ({detail}) => {
   //플랫리스트 돌리기
   const renderItem = ({item}) => {
     return (
-      // <ScrollView style={styles.commentView}>
       <View style={styles.commentBox}>
         <View style={styles.profileImg}>
           <FastImage
@@ -62,47 +142,118 @@ const CommentList = ({detail}) => {
             resizeMode={'contain'}
           />
         </View>
-        <View style={styles.profileData}>
-          <View>
-            <View style={styles.profileRow}>
-              <Text>{item.nickname}</Text>
-              <Text style={styles.timeText}>{item.createdAt}</Text>
+
+        {!edit ? (
+          <View style={styles.profileData}>
+            <View>
+              <View style={styles.profileRow}>
+                <Text>{item.nickname}</Text>
+                <Text style={styles.timeText}>{item.createdAt}</Text>
+              </View>
+              <Text>{item.comment}</Text>
             </View>
-            <Text>{item.comment}</Text>
           </View>
-        </View>
+        ) : (
+          <View style={styles.profileData}>
+            <View>
+              <View style={styles.profileRow2}>
+                <Text>{item.nickname}</Text>
+                <Text style={styles.timeText}>{item.createdAt}</Text>
+              </View>
+              <TextInput
+                style={styles.inputBorder}
+                onChangeText={onEditComment}>
+                {item.comment}
+              </TextInput>
+            </View>
+          </View>
+        )}
+
         <View style={styles.contentControl}>
-          <Pressable style={styles.editBtn} onPress={onEditHandler}>
-            <ServicesImg />
-          </Pressable>
+          {!edit ? (
+            <Pressable
+              style={styles.editBtn}
+              value
+              onPress={edit => {
+                onEditHandler(!edit[0], edit[1]), onDoneComment();
+              }}>
+              <ServicesImg />
+            </Pressable>
+          ) : (
+            <Pressable
+              style={styles.editBtn}
+              value
+              onPress={edit => {
+                onEditHandler(!edit[0], edit[1]), onDoneComment();
+              }}>
+              <TaskImg />
+            </Pressable>
+          )}
+
           <Pressable style={styles.deleteBtn} onPress={onDeleteHandler}>
             <Delete />
           </Pressable>
         </View>
       </View>
-      // </ScrollView>
     );
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.commentCountBox}>
-        <View style={styles.commentIcon}>
-          <CommentImg />
+    <>
+      {isActivated ? (
+        //상세보기
+        <View style={styles.listBoxLong}>
+          <FlatList
+            ListHeaderComponent={detailContent}
+            data={commentList}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            style={styles.listinBox2}
+            horizontal={false}
+            nestedScrollEnabled={true}
+          />
         </View>
-        <Text>{commentList.length}</Text>
-      </View>
-      <View style={styles.listBox}>
-        <FlatList
-          data={commentList}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          style={styles.listinBox}
-          horizontal={false}
-          nestedScrollEnabled={true}
-        />
-      </View>
-    </View>
+      ) : (
+        //간략보기
+        <View style={styles.listBoxShort}>
+          <View style={styles.preContent}>
+            <Text style={styles.titleText}>{detail.title}</Text>
+            <View style={styles.favoritBox}>
+              <Pressable onPress={onIsLikeHandler}>
+                {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
+              </Pressable>
+              <Text>{detail.likesCount}</Text>
+            </View>
+          </View>
+          <View style={styles.contentText}>
+            <Text numberOfLines={line} ellipsizeMode="tail">
+              {detail.content}
+            </Text>
+            <Pressable onPress={prev => handleLine(!prev[0], prev[1])}>
+              <Text>더보기</Text>
+            </Pressable>
+          </View>
+          <View style={styles.container}>
+            <View style={styles.commentCountBox}>
+              <View style={styles.commentIcon}>
+                <CommentImg />
+              </View>
+              <Text>{commentList.length}</Text>
+            </View>
+            <View style={styles.listBox}>
+              <FlatList
+                data={commentList}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+                style={styles.listinBox}
+                horizontal={false}
+                nestedScrollEnabled={true}
+              />
+            </View>
+          </View>
+        </View>
+      )}
+    </>
   );
 };
 
@@ -112,13 +263,46 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const videoCardWidth = windowWidth * 0.9;
-//const videoCardHeight = videoCardWidth;
+const videoCardHeight = videoCardWidth * 0.8;
 
 const styles = StyleSheet.create({
   container: {
     width: windowWidth,
     height: windowHeight,
   },
+  listBoxLong: {
+    height: windowHeight * 0.44,
+    padding: '2%',
+  },
+  listBoxShort: {
+    height: windowHeight * 0.44,
+    padding: '2%',
+  },
+  // 제목, 내용 스타일
+  detailBottom: {
+    backgroundColor: BasicColors.whiteColor,
+  },
+  preContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  titleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  favoritBox: {
+    alignItems: 'center',
+  },
+  contentScroll: {},
+  contentText: {
+    fontSize: 14,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+
+  // 댓글 리스트
   commentCountBox: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -137,7 +321,6 @@ const styles = StyleSheet.create({
     height: 80,
     alignItems: 'center',
     flexDirection: 'row',
-    // paddingHorizontal: '4%',
     backgroundColor: BasicColors.whiteColor,
   },
   profileImg: {
@@ -154,8 +337,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  profileRow2: {
+    top: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   timeText: {
     fontSize: 8,
+  },
+  inputBorder: {
+    borderBottomWidth: 1,
+    borderBottomColor: BasicColors.grayColor,
+    // borderRadius: 4,
+    height: 36,
+    padding: 3,
+    marginTop: 12,
+    bottom: 4,
   },
   contentControl: {
     flexDirection: 'row',
@@ -174,6 +371,9 @@ const styles = StyleSheet.create({
   },
   listBox: {},
   listinBox: {
-    height: '30%',
+    height: videoCardHeight * 0.86,
+  },
+  listinBox2: {
+    height: videoCardHeight * 0.86,
   },
 });
