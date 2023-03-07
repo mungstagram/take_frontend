@@ -5,8 +5,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SplashScreen from 'react-native-splash-screen';
 import {useSelector} from 'react-redux';
 
-import GlobalFont from 'react-native-global-font';
-
 import Login from './screens/Login';
 import AuthStartScreen from './screens/AuthStartScreen';
 import Signup from './screens/Signup';
