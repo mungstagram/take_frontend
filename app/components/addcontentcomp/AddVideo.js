@@ -246,10 +246,10 @@ const AddVideo = () => {
           </View>
           <View style={styles.buttonRow}>
             <CancelButton style={styles.cancelBtn} onPress={onCancelHandler}>
-              Cancel
+              취소
             </CancelButton>
             <YellowButton style={styles.doneBtn} onPress={onSendFormData}>
-              Done
+              작성완료
             </YellowButton>
           </View>
         </View>
@@ -375,5 +375,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: '10%',
   },
 });

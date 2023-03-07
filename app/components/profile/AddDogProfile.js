@@ -11,32 +11,37 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+
+import AddCircleGray from '../../components/svg/AddCircleGray';
+
 const AddDogProfile = ({navigation}) => {
   return (
-    <View style={styles.dogBlock}>
-      <View style={styles.addDogCard}>
-        <TouchableOpacity style={styles.addDogCardText}>
-          <Text style={{left: 20}}>플러스아이콘</Text>
-          <Text style={{left: 30}}>저희 집에</Text>
+    <View>
+      <TouchableOpacity>
+        <View style={styles.addDogCard}>
+          <AddCircleGray />
+          <Text style={{marginTop: '4%'}}>저희 집에</Text>
           <Text>댕댕이를 추가할게요!</Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  dogBlock: {
-    flex: 1,
-  },
   addDogCard: {
     width: 264,
     height: 444,
     borderRadius: 15,
     backgroundColor: '#ffffff',
-    opacity: 0.6,
+    opacity: 0.8,
+    borderWidth: 1,
+    borderColor: '#ffffff',
     justifyContent: 'center',
     alignItems: 'center',
+    shadowOpacity: 0.5,
+    shadowRadius: 15,
+    elevation: 0.9,
   },
 });
 

@@ -69,13 +69,13 @@ const Profile = ({navigation, route}) => {
         </View>
       </View>
       <View style={styles.content} />
-      <View style={{left: '8%', bottom: '10%'}}>
-        <InputDogProfileCard />
-        {/* <TextDogProfileCard /> */}
 
+      <View style={{left: '8%', bottom: '10%'}}>
         {/* <TouchableOpacity onPress={onPressAddDog}>
           <AddDogProfile />
         </TouchableOpacity> */}
+        <InputDogProfileCard />
+        {/* <TextDogProfileCard /> */}
       </View>
 
       <View style={styles.footer} />
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     height: '10%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#1ad657',
+    backgroundColor: '#ffffff',
   },
 
   linkBtn: {

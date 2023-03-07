@@ -243,8 +243,8 @@ const AddImage = ({navigate}) => {
             />
           </View>
           <View style={styles.buttonRow}>
-            <CancelButton onPress={onCancelHandler}>Cancel</CancelButton>
-            <YellowButton onPress={onSendFormData}>Done</YellowButton>
+            <CancelButton onPress={onCancelHandler}>취소</CancelButton>
+            <YellowButton onPress={onSendFormData}>작성완료</YellowButton>
           </View>
         </KeyboardAvoidingView>
       </View>
@@ -367,5 +367,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: '10%',
   },
 });
