@@ -8,9 +8,7 @@ import {useSelector} from 'react-redux';
 import Login from './screens/Login';
 import AuthStartScreen from './screens/AuthStartScreen';
 import Signup from './screens/Signup';
-import UserDetail from './screens/UserDetail';
 import KaKaoSignup from './screens/KaKaoSignup';
-import Profile from './screens/Profile';
 import VideoDetail from './screens/VideoDetail';
 import store from './redux/store/configStore';
 import {Colors} from './constants/colors';
@@ -60,17 +58,7 @@ const AuthenticatedStack = () => {
         component={BottomTabNav}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="Profile"
-        component={Profile}
-        options={{headerShown: false}}
-        // options={{tabBarVisible: false}}
-      />
-      {/* <Stack.Screen
-        name="UserDetail"
-        component={UserDetail}
-        options={{headerShown: false}}
-      /> */}
+
       <Stack.Screen name="VideoDetail" component={VideoDetail} />
       <Stack.Screen
         name="InputDogProfileCard"

@@ -1,45 +1,55 @@
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  Touchable,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {StyleSheet, View, Text, Button, Pressable, Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-
+import {useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 
 import {__getHomeProfile} from '../redux/modules/profileSlice';
 
 import TodoList from '../components/todos/TodoList';
 import WriteTodo from '../components/todos/WriteTodo';
-import ServicesPinkImg from '../components/svg/ServicesPinkImg';
 import Pets from '../components/svg/Pets';
 import Emoticon from '../components/svg/Emoticon';
-
+import DogIndexChangeLeft from '../components/svg/DogIndexChangeLeft';
+import DogIndexChangeRight from '../components/svg/DogIndexChagneRight';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Home({navigation}) {
-  // const response = useSelector(state => state.login);
-  // console.log('Home nick', myNick);
-  // console.log('response', response);
-
   const dispatch = useDispatch();
-
-  //이미지
-  const [images, setImages] = useState([]);
-
-  // let myNick = '';
   const [myNick, setMyNick] = useState();
-
+  const isFocused = useIsFocused();
   //data 불러옴
   const profile = useSelector(state => state.profile.profile);
+  // 몇번쨰 강아지인지
+  const [dogIndex, setDogIndex] = useState(0);
+  // profile[0] 유저  , profile[1] 강아지
 
-  // console.log('home profile', profile);
+  // 다음 강아지 혹은 이전 강아지가 있을 때, 다음 혹은 이전 강아지의 정보를 받아오는 함수
+  const dogIndexHandler = value => {
+    if (value === 'right' && dogIndex !== profile[1]?.dogs?.length - 1) {
+      setDogIndex(dogIndex + 1);
+    } else if (value === 'left' && dogIndex !== 0) {
+      setDogIndex(dogIndex - 1);
+    }
+  };
+  //메시지함으로 가기 위해서 토큰 받기
+  const [myToken, setMyToken] = useState('');
+  useEffect(() => {
+    async function fetctmyToken() {
+      const token = await AsyncStorage.getItem('authorization');
+      if (token) {
+        setMyToken(token);
+      }
+    }
+    fetctmyToken();
+  }, []);
 
+  //내 메시지함 열기
+  const openDirectMessageHandler = () => {
+    navigation.push('MessageBox', {token: myToken});
+  };
+
+  //내 닉네임을 받아오는 함수
   useEffect(() => {
     const getNickName = async () => {
       setMyNick(await AsyncStorage.getItem('nickname'));
@@ -49,81 +59,155 @@ function Home({navigation}) {
   console.log('myNick', myNick);
 
   useEffect(() => {
-    console.log('home에서 유즈이펙트');
     dispatch(__getHomeProfile());
-  }, []);
+  }, [isFocused]);
 
   return (
     <View style={styles.homeProfile}>
       <View style={styles.goToLink}>
-        <TouchableOpacity onPress={() => navigation.push('Profile', {myNick})}>
+        <Pressable onPress={() => navigation.push('Profile', {myNick})}>
           <Text style={styles.homeFontStyle}>프로필</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.push('UserDetail', {myNick})}>
+        </Pressable>
+        <Pressable
+          onPress={() => navigation.push('UserDetail', {nickname: myNick})}>
           <Text style={styles.homeFontStyle}>게시글</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.push('Profile')}>
+        </Pressable>
+        <Pressable onPress={openDirectMessageHandler}>
           <Text style={styles.homeFontStyle}>메시지</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <View style={styles.homeProfileInner}>
-        <View style={styles.profileImg}>
-          {images.length !== 0 ? (
-            <View style={styles.dogProfileImg}>
-              <Pets />
-            </View>
-          ) : (
-            <FastImage
-              style={styles.dogProfileImg}
-              source={{
-                uri: profile[1]?.dogs[1]?.contentUrl,
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={FastImage.resizeMode.contain}
-            />
-          )}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <View style={styles.dogIndexLeftSelector}>
+            {dogIndex === 0 ? (
+              <View
+                style={{
+                  width: 24,
+                  height: 24,
+                  alignItems: 'center',
+                }}
+              />
+            ) : (
+              <Pressable
+                onPress={() => dogIndexHandler('left')}
+                style={{
+                  width: 24,
+                  height: 24,
+                  alignItems: 'center',
+                }}>
+                <DogIndexChangeLeft />
+              </Pressable>
+            )}
+          </View>
+          <View style={styles.profileImg}>
+            {profile[0].user.contentUrl === '' ? (
+              <View style={styles.dogProfileImg}>
+                <Pets />
+              </View>
+            ) : (
+              <FastImage
+                style={styles.dogProfileImg}
+                source={{
+                  uri: profile[1]?.dogs[dogIndex]?.contentUrl,
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+            )}
 
-          {images.length !== 0 ? (
-            <View style={styles.personProfileImg}>
-              <Emoticon />
-            </View>
-          ) : (
-            <FastImage
-              style={styles.personProfileImg}
-              source={{
-                uri: profile[0]?.user.contentUrl,
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={FastImage.resizeMode.contain}
-            />
-          )}
+            {profile[0].user.contentUrl === '' ? (
+              <View style={styles.personProfileImg}>
+                <Emoticon />
+              </View>
+            ) : (
+              <FastImage
+                style={styles.personProfileImg}
+                source={{
+                  uri: profile[0]?.user.contentUrl,
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+            )}
+          </View>
+          <View style={styles.dogIndexRightSelector}>
+            {(dogIndex === profile[1].dogs.length - 1 &&
+              profile[1].dogs.length !== 0) ||
+            profile[1].dogs.length === 0 ? (
+              <View
+                style={{
+                  width: 24,
+                  height: 24,
+                  alignItems: 'center',
+                }}
+              />
+            ) : (
+              <Pressable
+                onPress={() => dogIndexHandler('right')}
+                style={{
+                  width: 24,
+                  height: 24,
+                  alignItems: 'center',
+                }}>
+                <DogIndexChangeRight />
+              </Pressable>
+            )}
+          </View>
         </View>
-
         <View style={styles.profileInner}>
           <View style={styles.dogNameBox}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: '600',
-                color: 'black',
-                textAlign: 'center',
-                top: '4%',
-              }}>
-              {profile[1]?.dogs[1]?.name}
-            </Text>
+            {profile[1].dogs.length === 0 ? (
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: '600',
+                  color: 'black',
+                  textAlign: 'center',
+                  top: '4%',
+                }}>
+                프로필에서
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: '600',
+                  color: 'black',
+                  textAlign: 'center',
+                  top: '4%',
+                }}>
+                {profile[1]?.dogs[dogIndex]?.name}
+              </Text>
+            )}
           </View>
           <View style={styles.dDayBox}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: '600',
-                color: '#ffb284',
-                textAlign: 'center',
-                top: '4%',
-              }}>
-              우리가 함께한 날 {profile[1]?.dogs[1]?.daysWithin}일
-            </Text>
+            {profile[1].dogs.length === 0 ? (
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: '600',
+                  color: '#ffb284',
+                  textAlign: 'center',
+                  top: '4%',
+                }}>
+                강아지를 등록해주세요~
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: '600',
+                  color: '#ffb284',
+                  textAlign: 'center',
+                  top: '4%',
+                }}>
+                우리가 함께한 날 {profile[1]?.dogs[dogIndex]?.daysWithin}일
+              </Text>
+            )}
           </View>
         </View>
       </View>
@@ -131,16 +215,27 @@ function Home({navigation}) {
       <View style={styles.homeTodoBox}>
         <View style={styles.homeTodoBoxInner}>
           <View style={styles.toDoText}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 'bold',
-                color: '#000000',
-                marginTop: '4%',
-              }}>
-              {profile[1]?.dogs[1]?.species}/{profile[1]?.dogs[1]?.age}/
-              {profile[1]?.dogs[1]?.weight}Kg
-            </Text>
+            {profile[1].dogs.length === 0 ? (
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  color: '#000000',
+                  marginTop: '4%',
+                }}></Text>
+            ) : (
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  color: '#000000',
+                  marginTop: '4%',
+                }}>
+                {profile[1]?.dogs[dogIndex]?.species}/{' '}
+                {profile[1]?.dogs[dogIndex]?.age}/{' '}
+                {profile[1]?.dogs[dogIndex]?.weight}Kg
+              </Text>
+            )}
           </View>
 
           <View style={styles.listBox}>
@@ -171,9 +266,10 @@ const styles = StyleSheet.create({
   goToLink: {
     // borderWidth: 1,
     flexDirection: 'row',
-    left: '32%',
+    justifyContent: 'flex-end',
+    paddingRight: '5.5%',
     marginBottom: 26,
-    marginTop: 56,
+    marginTop: 16,
   },
   homeProfileInner: {
     width: '100%',
@@ -185,7 +281,18 @@ const styles = StyleSheet.create({
     fontSize: 11,
     width: 40,
     height: 24,
+    marginLeft: 16,
     color: '#ffffff',
+  },
+  dogIndexLeftSelector: {
+    justifyContent: 'flex-end',
+    marginRight: '20%',
+    paddingBottom: 16,
+  },
+  dogIndexRightSelector: {
+    justifyContent: 'flex-end',
+    marginLeft: '20%',
+    paddingBottom: 16,
   },
   profileImg: {
     width: 120,
@@ -228,7 +335,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 8,
+    margin: 12,
   },
   dogNameBox: {
     borderRadius: 14,
@@ -242,6 +349,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   dDayBox: {
+    marginTop: 8,
     borderRadius: 14,
     width: 208,
     height: 28,

@@ -27,7 +27,7 @@ export const __getHomeProfile = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const {data} = await http.get(`/profile`);
-      console.log('home data', data);
+      // console.log('home data', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       console.log(e);
