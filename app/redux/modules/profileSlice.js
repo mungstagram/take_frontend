@@ -25,13 +25,12 @@ const initialState = {
 export const __getHomeProfile = createAsyncThunk(
   'GET_PROFILE_HOME',
   async (payload, thunkAPI) => {
-    // console.log('1.home payload', payload);
-    //여기서 undefined 면 절대통신이 안된다는 뜻!
     try {
       const {data} = await http.get(`/profile`);
       // console.log('home data', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
+      console.log(e);
       return thunkAPI.rejectWithValue(e.code);
     }
   },
