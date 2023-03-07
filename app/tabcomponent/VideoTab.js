@@ -4,7 +4,13 @@ import VideoBoard from '../screens/VideoBoard';
 import VideoDetail from '../screens/VideoDetail';
 import ModifyVideo from '../components/modifycontentcomp/ModifyVideo';
 
-const Stack = createNativeStackNavigator();
+const Stack =
+  createNativeStackNavigator();
+  //   {
+  //   defaultNavigationOptions: {
+  //     fontFamily: 'Pretendard-Regular',
+  //   },
+  // }
 
 const VideoTab = () => {
   return (
