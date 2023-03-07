@@ -241,8 +241,8 @@ const AddImage = () => {
             />
           </View>
           <View style={styles.buttonRow}>
-            <CancelButton>Cancel</CancelButton>
-            <YellowButton onPress={onSendFormData}>Done</YellowButton>
+            <CancelButton>취소</CancelButton>
+            <YellowButton onPress={onSendFormData}>작성완료</YellowButton>
           </View>
         </KeyboardAvoidingView>
       </View>
