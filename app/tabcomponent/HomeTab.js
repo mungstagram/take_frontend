@@ -1,6 +1,8 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+import Icon from 'react-native-vector-icons/Octicons';
+
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import UserDetail from '../screens/UserDetail';

@@ -1,6 +1,8 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
+import Icon from 'react-native-vector-icons/Octicons';
+
 import HomeTab from '../tabcomponent/HomeTab';
 import AddContent from '../screens/AddContent';
 import ImageTab from '../tabcomponent/ImageTab';
@@ -34,7 +36,12 @@ const BottomTabNav = () => {
       <Tab.Screen
         name="Home"
         component={HomeTab}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => {
+            <Icon name="home" />;
+          },
+        }}
       />
 
       <Tab.Screen
