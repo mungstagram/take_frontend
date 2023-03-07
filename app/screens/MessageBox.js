@@ -31,11 +31,11 @@ const MessageBox = () => {
 
     // Listen for connection success and set the socket state
     newSocket.on('connect', () => {
-      // console.log('Connected to server');
+      console.log('Connected to server');
       setSocket(newSocket);
     });
     newSocket.on('DMList', data => {
-      // console.log(data, 'DMlist 데이터');
+      console.log(data, 'DMlist 데이터');
       setDmUserList(data);
     });
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import Home from '../screens/Home';
 import HomeTab from '../tabcomponent/HomeTab';
 import AddContent from '../screens/AddContent';
 import ImageTab from '../tabcomponent/ImageTab';
@@ -24,19 +23,19 @@ const BottomTabNav = () => {
         activeTintColor: '#F09090', // 선택된 탭의 아이콘 색상
         inactiveTintColor: '#000000', // 선택되지 않은 탭의 아이콘 색상
       }}>
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Home"
         component={HomeTab}
         options={{
           headerShown: false,
           tabBarIcon: ({color, size}) => <HomeSvg />,
         }}
-      />
-      {/* <Tab.Screen
+      /> */}
+      <Tab.Screen
         name="Home"
         component={HomeTab}
         options={{headerShown: false}}
-      /> */}
+      />
 
       <Tab.Screen
         name="Search"

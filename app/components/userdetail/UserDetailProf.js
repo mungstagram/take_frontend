@@ -14,6 +14,7 @@ import GoBackButton from '../common/GoBackButton';
 import AccountCircle from '../svg/AccountCircle';
 import MailDm from '../svg/MailDm';
 import SendDM from '../svg/SendDM';
+import HumanDefaultImage from '../svg/HumanDefaultImage';
 
 const UserDetailProf = ({nickname}) => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const UserDetailProf = ({nickname}) => {
   const {myNick} = useSelector(state => state.login);
   // console.log(myNick, '내 닉네임');
   const {userDetail} = useSelector(state => state.userDetail);
+  console.log(userDetail.contentUrl, '유저 디테일');
   const {targetRoomId} = useSelector(state => state.userDetail);
   // console.log(targetRoomId, 'targetRoomId');
 
@@ -66,14 +68,21 @@ const UserDetailProf = ({nickname}) => {
         </View>
         <View style={styles.userProfile}>
           <View style={styles.userImgWrapper}>
-            <FastImage
-              style={styles.imageSizer}
-              source={{
-                uri: userDetail.contentUrl,
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={FastImage.resizeMode.contain}
-            />
+            {userDetail.contentUrl === '' ? (
+              <View style={styles.imageSizer}>
+                <HumanDefaultImage />
+              </View>
+            ) : (
+              <FastImage
+                style={styles.imageSizer}
+                source={{
+                  uri: userDetail.contentUrl,
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.contain}
+              />
+            )}
+
             <View style={styles.userImgIconContainer}>
               <View style={styles.iconAligner}>
                 <AccountCircle />
@@ -155,9 +164,11 @@ const styles = StyleSheet.create({
   imageSizer: {
     width: 108,
     height: 108,
-    backgroundColor: 'gray',
+    backgroundColor: 'white',
     overflow: 'hidden',
     borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   userImgIconContainer: {
     flexDirection: 'row',

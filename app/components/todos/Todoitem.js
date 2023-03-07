@@ -32,10 +32,6 @@ const Todoitem = ({id, text, done}) => {
   //done 을 가져와서 랜더링만 관리만 하는 거니까 done 만 가져와준다.
   const [isDone, setIsDone] = useState(done);
 
-  const todos = useSelector(state => state.todos.todo);
-  console.log('todos', todos);
-  // console.log('todos done', todos.done);
-
   const onPressIsEdit = () => {
     setIsEdit(true);
   };
@@ -49,8 +45,6 @@ const Todoitem = ({id, text, done}) => {
   };
 
   const onPressTodoEdit = () => {
-    // console.log('edit', edit);
-    // dispatch(__editTodos({id, done: isEdit, content: edit}));
     dispatch(__editTodos({id, content: edit}));
   };
 
@@ -62,8 +56,6 @@ const Todoitem = ({id, text, done}) => {
     //변화된 값을 바로 보여주지 않는다.
     dispatch(__doneTodos({id, done: !isDone}));
   };
-  console.log('isDone', isDone);
-  //바깥에서 출력해야 볼 수 있다.
 
   const onPressTodoRemove = () => {
     Alert.alert(
@@ -96,11 +88,15 @@ const Todoitem = ({id, text, done}) => {
         }}
         value={isDone}>
         {isDone ? (
-          <View style={styles.checkBoxImg}>
-            <CheckBox />
+          <View style={styles.checkBoxPositioner}>
+            <View style={styles.checkBoxImg}>
+              <CheckBox />
+            </View>
           </View>
         ) : (
-          <View style={styles.checkBox} />
+          <View style={styles.checkBoxPositioner}>
+            <View style={styles.checkBox} />
+          </View>
         )}
       </TouchableOpacity>
 
@@ -150,10 +146,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  checkBoxPositioner: {
+    marginRight: '5%',
+  },
   checkBox: {
     width: 18,
     height: 18,
-    marginRight: '5%',
+    margin: 3,
+    // marginRight: '5%',
     borderRadius: 3,
     borderWidth: 2,
     borderColor: '#e79796',
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   checkBoxImg: {
     width: 24,
     height: 24,
-    marginRight: '5%',
+    // marginRight: '5%',
     borderRadius: 3,
     justifyContent: 'center',
     alignItems: 'center',
