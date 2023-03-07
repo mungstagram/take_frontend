@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     marginHorizontal: videoCardWidth * 0.05,
     fontSize: 28,
     color: Colors.userDataColor,
+    fontFamily: 'SBAggro-M',
   },
   flex2: {
     flex: 1,

@@ -22,7 +22,6 @@ import BottomTabNav from './components/BottomTabNav';
 import InputDogProfileCard from './components/profile/InputDogProfileCard';
 
 const Stack = createNativeStackNavigator();
-
 // componentDidMount() {
 //   let fontName = 'Pretendard-Regular'
 //   GlobalFont.applyGlobal(fontName)

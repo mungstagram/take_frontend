@@ -52,18 +52,16 @@ const VideoDetail = ({route}) => {
         behavior="position"
         keyboardVerticalOffset={80}
         style={styles.avoid}>
-        <SafeAreaView>
-          <View style={styles.container}>
-            <View style={styles.videoContainer}>
-              <View style={styles.contentBox}>
-                <VideoDetailTop detail={detail} videoUrl={videoUrl} />
-              </View>
-              <View style={styles.commentInputBox}>
-                <CommentInput detail={detail} />
-              </View>
+        <View style={styles.container}>
+          <View style={styles.videoContainer}>
+            <View style={styles.contentBox}>
+              <VideoDetailTop detail={detail} videoUrl={videoUrl} />
+            </View>
+            <View style={styles.commentInputBox}>
+              <CommentInput detail={detail} />
             </View>
           </View>
-        </SafeAreaView>
+        </View>
       </KeyboardAvoidingView>
     </>
   );
@@ -111,6 +109,7 @@ const styles = StyleSheet.create({
     marginHorizontal: videoCardWidth * 0.05,
     fontSize: 28,
     color: BasicColors.whiteColor,
+    fontFamily: 'SBAggro-M',
   },
   flex2: {
     flex: 1,

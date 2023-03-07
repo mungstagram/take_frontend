@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     marginHorizontal: videoCardWidth * 0.05,
     fontSize: 28,
     color: BasicColors.whiteColor,
+    fontFamily: 'SBAggro-M',
   },
   flex2: {
     flex: 1,
