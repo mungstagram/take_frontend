@@ -71,10 +71,10 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     flexDirection: 'row',
-    width: videoCardWidth * 0.5,
+    width: videoCardWidth * 1,
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 4,
+    flex: 5,
   },
   title: {
     marginHorizontal: videoCardWidth * 0.05,
