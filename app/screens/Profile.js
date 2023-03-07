@@ -49,9 +49,6 @@ const Profile = ({navigation, route}) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={{width: '100%', height: '50%'}}>
-          <Text>status bar</Text>
-        </View>
-        <View style={{width: '100%', height: '50%'}}>
           <View style={styles.linkBtn}>
             <View>
               <GoBackButton />
@@ -77,8 +74,6 @@ const Profile = ({navigation, route}) => {
           <AddDogProfile />
         </TouchableOpacity> */}
       </View>
-
-      <View style={styles.footer} />
     </View>
   );
 };
@@ -92,10 +87,10 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    height: '12%',
+    height: '6.8%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    // backgroundColor: 'red',
   },
   top: {
     width: '100%',
@@ -109,13 +104,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-  },
-  footer: {
-    width: '100%',
-    height: '10%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#1ad657',
   },
 
   linkBtn: {
