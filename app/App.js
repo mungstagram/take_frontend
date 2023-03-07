@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SplashScreen from 'react-native-splash-screen';
 import {useSelector} from 'react-redux';
 
-import GlobalFont from 'react-native-global-font';
+// import GlobalFont from 'react-native-global-font';
 
 import Login from './screens/Login';
 import AuthStartScreen from './screens/AuthStartScreen';
@@ -51,10 +51,10 @@ const AuthStack = () => {
 // 로그인 후 이동하는 screen
 // TODO: 페이지들 넣기, screenOptions 지울듯
 const AuthenticatedStack = () => {
-  useEffect(() => {
-    const fontName = 'Pretendard-Regular';
-    GlobalFont.applyGlobal(fontName); //<------- Added font family golbally
-  }, []);
+  // useEffect(() => {
+  //   const fontName = 'Pretendard-Regular';
+  //   GlobalFont.applyGlobal(fontName); //<------- Added font family golbally
+  // }, []);
   return (
     <Stack.Navigator
       screenOptions={{
@@ -111,8 +111,8 @@ export const Navigation = () => {
 };
 
 const App = () => {
-  let fontName = 'Pretendard-Regular';
-  GlobalFont.applyGlobal(fontName);
+  // let fontName = 'Pretendard-Regular';
+  // GlobalFont.applyGlobal(fontName);
   return (
     <>
       <Provider store={store}>
