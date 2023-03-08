@@ -16,19 +16,33 @@ import Movie from './svg/Movie';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNav = () => {
+  const getActiveTintColor = routeName => {
+    if (routeName === 'Home') {
+      return '#F09090';
+    } else if (routeName === 'Search') {
+      return '#F5CEC7';
+    } else if (routeName === 'Write') {
+      return '#C6C09C';
+    } else if (routeName === 'Photo') {
+      return '#FFC98B';
+    } else {
+      return '#FFB284';
+    }
+  };
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{
-        activeTintColor: '#F09090', // 선택된 탭의 아이콘 색상
-        inactiveTintColor: '#000000', // 선택되지 않은 탭의 아이콘 색상
-      }}>
+      screenOptions={({route}) => ({
+        tabBarActiveTintColor: getActiveTintColor(route.name),
+      })}>
       <Tab.Screen
         name="Home"
         component={HomeTab}
         options={{
           headerShown: false,
-          tabBarIcon: ({color, size}) => <HomeSvg />,
+          tabBarIcon: ({focused}) =>
+            focused ? <HomeSvg color={'#F09090'} /> : <HomeSvg />,
         }}
       />
       <Tab.Screen

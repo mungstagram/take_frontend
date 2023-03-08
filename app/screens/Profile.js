@@ -6,6 +6,7 @@ import {
   Pressable,
   Dimensions,
   Alert,
+  ScrollView,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
@@ -22,17 +23,12 @@ import {__deleteUsers} from '../redux/modules/loginSlice';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+
 const Profile = ({navigation, route}) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
-  const [addDogProf, setAddDogProf] = useState(true);
   // 프로필 정보
   const {profile} = useSelector(state => state.profile);
-  console.log('stateProfile', profile[0]);
-  console.log('리랜더링횟수');
-  const onPressAddDog = () => {
-    setAddDogProf(!addDogProf);
-  };
 
   const {nickname} = route.params;
   const onDeleteUsersData = () => {
@@ -100,10 +96,11 @@ const Profile = ({navigation, route}) => {
           </View>
         </View>
         <View style={styles.content} />
-        <View style={styles.dogDetailWrapper}>
-          {/* <InputDogProfileCard /> */}
-          <TextDogProfileCard />
-          {/* <AddDogProfile /> */}
+        <View>
+          <ScrollView style={styles.dogDetailWrapper} horizontal={true}>
+            <AddDogProfile />
+          </ScrollView>
+          {/* <TextDogProfileCard /> */}
         </View>
       </View>
     </KeyboardAwareScrollView>
@@ -112,7 +109,7 @@ const Profile = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
   Wrapper: {
-    height: windowHeight - 40,
+    height: windowHeight * 0.945,
     width: windowWidth,
     backgroundColor: '#ffffff',
     bottom: 0,
@@ -154,9 +151,10 @@ const styles = StyleSheet.create({
     top: '4%',
   },
   dogDetailWrapper: {
-    bottom: '10%',
-    height: 444,
-    // backgroundColor: 'red',
+    position: 'absolute',
+    bottom: 30,
+    height: 498,
+    width: '100%',
   },
 });
 
