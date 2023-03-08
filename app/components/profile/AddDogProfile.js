@@ -33,10 +33,13 @@ const styles = StyleSheet.create({
     width: 264,
     height: 444,
     borderRadius: 15,
-    backgroundColor: '#ffffff',
+    backgroundColor: 'red',
     opacity: 0.6,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  addDogCardText: {
+    backgroundColor: 'red',
   },
 });
 

@@ -12,56 +12,32 @@ import {
   Alert,
   Platform,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
-
 import FastImage from 'react-native-fast-image';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 
 import {__getProfile, __editProfile} from '../../redux/modules/profileSlice';
-
 import Emoticon from '../svg/Emoticon';
 import ServicesWhiteImg from '../svg/ServicesWhiteImg';
 import TaskImgWhite from '../svg/TaskImgWhite';
 
-const PersonProfileCard = ({item}) => {
-  // const PersonProfileCard = ({myInfo}) => {
-  //   console.log('user myNick', myInfo[0].user);
+const PersonProfileCard = ({myInfo}) => {
+  console.log(myInfo, '프룹스받은값');
   const dispatch = useDispatch();
-  // console.log('item', item);
 
   //카메라
   const [openCamera, setOpenCamera] = useState(false);
 
-  //data 불러옴
-  const profile = useSelector(state => state.profile.profile);
-  // console.log('input profile', profile[0]);
-
   //input
-  const [profNickEdit, setProfNickEdit] = useState(profile[0]?.user.nickname);
-  const [profIntroEdit, setProfIntroEdit] = useState(
-    profile[0]?.user.introduce,
-  );
+  const [profNickEdit, setProfNickEdit] = useState(myInfo?.nickname);
+  const [profIntroEdit, setProfIntroEdit] = useState(myInfo?.introduce);
 
   //수정
   const [isEdit, setIsEdit] = useState(false);
 
   //이미지
   const [images, setImages] = useState([]);
-
-  // //data 값 get
-  // useEffect(() => {
-  //   // console.log('data를 가져오자');
-  //   //2.데이터 값을 초기에 실행(마운트될때, 안에 있는 함수을 실행)
-  //   dispatch(__getProfile());
-  //   //3. dispatch get 프로필 정보 요청
-  //   // console.log('2.2.user', nickname);
-  //   // console.log('person profile');
-  // }, []);
-
-  // // console.log('state.profile', profile[0]);
-  // console.log('user dog', myInfo[1].dogs);
-  // console.log('contentUrl', myInfo[0].user.contentUrl);
 
   //수정버튼 클릭 이벤트
   const onPressInputEdit = () => {
@@ -77,7 +53,6 @@ const PersonProfileCard = ({item}) => {
   const onPresschangeProfEdit = e => {
     setProfIntroEdit(e);
   };
-  // console.log('input profile profIntroEdit', profIntroEdit);
 
   //이미지,권한 설정
   useEffect(() => {
@@ -94,7 +69,7 @@ const PersonProfileCard = ({item}) => {
           : Alert.alert('카메라 권한을 허용해주세요!');
       } catch (error) {
         Alert.alert('카메라 권한설정이 에러났습니다.');
-        console.warn(error);
+        // console.warn(error);
       }
     };
     requestCameraPermission();
@@ -104,7 +79,6 @@ const PersonProfileCard = ({item}) => {
 
   const sendEditFormData = () => {
     const formData = new FormData();
-    // console.log('images[0]', images[0]);
 
     formData.append('changeNickname', profNickEdit);
     formData.append('introduce', profIntroEdit);
@@ -120,10 +94,8 @@ const PersonProfileCard = ({item}) => {
     console.log('edit profile');
     console.log('formData', formData);
 
-    dispatch(
-      __editProfile({nickname: profile[0]?.user.nickname, formData: formData}),
-    );
-    if (error === null) setIsEdit(false);
+    dispatch(__editProfile({nickname: myInfo?.nickname, formData: formData}));
+    setIsEdit(false);
   };
 
   //이미지 클릭시 갤러리를 여는 이벤트
@@ -138,13 +110,14 @@ const PersonProfileCard = ({item}) => {
         isCrop: true,
         isCropCircle: true,
       });
-      console.log('response: ', response);
+      // console.log('response: ', response);
       setImages(response);
     } catch (e) {
-      console.log(e.code, e.message);
+      // console.log(e);
+      Alert.alert('사진 등록 버튼에 오류가 생겼습니다. 문의부탁드립니다.');
     }
   };
-  // console.log(images);
+  // console.log(images, '이미지 저장되었는가?');
 
   return (
     <View style={styles.block}>
@@ -153,29 +126,32 @@ const PersonProfileCard = ({item}) => {
           <View style={styles.imgOpenBtn}>
             {isEdit ? (
               <View>
-                <TouchableOpacity
-                  style={styles.personProfileImg}
-                  onPress={openPicker}
-                  vlue={openCamera}>
+                <TouchableOpacity onPress={openPicker} value={openCamera}>
                   {images.length !== 0 ? (
                     <Image
                       value={images}
-                      width={IMAGE_WIDTH}
                       style={styles.media}
                       source={{
                         uri: `file:// ${images[0]?.realPath}`,
                       }}
                     />
                   ) : (
-                    <Emoticon />
+                    <FastImage
+                      style={styles.personProfileImg}
+                      source={{
+                        uri: myInfo.contentUrl,
+                        priority: FastImage.priority.normal,
+                      }}
+                      resizeMode={FastImage.resizeMode.contain}
+                    />
                   )}
                 </TouchableOpacity>
               </View>
             ) : (
               <FastImage
-                style={styles.personImg}
+                style={styles.media}
                 source={{
-                  uri: profile[0]?.user?.contentUrl,
+                  uri: myInfo?.contentUrl,
                   priority: FastImage.priority.normal,
                 }}
                 resizeMode={FastImage.resizeMode.contain}
@@ -190,7 +166,7 @@ const PersonProfileCard = ({item}) => {
               zIndex: 2,
               marginTop: '12%',
             }}>
-            {profile[0]?.user?.dogsCount} 마리의 집사
+            {myInfo?.dogsCount} 마리의 집사
           </Text>
         </View>
 
@@ -206,30 +182,28 @@ const PersonProfileCard = ({item}) => {
           )}
           <View style={styles.textInputWrap}>
             {isEdit ? (
-              <TextInput
-                placeholder="Nick Name"
-                onChangeText={onPresschangeNickEdit}
-                value={profNickEdit}
-                style={styles.textNickInput}
-                autoFocus
-              />
+              <>
+                <TextInput
+                  placeholder="Nick Name"
+                  onChangeText={onPresschangeNickEdit}
+                  value={profNickEdit}
+                  style={styles.textNickInput}
+                  autoFocus
+                />
+                <TextInput
+                  placeholder="성격, 산책 시간, 거주지 소개"
+                  maxLength={25}
+                  multiline={true}
+                  value={profIntroEdit}
+                  onChangeText={onPresschangeProfEdit}
+                  style={styles.textIntroInput}
+                />
+              </>
             ) : (
-              <Text style={styles.textNick}>{profile[0]?.user?.nickname}</Text>
-            )}
-
-            {isEdit ? (
-              <TextInput
-                placeholder="성격, 산책 시간, 거주지 소개"
-                maxLength={25}
-                multiline={true}
-                value={profIntroEdit}
-                onChangeText={onPresschangeProfEdit}
-                style={styles.textIntroInput}
-              />
-            ) : (
-              <Text style={styles.textIntro}>
-                {profile[0]?.user?.introduce}
-              </Text>
+              <>
+                <Text style={styles.textNick}>{myInfo?.nickname}</Text>
+                <Text style={styles.textIntro}>{myInfo?.introduce}</Text>
+              </>
             )}
           </View>
         </View>
@@ -237,8 +211,6 @@ const PersonProfileCard = ({item}) => {
     </View>
   );
 };
-
-const IMAGE_WIDTH = 80;
 
 const styles = StyleSheet.create({
   block: {
@@ -254,7 +226,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardLeftWrap: {
-    // borderWidth: 1,
     width: 94,
     justifyContent: 'center',
     alignItems: 'center',
@@ -276,10 +247,11 @@ const styles = StyleSheet.create({
     width: 170,
     height: 56,
     position: 'absolute',
-    padding: '8%',
     fontSize: 20,
     color: 'white',
     fontWeight: '600',
+    paddingLeft: 10,
+    paddingTop: 10,
   },
   textNickInput: {
     width: 170,
@@ -288,8 +260,9 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: '#ffffff',
     borderColor: '#ffffff',
+    borderWidth: 1,
     opacity: 0.5,
-    padding: '8%',
+    padding: 16,
   },
   saveBtn: {
     // borderWidth: 1,
@@ -316,10 +289,11 @@ const styles = StyleSheet.create({
     height: 72,
     position: 'relative',
     top: '44%',
-    padding: '8%',
     fontSize: 16,
     color: 'white',
     marginTop: '4%',
+    paddingLeft: 10,
+    paddingTop: 10,
   },
   textIntroInput: {
     width: 222,
@@ -329,9 +303,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderColor: '#ffffff',
     opacity: 0.5,
-    padding: '4%',
+    padding: 16,
     fontSize: 16,
-    marginTop: '4%',
+    marginTop: '2%',
+    borderWidth: 1,
   },
 
   textInputBtn: {
@@ -349,7 +324,6 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 50,
     top: '10%',
-    left: '15%',
     backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -357,17 +331,16 @@ const styles = StyleSheet.create({
   },
   media: {
     // borderWidth: 1,
-    width: IMAGE_WIDTH,
-    height: IMAGE_WIDTH,
+    width: 80,
+    height: 80,
     borderRadius: 50,
-    backgroundColor: 'rgba(155, 155, 155, 0.2)',
+    backgroundColor: '#ffffff',
   },
   imgOpenBtn: {
     width: 80,
     height: 80,
     justifyContent: 'center',
     alignItems: 'center',
-    right: '10%',
   },
   personProfileImg: {
     width: 80,
@@ -379,7 +352,6 @@ const styles = StyleSheet.create({
     opacity: 0.6,
     borderWidth: 1,
     top: '10%',
-    left: '15%',
     borderColor: '#ffffff',
   },
 });

@@ -19,7 +19,7 @@ function Home({navigation}) {
   const [myNick, setMyNick] = useState();
   const isFocused = useIsFocused();
   //data 불러옴
-  const profile = useSelector(state => state.profile.profile);
+  const profile = useSelector(state => state.profile.myProfile);
   // 몇번쨰 강아지인지
   const [dogIndex, setDogIndex] = useState(0);
   // profile[0] 유저  , profile[1] 강아지
@@ -55,8 +55,7 @@ function Home({navigation}) {
       setMyNick(await AsyncStorage.getItem('nickname'));
     };
     getNickName();
-  }, [myNick]);
-  console.log('myNick', myNick);
+  }, []);
 
   useEffect(() => {
     dispatch(__getHomeProfile());
@@ -65,7 +64,8 @@ function Home({navigation}) {
   return (
     <View style={styles.homeProfile}>
       <View style={styles.goToLink}>
-        <Pressable onPress={() => navigation.push('Profile', {myNick})}>
+        <Pressable
+          onPress={() => navigation.push('Profile', {nickname: myNick})}>
           <Text style={styles.homeFontStyle}>프로필</Text>
         </Pressable>
         <Pressable
@@ -104,7 +104,7 @@ function Home({navigation}) {
             )}
           </View>
           <View style={styles.profileImg}>
-            {profile[0].user.contentUrl === '' ? (
+            {profile[0]?.user.contentUrl === '' ? (
               <View style={styles.dogProfileImg}>
                 <Pets />
               </View>
