@@ -5,13 +5,14 @@ import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import UserDetail from '../screens/UserDetail';
 import MessageBox from '../screens/MessageBox';
+
 const Stack = createNativeStackNavigator();
 
 const HomeTab = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="HomeTab">
       <Stack.Screen
-        name="Home"
+        name="HomeTab"
         component={Home}
         options={{headerShown: false}}
       />
