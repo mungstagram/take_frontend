@@ -15,6 +15,8 @@ import Movie from './svg/Movie';
 
 const Tab = createBottomTabNavigator();
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 const BottomTabNav = () => {
   const getActiveTintColor = routeName => {
     if (routeName === 'Home') {
@@ -45,28 +47,33 @@ const BottomTabNav = () => {
             focused ? <HomeSvg color={'#F09090'} /> : <HomeSvg />,
         }}
       />
+
       <Tab.Screen
         name="Search"
         component={SearchTab}
         options={{
           headerShown: false,
-          tabBarIcon: ({color, size}) => <SearchBlack />,
+          tabBarIcon: ({focused}) =>
+            focused ? <SearchBlack color={'#F5CEC7'} /> : <SearchBlack />,
         }}
       />
       <Tab.Screen
-        name="Write "
+        name="Write"
         component={AddContent}
         options={{
           headerShown: false,
-          tabBarIcon: ({color, size}) => <Edit />,
+          tabBarIcon: ({focused}) =>
+            focused ? <Edit color={'#C6C09C'} /> : <Edit />,
         }}
       />
+
       <Tab.Screen
         name="Photo"
         component={ImageTab}
         options={{
           headerShown: false,
-          tabBarIcon: ({color, size}) => <Panorama />,
+          tabBarIcon: ({focused}) =>
+            focused ? <Panorama color={'#FFC98B'} /> : <Panorama />,
         }}
       />
       <Tab.Screen
@@ -74,7 +81,8 @@ const BottomTabNav = () => {
         component={VideoTab}
         options={{
           headerShown: false,
-          tabBarIcon: ({color, size}) => <Movie />,
+          tabBarIcon: ({focused}) =>
+            focused ? <Movie color={'#FFB284'} /> : <Movie />,
         }}
       />
     </Tab.Navigator>

@@ -22,5 +22,4 @@ const HomeSvg = ({color}) => {
     </>
   );
 };
-
 export default HomeSvg;
