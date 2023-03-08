@@ -4,13 +4,12 @@ import {
   View,
   Text,
   Pressable,
-  Modal,
-  TouchableOpacity,
+  Dimensions,
   Alert,
 } from 'react-native';
-import {Button} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {__getProfile} from '../redux/modules/profileSlice';
 import Logout from '../components/Logout';
@@ -20,6 +19,9 @@ import InputDogProfileCard from '../components/profile/InputDogProfileCard';
 import TextDogProfileCard from '../components/profile/TextDogProfileCard';
 import AddDogProfile from '../components/profile/AddDogProfile';
 import {__deleteUsers} from '../redux/modules/loginSlice';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 const Profile = ({navigation, route}) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -60,52 +62,67 @@ const Profile = ({navigation, route}) => {
   }, [isFocused]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={{width: '100%', height: '100%'}}>
-          <View style={styles.linkBtn}>
-            <View>
-              <GoBackButton />
-            </View>
-            <View
-              style={{flexDirection: 'row', right: '7%', alignItems: 'center'}}>
-              <Pressable onPress={onDeleteUsersData}>
-                <Text style={{fontSize: 11, paddingRight: 8}}>회원탈퇴</Text>
-              </Pressable>
+    <KeyboardAwareScrollView
+      // style={styles.Wrapper}
+      contentContainerStyle={styles.Wrapper}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <View style={{width: '100%', height: '100%'}}>
+            <View style={styles.linkBtn}>
+              <View>
+                <GoBackButton />
+              </View>
               <View
                 style={{
-                  borderLeftColor: '#C8C8C8',
-                  borderLeftWidth: 1,
-                  height: 12,
-                  width: 8,
-                }}
-              />
-              <Logout />
+                  flexDirection: 'row',
+                  right: '7%',
+                  alignItems: 'center',
+                }}>
+                <Pressable onPress={onDeleteUsersData}>
+                  <Text style={{fontSize: 11, paddingRight: 8}}>회원탈퇴</Text>
+                </Pressable>
+                <View
+                  style={{
+                    borderLeftColor: '#C8C8C8',
+                    borderLeftWidth: 1,
+                    height: 12,
+                    width: 8,
+                  }}
+                />
+                <Logout />
+              </View>
             </View>
           </View>
         </View>
-      </View>
-      <View style={styles.top}>
-        <View style={{bottom: '15%'}}>
-          <PersonProfileCard myInfo={profile[0].user} nickname={nickname} />
+        <View style={styles.top}>
+          <View style={{bottom: '15%'}}>
+            <PersonProfileCard myInfo={profile[0].user} nickname={nickname} />
+          </View>
+        </View>
+        <View style={styles.content} />
+        <View style={styles.dogDetailWrapper}>
+          {/* <InputDogProfileCard /> */}
+          <TextDogProfileCard />
+          {/* <AddDogProfile /> */}
         </View>
       </View>
-      <View style={styles.content} />
-      <View style={{left: '8%', bottom: '10%'}}>
-        <InputDogProfileCard />
-        {/* <TextDogProfileCard /> */}
-        {/* <AddDogProfile /> */}
-      </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  Wrapper: {
+    height: windowHeight - 40,
+    width: windowWidth,
+    backgroundColor: '#ffffff',
+    bottom: 0,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     //alignItems: 'center',
     backgroundColor: '#ffffff',
+    bottom: 0,
   },
   header: {
     width: '100%',
@@ -136,15 +153,11 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     top: '4%',
   },
-
-  // editBtn: {
-  //   borderWidth: 1,
-  //   width: 40,
-  //   height: 30,
-  //   top: '35%',
-  //   left: '75%',
-  //   zIndex: 2,
-  // },
+  dogDetailWrapper: {
+    bottom: '10%',
+    height: 444,
+    // backgroundColor: 'red',
+  },
 });
 
 export default Profile;

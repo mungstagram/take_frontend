@@ -12,14 +12,12 @@ import {
   Alert,
   Platform,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
-
 import FastImage from 'react-native-fast-image';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 
 import {__getProfile, __editProfile} from '../../redux/modules/profileSlice';
-
 import Emoticon from '../svg/Emoticon';
 import ServicesWhiteImg from '../svg/ServicesWhiteImg';
 import TaskImgWhite from '../svg/TaskImgWhite';
