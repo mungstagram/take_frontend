@@ -83,8 +83,8 @@ const KaKaoAuthStack = () => {
 export const Navigation = () => {
   const {isLogin} = useSelector(state => state.login);
   const {myNick} = useSelector(state => state.login);
-  console.log(myNick, '네비게이션에서');
-  console.log(isLogin, '네비게이션에서 확인하기');
+  // console.log(myNick, '네비게이션에서');
+  // console.log(isLogin, '네비게이션에서 확인하기');
   useEffect(() => {
     SplashScreen.hide();
   }, []);

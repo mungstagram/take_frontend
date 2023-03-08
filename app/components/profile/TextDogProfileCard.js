@@ -266,6 +266,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff',
+    elevation: 1,
   },
   dogCardShadow: {
     width: 264,

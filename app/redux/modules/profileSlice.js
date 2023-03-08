@@ -1,9 +1,22 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import {useDispatch} from 'react-redux';
 import http from '../api/http';
+import {Alert} from 'react-native';
 
 const initialState = {
   profile: [
+    {
+      user: {
+        nickname: '',
+        contentUrl: '',
+        introduce: '',
+        dogsCount: '',
+      },
+    },
+    {
+      dogs: [],
+    },
+  ],
+  myProfile: [
     {
       user: {
         nickname: '',
@@ -43,6 +56,7 @@ export const __getProfile = createAsyncThunk(
     //여기서 undefined 면 절대통신이 안된다는 뜻!
     try {
       const {data} = await http.get(`/profile/${payload}`);
+      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -54,24 +68,22 @@ export const __editProfile = createAsyncThunk(
   'EDIT_PROFILE',
   async (payload, thunkAPI) => {
     try {
-      // console.log('edit payload', payload);
-      // console.log('edit payload', payload.nickname);
-      // console.log('edit payload', payload.formData);
       const {data} = await http.put(
         `/profile/${payload.nickname}`,
         payload.formData,
         {
-          // changeNickname: payload.changeNickname,
-          // introduce: payload.introduce,
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         },
       );
       console.log('resdata', data);
+      AsyncStorage.setItem('nickname', data.nickname);
+
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log('edit error', error);
+      Alert.alert('죄송합니다 수정에 실패하였습니다.');
       return thunkAPI.rejectWithValue(error.code);
     }
   },
@@ -110,7 +122,7 @@ export const profileSlice = createSlice({
     [__getHomeProfile.fulfilled]: (state, action) => {
       state.isLoading = false;
       // console.log(action.payload);
-      state.profile = action.payload;
+      state.myProfile = action.payload;
       // console.log('payload', action.payload);
     },
     [__getHomeProfile.rejected]: (state, action) => {
@@ -122,9 +134,7 @@ export const profileSlice = createSlice({
     },
     [__getProfile.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log(action.payload);
       state.profile = action.payload;
-      // console.log('payload', action.payload);
     },
     [__getProfile.rejected]: (state, action) => {
       state.isLoading = false;
@@ -135,7 +145,8 @@ export const profileSlice = createSlice({
     },
     [__editProfile.fulfilled]: (state, action) => {
       state.profile[0].user = action.payload;
-      // state.profile[1].dogs = action.payload;
+      state.myProfile[0].user = action.payload;
+
       state.error = null;
     },
     [__editProfile.pending]: state => {
@@ -146,7 +157,6 @@ export const profileSlice = createSlice({
       state.error = action.payload;
     },
     [__editDogProfile.fulfilled]: (state, action) => {
-      // state.profile[0].user = action.payload;
       state.profile[1].dogs = action.payload;
       state.error = null;
     },
