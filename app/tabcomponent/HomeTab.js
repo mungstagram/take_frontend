@@ -12,7 +12,7 @@ const HomeTab = () => {
   return (
     <Stack.Navigator initialRouteName="HomeTab">
       <Stack.Screen
-        name="HomeTab"
+        name="Home"
         component={Home}
         options={{headerShown: false}}
       />
