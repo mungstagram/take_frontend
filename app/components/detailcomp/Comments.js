@@ -24,6 +24,7 @@ import Delete from '../svg/Delete';
 import TaskImg from '../svg/TaskImg';
 import TaskImgOn from '../svg/TaskImgOn';
 import ScanDelete from '../svg/ScanDelete';
+import MyText from '../common/MyText';
 
 const Comments = ({item, detail}) => {
   const dispatch = useDispatch();
@@ -62,8 +63,8 @@ const Comments = ({item, detail}) => {
                 comment: editComment,
               }),
             );
-          console.log('id', itemData.id);
-          console.log('edit', editComment);
+          //console.log('id', itemData.id);
+          //console.log('edit', editComment);
           setEdit(edit => !edit);
         },
       },
@@ -94,8 +95,6 @@ const Comments = ({item, detail}) => {
     state => state.profile.myProfile[0].user.nickname,
   );
   //console.log('loginNick', loginNick);
-  const userNick = detail.nickname;
-  //console.log('userNick', userNick);
   const commentNick = itemData.nickname;
   //console.log('commentNick', commentNick);
 
@@ -117,8 +116,8 @@ const Comments = ({item, detail}) => {
           resizeMode={'cover'}
         />
         <View style={styles.userInfo}>
-          <Text style={styles.nicknameText}>{itemData.nickname}</Text>
-          <Text style={styles.timeText}>{itemData.createdAt}</Text>
+          <MyText style={styles.nicknameText}>{itemData.nickname}</MyText>
+          <MyText style={styles.timeText}>{itemData.createdAt}</MyText>
         </View>
         <View style={styles.btnControl}>
           {commentNick === loginNick ? (
@@ -158,7 +157,7 @@ const Comments = ({item, detail}) => {
           <>
             <View style={styles.empty}></View>
             <View style={styles.textBox}>
-              <Text style={styles.text}>{itemData.comment}</Text>
+              <MyText style={styles.text}>{itemData.comment}</MyText>
             </View>
           </>
         ) : (
