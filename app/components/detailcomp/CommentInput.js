@@ -15,6 +15,7 @@ import {Colors, BasicColors} from '../../constants/colors';
 import WriteComment from '../svg/WriteComment';
 import {__postComment} from '../../redux/modules/commetsSlice';
 import {__getProfile} from '../../redux/modules/profileSlice';
+import MyText from '../common/MyText';
 
 const CommentInput = ({detail}) => {
   const dispatch = useDispatch();

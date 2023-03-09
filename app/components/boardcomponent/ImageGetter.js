@@ -5,6 +5,7 @@ import {__getPostData} from '../../redux/modules/addContentSlice';
 import {useIsFocused} from '@react-navigation/native';
 
 import ImageCard from './ImageCard';
+import MyText from '../common/MyText';
 
 const ImageGetter = ({order, nickname, searchData}) => {
   // 검색에서 값을 받는 경우 searchData 가 true

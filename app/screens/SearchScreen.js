@@ -20,6 +20,7 @@ import SearchNick from '../components/userdetail/SearchNick';
 import SearchNone from '../components/userdetail/SearchNone';
 import ImageGetter from '../components/boardcomponent/ImageGetter';
 import VideoGetter from '../components/boardcomponent/VideoGetter';
+import MyText from '../components/common/MyText';
 
 const SearchScreen = () => {
   const navigation = useNavigation();
@@ -83,7 +84,7 @@ const SearchScreen = () => {
               source={require('../assets/LogoSmall.png')}
               resizeMode={'cover'}
             />
-            <Text style={styles.logoText}>찾아보기</Text>
+            <MyText style={styles.logoText}>찾아보기</MyText>
           </View>
         </View>
 

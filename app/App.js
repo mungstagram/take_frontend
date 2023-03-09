@@ -5,6 +5,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SplashScreen from 'react-native-splash-screen';
 import {useSelector} from 'react-redux';
 
+// import GlobalFont from 'react-native-global-font';
+
 import Login from './screens/Login';
 import AuthStartScreen from './screens/AuthStartScreen';
 import Signup from './screens/Signup';
@@ -15,12 +17,11 @@ import {Colors} from './constants/colors';
 import {Provider} from 'react-redux';
 import LoginChecker from './components/LoginChecker';
 import BottomTabNav from './components/BottomTabNav';
-
 import InputDogProfileCard from './components/profile/InputDogProfileCard';
 
 const Stack = createNativeStackNavigator();
 
-//그인전 이용하는 스크린
+//로그인전 이용하는 스크린
 const AuthStack = () => {
   return (
     <Stack.Navigator>

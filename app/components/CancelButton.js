@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {Colors, BasicColors} from '../constants/colors';
 import {useNavigation} from '@react-navigation/native';
+import MyText from './common/MyText';
 
 const CancelButton = ({children}) => {
   const navigation = useNavigation();
@@ -17,7 +18,7 @@ const CancelButton = ({children}) => {
   return (
     <View>
       <TouchableOpacity style={styles.buttonBox} onPress={onCancelHandler}>
-        <Text style={styles.button}>{children}</Text>
+        <MyText style={styles.button}>{children}</MyText>
       </TouchableOpacity>
     </View>
   );

@@ -7,6 +7,7 @@ import AuthButton from '../components/common/AuthButton';
 import {__postLogin, deleteFailLog} from '../redux/modules/loginSlice';
 import AuthNavigateButton from '../components/AuthNavigateButton';
 import KaKaoLogin from '../components/kakaologin/KaKaoLogin';
+import MyText from '../components/common/MyText';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const Login = () => {
           source={require('../assets/LogoMedium.png')}
           resizeMode={'cover'}
         />
-        <Text style={styles.imageText}>로그인하기</Text>
+        <MyText style={styles.imageText}>로그인하기</MyText>
       </View>
       <View style={styles.inputWrapper}>
         <AuthInput
@@ -55,11 +56,11 @@ const Login = () => {
         />
         <View style={styles.helperMessageBox}>
           {isSuccessLogin ? (
-            <Text> </Text>
+            <MyText> </MyText>
           ) : (
-            <Text style={styles.helperText}>
+            <MyText style={styles.helperText}>
               입력하신 정보가 일치하지 않습니다
-            </Text>
+            </MyText>
           )}
         </View>
 

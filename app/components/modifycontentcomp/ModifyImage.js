@@ -12,10 +12,11 @@ import {
   Alert,
   Dimensions,
   Pressable,
+  Text,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
-import {Surface, Text} from 'react-native-paper';
+import {Surface} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {useIsFocused} from '@react-navigation/native';
 
@@ -28,6 +29,8 @@ import FastImage from 'react-native-fast-image';
 import Video from 'react-native-video';
 import {__putPostDetailData} from '../../redux/modules/commetsSlice';
 import {__getPostDetailData} from '../../redux/modules/commetsSlice';
+import MyText from '../common/MyText';
+import HeaderTitle from '../common/HeaderTitle';
 
 const ModifyImage = ({route}) => {
   const fileData = useSelector(state => state.comments.detail);
@@ -123,15 +126,24 @@ const ModifyImage = ({route}) => {
   };
   return (
     <SafeAreaView style={styles.containerBox}>
-      <View style={styles.goBackButton}>
-        <GoBackButton />
+      <View style={styles.headerBox}>
+        <View style={styles.goBackButton}>
+          <GoBackButton />
+        </View>
+        <View style={styles.headerTitle}>
+          <HeaderTitle />
+          <Text style={styles.title}>내새끼 자랑하기</Text>
+        </View>
+        <View style={styles.flex2}></View>
       </View>
       <View style={styles.container}>
         <View style={styles.box}>
           <View style={styles.fileInput}>
             <View style={styles.fileupload}>
               <View style={styles.categoryInfo}>
-                <Text style={styles.categoryInfoText}>등록된 사진 확인</Text>
+                <MyText style={styles.categoryInfoText}>
+                  등록된 사진 확인
+                </MyText>
               </View>
               <View style={styles.openfileView}>
                 <FlatList
@@ -164,7 +176,9 @@ const ModifyImage = ({route}) => {
                 onChange={contentTextHandler}
               />
               <View style={styles.contentCount}>
-                <Text style={styles.textCount}>{contentText.length}/2000</Text>
+                <MyText style={styles.textCount}>
+                  {contentText.length}/2000
+                </MyText>
               </View>
             </Surface>
           </View>
@@ -196,13 +210,34 @@ const styles = StyleSheet.create({
     height: windowHeight,
     //backgroundColor: 'red',
   },
-  goBackButton: {
+  headerBox: {
     width: imageCardWidth,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  goBackButton: {
     height: 58,
     alignItems: 'flex-start',
     marginLeft: '7%',
     paddingTop: 18,
     zIndex: 20,
+    flex: 1,
+  },
+  headerTitle: {
+    flexDirection: 'row',
+    width: imageCardWidth * 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 5,
+  },
+  title: {
+    marginHorizontal: imageCardWidth * 0.05,
+    fontSize: 28,
+    color: Colors.userDataColor,
+    fontFamily: 'SBAggro-M',
+  },
+  flex2: {
     flex: 1,
   },
   container: {

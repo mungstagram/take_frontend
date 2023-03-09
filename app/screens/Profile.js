@@ -19,6 +19,7 @@ import GoBackButton from '../components/common/GoBackButton';
 import PersonProfileCard from '../components/profile/PersonProfileCard';
 
 import AddDogProfile from '../components/profile/AddDogProfile';
+import MyText from '../components/common/MyText';
 import {__deleteUsers} from '../redux/modules/loginSlice';
 import DogCard from '../components/profile/DogCard';
 
@@ -76,7 +77,9 @@ const Profile = ({navigation, route}) => {
                   alignItems: 'center',
                 }}>
                 <Pressable onPress={onDeleteUsersData}>
-                  <Text style={{fontSize: 11, paddingRight: 8}}>회원탈퇴</Text>
+                  <MyText style={{fontSize: 11, paddingRight: 8}}>
+                    회원탈퇴
+                  </MyText>
                 </Pressable>
                 <View
                   style={{

@@ -9,6 +9,8 @@ import {useIsFocused} from '@react-navigation/core';
 import {Colors} from '../constants/colors';
 import FastImage from 'react-native-fast-image';
 import GoBackButton from '../components/common/GoBackButton';
+import MyText from '../components/common/MyText';
+
 const MessageBox = () => {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
@@ -69,7 +71,7 @@ const MessageBox = () => {
           source={require('../assets/LogoSmall.png')}
           resizeMode={'cover'}
         />
-        <Text style={styles.logoText}>메시지</Text>
+        <MyText style={styles.logoText}>메시지</MyText>
       </View>
       <View style={styles.userRoomWrapper}>
         <FlatList
@@ -94,13 +96,17 @@ const MessageBox = () => {
                   resizeMode={FastImage.resizeMode.contain}
                 />
                 <View style={styles.textAlinger}>
-                  <Text style={styles.nickNameFont}>{item.nickname}</Text>
-                  <Text style={styles.lastMessageFont}>{item.lastChat}</Text>
+                  <MyText style={styles.nickNameFont}>{item.nickname}</MyText>
+                  <MyText style={styles.lastMessageFont}>
+                    {item.lastChat}
+                  </MyText>
                 </View>
                 <View style={styles.detailInformation}>
-                  <Text style={styles.timeGapText}>{item.timeGap}</Text>
+                  <MyText style={styles.timeGapText}>{item.timeGap}</MyText>
                   <View style={styles.unreadCountHolder}>
-                    <Text style={styles.unreadCount}>{item.unreadCount}</Text>
+                    <MyText style={styles.unreadCount}>
+                      {item.unreadCount}
+                    </MyText>
                   </View>
                 </View>
               </Pressable>

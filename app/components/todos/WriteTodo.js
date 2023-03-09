@@ -12,6 +12,7 @@ import {useDispatch} from 'react-redux';
 import {__addTodos} from '../../redux/modules/todoSlice';
 
 import TaskPinkImg from '../svg/TaskPinkImg';
+import MyText from '../common/MyText';
 
 const WriteTodo = () => {
   const dispatch = useDispatch();
