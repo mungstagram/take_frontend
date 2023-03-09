@@ -8,7 +8,7 @@ import {
   Alert,
   TextInput,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FastImage from 'react-native-fast-image';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
@@ -36,17 +36,34 @@ const CommentList = ({userNick}) => {
   const detail = useSelector(state => state.comments.detail);
   //console.log('de', detail);
   //좋아요 상태
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(detail.isLiked);
+  const [likedCount, setLikedCount] = useState(detail.likesCount);
+  useEffect(() => {
+    setIsLiked(detail.isLiked);
+    setLikedCount(detail.likesCount);
+  }, [detail]);
   // 좋아요 버튼
   const onIsLikeHandler = () => {
-    if (isLiked === false) {
-      setIsLiked(true);
-      dispatch(__putLikes({postId: detail.postId}));
-    } else {
-      setIsLiked(false);
-      dispatch(__putLikes({postId: detail.postId}));
+    if (detail.isLiked && isLiked === true) {
+      setIsLiked(!isLiked);
+      setLikedCount(detail.likesCount - 1);
+    } else if (detail.isLiked && isLiked === false) {
+      setIsLiked(!isLiked);
+      setLikedCount(detail.likesCount);
+    } else if (!detail.isLiked && isLiked === false) {
+      setIsLiked(!isLiked);
+      setLikedCount(detail.likesCount + 1);
+    } else if (!detail.isLiked && isLiked === true) {
+      setIsLiked(!isLiked);
+      setLikedCount(detail.likesCount);
     }
+    dispatch(__putLikes({postId: detail.postId}));
   };
+  console.log(isLiked, '현재 좋아요', likedCount, '총 좋아요 수');
+  // detail.isLiked가 true ..=> 내가 원래 좋아요 했던 애
+  // 좋아요 누르면 하트 -> false + 좋아요개수 -1 한번더 누르면 원래 좋아요개수
+
+  //detail.isLiked가 false면  좋아요시 하트 -> true 좋아요 개수 +1 한번 더 누르면 원래개수
 
   const [line, setLine] = useState(2);
   const [isActivated, setIsActivated] = useState(false);
@@ -65,9 +82,9 @@ const CommentList = ({userNick}) => {
             <MyText style={styles.titleText}>{detail.title}</MyText>
             <View style={styles.favoritBox}>
               <Pressable onPress={onIsLikeHandler}>
-                {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
+                {isLiked ? <Favorite big /> : <NotFavorite big />}
               </Pressable>
-              <MyText>{detail.likesCount}</MyText>
+              <MyText>{likedCount}</MyText>
             </View>
           </View>
           <View style={styles.contentText}>
@@ -86,6 +103,7 @@ const CommentList = ({userNick}) => {
     );
   };
 
+  console.log(commentList, '커멘트리스트 ');
   //FlatList Footer
   const FooterContainer = () => {
     return (
@@ -107,7 +125,7 @@ const CommentList = ({userNick}) => {
           <FlatList
             ListHeaderComponent={detailContent}
             renderItem={renderItem}
-            keyExtractor={item => item.idData}
+            keyExtractor={item => item.id}
             style={styles.listinBox2}
             horizontal={false}
             nestedScrollEnabled={true}
@@ -121,9 +139,9 @@ const CommentList = ({userNick}) => {
             <MyText style={styles.titleText}>{detail.title}</MyText>
             <View style={styles.favoritBox}>
               <Pressable onPress={onIsLikeHandler}>
-                {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
+                {isLiked ? <Favorite big /> : <NotFavorite big />}
               </Pressable>
-              <MyText>{detail.likesCount}</MyText>
+              <MyText>{likedCount}</MyText>
             </View>
           </View>
           <View style={styles.contentText}>
@@ -145,7 +163,7 @@ const CommentList = ({userNick}) => {
               <FlatList
                 data={commentList}
                 renderItem={renderItem}
-                keyExtractor={item => item.idData}
+                keyExtractor={item => item.id}
                 style={styles.listinBox}
                 horizontal={false}
                 nestedScrollEnabled={true}
