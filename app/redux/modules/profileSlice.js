@@ -3,7 +3,6 @@ import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import http from '../api/http';
-import {act} from 'react-test-renderer';
 
 const initialState = {
   profile: [
@@ -55,8 +54,6 @@ export const __getHomeProfile = createAsyncThunk(
 export const __getProfile = createAsyncThunk(
   'GET_PROFILE',
   async (payload, thunkAPI) => {
-    console.log('1.payload', payload);
-    //여기서 undefined 면 절대통신이 안된다는 뜻!
     try {
       const {data} = await http.get(`/profile/${payload}`);
       console.log(data);
@@ -96,13 +93,12 @@ export const __addDogProfile = createAsyncThunk(
   'ADD_DOG_PROFILE',
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
       const {data} = await http.post(`/dogs`, payload, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('dog add data', data);
+      // console.log('dog add data', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log('add error', error);
@@ -115,9 +111,6 @@ export const __editDogProfile = createAsyncThunk(
   'EDIT_DOG_PROFILE',
   async (payload, thunkAPI) => {
     try {
-      // console.log('dog edit payload', payload);
-      // console.log('dog edit payload', payload.name);
-      // console.log('dog edit payload', payload.formData);
       const {data} = await http.put(
         `/profile/dogs/${payload.id}`,
         payload.formData,
@@ -179,7 +172,7 @@ export const profileSlice = createSlice({
       state.error = action.payload;
     },
     [__editDogProfile.fulfilled]: (state, action) => {
-      state.profile[1].dogs = action.payload;
+      // state.profile[1].dogs = action.payload;
       state.error = null;
     },
     [__editDogProfile.pending]: state => {

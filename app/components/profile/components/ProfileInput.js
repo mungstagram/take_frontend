@@ -9,11 +9,13 @@ const ProfileInput = ({
   onUpdateValue,
   number,
 }) => {
-  // console.log(onUpdateValue, '프룹스받는 함수');
+  // console.log('인풋에 들어오는 value값', value);
   return long ? (
     <TextInput
+      outlineStyle={{fontSize: 12}}
       style={{
         padding: 0,
+        paddingVertical: 0,
         width: 226,
         height: 62,
         fontSize: 14,
@@ -28,8 +30,11 @@ const ProfileInput = ({
     />
   ) : (
     <TextInput
+      outlineStyle={{fontSize: 12}}
       style={{
+        backgroundColor: 'transparent',
         padding: 0,
+        paddingVertical: 0,
         width: 108,
         height: 62,
         fontSize: 14,

@@ -23,7 +23,6 @@ import ServicesWhiteImg from '../svg/ServicesWhiteImg';
 import TaskImgWhite from '../svg/TaskImgWhite';
 
 const PersonProfileCard = ({myInfo}) => {
-  console.log(myInfo, '프룹스받은값');
   const dispatch = useDispatch();
 
   //카메라
@@ -93,8 +92,8 @@ const PersonProfileCard = ({myInfo}) => {
         });
     }
 
-    console.log('edit profile');
-    console.log('formData', formData);
+    // console.log('edit profile');
+    // console.log('formData', formData);
 
     dispatch(__editProfile({nickname: myInfo?.nickname, formData: formData}));
     setIsEdit(false);
