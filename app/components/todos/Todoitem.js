@@ -22,6 +22,7 @@ import TaskImg from '../svg/TaskImg';
 import ServicesImg from '../svg/ServicesImg';
 import Delete from '../svg/Delete';
 import CheckBox from '../svg/CheckBox';
+import MyText from '../common/MyText';
 
 const Todoitem = ({id, text, done}) => {
   const dispatch = useDispatch();
@@ -109,7 +110,9 @@ const Todoitem = ({id, text, done}) => {
           autoFocus
         />
       ) : (
-        <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
+        <MyText style={[styles.text, done && styles.lineThrough]}>
+          {text}
+        </MyText>
       )}
 
       <TouchableOpacity style={styles.utilBtn} onPress={onPressTodoRemove}>

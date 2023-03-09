@@ -14,6 +14,7 @@ import AuthInput from '../components/AuthInput';
 import AuthButton from '../components/common/AuthButton';
 import ArrowGoBack from '../components/svg/ArrowGoBack';
 import {__kakaoNick, checkLogout} from '../redux/modules/loginSlice';
+import MyText from '../components/common/MyText';
 
 const KaKaoSignup = () => {
   const dispatch = useDispatch();
@@ -62,8 +63,8 @@ const KaKaoSignup = () => {
           </View>
         </View>
         <View style={styles.inputWrapper}>
-          <Text style={styles.introduceText}>Pupfluencer에서 사용할 </Text>
-          <Text style={styles.introduceText}>닉네임을 입력해주세요!</Text>
+          <MyText style={styles.introduceText}>Pupfluencer에서 사용할 </MyText>
+          <MyText style={styles.introduceText}>닉네임을 입력해주세요!</MyText>
           <View style={{marginTop: 20}}>
             <AuthInput
               placeholder="Nick Name"

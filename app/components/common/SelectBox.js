@@ -3,6 +3,7 @@ import {StyleSheet, View, Image, Pressable, Text} from 'react-native';
 
 import ArrowDropDown from '../svg/ArrowDropDown';
 import ArrowDropUp from '../svg/ArrowDropUp';
+import MyText from './MyText';
 const SelectBox = ({
   dataSortSelector,
   dateSortSelectorHandler,
@@ -30,9 +31,9 @@ const SelectBox = ({
     <View style={dynamicStyles(listOpener).selectBoxContainer}>
       <Pressable onPress={onListOpenHandler}>
         <View style={styles.selectOpener}>
-          <Text style={styles.selectBoxText}>
+          <MyText style={styles.selectBoxText}>
             {selectParameter[dataSortSelector].content}
-          </Text>
+          </MyText>
           <View style={styles.iconSetter}>
             {!listOpener ? <ArrowDropDown /> : <ArrowDropUp />}
           </View>
@@ -46,7 +47,7 @@ const SelectBox = ({
                 onPress={() => {
                   onDataSelectHandler(selector);
                 }}>
-                <Text style={styles.selectBoxText}>{selector.content}</Text>
+                <MyText style={styles.selectBoxText}>{selector.content}</MyText>
               </Pressable>
             </View>
           ))}

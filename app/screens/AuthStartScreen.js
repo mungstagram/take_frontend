@@ -6,6 +6,8 @@ import AuthButton from '../components/common/AuthButton';
 import ForceLoginButton from '../components/common/ForceLoginButton';
 import {newSignup} from '../redux/modules/loginSlice';
 import {useDispatch} from 'react-redux';
+import MyText from '../components/common/MyText';
+
 const AuthStartScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();

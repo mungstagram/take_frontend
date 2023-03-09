@@ -14,6 +14,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {__getTodos} from '../../redux/modules/todoSlice';
 
 import Todoitem from './Todoitem';
+import MyText from '../common/MyText';
 
 // const TodoList = ({todos, onToggle, onRemove}) => {
 const TodoList = () => {

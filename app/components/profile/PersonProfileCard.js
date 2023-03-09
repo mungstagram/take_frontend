@@ -21,6 +21,7 @@ import {__getProfile, __editProfile} from '../../redux/modules/profileSlice';
 import Emoticon from '../svg/Emoticon';
 import ServicesWhiteImg from '../svg/ServicesWhiteImg';
 import TaskImgWhite from '../svg/TaskImgWhite';
+import MyText from '../common/MyText';
 
 const PersonProfileCard = ({myInfo}) => {
   console.log(myInfo, '프룹스받은값');
@@ -161,7 +162,7 @@ const PersonProfileCard = ({myInfo}) => {
             )}
           </View>
 
-          <Text
+          <MyText
             style={{
               fontSize: 12,
               color: 'white',
@@ -169,7 +170,7 @@ const PersonProfileCard = ({myInfo}) => {
               marginTop: '12%',
             }}>
             {myInfo?.dogsCount} 마리의 집사
-          </Text>
+          </MyText>
         </View>
 
         <View style={styles.cardRightWrap}>
@@ -203,8 +204,8 @@ const PersonProfileCard = ({myInfo}) => {
               </>
             ) : (
               <>
-                <Text style={styles.textNick}>{myInfo?.nickname}</Text>
-                <Text style={styles.textIntro}>{myInfo?.introduce}</Text>
+                <MyText style={styles.textNick}>{myInfo?.nickname}</MyText>
+                <MyText style={styles.textIntro}>{myInfo?.introduce}</MyText>
               </>
             )}
           </View>

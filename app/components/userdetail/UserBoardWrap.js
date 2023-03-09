@@ -5,6 +5,7 @@ import {Colors} from '../../constants/colors';
 import SelectBox from '../common/SelectBox';
 import ImageGetter from '../boardcomponent/ImageGetter';
 import VideoGetter from '../boardcomponent/VideoGetter';
+import MyText from '../common/MyText';
 const UserBoardWrap = ({nickname}) => {
   console.log(nickname, '유저보드랩마운트되면 닉네임임');
   // 사진 동영상 중 어떤 페이진지 선택하는 탭
@@ -39,12 +40,17 @@ const UserBoardWrap = ({nickname}) => {
       <View style={styles.tabWrapper}>
         <View style={dynamicStyles(mainSelector).tabLeftBox}>
           <Pressable onPress={showImageBoard}>
-            <Text style={dynamicStyles(mainSelector).tabTextLeft}> 사진</Text>
+            <MyText style={dynamicStyles(mainSelector).tabTextLeft}>
+              {' '}
+              사진
+            </MyText>
           </Pressable>
         </View>
         <View style={dynamicStyles(mainSelector).tabRightBox}>
           <Pressable onPress={showVideoBoard}>
-            <Text style={dynamicStyles(mainSelector).tabTextRight}>동영상</Text>
+            <MyText style={dynamicStyles(mainSelector).tabTextRight}>
+              동영상
+            </MyText>
           </Pressable>
         </View>
       </View>

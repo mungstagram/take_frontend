@@ -23,6 +23,7 @@ import {__putLikes} from '../../redux/modules/addContentSlice';
 import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
 import TaskImg from '../svg/TaskImg';
+import MyText from '../common/MyText';
 
 const CommentList = () => {
   const dispatch = useDispatch();
@@ -60,25 +61,25 @@ const CommentList = () => {
       <View>
         <View style={styles.detailBottom}>
           <View style={styles.preContent}>
-            <Text style={styles.titleText}>{detail.title}</Text>
+            <MyText style={styles.titleText}>{detail.title}</MyText>
             <View style={styles.favoritBox}>
               <Pressable onPress={onIsLikeHandler}>
                 {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
               </Pressable>
-              <Text>{detail.likesCount}</Text>
+              <MyText>{detail.likesCount}</MyText>
             </View>
           </View>
           <View style={styles.contentText}>
-            <Text numberOfLines={line} ellipsizeMode="tail">
+            <MyText numberOfLines={line} ellipsizeMode="tail">
               {detail.content}
-            </Text>
+            </MyText>
           </View>
         </View>
         <View style={styles.commentCountBox}>
           <View style={styles.commentIcon}>
             <CommentImg />
           </View>
-          <Text>{commentList.length}</Text>
+          <MyText>{commentList.length}</MyText>
         </View>
       </View>
     );
@@ -147,18 +148,18 @@ const CommentList = () => {
           <View style={styles.profileData}>
             <View>
               <View style={styles.profileRow}>
-                <Text>{item.nickname}</Text>
-                <Text style={styles.timeText}>{item.createdAt}</Text>
+                <MyText>{item.nickname}</MyText>
+                <MyText style={styles.timeText}>{item.createdAt}</MyText>
               </View>
-              <Text>{item.comment}</Text>
+              <MyText>{item.comment}</MyText>
             </View>
           </View>
         ) : (
           <View style={styles.profileData}>
             <View>
               <View style={styles.profileRow2}>
-                <Text>{item.nickname}</Text>
-                <Text style={styles.timeText}>{item.createdAt}</Text>
+                <MyText>{item.nickname}</MyText>
+                <MyText style={styles.timeText}>{item.createdAt}</MyText>
               </View>
               <TextInput
                 style={styles.inputBorder}
@@ -217,20 +218,20 @@ const CommentList = () => {
         //간략보기
         <View style={styles.listBoxShort}>
           <View style={styles.preContent}>
-            <Text style={styles.titleText}>{detail.title}</Text>
+            <MyText style={styles.titleText}>{detail.title}</MyText>
             <View style={styles.favoritBox}>
               <Pressable onPress={onIsLikeHandler}>
                 {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
               </Pressable>
-              <Text>{detail.likesCount}</Text>
+              <MyText>{detail.likesCount}</MyText>
             </View>
           </View>
           <View style={styles.contentText}>
-            <Text numberOfLines={line} ellipsizeMode="tail">
+            <MyText numberOfLines={line} ellipsizeMode="tail">
               {detail.content}
-            </Text>
+            </MyText>
             <Pressable onPress={prev => handleLine(!prev[0], prev[1])}>
-              <Text>더보기</Text>
+              <MyText>더보기</MyText>
             </Pressable>
           </View>
           <View style={styles.container}>
@@ -238,7 +239,7 @@ const CommentList = () => {
               <View style={styles.commentIcon}>
                 <CommentImg />
               </View>
-              <Text>{commentList.length}</Text>
+              <MyText>{commentList.length}</MyText>
             </View>
             <View style={styles.listBox}>
               <FlatList

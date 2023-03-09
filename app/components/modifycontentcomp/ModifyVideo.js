@@ -12,10 +12,12 @@ import {
   Dimensions,
   Pressable,
   ScrollView,
+  Text,
   KeyboardAvoidingView,
 } from 'react-native';
+
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
-import {Surface, Text} from 'react-native-paper';
+import {Surface} from 'react-native-paper';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -30,6 +32,8 @@ import GoBackButton from '../common/GoBackButton';
 import FastImage from 'react-native-fast-image';
 import Video from 'react-native-video';
 import {__putPostDetailData} from '../../redux/modules/commetsSlice';
+import MyText from '../common/MyText';
+import HeaderTitle from '../common/HeaderTitle';
 
 const ModifyVideo = ({route}) => {
   const fileData = useSelector(state => state.comments.detail);
@@ -112,17 +116,24 @@ const ModifyVideo = ({route}) => {
   return (
     <KeyboardAvoidingView behavior="position">
       <SafeAreaView style={styles.containerBox}>
-        <View style={styles.goBackButton}>
-          <GoBackButton />
+        <View style={styles.headerBox}>
+          <View style={styles.goBackButton}>
+            <GoBackButton />
+          </View>
+          <View style={styles.headerTitle}>
+            <HeaderTitle />
+            <Text style={styles.title}>내새끼 자랑하기</Text>
+          </View>
+          <View style={styles.flex2}></View>
         </View>
         <View style={styles.container}>
           <View style={styles.box}>
             <View style={styles.fileInput}>
               <View style={styles.fileupload}>
                 <View style={styles.categoryInfo}>
-                  <Text style={styles.categoryInfoText}>
+                  <MyText style={styles.categoryInfoText}>
                     등록된 동영상 확인
-                  </Text>
+                  </MyText>
                 </View>
                 <View style={styles.openfileView}>
                   <Video
@@ -156,9 +167,9 @@ const ModifyVideo = ({route}) => {
                   onChange={contentTextHandler}
                 />
                 <View style={styles.contentCount}>
-                  <Text style={styles.textCount}>
+                  <MyText style={styles.textCount}>
                     {contentText.length}/2000
-                  </Text>
+                  </MyText>
                 </View>
               </Surface>
             </View>
@@ -166,7 +177,7 @@ const ModifyVideo = ({route}) => {
               <TouchableOpacity
                 style={styles.buttonBox}
                 onPress={onCancelHandler}>
-                <Text style={styles.button}>취소</Text>
+                <MyText style={styles.button}>취소</MyText>
               </TouchableOpacity>
               <YellowButton style={styles.doneBtn} onPress={onDoneHandler}>
                 수정완료
@@ -193,13 +204,34 @@ const styles = StyleSheet.create({
     height: windowHeight,
     //backgroundColor: 'red',
   },
-  goBackButton: {
+  headerBox: {
     width: videoCardWidth,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  goBackButton: {
     height: 58,
     alignItems: 'flex-start',
     marginLeft: '7%',
     paddingTop: 18,
     zIndex: 20,
+    flex: 1,
+  },
+  headerTitle: {
+    flexDirection: 'row',
+    width: videoCardWidth * 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 5,
+  },
+  title: {
+    marginHorizontal: videoCardWidth * 0.05,
+    fontSize: 28,
+    color: Colors.userDataColor,
+    fontFamily: 'SBAggro-M',
+  },
+  flex2: {
     flex: 1,
   },
   container: {

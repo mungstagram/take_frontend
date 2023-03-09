@@ -26,6 +26,8 @@ import {Colors} from '../constants/colors';
 import GoBackButton from '../components/common/GoBackButton';
 import SendDM from '../components/svg/SendDM';
 import {white} from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
+import MyText from '../components/common/MyText';
+
 const DirectMessage = () => {
   const dispatch = useDispatch();
   const route = useRoute();
@@ -102,7 +104,7 @@ const DirectMessage = () => {
                 source={require('../assets/LogoSmall.png')}
                 resizeMode={'cover'}
               />
-              <Text style={styles.logoText}>메시지</Text>
+              <MyText style={styles.logoText}>메시지</MyText>
             </View>
             <View style={styles.targetProfileBox}>
               <FastImage
@@ -113,7 +115,7 @@ const DirectMessage = () => {
                 }}
                 resizeMode={FastImage.resizeMode.contain}
               />
-              <Text style={styles.targetFont}>{value.nickname}</Text>
+              <MyText style={styles.targetFont}>{value.nickname}</MyText>
             </View>
           </View>
           <View style={styles.chatListWrapper}>
@@ -127,20 +129,20 @@ const DirectMessage = () => {
                       userDM[index].createdAt.substr(0, 10) !==
                         userDM[index + 1].createdAt.substr(0, 10) && (
                         <View style={styles.dateTeller}>
-                          <Text style={{fontSize: 8}}>
+                          <MyText style={{fontSize: 8}}>
                             {userDM[index].createdAt.substr(0, 4)}년{' '}
                             {userDM[index].createdAt.substr(5, 2)}월{' '}
                             {userDM[index].createdAt.substr(8, 2)}일{' '}
-                          </Text>
+                          </MyText>
                         </View>
                       )}
                     {userDM.length === index + 1 && (
                       <View style={styles.dateTeller}>
-                        <Text style={{fontSize: 8}}>
+                        <MyText style={{fontSize: 8}}>
                           {userDM[index].createdAt.substr(0, 4)}년{' '}
                           {userDM[index].createdAt.substr(5, 2)}월{' '}
                           {userDM[index].createdAt.substr(8, 2)}일{' '}
-                        </Text>
+                        </MyText>
                       </View>
                     )}
                     <View
@@ -154,14 +156,14 @@ const DirectMessage = () => {
                             value.nickname === item.receiver.nickname,
                           ).userConversationBox
                         }>
-                        <Text numberOfLines={10} style={styles.textContent}>
+                        <MyText numberOfLines={10} style={styles.textContent}>
                           {item.message}
-                        </Text>
+                        </MyText>
                       </View>
-                      <Text style={styles.textCreatedAt}>
+                      <MyText style={styles.textCreatedAt}>
                         {item.createdAt.substr(11, 2)}시{' '}
                         {item.createdAt.substr(14, 2)}분
-                      </Text>
+                      </MyText>
                     </View>
                   </View>
                 )}
@@ -354,7 +356,7 @@ const dynamicStyles = value =>
 //             }}
 //             resizeMode={FastImage.resizeMode.contain}
 //           />
-//           <Text style={styles.targetFont}>{value.nickname}</Text>
+//           <MyText style={styles.targetFont}>{value.nickname}</MyText>
 //         </View>
 //       </View>
 //       <View style={styles.chatListWrapper}>
@@ -365,17 +367,17 @@ const dynamicStyles = value =>
 //       {totalMessage.length > index + 1 &&
 //         totalMessage[index].createdAt.substr(0, 10) !==
 //           totalMessage[index + 1].createdAt.substr(0, 10) && (
-//           <Text>
+//           <MyText>
 //             {totalMessage[index].createdAt.substr(0, 4)}년{' '}
 //             {totalMessage[index].createdAt.substr(5, 2)}월{' '}
 //             {totalMessage[index].createdAt.substr(8, 2)}일{' '}
-//           </Text>
+//           </MyText>
 //         )}
-//       <Text>{item.message}</Text>
-//       <Text>
+//       <MyText>{item.message}</MyText>
+//       <MyText>
 //         {item.createdAt.substr(11, 2)}시 {item.createdAt.substr(14, 2)}
 //         분
-//       </Text>
+//       </MyText>
 //     </View>
 //   )}
 //   keyExtractor={(item, index) => index}

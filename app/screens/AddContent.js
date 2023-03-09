@@ -14,6 +14,7 @@ import AddImage from '../components/addcontentcomp/AddImage';
 import AddVideo from '../components/addcontentcomp/AddVideo';
 import GoBackButton from '../components/common/GoBackButton';
 import HeaderTitle from '../components/common/HeaderTitle';
+import MyText from '../components/common/MyText';
 
 const AddContent = () => {
   const Tab = createMaterialTopTabNavigator();
@@ -71,15 +72,16 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     flexDirection: 'row',
-    width: videoCardWidth * 0.5,
+    width: videoCardWidth * 1,
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 4,
+    flex: 5,
   },
   title: {
     marginHorizontal: videoCardWidth * 0.05,
     fontSize: 28,
     color: Colors.userDataColor,
+    fontFamily: 'SBAggro-M',
   },
   flex2: {
     flex: 1,
