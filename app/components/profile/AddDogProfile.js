@@ -89,22 +89,20 @@ const AddDogProfile = () => {
 
   const onSendFormData = () => {
     const isValidDate = dateString => {
-      // 입력된 값을 Date 객체로 변환합니다.
       const date = new Date(dateString);
       // Date 객체가 유효한 날짜인지 확인합니다.
       return date instanceof Date && !isNaN(date);
     };
     const isNumber = value => {
       const num = Number(value);
+      // 몸무게가 숫자인지 확인용
       if (num > 0) {
         return !isNaN(num);
       } else {
         return false;
       }
     };
-    console.log(isValidDate(birthday), '확인', birthday, '입력값 생일');
     if (!isValidDate(birthday) || !isValidDate(bringDate)) {
-      console.log(isValidDate(birthday), '확인', birthday, '입력값 생일');
       return Alert.alert('유효한 날짜를 입력해주세요', 'ex)2020-08-22');
     } else if (images.length === 0) {
       return Alert.alert('사진을 등록해 주세요');
@@ -132,7 +130,7 @@ const AddDogProfile = () => {
 
       dispatch(__addDogProfile(formData));
 
-      // setAddMode(false);
+      setAddMode(false);
     }
   };
   //입력값
