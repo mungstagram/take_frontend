@@ -62,8 +62,7 @@ const Comments = ({item, detail}) => {
                 comment: editComment,
               }),
             );
-          console.log('id', itemData.id);
-          console.log('edit', editComment);
+
           setEdit(edit => !edit);
         },
       },
@@ -93,9 +92,7 @@ const Comments = ({item, detail}) => {
   const loginNick = useSelector(
     state => state.profile.myProfile[0].user.nickname,
   );
-  //console.log('loginNick', loginNick);
   const userNick = detail.nickname;
-  //console.log('userNick', userNick);
   const commentNick = itemData.nickname;
   //console.log('commentNick', commentNick);
 
