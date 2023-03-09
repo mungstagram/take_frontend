@@ -88,7 +88,7 @@ const AddImage = () => {
         isCropCircle: true,
         //singleSelectedMode: true,
       });
-      console.log('response: ', response);
+      //console.log('response: ', response);
       setImages(response);
     } catch (e) {
       // console.log(e.code, e.message);
@@ -241,7 +241,7 @@ const AddImage = () => {
             />
           </View>
           <View style={styles.buttonRow}>
-            <CancelButton>Cancel</CancelButton>
+            <CancelButton omPress={onCancelHandler}>Cancel</CancelButton>
             <YellowButton onPress={onSendFormData}>Done</YellowButton>
           </View>
         </KeyboardAvoidingView>

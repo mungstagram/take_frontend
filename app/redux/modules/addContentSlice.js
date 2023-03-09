@@ -15,7 +15,7 @@ const initialState = {
 export const __postAddContentFormData = createAsyncThunk(
   'POST_ADDCONTENT',
   async (payload, thunkAPI) => {
-    console.log('paylod', payload);
+    //console.log('paylod', payload);
     try {
       const data = await http
         .post('/posts', payload, {
@@ -65,11 +65,11 @@ export const __getPostData = createAsyncThunk(
 export const __deletePostDetailData = createAsyncThunk(
   'DELETE_POST_DETAIL_DATA',
   async (payload, thunkAPI) => {
-    console.log('payload', payload);
+    //console.log('payload', payload);
     try {
       const {data} = await http.delete(`/posts/${payload.postId}`);
 
-      console.log('deleteData', data);
+      //console.log('deleteData', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

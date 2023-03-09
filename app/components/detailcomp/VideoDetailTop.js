@@ -85,10 +85,12 @@ const VideoDetailTop = ({detail, videoUrl}) => {
             </Pressable>
           </View>
         </View>
-        <View style={styles.controlbox}>
+        <View style={styles.controlBox}>
           <VideoPlayer source={{uri: videoUrl}} disableBack disableFullscreen />
         </View>
-        <CommentList />
+        <View style={styles.listBox}>
+          <CommentList />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -114,8 +116,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: '4%',
     borderTopRightRadius: 4,
     borderTopLeftRadius: 4,
-
-    width: '100%',
+    width: videoCardWidth,
     alignItems: 'center',
   },
   profileImg: {
@@ -148,7 +149,7 @@ const styles = StyleSheet.create({
     height: 24,
     marginHorizontal: '6%',
   },
-  controlbox: {
+  controlBox: {
     width: videoCardWidth,
     height: videoCardHeight * 0.703,
     backgroundColor: BasicColors.blackColor,
@@ -158,6 +159,7 @@ const styles = StyleSheet.create({
     height: videoCardHeight * 0.703,
     backgroundColor: BasicColors.blackColor,
   },
+
   // detailBottom: {
   //   backgroundColor: BasicColors.whiteColor,
   //   //height: videoCardHeight * 0.3,

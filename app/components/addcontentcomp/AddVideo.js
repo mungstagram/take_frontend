@@ -29,10 +29,9 @@ import AddCircle from '../svg/AddCircle';
 const AddVideo = () => {
   // 제목 인풋상태
   const [titleText, setTitleText] = useState('');
-  // console.log(titleText);
+
   //제목 인풋 핸들러
   const titleTextHandler = event => {
-    console.log('제목', event.nativeEvent.text);
     setTitleText(event.nativeEvent.text);
   };
   // 내용 인풋상태
@@ -40,13 +39,13 @@ const AddVideo = () => {
 
   // 내용 인풋 핸들러
   const contentTextHandler = event => {
-    console.log('내용', event.nativeEvent.text);
     setContentText(event.nativeEvent.text);
   };
+
   //사진넣기버튼의 사용가능여부조절
   const [openCamera, setOpenCamera] = useState(false);
-  // 사진업로드 버튼 눌렀을 때 권한묻기
 
+  // 사진업로드 버튼 눌렀을 때 권한묻기
   useEffect(() => {
     if (Platform.OS !== 'ios' && Platform.OS !== 'android') return;
     const platformPermissions =
@@ -66,8 +65,10 @@ const AddVideo = () => {
     };
     requestCameraPermission();
   }, []);
+
   // * 사진관련 코드
   const [videos, setVideos] = useState([]);
+
   // 사진넣기 버튼 클릭시 작동하는 이벤트
   const openPicker = async () => {
     try {
@@ -88,12 +89,12 @@ const AddVideo = () => {
       setVideos(response);
     } catch (e) {}
   };
+
   // 권한 거절 후 다시 시도할때
   const openAgainPicker = () => {
     setOpenCamera(true);
     openPicker();
   };
-  //remove 라는 이름을 많이 쓴다고 한다.
 
   const onDelete = value => {
     const data = videos.filter(
@@ -103,13 +104,12 @@ const AddVideo = () => {
     );
     setVideos(data);
   };
+
   // 사진 출력
-  //출력되는 사진들에 각각 삭제버튼을 만들어 줌.
   const renderItem = ({item, index}) => {
     return (
       <ScrollView>
         <Image
-          // width={IMAGE_WIDTH}
           source={{
             uri:
               item?.type === 'image'
@@ -141,12 +141,6 @@ const AddVideo = () => {
     } else if (contentText === '') {
       return Alert.alert('내용을 넣어주세요');
     } else {
-      const formList = {
-        category: 'video',
-        title: titleText,
-        content: contentText,
-        files: videos,
-      };
       formData.append('category', 'video');
       formData.append('title', titleText);
       formData.append('content', contentText);
@@ -155,7 +149,7 @@ const AddVideo = () => {
         type: videos[0].mime,
         uri: `file://${videos[0].realPath}`,
       });
-      console.log(formData);
+      //console.log(formData);
       dispatch(__postAddContentFormData(formData));
       setTitleText('');
       setContentText('');
@@ -352,23 +346,6 @@ const styles = StyleSheet.create({
   textCount: {
     color: BasicColors.grayColor,
   },
-  // buttonDelete: {
-  //   paddingHorizontal: 8,
-  //   paddingVertical: 3,
-  //   position: 'absolute',
-  //   right: 4,
-  //   top: 4,
-  //   marginTop: 3,
-  //   width: 22,
-  //   height: 22,
-  //   backgroundColor: '#ffffff92',
-  //   borderRadius: 4,
-  // },
-  // titleDelete: {
-  //   fontWeight: 'bold',
-  //   fontSize: 12,
-  //   color: BasicColors.blackColor,
-  // },
   buttonRow: {
     flex: 1,
     width: videoCardWidth,

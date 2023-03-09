@@ -15,6 +15,7 @@ import {Colors, BasicColors} from '../../constants/colors';
 import WriteComment from '../svg/WriteComment';
 import {__postComment} from '../../redux/modules/commetsSlice';
 import {__getProfile} from '../../redux/modules/profileSlice';
+import WriteCommentOn from '../svg/WriteCommentOn';
 
 const CommentInput = ({detail}) => {
   const dispatch = useDispatch();
@@ -45,18 +46,22 @@ const CommentInput = ({detail}) => {
       <View style={styles.commentsInput}>
         <View style={styles.profileImg}></View>
         <TextInput
-          placeholder=" 댓글쓰기 "
+          //numberOfLines={3}
+          multiline
+          maxLength={60}
+          placeholder=" 댓글을 남겨주세요(60자 이하)"
           placeholderTextColor={BasicColors.grayColor}
           value={inputText}
           onChangeText={commentTextEnter}
-          style={styles.commentInput}></TextInput>
+          style={styles.commentInput}
+          cursorColor="#FFC98B"></TextInput>
       </View>
       <TouchableOpacity
         style={styles.writeIcon}
         activeOpacity={0.8}
         hitSlop={{top: 32, bottom: 32, left: 32, right: 32}}
         onPress={commentEnterHandler}>
-        <WriteComment />
+        {inputText ? <WriteCommentOn /> : <WriteComment />}
       </TouchableOpacity>
     </View>
   );
@@ -93,12 +98,13 @@ const styles = StyleSheet.create({
     height: 24,
     position: 'absolute',
     top: '35%',
-    right: '12%',
+    right: '8%',
   },
   commentInput: {
-    width: windowWidth * 0.74,
+    width: windowWidth * 0.79,
     borderWidth: 1,
     borderRadius: 4,
     borderColor: BasicColors.grayColor,
+    paddingRight: 50,
   },
 });
