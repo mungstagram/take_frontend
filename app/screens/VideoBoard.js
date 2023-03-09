@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: BasicColors.whiteColor,
     fontFamily: 'SBAggro-M',
+    top: 3,
   },
   flex2: {
     flex: 1,
