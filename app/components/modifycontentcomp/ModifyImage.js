@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   containerBox: {
     width: windowWidth,
     height: windowHeight,
-    //backgroundColor: 'red',
+    backgroundColor: BasicColors.whiteColor,
   },
   headerBox: {
     width: imageCardWidth,
