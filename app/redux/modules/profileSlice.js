@@ -3,6 +3,7 @@ import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import http from '../api/http';
+import {act} from 'react-test-renderer';
 
 const initialState = {
   profile: [
@@ -91,6 +92,25 @@ export const __editProfile = createAsyncThunk(
   },
 );
 
+export const __addDogProfile = createAsyncThunk(
+  'ADD_DOG_PROFILE',
+  async (payload, thunkAPI) => {
+    try {
+      console.log(payload);
+      const {data} = await http.post(`/dogs`, payload, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('dog add data', data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      console.log('add error', error);
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  },
+);
+
 export const __editDogProfile = createAsyncThunk(
   'EDIT_DOG_PROFILE',
   async (payload, thunkAPI) => {
@@ -166,6 +186,19 @@ export const profileSlice = createSlice({
       state.isLoading = true;
     },
     [__editDogProfile.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [__addDogProfile.fulfilled]: (state, action) => {
+      console.log(action.payload, 'addDog시 들어오는 payload');
+      // state.profile[1].dogs = action.payload;
+      //값보고 수정
+      state.error = null;
+    },
+    [__addDogProfile.pending]: state => {
+      state.isLoading = true;
+    },
+    [__addDogProfile.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

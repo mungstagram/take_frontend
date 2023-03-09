@@ -42,6 +42,8 @@ const PersonProfileCard = ({myInfo}) => {
   //수정버튼 클릭 이벤트
   const onPressInputEdit = () => {
     setIsEdit(true);
+    setProfNickEdit(myInfo.nickname);
+    setProfIntroEdit(myInfo.introduce);
   };
 
   //input 닉네임,자기소개 수정
@@ -192,7 +194,7 @@ const PersonProfileCard = ({myInfo}) => {
                 />
                 <TextInput
                   placeholder="성격, 산책 시간, 거주지 소개"
-                  maxLength={25}
+                  maxLength={30}
                   multiline={true}
                   value={profIntroEdit}
                   onChangeText={onPresschangeProfEdit}
@@ -219,16 +221,17 @@ const styles = StyleSheet.create({
   },
   card: {
     // borderWidth: 1,
-    width: 320,
+    width: 380,
     height: 132,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
   cardLeftWrap: {
-    width: 94,
+    width: 100,
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: '5%',
   },
   cardRightWrap: {
     // borderWidth: 1,
@@ -320,8 +323,8 @@ const styles = StyleSheet.create({
   },
   personImg: {
     // borderWidth: 1,
-    width: 80,
-    height: 80,
+    width: 92,
+    height: 92,
     borderRadius: 50,
     top: '10%',
     backgroundColor: '#ffffff',
@@ -331,27 +334,26 @@ const styles = StyleSheet.create({
   },
   media: {
     // borderWidth: 1,
-    width: 80,
-    height: 80,
+    width: 92,
+    height: 92,
     borderRadius: 50,
     backgroundColor: '#ffffff',
   },
   imgOpenBtn: {
-    width: 80,
-    height: 80,
+    width: 92,
+    height: 92,
     justifyContent: 'center',
     alignItems: 'center',
   },
   personProfileImg: {
-    width: 80,
-    height: 80,
+    width: 92,
+    height: 92,
     borderRadius: 50,
     backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
     opacity: 0.6,
     borderWidth: 1,
-    top: '10%',
     borderColor: '#ffffff',
   },
 });
