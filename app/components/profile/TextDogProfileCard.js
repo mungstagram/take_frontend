@@ -33,6 +33,7 @@ import ServicesPinkImg from '../../components/svg/ServicesPinkImg';
 
 import FastImage from 'react-native-fast-image';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
+import MyText from '../common/MyText';
 
 const InputDogProfileCard = ({item, index}) => {
   const dispatch = useDispatch();
@@ -186,13 +187,13 @@ const InputDogProfileCard = ({item, index}) => {
         <View style={styles.dogProfileInputWrap}>
           <View style={styles.dogInputWrapInner}>
             <View style={styles.firstLine}>
-              <Text style={styles.dogName}>강아지이름</Text>
+              <MyText style={styles.dogName}>강아지이름</MyText>
 
-              <Text style={styles.dogNameText}>
+              <MyText style={styles.dogNameText}>
                 {profile[1]?.dogs[1]?.name}
-              </Text>
+              </MyText>
 
-              <Text style={styles.representDog}>대표 강아지</Text>
+              <MyText style={styles.representDog}>대표 강아지</MyText>
 
               <View style={styles.representDogBox}>
                 <View style={styles.checkCircleBox} />
@@ -210,39 +211,39 @@ const InputDogProfileCard = ({item, index}) => {
             </View>
 
             <View style={styles.secondLine}>
-              <Text style={styles.species}>종류</Text>
+              <MyText style={styles.species}>종류</MyText>
 
-              <Text style={styles.speciesText}>
+              <MyText style={styles.speciesText}>
                 {profile[1]?.dogs[1]?.species}
-              </Text>
+              </MyText>
 
-              <Text style={styles.weight}>몸무게</Text>
+              <MyText style={styles.weight}>몸무게</MyText>
 
-              <Text style={styles.weightText}>
+              <MyText style={styles.weightText}>
                 {profile[1]?.dogs[1]?.weight}
-              </Text>
+              </MyText>
             </View>
 
             <View style={styles.thirdLine}>
-              <Text style={styles.introduce}>강아지소개</Text>
+              <MyText style={styles.introduce}>강아지소개</MyText>
 
-              <Text style={styles.introduceText}>
+              <MyText style={styles.introduceText}>
                 {profile[1]?.dogs[1]?.introduce}
-              </Text>
+              </MyText>
             </View>
 
             <View style={styles.fourthLine}>
-              <Text style={styles.birthday}>태어난 날</Text>
+              <MyText style={styles.birthday}>태어난 날</MyText>
 
-              <Text style={styles.birthdayText} placeholder="00.00.00">
+              <MyText style={styles.birthdayText} placeholder="00.00.00">
                 {profile[1]?.dogs[1]?.birthday}
-              </Text>
+              </MyText>
 
-              <Text style={styles.bringDate}>데려온 날</Text>
+              <MyText style={styles.bringDate}>데려온 날</MyText>
 
-              <Text style={styles.bringDateText} placeholder="yyyy-mm-dd">
+              <MyText style={styles.bringDateText} placeholder="yyyy-mm-dd">
                 {profile[1]?.dogs[1]?.bringDate}
-              </Text>
+              </MyText>
             </View>
           </View>
         </View>

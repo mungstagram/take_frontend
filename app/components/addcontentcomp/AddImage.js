@@ -25,6 +25,7 @@ import YellowButton from '../YellowButton';
 import CancelButton from '../CancelButton';
 import {Colors, BasicColors} from '../../constants/colors';
 import AddCircle from '../svg/AddCircle';
+import MyText from '../common/MyText';
 
 const AddImage = () => {
   // 제목 인풋상태
@@ -129,7 +130,7 @@ const AddImage = () => {
           onPress={() => onDelete(item)}
           activeOpacity={0.9}
           style={styles.buttonDelete}>
-          <Text style={styles.titleDelete}>X</Text>
+          <MyText style={styles.titleDelete}>X</MyText>
         </TouchableOpacity>
       </ScrollView>
     );
@@ -212,7 +213,9 @@ const AddImage = () => {
                 onChange={contentTextHandler}
               />
               <View style={styles.contentCount}>
-                <Text style={styles.textCount}>{contentText.length}/2000</Text>
+                <MyText style={styles.textCount}>
+                  {contentText.length}/2000
+                </MyText>
               </View>
             </Surface>
           </View>

@@ -33,6 +33,7 @@ import ServicesPinkImg from '../../components/svg/ServicesPinkImg';
 
 import FastImage from 'react-native-fast-image';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
+import MyText from '../common/MyText';
 
 const InputDogProfileCard = ({item, index}) => {
   const dispatch = useDispatch();
@@ -196,7 +197,7 @@ const InputDogProfileCard = ({item, index}) => {
         <View style={styles.dogProfileInputWrap}>
           <View style={styles.dogInputWrapInner}>
             <View style={styles.firstLine}>
-              <Text style={styles.dogName}>강아지이름</Text>
+              <MyText style={styles.dogName}>강아지이름</MyText>
 
               <TextInput
                 style={styles.dogNameBox}
@@ -207,7 +208,7 @@ const InputDogProfileCard = ({item, index}) => {
                 ref={inputRef}
               />
 
-              <Text style={styles.representDog}>대표 강아지</Text>
+              <MyText style={styles.representDog}>대표 강아지</MyText>
 
               <View style={styles.representDogBox}>
                 <View style={styles.checkCircleBox} />
@@ -225,7 +226,7 @@ const InputDogProfileCard = ({item, index}) => {
             </View>
 
             <View style={styles.secondLine}>
-              <Text style={styles.species}>종류</Text>
+              <MyText style={styles.species}>종류</MyText>
 
               <TextInput
                 style={styles.speciesBox}
@@ -235,7 +236,7 @@ const InputDogProfileCard = ({item, index}) => {
                 ref={inputRef}
               />
 
-              <Text style={styles.weight}>몸무게</Text>
+              <MyText style={styles.weight}>몸무게</MyText>
 
               <TextInput
                 style={styles.weightBox}
@@ -248,7 +249,7 @@ const InputDogProfileCard = ({item, index}) => {
             </View>
 
             <View style={styles.thirdLine}>
-              <Text style={styles.introduce}>강아지소개</Text>
+              <MyText style={styles.introduce}>강아지소개</MyText>
 
               <TextInput
                 style={styles.introduceBox}
@@ -260,7 +261,7 @@ const InputDogProfileCard = ({item, index}) => {
             </View>
 
             <View style={styles.fourthLine}>
-              <Text style={styles.birthday}>태어난 날</Text>
+              <MyText style={styles.birthday}>태어난 날</MyText>
 
               <TextInput
                 style={styles.birthdayBox}
@@ -272,7 +273,7 @@ const InputDogProfileCard = ({item, index}) => {
                 ref={inputRef}
               />
 
-              <Text style={styles.bringDate}>데려온 날</Text>
+              <MyText style={styles.bringDate}>데려온 날</MyText>
 
               <TextInput
                 style={styles.bringDateBox}

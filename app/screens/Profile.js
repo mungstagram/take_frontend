@@ -23,6 +23,7 @@ import PersonProfileCard from '../components/profile/PersonProfileCard';
 import InputDogProfileCard from '../components/profile/InputDogProfileCard';
 import TextDogProfileCard from '../components/profile/TextDogProfileCard';
 import AddDogProfile from '../components/profile/AddDogProfile';
+import MyText from '../components/common/MyText';
 
 const Profile = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -54,7 +55,9 @@ const Profile = ({navigation, route}) => {
               <GoBackButton />
             </View>
             <View style={{flexDirection: 'row', right: '10%'}}>
-              <Text style={{fontSize: 11, paddingRight: '4%'}}>회원탈퇴</Text>
+              <MyText style={{fontSize: 11, paddingRight: '4%'}}>
+                회원탈퇴
+              </MyText>
               <Logout />
             </View>
           </View>

@@ -6,6 +6,7 @@ import SelectBox from '../components/common/SelectBox';
 import ImageGetter from '../components/boardcomponent/ImageGetter';
 import GoBackButtonWhite from '../components/common/GoBackButtonWhite';
 import HeaderTitle from '../components/common/HeaderTitle';
+import MyText from '../components/common/MyText';
 
 const ImageBoard = () => {
   // 최신순 or 좋아요 순 결정하는 state (초깃값 설정 서버에 보낼 값을 배열에 담고, 그때의 인덱스)

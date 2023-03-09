@@ -8,6 +8,7 @@ import {
 } from '@react-native-seoul/kakao-login';
 import {useDispatch} from 'react-redux';
 import {__postKaKaoLogin} from '../../redux/modules/loginSlice';
+import MyText from '../common/MyText';
 
 const KaKaoLogin = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const KaKaoLogin = () => {
   // };
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>간편하게 로그인하기</Text>
+      <MyText style={styles.text}>간편하게 로그인하기</MyText>
 
       <Pressable
         style={styles.button}

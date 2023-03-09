@@ -14,6 +14,7 @@ import AddImage from '../components/addcontentcomp/AddImage';
 import AddVideo from '../components/addcontentcomp/AddVideo';
 import GoBackButton from '../components/common/GoBackButton';
 import HeaderTitle from '../components/common/HeaderTitle';
+import MyText from '../components/common/MyText';
 
 const AddContent = () => {
   const Tab = createMaterialTopTabNavigator();

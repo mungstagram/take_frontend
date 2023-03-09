@@ -23,6 +23,7 @@ import {__getProfile, __editProfile} from '../../redux/modules/profileSlice';
 import Emoticon from '../svg/Emoticon';
 import ServicesWhiteImg from '../svg/ServicesWhiteImg';
 import TaskImgWhite from '../svg/TaskImgWhite';
+import MyText from '../common/MyText';
 
 const PersonProfileCard = ({item}) => {
   // const PersonProfileCard = ({myInfo}) => {
@@ -183,7 +184,7 @@ const PersonProfileCard = ({item}) => {
             )}
           </View>
 
-          <Text
+          <MyText
             style={{
               fontSize: 12,
               color: 'white',
@@ -191,7 +192,7 @@ const PersonProfileCard = ({item}) => {
               marginTop: '12%',
             }}>
             {profile[0]?.user?.dogsCount} 마리의 집사
-          </Text>
+          </MyText>
         </View>
 
         <View style={styles.cardRightWrap}>
@@ -214,7 +215,9 @@ const PersonProfileCard = ({item}) => {
                 autoFocus
               />
             ) : (
-              <Text style={styles.textNick}>{profile[0]?.user?.nickname}</Text>
+              <MyText style={styles.textNick}>
+                {profile[0]?.user?.nickname}
+              </MyText>
             )}
 
             {isEdit ? (
@@ -227,9 +230,9 @@ const PersonProfileCard = ({item}) => {
                 style={styles.textIntroInput}
               />
             ) : (
-              <Text style={styles.textIntro}>
+              <MyText style={styles.textIntro}>
                 {profile[0]?.user?.introduce}
-              </Text>
+              </MyText>
             )}
           </View>
         </View>

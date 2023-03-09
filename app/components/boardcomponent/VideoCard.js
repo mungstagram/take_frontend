@@ -16,6 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import CommentImg from '../svg/CommentImg';
 import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
+import MyText from '../common/MyText';
 
 const VideoCard = ({videoContent}) => {
   const navigation = useNavigation();
@@ -39,8 +40,12 @@ const VideoCard = ({videoContent}) => {
                 resizeMode={'contain'}
               />
               <View>
-                <Text style={styles.nicknameText}>{videoContent.nickname}</Text>
-                <Text style={styles.timeText}>{videoContent.createdAt}</Text>
+                <MyText style={styles.nicknameText}>
+                  {videoContent.nickname}
+                </MyText>
+                <MyText style={styles.timeText}>
+                  {videoContent.createdAt}
+                </MyText>
               </View>
             </View>
             <View>
@@ -54,17 +59,21 @@ const VideoCard = ({videoContent}) => {
               />
             </View>
             <View style={styles.preContent}>
-              <Text style={styles.titleText}>{videoContent.title}</Text>
+              <MyText style={styles.titleText}>{videoContent.title}</MyText>
               <View style={styles.subBox}>
                 <View style={styles.iconCount}>
                   <View style={styles.iconRow}>
                     {videoContent.isLiked ? <Favorite /> : <NotFavorite />}
-                    <Text style={styles.text}>{videoContent.likesCount}</Text>
+                    <MyText style={styles.text}>
+                      {videoContent.likesCount}
+                    </MyText>
                     {/* likesCount */}
                   </View>
                   <View style={styles.iconRow}>
                     <CommentImg />
-                    <Text style={styles.text}>{videoContent.commentCount}</Text>
+                    <MyText style={styles.text}>
+                      {videoContent.commentCount}
+                    </MyText>
                     {/* commentCount */}
                   </View>
                 </View>

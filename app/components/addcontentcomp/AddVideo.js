@@ -25,6 +25,7 @@ import YellowButton from '../YellowButton';
 import CancelButton from '../CancelButton';
 import {Colors, BasicColors} from '../../constants/colors';
 import AddCircle from '../svg/AddCircle';
+import MyText from '../common/MyText';
 
 const AddVideo = () => {
   // 제목 인풋상태
@@ -32,7 +33,7 @@ const AddVideo = () => {
   // console.log(titleText);
   //제목 인풋 핸들러
   const titleTextHandler = event => {
-    console.log('제목', event.nativeEvent.text);
+    //console.log('제목', event.nativeEvent.text);
     setTitleText(event.nativeEvent.text);
   };
   // 내용 인풋상태
@@ -40,7 +41,7 @@ const AddVideo = () => {
 
   // 내용 인풋 핸들러
   const contentTextHandler = event => {
-    console.log('내용', event.nativeEvent.text);
+    //console.log('내용', event.nativeEvent.text);
     setContentText(event.nativeEvent.text);
   };
   //사진넣기버튼의 사용가능여부조절
@@ -61,7 +62,7 @@ const AddVideo = () => {
           : Alert.alert('카메라 권한을 허용해주세요!');
       } catch (error) {
         Alert.alert('카메라 권한설정이 에러났습니다.');
-        // console.warn(error);
+        console.warn(error);
       }
     };
     requestCameraPermission();
@@ -123,7 +124,7 @@ const AddVideo = () => {
           onPress={() => onDelete(item)}
           activeOpacity={0.9}
           style={styles.buttonDelete}>
-          <Text style={styles.titleDelete}>X</Text>
+          <MyText style={styles.titleDelete}>X</MyText>
         </TouchableOpacity>
       </ScrollView>
     );
@@ -240,7 +241,9 @@ const AddVideo = () => {
                 onChange={contentTextHandler}
               />
               <View style={styles.contentCount}>
-                <Text style={styles.textCount}>{contentText.length}/2000</Text>
+                <MyText style={styles.textCount}>
+                  {contentText.length}/2000
+                </MyText>
               </View>
             </Surface>
           </View>

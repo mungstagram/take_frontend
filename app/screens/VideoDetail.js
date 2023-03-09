@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   Dimensions,
   SafeAreaView,
@@ -16,6 +15,7 @@ import {__getPostDetailData} from '../redux/modules/commetsSlice';
 import VideoDetailTop from '../components/detailcomp/VideoDetailTop';
 import CommentInput from '../components/detailcomp/CommentInput';
 import HeaderTitle from '../components/common/HeaderTitle';
+import MyText from '../components/common/MyText';
 
 const VideoDetail = ({route}) => {
   //useSelector로.. postId 불러야할것 같음
