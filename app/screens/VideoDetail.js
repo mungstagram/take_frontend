@@ -5,6 +5,7 @@ import {
   Dimensions,
   SafeAreaView,
   KeyboardAvoidingView,
+  Text,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
@@ -18,8 +19,6 @@ import HeaderTitle from '../components/common/HeaderTitle';
 import MyText from '../components/common/MyText';
 
 const VideoDetail = ({route}) => {
-  //useSelector로.. postId 불러야할것 같음
-
   const detail = useSelector(state => state.comments.detail);
 
   const videoUrl = detail.contentUrl[0];
@@ -29,7 +28,7 @@ const VideoDetail = ({route}) => {
   const isFocused = useIsFocused();
 
   const dispatch = useDispatch();
-  //postId를 보내준다. / 요청하고.
+
   useEffect(() => {
     if (isFocused) {
       dispatch(__getPostDetailData(route.params.postId));

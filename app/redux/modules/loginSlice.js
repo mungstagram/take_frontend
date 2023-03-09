@@ -4,7 +4,7 @@ import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
-  isLogin: false, //로그인 상태 관리 변수
+  isLogin: false, //로그인유무 상태 관리 변수
   isLoading: false,
   error: null,
   myNick: '',
@@ -129,6 +129,23 @@ export const __kakaoNick = createAsyncThunk(
   },
 );
 
+export const __deleteUsers = createAsyncThunk(
+  'DELETE_USERS',
+  async (payload, thunkAPI) => {
+    try {
+      const {data} = await http.delete('/users');
+      AsyncStorage.removeItem('authorization');
+      AsyncStorage.removeItem('nickname');
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      console.log(error, '회원탈퇴 에러');
+
+      return thunkAPI.rejectWithValue(error.response);
+    }
+  },
+);
+
 const loginSlice = createSlice({
   name: 'login',
   initialState,
@@ -229,6 +246,18 @@ const loginSlice = createSlice({
     [__kakaoNick.rejected]: (state, action) => {
       state.isLoading = false;
       // state.idNotChecked = true;
+      state.error = action.payload;
+    },
+    [__deleteUsers.pending]: state => {
+      state.isLoading = true;
+    },
+    [__deleteUsers.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.myNick = '';
+      state.isLogin = false;
+    },
+    [__deleteUsers.rejected]: (state, action) => {
+      state.isLoading = false;
       state.error = action.payload;
     },
   },

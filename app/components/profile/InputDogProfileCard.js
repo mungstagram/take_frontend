@@ -21,10 +21,6 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 
-import {
-  __addDogProfile,
-  __addDogImg,
-} from '../../redux/modules/dogProfileSlice';
 import {__getProfile, __editDogProfile} from '../../redux/modules/profileSlice';
 
 import Pets from '../../components/svg/Pets';
@@ -88,16 +84,6 @@ const InputDogProfileCard = ({item, index}) => {
   //Add dog profile
   const onPressAdd = e => {
     console.log('onPressAdd 안에', inputRef.current);
-    dispatch(
-      __addDogProfile({
-        name: inputRef.current,
-        introduce: inputRef.current,
-        species: inputRef.current,
-        weight: inputRef.current,
-        birthday: inputRef.current,
-        bringDate: inputRef.current,
-      }),
-    );
   };
 
   // useEffect(() => {}, []);
@@ -147,7 +133,7 @@ const InputDogProfileCard = ({item, index}) => {
     console.log('dog edit profile');
     console.log('dog formData', formData);
 
-    dispatch(__editDogProfile({id, formData: formData}));
+    // dispatch(__editDogProfile({id, formData: formData}));
     if (error === null) setIsEdit(false);
   };
 

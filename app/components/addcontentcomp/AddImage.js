@@ -148,12 +148,6 @@ const AddImage = () => {
     } else if (images.length === 0) {
       return Alert.alert('사진을 넣어주세요');
     } else {
-      const formList = {
-        category: 'image',
-        title: titleText,
-        content: contentText,
-        files: images,
-      };
       formData.append('category', 'image');
       formData.append('title', titleText);
       formData.append('content', contentText);
