@@ -70,8 +70,9 @@ const MessageBox = () => {
         <Image
           source={require('../assets/LogoSmall.png')}
           resizeMode={'cover'}
+          style={styles.headImage}
         />
-        <MyText style={styles.logoText}>메시지</MyText>
+        <Text style={styles.logoText}>메시지</Text>
       </View>
       <View style={styles.userRoomWrapper}>
         <FlatList
@@ -141,12 +142,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 12,
   },
+  headImage: {
+    marginRight: 20,
+  },
   logoText: {
     marginLeft: 10,
     lineHeight: 32,
     textAlign: 'center',
     textAlignVertical: 'center',
     fontSize: 28,
+    fontFamily: 'SBAggro-M',
+    top: 3,
     color: Colors.pointColorDark,
   },
   userRoomWrapper: {

@@ -50,7 +50,7 @@ export default AddContent;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const videoCardWidth = windowWidth * 0.9;
+const videoCardWidth = windowWidth * 0.92;
 
 const styles = StyleSheet.create({
   container: {
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: Colors.userDataColor,
     fontFamily: 'SBAggro-M',
+    top: 3,
   },
   flex2: {
     flex: 1,

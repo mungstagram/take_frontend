@@ -12,7 +12,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {useIsFocused} from '@react-navigation/native';
 
-import GoBackButton from '../components/common/GoBackButton';
+import GoBackButtonWhite from '../components/common/GoBackButtonWhite';
 import SelectBox from '../components/common/SelectBox';
 import Search from '../components/svg/Search';
 import {__getSearchData} from '../redux/modules/searchSlice';
@@ -77,14 +77,15 @@ const SearchScreen = () => {
       <View style={styles.wrapper}>
         <View style={styles.header}>
           <View style={styles.buttonAligner}>
-            <GoBackButton />
+            <GoBackButtonWhite />
           </View>
           <View style={styles.logoAligner}>
             <Image
               source={require('../assets/LogoSmall.png')}
               resizeMode={'cover'}
+              style={styles.headImage}
             />
-            <MyText style={styles.logoText}>찾아보기</MyText>
+            <Text style={styles.logoText}>찾아보기</Text>
           </View>
         </View>
 
@@ -152,12 +153,17 @@ const styles = StyleSheet.create({
     paddingRight: 24,
     flex: 1,
   },
+  headImage: {
+    marginRight: 20,
+  },
   logoText: {
     lineHeight: 32,
     textAlign: 'center',
     textAlignVertical: 'center',
     fontSize: 28,
+    fontFamily: 'SBAggro-M',
     color: 'white',
+    top: 3,
   },
   inputContainer: {
     // backgroundColor: 'blue',
