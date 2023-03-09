@@ -37,7 +37,6 @@ const CommentInput = ({detail}) => {
     dispatch(
       __postComment({postId: detail.postId, comment: inputText, target: 0}),
     );
-
     setInputText('');
   };
 
@@ -60,7 +59,7 @@ const CommentInput = ({detail}) => {
           />
         </View>
         <TextInput
-          //numberOfLines={3}
+          numberOfLines={3}
           multiline
           maxLength={60}
           placeholder=" 댓글을 남겨주세요(60자 이하)"

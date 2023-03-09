@@ -78,7 +78,7 @@ export const __putComment = createAsyncThunk(
     //console.log('put', payload);
     try {
       const {data} = await http.put(`/comments/${payload.commentId}`, {
-        id: payload.id,
+        id: payload.commentId,
         comment: payload.comment,
       });
       //console.log('commentPutData', data);

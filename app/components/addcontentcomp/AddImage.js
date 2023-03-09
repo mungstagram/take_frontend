@@ -184,8 +184,8 @@ const AddImage = () => {
   };
   return (
     <SafeAreaView style={styles.containerBox}>
-      <View style={styles.box}>
-        <KeyboardAvoidingView behavior="position">
+      <KeyboardAvoidingView behavior="height">
+        <View style={styles.box}>
           <View style={styles.textBox}>
             <Surface style={styles.titleInput}>
               <TextInput
@@ -200,6 +200,8 @@ const AddImage = () => {
             <Surface style={styles.contentInput}>
               <TextInput
                 placeholder="내용을 입력하세요(2000자 이하)"
+                textAlignVertical="top"
+                numberOfLines={8}
                 maxLength={2000}
                 multiline={true}
                 value={contentText}
@@ -238,8 +240,8 @@ const AddImage = () => {
             <CancelButton omPress={onCancelHandler}>Cancel</CancelButton>
             <YellowButton onPress={onSendFormData}>Done</YellowButton>
           </View>
-        </KeyboardAvoidingView>
-      </View>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

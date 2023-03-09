@@ -104,10 +104,8 @@ const CommentList = ({userNick}) => {
         <View style={styles.listBoxLong}>
           <FlatList
             ListHeaderComponent={detailContent}
-            data={commentList}
-            extraData={commentList}
             renderItem={renderItem}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.idData}
             style={styles.listinBox2}
             horizontal={false}
             nestedScrollEnabled={true}
@@ -130,7 +128,7 @@ const CommentList = ({userNick}) => {
             <Text numberOfLines={line} ellipsizeMode="tail">
               {detail.content}
             </Text>
-            <Pressable onPress={prev => handleLine(!prev[0], prev[1])}>
+            <Pressable onPress={prev => handleLine()}>
               <Text>더보기</Text>
             </Pressable>
           </View>
@@ -144,9 +142,8 @@ const CommentList = ({userNick}) => {
             <View style={styles.listBox}>
               <FlatList
                 data={commentList}
-                extraData={commentList}
                 renderItem={renderItem}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.idData}
                 style={styles.listinBox}
                 horizontal={false}
                 nestedScrollEnabled={true}

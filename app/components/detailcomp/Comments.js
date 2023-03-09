@@ -28,10 +28,8 @@ import ScanDelete from '../svg/ScanDelete';
 const Comments = ({item, detail}) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
-
   //댓글 객체
   const itemData = item.item;
-  console.log('www', item.item);
   //댓글 수정 인풋형태 변경 상태
   const [edit, setEdit] = useState(false);
   //댓글 값 변경
@@ -42,7 +40,6 @@ const Comments = ({item, detail}) => {
   };
   //댓글 값 입력
   const onEditComment = e => {
-    //console.log('edit', editComment);
     setEditComment(e);
   };
   //댓글 수정 완료 버튼
@@ -65,6 +62,8 @@ const Comments = ({item, detail}) => {
                 comment: editComment,
               }),
             );
+          console.log('id', itemData.id);
+          console.log('edit', editComment);
           setEdit(edit => !edit);
         },
       },
@@ -90,7 +89,7 @@ const Comments = ({item, detail}) => {
         },
       },
     ]);
-
+  //유저 확인
   const loginNick = useSelector(
     state => state.profile.myProfile[0].user.nickname,
   );
@@ -105,6 +104,7 @@ const Comments = ({item, detail}) => {
       dispatch(__getPostDetailData());
     }
   }, [isFocused]);
+
   return (
     <View style={styles.commentsContainer}>
       <View style={styles.commentsTop}>
@@ -136,7 +136,6 @@ const Comments = ({item, detail}) => {
           ) : (
             <View style={styles.editBtnEmpty}></View>
           )}
-
           {commentNick === loginNick ? (
             edit ? (
               <Pressable style={styles.deleteBtn} onPress={onEditCancelHandler}>
@@ -149,12 +148,6 @@ const Comments = ({item, detail}) => {
                 <Delete />
               </Pressable>
             )
-          ) : loginNick === userNick ? (
-            <View>
-              <Pressable style={styles.deleteBtn} onPress={onDeleteHandler}>
-                <Delete />
-              </Pressable>
-            </View>
           ) : (
             <></>
           )}
