@@ -13,6 +13,7 @@ import FastImage from 'react-native-fast-image';
 import ProfileText from './components/ProfileText';
 import ServicesImg from '../svg/ServicesImg';
 import {__editDogProfile} from '../../redux/modules/profileSlice';
+import Delete from '../svg/Delete';
 const DogCard = ({dog}) => {
   //추가 버튼 상태
   const [editMode, setEditMode] = useState(false);
@@ -166,20 +167,8 @@ const DogCard = ({dog}) => {
       bringDate: dog.bringDate,
     });
   }, [dog]);
-  console.log(
-    name,
-    species,
-    weight,
-    introduce,
-    birthday,
-    bringDate,
-    '인풋값들',
-  );
-  console.log(
-    weight,
-    '개몸무게 잘 찍히는지 왼쪽 state, 오른쪽 props',
-    dog.weight,
-  );
+
+  console.log(images, 'images값');
 
   //인풋값 변경 함수
   const onChangeInputHandler = (name, value) => {
@@ -250,12 +239,14 @@ const DogCard = ({dog}) => {
                   label={'강아지 이름'}
                   onUpdateValue={onChangeInputHandler.bind(this, 'name')}
                   value={name}
+                  small
                 />
                 <View style={styles.addButtonWrapper}>
                   <View style={{height: 12, width: '100%'}} />
                   <View style={styles.addButtonAligner}>
                     <Pressable onPress={unEditMyDoghandler}>
-                      <TaskImg />
+                      {/* <TaskImg /> */}
+                      <Delete gray />
                     </Pressable>
                     {/* //TODO: 취소버튼으로 바꿔야함 */}
                     <Pressable onPress={onSendFormData}>
@@ -273,7 +264,7 @@ const DogCard = ({dog}) => {
                 <ProfileInput
                   label={'몸무게'}
                   onUpdateValue={onChangeInputHandler.bind(this, 'weight')}
-                  value={weight}
+                  value={String(weight)}
                   number
                   placeholder={'xx.x(kg)'}
                 />
@@ -298,6 +289,7 @@ const DogCard = ({dog}) => {
                   placeholder={'0000-00-00'}
                   onUpdateValue={onChangeInputHandler.bind(this, 'bringDate')}
                   value={bringDate}
+                  number
                 />
               </View>
             </View>

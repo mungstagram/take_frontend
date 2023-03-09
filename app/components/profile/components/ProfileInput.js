@@ -8,16 +8,39 @@ const ProfileInput = ({
   value,
   onUpdateValue,
   number,
+  small,
 }) => {
-  // console.log('인풋에 들어오는 value값', value);
+  if (small) {
+    return (
+      <TextInput
+        outlineStyle={{fontSize: 12}}
+        style={{
+          padding: 0,
+          marginTop: 8,
+          width: 100,
+          maxHeight: 62,
+          height: '100%',
+          fontSize: 14,
+        }}
+        activeOutlineColor="black"
+        mode="outlined"
+        label={label}
+        maxLength={22}
+        placeholder={placeholder}
+        value={value}
+        onChangeText={onUpdateValue}
+      />
+    );
+  }
   return long ? (
     <TextInput
       outlineStyle={{fontSize: 12}}
       style={{
         padding: 0,
-        paddingVertical: 0,
+        marginTop: 8,
         width: 226,
-        height: 62,
+        maxHeight: 62,
+        height: '100%',
         fontSize: 14,
       }}
       activeOutlineColor="black"
@@ -36,7 +59,8 @@ const ProfileInput = ({
         padding: 0,
         paddingVertical: 0,
         width: 108,
-        height: 62,
+        maxHeight: 62,
+        height: '100%',
         fontSize: 14,
       }}
       activeOutlineColor="black"
