@@ -7,6 +7,7 @@ import {
   Dimensions,
   Alert,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
@@ -18,7 +19,9 @@ import GoBackButton from '../components/common/GoBackButton';
 import PersonProfileCard from '../components/profile/PersonProfileCard';
 
 import AddDogProfile from '../components/profile/AddDogProfile';
+import MyText from '../components/common/MyText';
 import {__deleteUsers} from '../redux/modules/loginSlice';
+import DogCard from '../components/profile/DogCard';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -74,7 +77,9 @@ const Profile = ({navigation, route}) => {
                   alignItems: 'center',
                 }}>
                 <Pressable onPress={onDeleteUsersData}>
-                  <Text style={{fontSize: 11, paddingRight: 8}}>회원탈퇴</Text>
+                  <MyText style={{fontSize: 11, paddingRight: 8}}>
+                    회원탈퇴
+                  </MyText>
                 </Pressable>
                 <View
                   style={{
@@ -97,9 +102,12 @@ const Profile = ({navigation, route}) => {
         <View style={styles.content} />
         <View>
           <ScrollView style={styles.dogDetailWrapper} horizontal={true}>
+            <View style={{width: 32}}></View>
+            {profile[1].dogs.map(item => (
+              <DogCard key={item.id} dog={item} />
+            ))}
             <AddDogProfile />
           </ScrollView>
-          {/* <TextDogProfileCard /> */}
         </View>
       </View>
     </KeyboardAwareScrollView>

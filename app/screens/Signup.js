@@ -14,6 +14,8 @@ import {
   __postUsers,
 } from '../redux/modules/loginSlice';
 import {Colors} from '../constants/colors';
+import MyText from '../components/common/MyText';
+
 const Signup = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -149,7 +151,7 @@ const Signup = () => {
           source={require('../assets/LogoMedium.png')}
           resizeMode={'cover'}
         />
-        <Text style={styles.imageText}>로그인하기</Text>
+        <MyText style={styles.imageText}>로그인하기</MyText>
       </View>
       <View style={styles.inputWrapper}>
         <View>
@@ -167,7 +169,7 @@ const Signup = () => {
                 <Pressable
                   style={dynamicStyles().buttonPositioner}
                   onPress={() => onCheckUsabilityHandler('email', email)}>
-                  <Text style={dynamicStyles().buttonText}>중복 확인</Text>
+                  <MyText style={dynamicStyles().buttonText}>중복 확인</MyText>
                 </Pressable>
               </View>
             </View>
@@ -186,7 +188,7 @@ const Signup = () => {
                 <Pressable
                   style={dynamicStyles().buttonPositioner}
                   onPress={() => onCheckUsabilityHandler('nickname', nickname)}>
-                  <Text style={dynamicStyles().buttonText}>중복 확인</Text>
+                  <MyText style={dynamicStyles().buttonText}>중복 확인</MyText>
                 </Pressable>
               </View>
             </View>

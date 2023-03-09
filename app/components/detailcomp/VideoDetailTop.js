@@ -23,6 +23,7 @@ import {__deletePostDetailData} from '../../redux/modules/addContentSlice';
 import Delete from '../svg/Delete';
 import ServicesImg from '../svg/ServicesImg';
 import CommentList from './CommentList';
+import MyText from '../common/MyText';
 
 const VideoDetailTop = ({detail, videoUrl}) => {
   const navigation = useNavigation();
@@ -76,8 +77,8 @@ const VideoDetailTop = ({detail, videoUrl}) => {
           />
 
           <View style={styles.userInfo}>
-            <Text style={styles.nicknameText}>{detail.nickname}</Text>
-            <Text style={styles.timeText}>{detail.createdAt}</Text>
+            <MyText style={styles.nicknameText}>{detail.nickname}</MyText>
+            <MyText style={styles.timeText}>{detail.createdAt}</MyText>
           </View>
           {userNick === loginNick ? (
             <View style={styles.contentControl}>

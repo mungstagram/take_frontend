@@ -14,6 +14,7 @@ import VideoCard from './VideoCard';
 import {__getPostData} from '../../redux/modules/addContentSlice';
 import {startDetecting} from 'react-native/Libraries/Utilities/PixelRatio';
 import {useIsFocused} from '@react-navigation/native';
+import MyText from '../common/MyText';
 
 const VideoGetter = ({order, nickname, searchData}) => {
   const videoContentList = useSelector(state => state.addContent.contentList);

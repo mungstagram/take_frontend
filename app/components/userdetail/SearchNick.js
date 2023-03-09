@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, Pressable, FlatList, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/core';
+import MyText from '../common/MyText';
 
 const SearchNick = ({searchData}) => {
   const navigation = useNavigation();
@@ -20,15 +21,17 @@ const SearchNick = ({searchData}) => {
               <View style={styles.searchTextContainer}>
                 <Pressable onPress={() => moveToUserDetail(item.nickname)}>
                   <View>
-                    <Text style={styles.searchTextNick}>{item.nickname}</Text>
+                    <MyText style={styles.searchTextNick}>
+                      {item.nickname}
+                    </MyText>
                   </View>
                   <View>
-                    <Text
+                    <MyText
                       style={styles.searchTextIntro}
                       numberOfLines={2}
                       ellipsizeMode="tail">
                       {item.introduce}
-                    </Text>
+                    </MyText>
                   </View>
                 </Pressable>
               </View>

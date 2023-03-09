@@ -5,6 +5,7 @@ import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import UserDetail from '../screens/UserDetail';
 import MessageBox from '../screens/MessageBox';
+import DirectMessage from '../screens/DirectMessage';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,11 @@ const HomeTab = () => {
       <Stack.Screen
         name="MessageBox"
         component={MessageBox}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="DirectMessage"
+        component={DirectMessage}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

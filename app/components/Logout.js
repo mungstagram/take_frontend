@@ -4,6 +4,7 @@ import {useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {checkLogout} from '../redux/modules/loginSlice';
+import MyText from './common/MyText';
 
 const Logout = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Logout = () => {
   return (
     <View>
       <Pressable onPress={onLogoutHandelr}>
-        <Text style={styles.textStyle}>로그아웃</Text>
+        <MyText style={styles.textStyle}>로그아웃</MyText>
       </Pressable>
     </View>
   );

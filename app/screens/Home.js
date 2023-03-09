@@ -13,6 +13,7 @@ import Emoticon from '../components/svg/Emoticon';
 import DogIndexChangeLeft from '../components/svg/DogIndexChangeLeft';
 import DogIndexChangeRight from '../components/svg/DogIndexChagneRight';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MyText from '../components/common/MyText';
 
 function Home({navigation}) {
   const dispatch = useDispatch();
@@ -66,14 +67,14 @@ function Home({navigation}) {
       <View style={styles.goToLink}>
         <Pressable
           onPress={() => navigation.push('Profile', {nickname: myNick})}>
-          <Text style={styles.homeFontStyle}>프로필</Text>
+          <MyText style={styles.homeFontStyle}>프로필</MyText>
         </Pressable>
         <Pressable
           onPress={() => navigation.push('UserDetail', {nickname: myNick})}>
-          <Text style={styles.homeFontStyle}>게시글</Text>
+          <MyText style={styles.homeFontStyle}>게시글</MyText>
         </Pressable>
         <Pressable onPress={openDirectMessageHandler}>
-          <Text style={styles.homeFontStyle}>메시지</Text>
+          <MyText style={styles.homeFontStyle}>메시지</MyText>
         </Pressable>
       </View>
       <View style={styles.homeProfileInner}>
@@ -161,7 +162,7 @@ function Home({navigation}) {
         <View style={styles.profileInner}>
           <View style={styles.dogNameBox}>
             {profile[1].dogs.length === 0 ? (
-              <Text
+              <MyText
                 style={{
                   fontSize: 16,
                   fontWeight: '600',
@@ -170,9 +171,9 @@ function Home({navigation}) {
                   top: '4%',
                 }}>
                 프로필에서
-              </Text>
+              </MyText>
             ) : (
-              <Text
+              <MyText
                 style={{
                   fontSize: 16,
                   fontWeight: '600',
@@ -181,12 +182,12 @@ function Home({navigation}) {
                   top: '4%',
                 }}>
                 {profile[1]?.dogs[dogIndex]?.name}
-              </Text>
+              </MyText>
             )}
           </View>
           <View style={styles.dDayBox}>
             {profile[1].dogs.length === 0 ? (
-              <Text
+              <MyText
                 style={{
                   fontSize: 16,
                   fontWeight: '600',
@@ -195,9 +196,9 @@ function Home({navigation}) {
                   top: '4%',
                 }}>
                 강아지를 등록해주세요~
-              </Text>
+              </MyText>
             ) : (
-              <Text
+              <MyText
                 style={{
                   fontSize: 16,
                   fontWeight: '600',
@@ -206,7 +207,7 @@ function Home({navigation}) {
                   top: '4%',
                 }}>
                 우리가 함께한 날 {profile[1]?.dogs[dogIndex]?.daysWithin}일
-              </Text>
+              </MyText>
             )}
           </View>
         </View>
@@ -216,15 +217,15 @@ function Home({navigation}) {
         <View style={styles.homeTodoBoxInner}>
           <View style={styles.toDoText}>
             {profile[1].dogs.length === 0 ? (
-              <Text
+              <MyText
                 style={{
                   fontSize: 16,
                   fontWeight: 'bold',
                   color: '#000000',
                   marginTop: '4%',
-                }}></Text>
+                }}></MyText>
             ) : (
-              <Text
+              <MyText
                 style={{
                   fontSize: 16,
                   fontWeight: 'bold',
@@ -234,7 +235,7 @@ function Home({navigation}) {
                 {profile[1]?.dogs[dogIndex]?.species}/{' '}
                 {profile[1]?.dogs[dogIndex]?.age}/{' '}
                 {profile[1]?.dogs[dogIndex]?.weight}Kg
-              </Text>
+              </MyText>
             )}
           </View>
 
@@ -262,6 +263,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffc988',
     justifyContent: 'center',
     alignContent: 'center',
+    flex: 1,
   },
   goToLink: {
     // borderWidth: 1,

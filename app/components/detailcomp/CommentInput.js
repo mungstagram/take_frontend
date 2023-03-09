@@ -18,6 +18,8 @@ import WriteComment from '../svg/WriteComment';
 import {__postComment} from '../../redux/modules/commetsSlice';
 import {__getHomeProfile} from '../../redux/modules/profileSlice';
 import WriteCommentOn from '../svg/WriteCommentOn';
+import {__getProfile} from '../../redux/modules/profileSlice';
+import MyText from '../common/MyText';
 
 const CommentInput = ({detail}) => {
   const dispatch = useDispatch();

@@ -8,16 +8,25 @@ import Pets from '../svg/Pets';
 import AddCircle from '../svg/AddCircle';
 import ProfileInput from './components/ProfileInput';
 import TaskPinkImg from '../svg/TaskPinkImg';
-import {__addDogProfile} from '../../redux/modules/profileSlice';
+import TaskImg from '../svg/TaskImg';
+import FastImage from 'react-native-fast-image';
+import ProfileText from './components/ProfileText';
+import ServicesImg from '../svg/ServicesImg';
+import {
+  __deleteDogProfile,
+  __editDogProfile,
+} from '../../redux/modules/profileSlice';
+import Delete from '../svg/Delete';
 import ScanDelete from '../svg/ScanDelete';
-
-const AddDogProfile = () => {
+import MyText from '../common/MyText';
+import {RadioButton} from 'react-native-paper';
+const DogCard = ({dog}) => {
   //추가 버튼 상태
-  const [addMode, setAddMode] = useState(false);
-  const addMyDoghandler = () => {
-    setAddMode(!addMode);
+  const [editMode, setEditMode] = useState(false);
+  const editMyDoghandler = () => {
+    setEditMode(!editMode);
   };
-  const unAddMyDoghandler = () => {
+  const unEditMyDoghandler = () => {
     Alert.alert(
       '',
       '작성을 취소하시겠습니까?',
@@ -25,7 +34,17 @@ const AddDogProfile = () => {
       [
         {
           text: '취소하기',
-          onPress: () => setAddMode(!addMode),
+          onPress: () => {
+            setEditMode(!editMode);
+            setInput({
+              name: dog.name,
+              introduce: dog.introduce,
+              species: dog.species,
+              weight: dog.weight,
+              birthday: dog.birthday,
+              bringDate: dog.bringDate,
+            });
+          },
         },
         {
           text: '계속작성',
@@ -76,7 +95,7 @@ const AddDogProfile = () => {
       // console.log(e.code, e.message);
     }
   };
-  // console.log(images, 'images멀까?');
+  //   console.log(images, 'images멀까?');
 
   const openAgainPicker = () => {
     setOpenCamera(true);
@@ -104,8 +123,6 @@ const AddDogProfile = () => {
     };
     if (!isValidDate(birthday) || !isValidDate(bringDate)) {
       return Alert.alert('유효한 날짜를 입력해주세요', 'ex)2020-08-22');
-    } else if (images.length === 0) {
-      return Alert.alert('사진을 등록해 주세요');
     } else if (
       name === '' ||
       species === '' ||
@@ -116,21 +133,26 @@ const AddDogProfile = () => {
     } else if (!isNumber(weight)) {
       Alert.alert('몸무게는 양수여야 합니다.', 'ex) 8.5');
     } else {
+      console.log(representative, '대표여부');
       formData.append('name', name);
       formData.append('species', species);
       formData.append('weight', weight);
       formData.append('introduce', introduce);
       formData.append('birthday', birthday);
       formData.append('bringDate', bringDate);
-      formData.append('files', {
-        name: images[0].fileName,
-        type: images[0].mime,
-        uri: `file://${images[0].realPath}`,
-      });
+      formData.append('representative', representative);
+      {
+        images.length !== 0 &&
+          formData.append('files', {
+            name: images[0].fileName,
+            type: images[0].mime,
+            uri: `file://${images[0]?.realPath}`,
+          });
+      }
 
-      dispatch(__addDogProfile(formData));
+      dispatch(__editDogProfile({id: dog.id, formData}));
 
-      setAddMode(false);
+      setEditMode(false);
     }
   };
   //입력값
@@ -142,18 +164,42 @@ const AddDogProfile = () => {
     birthday: '',
     bringDate: '',
   });
-
   const {name, species, weight, introduce, birthday, bringDate} = input;
+  //대표강아지 여부
+  const [representative, setRepresentative] = useState(dog.representative);
+  useEffect(() => {
+    setInput({
+      name: dog.name,
+      introduce: dog.introduce,
+      species: dog.species,
+      weight: dog.weight,
+      birthday: dog.birthday,
+      bringDate: dog.bringDate,
+    });
+  }, [dog]);
 
   //인풋값 변경 함수
   const onChangeInputHandler = (name, value) => {
     setInput({...input, [name]: value});
   };
+  const onDeleteDogCardHandler = () => {
+    Alert.alert('', '삭제 하시겠습니까??', [
+      {
+        text: '취소하기',
+      },
+      {
+        text: '삭제하기',
+        onPress: () => {
+          dispatch(__deleteDogProfile({id: dog.id}));
+        },
+      },
+    ]);
+  };
 
   return (
     <View style={styles.dogBlock}>
-      <View style={dynamicStyles(addMode).addDogCard}>
-        {addMode ? (
+      <View style={dynamicStyles(editMode).addDogCard}>
+        {editMode ? (
           <>
             <View style={styles.addImageContainer}>
               {openCamera ? (
@@ -164,15 +210,20 @@ const AddDogProfile = () => {
                   }}
                   onPress={openPicker}>
                   {images.length === 0 ? (
-                    <View
+                    <FastImage
                       style={{
                         height: '100%',
                         width: '100%',
                         justifyContent: 'center',
                         alignItems: 'center',
-                      }}>
-                      <Pets gray />
-                    </View>
+                        opacity: 0.8,
+                      }}
+                      source={{
+                        uri: dog.contentUrl,
+                        priority: FastImage.priority.normal,
+                      }}
+                      resizeMode={FastImage.resizeMode.contain}
+                    />
                   ) : (
                     <Image
                       value={images}
@@ -209,11 +260,23 @@ const AddDogProfile = () => {
                   label={'강아지 이름'}
                   onUpdateValue={onChangeInputHandler.bind(this, 'name')}
                   value={name}
+                  small
                 />
                 <View style={styles.addButtonWrapper}>
-                  <View style={{height: 12, width: '100%'}} />
+                  <MyText style={{fontSize: 12, width: '100%', lineHeight: 12}}>
+                    대표 강아지
+                  </MyText>
                   <View style={styles.addButtonAligner}>
-                    <Pressable onPress={unAddMyDoghandler}>
+                    <RadioButton
+                      color="#F09090"
+                      uncheckedColor="#C8C8C8"
+                      value={representative}
+                      status={representative ? 'checked' : 'unchecked'}
+                      onPress={() => setRepresentative(!representative)}
+                    />
+                    <Pressable
+                      style={{marginLeft: 16}}
+                      onPress={unEditMyDoghandler}>
                       <ScanDelete brightGray />
                     </Pressable>
                     <Pressable
@@ -233,7 +296,7 @@ const AddDogProfile = () => {
                 <ProfileInput
                   label={'몸무게'}
                   onUpdateValue={onChangeInputHandler.bind(this, 'weight')}
-                  value={weight}
+                  value={String(weight)}
                   number
                   placeholder={'xx.x(kg)'}
                 />
@@ -258,18 +321,53 @@ const AddDogProfile = () => {
                   placeholder={'0000-00-00'}
                   onUpdateValue={onChangeInputHandler.bind(this, 'bringDate')}
                   value={bringDate}
+                  number
                 />
               </View>
             </View>
           </>
         ) : (
-          <Pressable onPress={addMyDoghandler} style={styles.addDogCardText}>
-            <View style={{marginBottom: 12}}>
-              <AddCircle grayColor />
+          <>
+            <View style={styles.addImageContainer}>
+              <FastImage
+                style={{height: '100%', width: '100%'}}
+                source={{
+                  uri: dog.contentUrl,
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.contain}
+              />
             </View>
-            <Text style={styles.textStyle}>저희 집에</Text>
-            <Text style={styles.textStyle}>댕댕이를 추가할게요!</Text>
-          </Pressable>
+            <View style={styles.addInfoContainer}>
+              <View style={styles.inputAligner}>
+                <ProfileText title={'강아지 이름'} value={dog.name} />
+                <View style={styles.addButtonWrapper}>
+                  <View style={{height: 12, width: '100%'}} />
+                  <View style={styles.addButtonAligner}>
+                    <Pressable onPress={onDeleteDogCardHandler}>
+                      <Delete gray />
+                    </Pressable>
+                    <Pressable
+                      style={{marginLeft: 16}}
+                      onPress={editMyDoghandler}>
+                      <ServicesImg gray />
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.inputAligner}>
+                <ProfileText title={'종류'} value={dog.species} />
+                <ProfileText title={'몸무게'} value={dog.weight} />
+              </View>
+              <View>
+                <ProfileText title={'강아지 소개'} value={dog.introduce} long />
+              </View>
+              <View style={styles.inputAligner}>
+                <ProfileText title={'태어난 날'} value={dog.birthday} />
+                <ProfileText title={'데려온 날'} value={dog.bringDate} />
+              </View>
+            </View>
+          </>
         )}
       </View>
     </View>
@@ -283,7 +381,6 @@ const dynamicStyles = value =>
       height: 480,
       borderRadius: 15,
       backgroundColor: value ? 'transparent' : 'white',
-      opacity: value ? 1 : 0.4,
       justifyContent: 'center',
       alignItems: 'center',
       elevation: 2,
@@ -292,9 +389,9 @@ const dynamicStyles = value =>
 
 const styles = StyleSheet.create({
   dogBlock: {
+    marginRight: 20,
     flex: 1,
     justifyContent: 'center',
-    marginRight: 60,
   },
   addDogCardText: {
     justifyContent: 'center',
@@ -303,15 +400,15 @@ const styles = StyleSheet.create({
   textStyle: {
     textAlign: 'center',
   },
-  imageView: {},
   addButtonWrapper: {
     width: 116,
+    // height: 62,
   },
   addButtonAligner: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    height: 50,
+    height: 42,
     paddingRight: 8,
   },
   inputAligner: {
@@ -349,4 +446,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddDogProfile;
+export default DogCard;

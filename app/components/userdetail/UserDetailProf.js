@@ -15,6 +15,7 @@ import AccountCircle from '../svg/AccountCircle';
 import MailDm from '../svg/MailDm';
 import SendDM from '../svg/SendDM';
 import HumanDefaultImage from '../svg/HumanDefaultImage';
+import MyText from '../common/MyText';
 
 const UserDetailProf = ({nickname}) => {
   const dispatch = useDispatch();
@@ -110,21 +111,27 @@ const UserDetailProf = ({nickname}) => {
           </View>
           <View style={styles.userTextWrapper}>
             <View style={styles.userIntroWrapper}>
-              <Text style={styles.textNickName}>{nickname}</Text>
-              <Text style={styles.textIntroduce}>{userDetail.introduce}</Text>
+              <MyText style={styles.textNickName}>{nickname}</MyText>
+              <MyText style={styles.textIntroduce}>
+                {userDetail.introduce}
+              </MyText>
             </View>
             <View style={styles.userContentCountWrapper}>
               <View style={styles.userContentCounterContainer}>
-                <Text style={styles.userContetCounterMainText}>
+                <MyText style={styles.userContetCounterMainText}>
                   {userDetail.postsCount}
-                </Text>
-                <Text style={styles.userContetCounterSubText}>게시글 수</Text>
+                </MyText>
+                <MyText style={styles.userContetCounterSubText}>
+                  게시글 수
+                </MyText>
               </View>
               <View style={styles.userContentCounterContainer}>
-                <Text style={styles.userContetCounterMainText}>
+                <MyText style={styles.userContetCounterMainText}>
                   {userDetail.dogsCount}마리의
-                </Text>
-                <Text style={styles.userContetCounterSubText}>댕댕이 집사</Text>
+                </MyText>
+                <MyText style={styles.userContetCounterSubText}>
+                  댕댕이 집사
+                </MyText>
               </View>
             </View>
           </View>

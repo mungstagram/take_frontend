@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   Dimensions,
   SafeAreaView,
   KeyboardAvoidingView,
+  Text,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
@@ -16,10 +16,9 @@ import {__getPostDetailData} from '../redux/modules/commetsSlice';
 import VideoDetailTop from '../components/detailcomp/VideoDetailTop';
 import CommentInput from '../components/detailcomp/CommentInput';
 import HeaderTitle from '../components/common/HeaderTitle';
+import MyText from '../components/common/MyText';
 
 const VideoDetail = ({route}) => {
-  //useSelector로.. postId 불러야할것 같음
-
   const detail = useSelector(state => state.comments.detail);
 
   const videoUrl = detail.contentUrl[0];
@@ -29,7 +28,7 @@ const VideoDetail = ({route}) => {
   const isFocused = useIsFocused();
 
   const dispatch = useDispatch();
-  //postId를 보내준다. / 요청하고.
+
   useEffect(() => {
     if (isFocused) {
       dispatch(__getPostDetailData(route.params.postId));
@@ -52,18 +51,16 @@ const VideoDetail = ({route}) => {
         behavior="position"
         keyboardVerticalOffset={80}
         style={styles.avoid}>
-        <SafeAreaView>
-          <View style={styles.container}>
-            <View style={styles.videoContainer}>
-              <View style={styles.contentBox}>
-                <VideoDetailTop detail={detail} videoUrl={videoUrl} />
-              </View>
-              <View style={styles.commentInputBox}>
-                <CommentInput detail={detail} />
-              </View>
+        <View style={styles.container}>
+          <View style={styles.videoContainer}>
+            <View style={styles.contentBox}>
+              <VideoDetailTop detail={detail} videoUrl={videoUrl} />
+            </View>
+            <View style={styles.commentInputBox}>
+              <CommentInput detail={detail} />
             </View>
           </View>
-        </SafeAreaView>
+        </View>
       </KeyboardAvoidingView>
     </>
   );
@@ -111,6 +108,7 @@ const styles = StyleSheet.create({
     marginHorizontal: videoCardWidth * 0.05,
     fontSize: 28,
     color: BasicColors.whiteColor,
+    fontFamily: 'SBAggro-M',
   },
   flex2: {
     flex: 1,

@@ -1,10 +1,13 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image} from 'react-native';
+import MyText from '../common/MyText';
 
 const SearchNone = () => {
   return (
     <View style={styles.textContainer}>
-      <Text style={styles.textStyle}>검색 단어에 대한 결과가 없습니다.</Text>
+      <MyText style={styles.textStyle}>
+        검색 단어에 대한 결과가 없습니다.
+      </MyText>
       <Image
         source={require('../../assets/searchedNone.png')}
         resizeMode={'cover'}

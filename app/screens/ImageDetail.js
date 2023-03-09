@@ -17,6 +17,7 @@ import {__getPostDetailData} from '../redux/modules/commetsSlice';
 import ImageDetailTop from '../components/detailcomp/ImageDetailTop';
 import GoBackButtonWhite from '../components/common/GoBackButtonWhite';
 import HeaderTitle from '../components/common/HeaderTitle';
+import MyText from '../components/common/MyText';
 
 const ImageDetail = ({route}) => {
   const detail = useSelector(state => state.comments.detail);
@@ -106,6 +107,7 @@ const styles = StyleSheet.create({
     marginHorizontal: videoCardWidth * 0.05,
     fontSize: 28,
     color: BasicColors.whiteColor,
+    fontFamily: 'SBAggro-M',
   },
   flex2: {
     flex: 1,

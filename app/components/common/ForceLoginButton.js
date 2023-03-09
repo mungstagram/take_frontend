@@ -5,6 +5,7 @@ import React from 'react';
 import {useDispatch} from 'react-redux';
 
 import {checkLogin} from '../../redux/modules/loginSlice';
+import MyText from './MyText';
 const ForceLoginButton = () => {
   const dispatch = useDispatch();
 
@@ -16,7 +17,7 @@ const ForceLoginButton = () => {
     <View style={styles.forcebutton}>
       <Pressable onPress={forceLoginHandler}>
         <View>
-          <Text>강제 로그인 (토큰 있을때만 쓰세요)</Text>
+          <MyText>강제 로그인 (토큰 있을때만 쓰세요)</MyText>
         </View>
       </Pressable>
     </View>

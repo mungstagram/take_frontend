@@ -4,6 +4,8 @@ import React from 'react';
 import {Colors} from '../constants/colors';
 import PassWordVisibility from './svg/PassWordVisibility';
 import PassWordVisibilityOff from './svg/PassWordVisibilityOff';
+import MyText from './common/MyText';
+
 const AuthInput = ({
   label, //만약 라벨을 쓴다면 없다면 추후 삭제
   keyboardType,
@@ -32,7 +34,7 @@ const AuthInput = ({
       <View>
         {refInput ? (
           <View style={[styles.input, !isInvalid && styles.inputInvalid]}>
-            <Text style={styles.labelStyle}> </Text>
+            <MyText style={styles.labelStyle}> </MyText>
             <View style={styles.inputDirection}>
               <TextInput
                 placeholder={placeholder}
@@ -65,7 +67,7 @@ const AuthInput = ({
           </View>
         ) : (
           <View style={[styles.input, !isInvalid && styles.inputInvalid]}>
-            <Text style={styles.labelStyle}> {helper}</Text>
+            <MyText style={styles.labelStyle}> {helper}</MyText>
             <View style={styles.inputDirection}>
               <TextInput
                 placeholder={placeholder}

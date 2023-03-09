@@ -1,6 +1,6 @@
 import React from 'react';
 import {TextInput} from 'react-native-paper';
-
+import {View} from 'react-native';
 const ProfileInput = ({
   label,
   long,
@@ -8,41 +8,68 @@ const ProfileInput = ({
   value,
   onUpdateValue,
   number,
+  small,
 }) => {
-  // console.log(onUpdateValue, '프룹스받는 함수');
+  if (small) {
+    return (
+      <TextInput
+        outlineStyle={{fontSize: 56, height: 62}}
+        style={{
+          padding: 0,
+          width: 108,
+          maxHeight: 62,
+          fontSize: 14,
+        }}
+        activeOutlineColor="black"
+        mode="outlined"
+        label={label}
+        maxLength={22}
+        placeholder={placeholder}
+        value={value}
+        onChangeText={onUpdateValue}
+      />
+    );
+  }
   return long ? (
-    <TextInput
-      style={{
-        padding: 0,
-        width: 226,
-        height: 62,
-        fontSize: 14,
-      }}
-      activeOutlineColor="black"
-      mode="outlined"
-      label={label}
-      maxLength={22}
-      placeholder={placeholder}
-      value={value}
-      onChangeText={onUpdateValue}
-    />
+    <View style={{marginTop: 12}}>
+      <TextInput
+        outlineStyle={{fontSize: 12, height: 56}}
+        style={{
+          padding: 0,
+          width: 240,
+          maxHeight: 62,
+          fontSize: 14,
+        }}
+        activeOutlineColor="black"
+        mode="outlined"
+        label={label}
+        maxLength={22}
+        placeholder={placeholder}
+        value={value}
+        onChangeText={onUpdateValue}
+      />
+    </View>
   ) : (
-    <TextInput
-      style={{
-        padding: 0,
-        width: 108,
-        height: 62,
-        fontSize: 14,
-      }}
-      activeOutlineColor="black"
-      mode="outlined"
-      label={label}
-      maxLength={10}
-      placeholder={placeholder}
-      value={value}
-      onChangeText={onUpdateValue}
-      keyboardType={number ? 'number-pad' : 'default'}
-    />
+    <View style={{marginTop: 8}}>
+      <TextInput
+        outlineStyle={{fontSize: 12, height: 56}}
+        style={{
+          padding: 0,
+          paddingVertical: 0,
+          width: 116,
+          maxHeight: 62,
+          fontSize: 14,
+        }}
+        activeOutlineColor="black"
+        mode="outlined"
+        label={label}
+        maxLength={10}
+        placeholder={placeholder}
+        value={value}
+        onChangeText={onUpdateValue}
+        keyboardType={number ? 'number-pad' : 'default'}
+      />
+    </View>
   );
 };
 

@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import CommentImg from '../svg/CommentImg';
 import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
+import MyText from '../common/MyText';
 
 const ImageCard = ({imageContent}) => {
   const navigation = useNavigation();
@@ -26,8 +27,8 @@ const ImageCard = ({imageContent}) => {
             resizeMode={FastImage.resizeMode.contain}
           />
           <View style={styles.profileTextWrapper}>
-            <Text style={styles.nicknameFont}>{imageContent.nickname}</Text>
-            <Text style={styles.dateFont}>{imageContent.createdAt}</Text>
+            <MyText style={styles.nicknameFont}>{imageContent.nickname}</MyText>
+            <MyText style={styles.dateFont}>{imageContent.createdAt}</MyText>
           </View>
         </View>
         <FastImage
@@ -43,21 +44,28 @@ const ImageCard = ({imageContent}) => {
           resizeMode={FastImage.resizeMode.contain}
         />
         <View style={styles.contentDetailBox}>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.titleFont}>
+          <MyText
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={styles.titleFont}>
             {imageContent.title}
-          </Text>
+          </MyText>
           <View style={styles.iconBox}>
             <View style={styles.iconSize}>
               {imageContent.isLiked ? <Favorite /> : <NotFavorite />}
             </View>
             <View style={styles.countBox}>
-              <Text style={styles.countFont}>{imageContent.likesCount}</Text>
+              <MyText style={styles.countFont}>
+                {imageContent.likesCount}
+              </MyText>
             </View>
             <View style={styles.iconSize}>
               <CommentImg />
             </View>
             <View style={styles.countBox}>
-              <Text style={styles.countFont}>{imageContent.commentCount}</Text>
+              <MyText style={styles.countFont}>
+                {imageContent.commentCount}
+              </MyText>
             </View>
           </View>
         </View>

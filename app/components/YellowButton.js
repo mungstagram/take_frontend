@@ -7,14 +7,15 @@ import {
   Dimensions,
 } from 'react-native';
 import {Colors, BasicColors} from '../constants/colors';
+import MyText from './common/MyText';
 
 const YellowButton = ({children, onPress}) => {
   return (
     <View>
       <TouchableOpacity style={styles.buttonBox}>
-        <Text style={styles.button} onPress={onPress}>
+        <MyText style={styles.button} onPress={onPress}>
           {children}
-        </Text>
+        </MyText>
       </TouchableOpacity>
     </View>
   );

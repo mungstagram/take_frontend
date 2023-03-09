@@ -22,6 +22,8 @@ import {__getPostDetailData} from '../../redux/modules/commetsSlice';
 import {__putLikes} from '../../redux/modules/addContentSlice';
 import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
+import TaskImg from '../svg/TaskImg';
+import MyText from '../common/MyText';
 
 import Comments from './Comments';
 
@@ -60,25 +62,25 @@ const CommentList = ({userNick}) => {
       <View>
         <View style={styles.detailBottom}>
           <View style={styles.preContent}>
-            <Text style={styles.titleText}>{detail.title}</Text>
+            <MyText style={styles.titleText}>{detail.title}</MyText>
             <View style={styles.favoritBox}>
               <Pressable onPress={onIsLikeHandler}>
                 {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
               </Pressable>
-              <Text>{detail.likesCount}</Text>
+              <MyText>{detail.likesCount}</MyText>
             </View>
           </View>
           <View style={styles.contentText}>
-            <Text numberOfLines={line} ellipsizeMode="tail">
+            <MyText numberOfLines={line} ellipsizeMode="tail">
               {detail.content}
-            </Text>
+            </MyText>
           </View>
         </View>
         <View style={styles.commentCountBox}>
           <View style={styles.commentIcon}>
             <CommentImg />
           </View>
-          <Text>{commentList.length}</Text>
+          <MyText>{commentList.length}</MyText>
         </View>
       </View>
     );
@@ -116,20 +118,20 @@ const CommentList = ({userNick}) => {
         //간략보기
         <View style={styles.listBoxShort}>
           <View style={styles.preContent}>
-            <Text style={styles.titleText}>{detail.title}</Text>
+            <MyText style={styles.titleText}>{detail.title}</MyText>
             <View style={styles.favoritBox}>
               <Pressable onPress={onIsLikeHandler}>
                 {detail.isLiked ? <Favorite big /> : <NotFavorite big />}
               </Pressable>
-              <Text>{detail.likesCount}</Text>
+              <MyText>{detail.likesCount}</MyText>
             </View>
           </View>
           <View style={styles.contentText}>
-            <Text numberOfLines={line} ellipsizeMode="tail">
+            <MyText numberOfLines={line} ellipsizeMode="tail">
               {detail.content}
-            </Text>
-            <Pressable onPress={prev => handleLine()}>
-              <Text>더보기</Text>
+            </MyText>
+            <Pressable onPress={prev => handleLine(!prev[0], prev[1])}>
+              <MyText>더보기</MyText>
             </Pressable>
           </View>
           <View style={styles.container}>
@@ -137,7 +139,7 @@ const CommentList = ({userNick}) => {
               <View style={styles.commentIcon}>
                 <CommentImg />
               </View>
-              <Text>{commentList.length}</Text>
+              <MyText>{commentList.length}</MyText>
             </View>
             <View style={styles.listBox}>
               <FlatList

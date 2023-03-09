@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {checkLogin, setMyNick} from '../redux/modules/loginSlice';
 import {Navigation} from '../App';
+import MyText from './common/MyText';
 const LoginChecker = () => {
   //    마운트 될 때, asyncStorage의 토큰 여부를 검사 = > 있으면 checkLogin 리듀서를 통해서   isLogin의 상태 true로 바꿔줌
   const dispatch = useDispatch();
@@ -16,7 +17,6 @@ const LoginChecker = () => {
     async function fetchToken() {
       const storedToken = await AsyncStorage.getItem('authorization');
       const myNick = await AsyncStorage.getItem('nickname');
-      console.log(myNick, '체커에서 닉네임');
 
       if (storedToken) {
         dispatch(checkLogin());
