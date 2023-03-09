@@ -17,7 +17,6 @@ import {Colors} from './constants/colors';
 import {Provider} from 'react-redux';
 import LoginChecker from './components/LoginChecker';
 import BottomTabNav from './components/BottomTabNav';
-import InputDogProfileCard from './components/profile/InputDogProfileCard';
 
 const Stack = createNativeStackNavigator();
 
@@ -61,10 +60,6 @@ const AuthenticatedStack = () => {
       />
 
       <Stack.Screen name="VideoDetail" component={VideoDetail} />
-      <Stack.Screen
-        name="InputDogProfileCard"
-        component={InputDogProfileCard}
-      />
     </Stack.Navigator>
   );
 };
@@ -84,8 +79,7 @@ const KaKaoAuthStack = () => {
 export const Navigation = () => {
   const {isLogin} = useSelector(state => state.login);
   const {myNick} = useSelector(state => state.login);
-  // console.log(myNick, '네비게이션에서');
-  // console.log(isLogin, '네비게이션에서 확인하기');
+
   useEffect(() => {
     SplashScreen.hide();
   }, []);
