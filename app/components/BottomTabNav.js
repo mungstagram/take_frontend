@@ -15,8 +15,6 @@ import Movie from './svg/Movie';
 
 const Tab = createBottomTabNavigator();
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
 const BottomTabNav = () => {
   const getActiveTintColor = routeName => {
     if (routeName === 'Home') {

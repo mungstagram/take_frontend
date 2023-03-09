@@ -10,15 +10,23 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useRoute} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
+import FastImage from 'react-native-fast-image';
 
 import {Colors, BasicColors} from '../../constants/colors';
 import WriteComment from '../svg/WriteComment';
 import {__postComment} from '../../redux/modules/commetsSlice';
+import {__getHomeProfile} from '../../redux/modules/profileSlice';
+import WriteCommentOn from '../svg/WriteCommentOn';
 import {__getProfile} from '../../redux/modules/profileSlice';
 import MyText from '../common/MyText';
 
 const CommentInput = ({detail}) => {
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
+
+  const userImg = useSelector(state => state.profile.myProfile[0].user);
+  //console.log('mp', userImg);
   // 댓글 인풋창 상태
   const [inputText, setInputText] = useState('');
   // 댓글 인풋 set
@@ -31,33 +39,44 @@ const CommentInput = ({detail}) => {
     dispatch(
       __postComment({postId: detail.postId, comment: inputText, target: 0}),
     );
-
     setInputText('');
   };
 
-  // 유저 프로필 가져오기 아직 슬라이스가 안만들어져서 기다려야함
-  // useEffect(() => {
-  //   if (isFocused) {
-  //     dispatch(__getProfile());
-  //   }
-  // }, [isFocused]);
+  useEffect(() => {
+    if (isFocused) {
+      dispatch(__getHomeProfile());
+    }
+  }, [isFocused]);
   return (
     <View style={styles.container}>
       <View style={styles.commentsInput}>
-        <View style={styles.profileImg}></View>
+        <View style={styles.profileImg}>
+          <FastImage
+            style={styles.profileImg}
+            source={{
+              uri: userImg.contentUrl,
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={'cover'}
+          />
+        </View>
         <TextInput
-          placeholder=" 댓글쓰기 "
+          numberOfLines={3}
+          multiline
+          maxLength={60}
+          placeholder=" 댓글을 남겨주세요(60자 이하)"
           placeholderTextColor={BasicColors.grayColor}
           value={inputText}
           onChangeText={commentTextEnter}
-          style={styles.commentInput}></TextInput>
+          style={styles.commentInput}
+          cursorColor="#FFC98B"></TextInput>
       </View>
       <TouchableOpacity
         style={styles.writeIcon}
         activeOpacity={0.8}
         hitSlop={{top: 32, bottom: 32, left: 32, right: 32}}
         onPress={commentEnterHandler}>
-        <WriteComment />
+        {inputText ? <WriteCommentOn /> : <WriteComment />}
       </TouchableOpacity>
     </View>
   );
@@ -94,12 +113,13 @@ const styles = StyleSheet.create({
     height: 24,
     position: 'absolute',
     top: '35%',
-    right: '12%',
+    right: '8%',
   },
   commentInput: {
-    width: windowWidth * 0.74,
+    width: windowWidth * 0.79,
     borderWidth: 1,
     borderRadius: 4,
     borderColor: BasicColors.grayColor,
+    paddingRight: 50,
   },
 });

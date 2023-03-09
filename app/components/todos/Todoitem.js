@@ -110,7 +110,11 @@ const Todoitem = ({id, text, done}) => {
           autoFocus
         />
       ) : (
-        <MyText style={[styles.text, done && styles.lineThrough]}>
+        <MyText
+          style={{
+            ...styles.text,
+            textDecorationLine: isDone ? 'line-through' : 'none',
+          }}>
           {text}
         </MyText>
       )}

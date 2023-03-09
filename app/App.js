@@ -5,8 +5,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SplashScreen from 'react-native-splash-screen';
 import {useSelector} from 'react-redux';
 
-// import GlobalFont from 'react-native-global-font';
-
 import Login from './screens/Login';
 import AuthStartScreen from './screens/AuthStartScreen';
 import Signup from './screens/Signup';
@@ -17,7 +15,6 @@ import {Colors} from './constants/colors';
 import {Provider} from 'react-redux';
 import LoginChecker from './components/LoginChecker';
 import BottomTabNav from './components/BottomTabNav';
-import InputDogProfileCard from './components/profile/InputDogProfileCard';
 
 const Stack = createNativeStackNavigator();
 
@@ -61,10 +58,6 @@ const AuthenticatedStack = () => {
       />
 
       <Stack.Screen name="VideoDetail" component={VideoDetail} />
-      <Stack.Screen
-        name="InputDogProfileCard"
-        component={InputDogProfileCard}
-      />
     </Stack.Navigator>
   );
 };
@@ -84,8 +77,7 @@ const KaKaoAuthStack = () => {
 export const Navigation = () => {
   const {isLogin} = useSelector(state => state.login);
   const {myNick} = useSelector(state => state.login);
-  // console.log(myNick, '네비게이션에서');
-  // console.log(isLogin, '네비게이션에서 확인하기');
+
   useEffect(() => {
     SplashScreen.hide();
   }, []);

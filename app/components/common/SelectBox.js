@@ -85,12 +85,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingLeft: '7%',
     paddingVertical: '7%',
-    width: '75%',
+    width: 140,
+    fontSize: 14,
   },
   selectOpener: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: '4%',
+    // backgroundColor: 'green',
   },
   iconSetter: {
     postion: 'absolute',

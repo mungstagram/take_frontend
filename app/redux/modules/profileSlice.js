@@ -3,7 +3,6 @@ import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import http from '../api/http';
-import {act} from 'react-test-renderer';
 
 const initialState = {
   profile: [
@@ -55,11 +54,8 @@ export const __getHomeProfile = createAsyncThunk(
 export const __getProfile = createAsyncThunk(
   'GET_PROFILE',
   async (payload, thunkAPI) => {
-    console.log('1.payload', payload);
-    //여기서 undefined 면 절대통신이 안된다는 뜻!
     try {
       const {data} = await http.get(`/profile/${payload}`);
-      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -80,12 +76,10 @@ export const __editProfile = createAsyncThunk(
           },
         },
       );
-      console.log('resdata', data);
       AsyncStorage.setItem('nickname', data.nickname);
 
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
-      console.log('edit error', error);
       Alert.alert('죄송합니다 수정에 실패하였습니다.');
       return thunkAPI.rejectWithValue(error.code);
     }
@@ -96,13 +90,12 @@ export const __addDogProfile = createAsyncThunk(
   'ADD_DOG_PROFILE',
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
       const {data} = await http.post(`/dogs`, payload, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('dog add data', data);
+      // console.log('dog add data', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log('add error', error);
@@ -115,9 +108,6 @@ export const __editDogProfile = createAsyncThunk(
   'EDIT_DOG_PROFILE',
   async (payload, thunkAPI) => {
     try {
-      // console.log('dog edit payload', payload);
-      // console.log('dog edit payload', payload.name);
-      // console.log('dog edit payload', payload.formData);
       const {data} = await http.put(
         `/profile/dogs/${payload.id}`,
         payload.formData,
@@ -127,8 +117,22 @@ export const __editDogProfile = createAsyncThunk(
           },
         },
       );
-      console.log('dog resdata', data);
       return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      console.log('edit error', error);
+      return thunkAPI.rejectWithValue(error.code);
+    }
+  },
+);
+
+export const __deleteDogProfile = createAsyncThunk(
+  'DELETE_DOG_PROFILE',
+  async (payload, thunkAPI) => {
+    console.log(payload, '삭제 페이로드');
+    try {
+      const {data} = await http.delete('/dogs', {data: payload});
+      console.log(data, '삭제 응답');
+      return thunkAPI.fulfillWithValue(payload.id);
     } catch (error) {
       console.log('edit error', error);
       return thunkAPI.rejectWithValue(error.code);
@@ -178,8 +182,9 @@ export const profileSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    //강아지
     [__editDogProfile.fulfilled]: (state, action) => {
-      state.profile[1].dogs = action.payload;
+      state.profile[1].dogs = action.payload.dogs;
       state.error = null;
     },
     [__editDogProfile.pending]: state => {
@@ -190,15 +195,27 @@ export const profileSlice = createSlice({
       state.error = action.payload;
     },
     [__addDogProfile.fulfilled]: (state, action) => {
-      console.log(action.payload, 'addDog시 들어오는 payload');
-      // state.profile[1].dogs = action.payload;
-      //값보고 수정
+      state.profile[1].dogs.push(action.payload);
       state.error = null;
     },
     [__addDogProfile.pending]: state => {
       state.isLoading = true;
     },
     [__addDogProfile.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [__deleteDogProfile.fulfilled]: (state, action) => {
+      const target = state.profile[1].dogs.findIndex(
+        dog => dog.id === action.payload,
+      );
+      state.profile[1].dogs.splice(target, 1);
+      state.error = null;
+    },
+    [__deleteDogProfile.pending]: state => {
+      state.isLoading = true;
+    },
+    [__deleteDogProfile.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

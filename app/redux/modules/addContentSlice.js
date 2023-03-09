@@ -15,7 +15,7 @@ const initialState = {
 export const __postAddContentFormData = createAsyncThunk(
   'POST_ADDCONTENT',
   async (payload, thunkAPI) => {
-    console.log('paylod', payload);
+    //console.log('paylod', payload);
     try {
       const data = await http
         .post('/posts', payload, {
@@ -26,11 +26,6 @@ export const __postAddContentFormData = createAsyncThunk(
         .then(res => {
           //console.log('요청성공');
           Alert.alert('게시글 작성을 완료하였습니다.');
-          //사진탭을 눌러서 사진을 넣고 완료버튼을 누르면 사진게시판으로 이동하게
-          //영상탭을 눌러서 영상 하나 넣고 완료누르면 영상게시판으로 이동
-
-          //유저디테일로 보내는걸로 하기!
-          //유저디테일페이지로 넘겨버리자! navigate. sa('/userdetail')
 
           return res;
         });
@@ -65,11 +60,11 @@ export const __getPostData = createAsyncThunk(
 export const __deletePostDetailData = createAsyncThunk(
   'DELETE_POST_DETAIL_DATA',
   async (payload, thunkAPI) => {
-    console.log('payload', payload);
+    //console.log('payload', payload);
     try {
       const {data} = await http.delete(`/posts/${payload.postId}`);
 
-      console.log('deleteData', data);
+      //console.log('deleteData', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -81,10 +76,10 @@ export const __deletePostDetailData = createAsyncThunk(
 export const __putLikes = createAsyncThunk(
   'PUT_LIKES',
   async (payload, thunkAPI) => {
-    console.log('likepay', payload.postId);
+    //console.log('likepay', payload.postId);
     try {
       const {data} = await http.put(`/posts/likes/${payload.postId}`);
-      console.log('likeData', data);
+      //console.log('likeData', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

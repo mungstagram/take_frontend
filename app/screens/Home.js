@@ -263,6 +263,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffc988',
     justifyContent: 'center',
     alignContent: 'center',
+    flex: 1,
   },
   goToLink: {
     // borderWidth: 1,

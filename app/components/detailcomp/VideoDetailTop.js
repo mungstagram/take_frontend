@@ -29,6 +29,12 @@ const VideoDetailTop = ({detail, videoUrl}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const loginNick = useSelector(
+    state => state.profile.myProfile[0].user.nickname,
+  );
+  //console.log('loginNick', loginNick);
+  const userNick = detail.nickname;
+  //console.log('userNick', userNick);
   //게시물 편집 버튼
   const onEditHandler = () => {
     navigation.navigate('ModifyVideo', {postId: detail.postId});
@@ -74,22 +80,28 @@ const VideoDetailTop = ({detail, videoUrl}) => {
             <MyText style={styles.nicknameText}>{detail.nickname}</MyText>
             <MyText style={styles.timeText}>{detail.createdAt}</MyText>
           </View>
-          <View style={styles.contentControl}>
-            <Pressable style={styles.editBtn} onPress={onEditHandler}>
-              <ServicesImg
-                titleText={detail.title}
-                contentText={detail.content}
-              />
-            </Pressable>
-            <Pressable style={styles.deleteBtn} onPress={onDeleteHandler}>
-              <Delete />
-            </Pressable>
-          </View>
+          {userNick === loginNick ? (
+            <View style={styles.contentControl}>
+              <Pressable style={styles.editBtn} onPress={onEditHandler}>
+                <ServicesImg
+                  titleText={detail.title}
+                  contentText={detail.content}
+                />
+              </Pressable>
+              <Pressable style={styles.deleteBtn} onPress={onDeleteHandler}>
+                <Delete />
+              </Pressable>
+            </View>
+          ) : (
+            <View style={styles.contentControl}></View>
+          )}
         </View>
-        <View style={styles.controlbox}>
+        <View style={styles.controlBox}>
           <VideoPlayer source={{uri: videoUrl}} disableBack disableFullscreen />
         </View>
-        <CommentList />
+        <View style={styles.listBox}>
+          <CommentList userNick />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -115,8 +127,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: '4%',
     borderTopRightRadius: 4,
     borderTopLeftRadius: 4,
-
-    width: '100%',
+    width: videoCardWidth,
     alignItems: 'center',
   },
   profileImg: {
@@ -149,7 +160,7 @@ const styles = StyleSheet.create({
     height: 24,
     marginHorizontal: '6%',
   },
-  controlbox: {
+  controlBox: {
     width: videoCardWidth,
     height: videoCardHeight * 0.703,
     backgroundColor: BasicColors.blackColor,
@@ -159,32 +170,6 @@ const styles = StyleSheet.create({
     height: videoCardHeight * 0.703,
     backgroundColor: BasicColors.blackColor,
   },
-  // detailBottom: {
-  //   backgroundColor: BasicColors.whiteColor,
-  //   //height: videoCardHeight * 0.3,
-  //   padding: '2%',
-  // },
-  // preContent: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   alignItems: 'center',
-  //   //height: '60%',
-  // },
-  // titleText: {
-  //   fontSize: 20,
-  //   fontWeight: 'bold',
-  // },
-  // favoritBox: {
-  //   alignItems: 'center',
-  // },
-  // contentScroll: {
-  //   height: windowHeight,
-  // },
-  // contentText: {
-  //   fontSize: 14,
-  //   flexDirection: 'row',
-  //   alignItems: 'flex-end',
-  // },
   conmmentList: {
     padding: '2%',
   },
