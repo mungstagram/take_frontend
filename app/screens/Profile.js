@@ -16,8 +16,7 @@ import {__getProfile} from '../redux/modules/profileSlice';
 import Logout from '../components/Logout';
 import GoBackButton from '../components/common/GoBackButton';
 import PersonProfileCard from '../components/profile/PersonProfileCard';
-import InputDogProfileCard from '../components/profile/InputDogProfileCard';
-import TextDogProfileCard from '../components/profile/TextDogProfileCard';
+
 import AddDogProfile from '../components/profile/AddDogProfile';
 import {__deleteUsers} from '../redux/modules/loginSlice';
 

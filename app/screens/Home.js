@@ -14,8 +14,6 @@ import DogIndexChangeLeft from '../components/svg/DogIndexChangeLeft';
 import DogIndexChangeRight from '../components/svg/DogIndexChagneRight';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
 function Home({navigation}) {
   const dispatch = useDispatch();
   const [myNick, setMyNick] = useState();

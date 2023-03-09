@@ -1,7 +1,15 @@
 import React from 'react';
 import {TextInput} from 'react-native-paper';
 
-const ProfileInput = ({label, long}) => {
+const ProfileInput = ({
+  label,
+  long,
+  placeholder,
+  value,
+  onUpdateValue,
+  number,
+}) => {
+  // console.log(onUpdateValue, '프룹스받는 함수');
   return long ? (
     <TextInput
       style={{
@@ -13,6 +21,10 @@ const ProfileInput = ({label, long}) => {
       activeOutlineColor="black"
       mode="outlined"
       label={label}
+      maxLength={22}
+      placeholder={placeholder}
+      value={value}
+      onChangeText={onUpdateValue}
     />
   ) : (
     <TextInput
@@ -25,6 +37,11 @@ const ProfileInput = ({label, long}) => {
       activeOutlineColor="black"
       mode="outlined"
       label={label}
+      maxLength={10}
+      placeholder={placeholder}
+      value={value}
+      onChangeText={onUpdateValue}
+      keyboardType={number ? 'number-pad' : 'default'}
     />
   );
 };

@@ -1,14 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  Button,
-  Keyboard,
-  Image,
-  Alert,
-  Pressable,
-} from 'react-native';
+import {View, StyleSheet, Text, Image, Alert, Pressable} from 'react-native';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import {useDispatch} from 'react-redux';
@@ -18,6 +9,7 @@ import AddCircle from '../svg/AddCircle';
 import ProfileInput from './components/ProfileInput';
 import TaskPinkImg from '../svg/TaskPinkImg';
 import TaskImg from '../svg/TaskImg';
+import {__addDogProfile} from '../../redux/modules/profileSlice';
 
 const AddDogProfile = () => {
   //추가 버튼 상태
@@ -41,7 +33,6 @@ const AddDogProfile = () => {
       ],
     );
   };
-  console.log(addMode);
 
   //카메라 기능 상용여부
   const [openCamera, setOpenCamera] = useState(false);
@@ -91,47 +82,84 @@ const AddDogProfile = () => {
     setOpenCamera(true);
     openPicker();
   };
-  const renderItem = ({item, index}) => {
-    return (
-      <ScrollView style={styles.imageView}>
-        <Image
-          source={{
-            uri:
-              item?.type === 'video'
-                ? 'file://' + (item?.crop?.cropPath ?? item.realPath)
-                : 'file://' + (item?.crop?.cropPath ?? item.realPath),
-          }}
-          style={styles.media}
-        />
-      </ScrollView>
-    );
-  };
 
   const dispatch = useDispatch();
   // 폼데이터 선언 및 전송
   const formData = new FormData();
+
   const onSendFormData = () => {
-    if (titleText === '') {
-      return Alert.alert('제목을 넣어주세요');
-    } else if (contentText === '') {
-      return Alert.alert('내용을 넣어주세요');
+    const isValidDate = dateString => {
+      // 입력된 값을 Date 객체로 변환합니다.
+      const date = new Date(dateString);
+      // Date 객체가 유효한 날짜인지 확인합니다.
+      return date instanceof Date && !isNaN(date);
+    };
+    const isNumber = value => {
+      const num = Number(value);
+      if (num > 0) {
+        return !isNaN(num);
+      } else {
+        return false;
+      }
+    };
+    console.log(isValidDate(birthday), '확인', birthday, '입력값 생일');
+    if (!isValidDate(birthday) || !isValidDate(bringDate)) {
+      console.log(isValidDate(birthday), '확인', birthday, '입력값 생일');
+      return Alert.alert('유효한 날짜를 입력해주세요', 'ex)2020-08-22');
     } else if (images.length === 0) {
-      return Alert.alert('사진을 넣어주세요');
+      return Alert.alert('사진을 등록해 주세요');
+    } else if (
+      name === '' ||
+      species === '' ||
+      weight === '' ||
+      introduce === ''
+    ) {
+      Alert.alert('입력하지 않은 내용이 있습니다.');
+    } else if (!isNumber(weight)) {
+      Alert.alert('몸무게는 양수여야 합니다.', 'ex) 8.5');
     } else {
-      formData.append('category', 'image');
-      formData.append('title', titleText);
-      formData.append('content', contentText);
+      formData.append('name', name);
+      formData.append('species', species);
+      formData.append('weight', weight);
+      formData.append('introduce', introduce);
+      formData.append('birthday', birthday);
+      formData.append('bringDate', bringDate);
       formData.append('files', {
         name: images[0].fileName,
         type: images[0].mime,
         uri: `file://${images[0].realPath}`,
       });
 
-      // dispatch(__postAddContentFormData(formData));
-      // setTitleText('');
-      // setContentText('');
-      // setImages([]);
+      dispatch(__addDogProfile(formData));
+
+      // setAddMode(false);
     }
+  };
+  //입력값
+  const [input, setInput] = useState({
+    name: '',
+    introduce: '',
+    species: '',
+    weight: '',
+    birthday: '',
+    bringDate: '',
+  });
+
+  const {name, species, weight, introduce, birthday, bringDate} = input;
+  console.log(
+    name,
+    species,
+    weight,
+    introduce,
+    birthday,
+    bringDate,
+    '인풋값들',
+  );
+
+  //인풋값 변경 함수
+  const onChangeInputHandler = (name, value) => {
+    console.log(name);
+    setInput({...input, [name]: value});
   };
 
   return (
@@ -181,7 +209,11 @@ const AddDogProfile = () => {
             </View>
             <View style={styles.addInfoContainer}>
               <View style={styles.inputAligner}>
-                <ProfileInput label={'강아지 이름'} />
+                <ProfileInput
+                  label={'강아지 이름'}
+                  onUpdateValue={onChangeInputHandler.bind(this, 'name')}
+                  value={name}
+                />
                 <View style={styles.addButtonWrapper}>
                   <View style={{height: 12, width: '100%'}} />
                   <View style={styles.addButtonAligner}>
@@ -189,22 +221,47 @@ const AddDogProfile = () => {
                       <TaskImg />
                     </Pressable>
                     {/* //TODO: 취소버튼으로 바꿔야함 */}
-                    <Pressable onPress={addMyDoghandler}>
+                    <Pressable onPress={onSendFormData}>
                       <TaskPinkImg />
                     </Pressable>
                   </View>
                 </View>
               </View>
               <View style={styles.inputAligner}>
-                <ProfileInput label={'종류'} />
-                <ProfileInput label={'몸무게'} />
+                <ProfileInput
+                  label={'종류'}
+                  value={species}
+                  onUpdateValue={onChangeInputHandler.bind(this, 'species')}
+                />
+                <ProfileInput
+                  label={'몸무게'}
+                  onUpdateValue={onChangeInputHandler.bind(this, 'weight')}
+                  value={weight}
+                  number
+                  placeholder={'xx.x(kg)'}
+                />
               </View>
               <View>
-                <ProfileInput label={'강아지 소개'} long />
+                <ProfileInput
+                  label={'강아지 소개'}
+                  long
+                  onUpdateValue={onChangeInputHandler.bind(this, 'introduce')}
+                  value={introduce}
+                />
               </View>
               <View style={styles.inputAligner}>
-                <ProfileInput label={'태어난 날'} />
-                <ProfileInput label={'데려온 날'} />
+                <ProfileInput
+                  label={'태어난 날'}
+                  placeholder={'0000-00-00'}
+                  onUpdateValue={onChangeInputHandler.bind(this, 'birthday')}
+                  value={birthday}
+                />
+                <ProfileInput
+                  label={'데려온 날'}
+                  placeholder={'0000-00-00'}
+                  onUpdateValue={onChangeInputHandler.bind(this, 'bringDate')}
+                  value={bringDate}
+                />
               </View>
             </View>
           </>

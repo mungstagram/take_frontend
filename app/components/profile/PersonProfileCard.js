@@ -42,6 +42,8 @@ const PersonProfileCard = ({myInfo}) => {
   //수정버튼 클릭 이벤트
   const onPressInputEdit = () => {
     setIsEdit(true);
+    setProfNickEdit(myInfo.nickname);
+    setProfIntroEdit(myInfo.introduce);
   };
 
   //input 닉네임,자기소개 수정
