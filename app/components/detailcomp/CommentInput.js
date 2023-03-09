@@ -10,15 +10,21 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useRoute} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
+import FastImage from 'react-native-fast-image';
 
 import {Colors, BasicColors} from '../../constants/colors';
 import WriteComment from '../svg/WriteComment';
 import {__postComment} from '../../redux/modules/commetsSlice';
-import {__getProfile} from '../../redux/modules/profileSlice';
+import {__getHomeProfile} from '../../redux/modules/profileSlice';
 import WriteCommentOn from '../svg/WriteCommentOn';
 
 const CommentInput = ({detail}) => {
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
+
+  const userImg = useSelector(state => state.profile.myProfile[0].user);
+  //console.log('mp', userImg);
   // 댓글 인풋창 상태
   const [inputText, setInputText] = useState('');
   // 댓글 인풋 set
@@ -35,16 +41,24 @@ const CommentInput = ({detail}) => {
     setInputText('');
   };
 
-  // 유저 프로필 가져오기 아직 슬라이스가 안만들어져서 기다려야함
-  // useEffect(() => {
-  //   if (isFocused) {
-  //     dispatch(__getProfile());
-  //   }
-  // }, [isFocused]);
+  useEffect(() => {
+    if (isFocused) {
+      dispatch(__getHomeProfile());
+    }
+  }, [isFocused]);
   return (
     <View style={styles.container}>
       <View style={styles.commentsInput}>
-        <View style={styles.profileImg}></View>
+        <View style={styles.profileImg}>
+          <FastImage
+            style={styles.profileImg}
+            source={{
+              uri: userImg.contentUrl,
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={'cover'}
+          />
+        </View>
         <TextInput
           //numberOfLines={3}
           multiline

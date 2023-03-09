@@ -75,13 +75,13 @@ export const __putPostDetailData = createAsyncThunk(
 export const __putComment = createAsyncThunk(
   'PUT_COMMENT',
   async (payload, thunkAPI) => {
-    console.log('put', payload);
+    //console.log('put', payload);
     try {
       const {data} = await http.put(`/comments/${payload.commentId}`, {
         id: payload.id,
         comment: payload.comment,
       });
-      console.log('commentPutData', data);
+      //console.log('commentPutData', data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -155,8 +155,8 @@ const commetsSlice = createSlice({
         comment => comment.id === action.payload,
       );
       //console.log('지고 싶은 대상의 인덱스값', target);
-      state.comments.splice(target, 1, action.payload.comment);
-      console.log('수정했을때', action.payload.comment);
+      state.comments.splice(target, 1, action.payload);
+      //console.log('수정했을때', action.payload);
     },
     [__putComment.rejected]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.

@@ -25,20 +25,16 @@ import NotFavorite from '../svg/NotFavorite';
 
 import Comments from './Comments';
 
-const CommentList = () => {
+const CommentList = ({userNick}) => {
   const dispatch = useDispatch();
-
+  const isFocused = useIsFocused();
   //댓글 리스트
   const commentList = useSelector(state => state.comments.comments);
   //console.log('list', commentList);
   const detail = useSelector(state => state.comments.detail);
   //console.log('de', detail);
-
-  //포커스
-  const isFocused = useIsFocused();
   //좋아요 상태
   const [isLiked, setIsLiked] = useState(false);
-
   // 좋아요 버튼
   const onIsLikeHandler = () => {
     if (isLiked === false) {
@@ -98,7 +94,7 @@ const CommentList = () => {
   };
   //FlatList Render
   const renderItem = item => {
-    return <Comments item={item} commentList={commentList} />;
+    return <Comments userNick={userNick} item={item} detail={detail} />;
   };
 
   return (
@@ -109,6 +105,7 @@ const CommentList = () => {
           <FlatList
             ListHeaderComponent={detailContent}
             data={commentList}
+            extraData={commentList}
             renderItem={renderItem}
             keyExtractor={item => item.id}
             style={styles.listinBox2}
@@ -147,10 +144,9 @@ const CommentList = () => {
             <View style={styles.listBox}>
               <FlatList
                 data={commentList}
+                extraData={commentList}
                 renderItem={renderItem}
-                keyExtractor={(item, index) => {
-                  item.id, index;
-                }}
+                keyExtractor={item => item.id}
                 style={styles.listinBox}
                 horizontal={false}
                 nestedScrollEnabled={true}

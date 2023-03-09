@@ -25,11 +25,13 @@ import TaskImg from '../svg/TaskImg';
 import TaskImgOn from '../svg/TaskImgOn';
 import ScanDelete from '../svg/ScanDelete';
 
-const Comments = ({item, index}) => {
+const Comments = ({item, detail}) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
+
   //댓글 객체
   const itemData = item.item;
+  console.log('www', item.item);
   //댓글 수정 인풋형태 변경 상태
   const [edit, setEdit] = useState(false);
   //댓글 값 변경
@@ -88,6 +90,16 @@ const Comments = ({item, index}) => {
         },
       },
     ]);
+
+  const loginNick = useSelector(
+    state => state.profile.myProfile[0].user.nickname,
+  );
+  //console.log('loginNick', loginNick);
+  const userNick = detail.nickname;
+  //console.log('userNick', userNick);
+  const commentNick = itemData.nickname;
+  //console.log('commentNick', commentNick);
+
   useEffect(() => {
     if (isFocused) {
       dispatch(__getPostDetailData());
@@ -109,28 +121,42 @@ const Comments = ({item, index}) => {
           <Text style={styles.timeText}>{itemData.createdAt}</Text>
         </View>
         <View style={styles.btnControl}>
-          {!edit ? (
-            <Pressable style={styles.editBtn} onPress={onEditHandler}>
-              <ServicesImg />
-            </Pressable>
+          {commentNick === loginNick ? (
+            !edit ? (
+              <Pressable style={styles.editBtn} onPress={onEditHandler}>
+                <ServicesImg />
+              </Pressable>
+            ) : (
+              <Pressable style={styles.editBtn} onPress={onDoneHandler}>
+                <View style={styles.taskOn}>
+                  <TaskImgOn />
+                </View>
+              </Pressable>
+            )
           ) : (
-            <Pressable style={styles.editBtn} onPress={onDoneHandler}>
-              <View style={styles.taskOn}>
-                <TaskImgOn />
-              </View>
-            </Pressable>
+            <View style={styles.editBtnEmpty}></View>
           )}
 
-          {edit ? (
-            <Pressable style={styles.deleteBtn} onPress={onEditCancelHandler}>
-              <View style={styles.cancel}>
-                <ScanDelete />
-              </View>
-            </Pressable>
+          {commentNick === loginNick ? (
+            edit ? (
+              <Pressable style={styles.deleteBtn} onPress={onEditCancelHandler}>
+                <View style={styles.cancel}>
+                  <ScanDelete />
+                </View>
+              </Pressable>
+            ) : (
+              <Pressable style={styles.deleteBtn} onPress={onDeleteHandler}>
+                <Delete />
+              </Pressable>
+            )
+          ) : loginNick === userNick ? (
+            <View>
+              <Pressable style={styles.deleteBtn} onPress={onDeleteHandler}>
+                <Delete />
+              </Pressable>
+            </View>
           ) : (
-            <Pressable style={styles.deleteBtn} onPress={onDeleteHandler}>
-              <Delete />
-            </Pressable>
+            <></>
           )}
         </View>
       </View>
@@ -205,6 +231,11 @@ const styles = StyleSheet.create({
   },
   taskOn: {
     left: 3,
+  },
+  editBtnEmpty: {
+    width: 26,
+    height: 24,
+    marginHorizontal: '6%',
   },
   deleteBtn: {
     width: 24,
