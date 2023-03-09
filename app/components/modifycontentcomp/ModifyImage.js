@@ -236,6 +236,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: Colors.userDataColor,
     fontFamily: 'SBAggro-M',
+    top: 3,
   },
   flex2: {
     flex: 1,

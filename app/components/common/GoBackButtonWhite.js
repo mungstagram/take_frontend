@@ -3,7 +3,7 @@ import {Pressable, View, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import ArrowGoBackWhite from '../svg/ArrowGoBackWhite';
 
-const GoBackButton = () => {
+const GoBackButtonWhite = () => {
   const navigation = useNavigation();
   const navigateBackPageHandler = () => {
     navigation.goBack();
@@ -17,7 +17,7 @@ const GoBackButton = () => {
   );
 };
 
-export default GoBackButton;
+export default GoBackButtonWhite;
 
 const styles = StyleSheet.create({
   textContainer: {

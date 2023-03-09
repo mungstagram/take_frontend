@@ -60,7 +60,7 @@ export default ImageBoard;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const videoCardWidth = windowWidth - 40;
+const videoCardWidth = windowWidth * 0.92;
 const videoCardHeight = videoCardWidth;
 
 const styles = StyleSheet.create({
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: BasicColors.whiteColor,
     fontFamily: 'SBAggro-M',
+    top: 3,
   },
   flex2: {
     flex: 1,
