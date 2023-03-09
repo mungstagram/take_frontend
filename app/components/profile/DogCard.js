@@ -12,8 +12,14 @@ import TaskImg from '../svg/TaskImg';
 import FastImage from 'react-native-fast-image';
 import ProfileText from './components/ProfileText';
 import ServicesImg from '../svg/ServicesImg';
-import {__editDogProfile} from '../../redux/modules/profileSlice';
+import {
+  __deleteDogProfile,
+  __editDogProfile,
+} from '../../redux/modules/profileSlice';
 import Delete from '../svg/Delete';
+import ScanDelete from '../svg/ScanDelete';
+import MyText from '../common/MyText';
+import {RadioButton} from 'react-native-paper';
 const DogCard = ({dog}) => {
   //추가 버튼 상태
   const [editMode, setEditMode] = useState(false);
@@ -127,6 +133,7 @@ const DogCard = ({dog}) => {
     } else if (!isNumber(weight)) {
       Alert.alert('몸무게는 양수여야 합니다.', 'ex) 8.5');
     } else {
+      console.log(representative, '대표여부');
       formData.append('name', name);
       formData.append('species', species);
       formData.append('weight', weight);
@@ -134,11 +141,14 @@ const DogCard = ({dog}) => {
       formData.append('birthday', birthday);
       formData.append('bringDate', bringDate);
       formData.append('representative', representative);
-      formData.append('files', {
-        name: images[0].fileName,
-        type: images[0].mime,
-        uri: `file://${images[0].realPath}`,
-      });
+      {
+        images.length !== 0 &&
+          formData.append('files', {
+            name: images[0].fileName,
+            type: images[0].mime,
+            uri: `file://${images[0]?.realPath}`,
+          });
+      }
 
       dispatch(__editDogProfile({id: dog.id, formData}));
 
@@ -168,11 +178,22 @@ const DogCard = ({dog}) => {
     });
   }, [dog]);
 
-  console.log(images, 'images값');
-
   //인풋값 변경 함수
   const onChangeInputHandler = (name, value) => {
     setInput({...input, [name]: value});
+  };
+  const onDeleteDogCardHandler = () => {
+    Alert.alert('', '삭제 하시겠습니까??', [
+      {
+        text: '취소하기',
+      },
+      {
+        text: '삭제하기',
+        onPress: () => {
+          dispatch(__deleteDogProfile({id: dog.id}));
+        },
+      },
+    ]);
   };
 
   return (
@@ -242,14 +263,25 @@ const DogCard = ({dog}) => {
                   small
                 />
                 <View style={styles.addButtonWrapper}>
-                  <View style={{height: 12, width: '100%'}} />
+                  <MyText style={{fontSize: 12, width: '100%', lineHeight: 12}}>
+                    대표 강아지
+                  </MyText>
                   <View style={styles.addButtonAligner}>
-                    <Pressable onPress={unEditMyDoghandler}>
-                      {/* <TaskImg /> */}
-                      <Delete gray />
+                    <RadioButton
+                      color="#F09090"
+                      uncheckedColor="#C8C8C8"
+                      value={representative}
+                      status={representative ? 'checked' : 'unchecked'}
+                      onPress={() => setRepresentative(!representative)}
+                    />
+                    <Pressable
+                      style={{marginLeft: 16}}
+                      onPress={unEditMyDoghandler}>
+                      <ScanDelete brightGray />
                     </Pressable>
-                    {/* //TODO: 취소버튼으로 바꿔야함 */}
-                    <Pressable onPress={onSendFormData}>
+                    <Pressable
+                      style={{marginLeft: 16}}
+                      onPress={onSendFormData}>
                       <TaskPinkImg />
                     </Pressable>
                   </View>
@@ -312,11 +344,12 @@ const DogCard = ({dog}) => {
                 <View style={styles.addButtonWrapper}>
                   <View style={{height: 12, width: '100%'}} />
                   <View style={styles.addButtonAligner}>
-                    <Pressable>
-                      {/* //TODO: 삭제버튼으로 생겨야함 */}
-                      <TaskImg />
+                    <Pressable onPress={onDeleteDogCardHandler}>
+                      <Delete gray />
                     </Pressable>
-                    <Pressable onPress={editMyDoghandler}>
+                    <Pressable
+                      style={{marginLeft: 16}}
+                      onPress={editMyDoghandler}>
                       <ServicesImg gray />
                     </Pressable>
                   </View>
@@ -367,21 +400,20 @@ const styles = StyleSheet.create({
   textStyle: {
     textAlign: 'center',
   },
-  imageView: {},
   addButtonWrapper: {
-    width: 108,
+    width: 116,
+    // height: 62,
   },
   addButtonAligner: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    height: 50,
-    paddingLeft: 36,
+    height: 42,
     paddingRight: 8,
   },
   inputAligner: {
     flexDirection: 'row',
-    width: 226,
+    width: 240,
     justifyContent: 'space-between',
     marginTop: 8,
   },

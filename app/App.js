@@ -17,7 +17,6 @@ import {Colors} from './constants/colors';
 import {Provider} from 'react-redux';
 import LoginChecker from './components/LoginChecker';
 import BottomTabNav from './components/BottomTabNav';
-import InputDogProfileCard from './components/profile/InputDogProfileCard';
 
 const Stack = createNativeStackNavigator();
 
@@ -61,10 +60,6 @@ const AuthenticatedStack = () => {
       />
 
       <Stack.Screen name="VideoDetail" component={VideoDetail} />
-      <Stack.Screen
-        name="InputDogProfileCard"
-        component={InputDogProfileCard}
-      />
     </Stack.Navigator>
   );
 };

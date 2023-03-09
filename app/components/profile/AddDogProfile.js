@@ -8,8 +8,8 @@ import Pets from '../svg/Pets';
 import AddCircle from '../svg/AddCircle';
 import ProfileInput from './components/ProfileInput';
 import TaskPinkImg from '../svg/TaskPinkImg';
-import TaskImg from '../svg/TaskImg';
 import {__addDogProfile} from '../../redux/modules/profileSlice';
+import ScanDelete from '../svg/ScanDelete';
 
 const AddDogProfile = () => {
   //추가 버튼 상태
@@ -214,10 +214,11 @@ const AddDogProfile = () => {
                   <View style={{height: 12, width: '100%'}} />
                   <View style={styles.addButtonAligner}>
                     <Pressable onPress={unAddMyDoghandler}>
-                      <TaskImg />
+                      <ScanDelete brightGray />
                     </Pressable>
-                    {/* //TODO: 취소버튼으로 바꿔야함 */}
-                    <Pressable onPress={onSendFormData}>
+                    <Pressable
+                      style={{marginLeft: 16}}
+                      onPress={onSendFormData}>
                       <TaskPinkImg />
                     </Pressable>
                   </View>
@@ -293,6 +294,7 @@ const styles = StyleSheet.create({
   dogBlock: {
     flex: 1,
     justifyContent: 'center',
+    marginRight: 60,
   },
   addDogCardText: {
     justifyContent: 'center',
@@ -303,19 +305,18 @@ const styles = StyleSheet.create({
   },
   imageView: {},
   addButtonWrapper: {
-    width: 108,
+    width: 116,
   },
   addButtonAligner: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     height: 50,
-    paddingLeft: 36,
     paddingRight: 8,
   },
   inputAligner: {
     flexDirection: 'row',
-    width: 226,
+    width: 240,
     justifyContent: 'space-between',
     marginTop: 8,
   },
