@@ -121,7 +121,7 @@ const Comments = ({item, detail}) => {
           {commentNick === loginNick ? (
             !edit ? (
               <Pressable style={styles.editBtn} onPress={onEditHandler}>
-                <ServicesImg />
+                <ServicesImg gray />
               </Pressable>
             ) : (
               <Pressable style={styles.editBtn} onPress={onDoneHandler}>
@@ -137,12 +137,12 @@ const Comments = ({item, detail}) => {
             edit ? (
               <Pressable style={styles.deleteBtn} onPress={onEditCancelHandler}>
                 <View style={styles.cancel}>
-                  <ScanDelete />
+                  <ScanDelete brightGray />
                 </View>
               </Pressable>
             ) : (
               <Pressable style={styles.deleteBtn} onPress={onDeleteHandler}>
-                <Delete />
+                <Delete gray />
               </Pressable>
             )
           ) : (

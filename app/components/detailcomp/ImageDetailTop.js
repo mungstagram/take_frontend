@@ -89,14 +89,14 @@ const ImageDetailTop = ({detail}) => {
           />
           <View style={styles.userInfo}>
             <MyText style={styles.nicknameText}>{detail.nickname}</MyText>
-            <MyText style={styles.timeText}>{detail.createdAt}</MyText>
+            <Text style={styles.timeText}>{detail.createdAt}</Text>
           </View>
           <View style={styles.contentControl}>
             <Pressable style={styles.editBtn} onPress={onEditHandler}>
-              <ServicesImg />
+              <ServicesImg gray />
             </Pressable>
             <Pressable style={styles.deleteBtn} onPress={onDeleteHandler}>
-              <Delete />
+              <Delete gray />
             </Pressable>
           </View>
         </View>
@@ -155,6 +155,8 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: 8,
+    fontFamily: 'Pretendard-Light',
+    color: '#C8C8C8',
   },
   contentControl: {
     flexDirection: 'row',

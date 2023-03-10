@@ -28,7 +28,7 @@ const ImageCard = ({imageContent}) => {
           />
           <View style={styles.profileTextWrapper}>
             <MyText style={styles.nicknameFont}>{imageContent.nickname}</MyText>
-            <MyText style={styles.dateFont}>{imageContent.createdAt}</MyText>
+            <Text style={styles.dateFont}>{imageContent.createdAt}</Text>
           </View>
         </View>
         <FastImage
@@ -44,12 +44,9 @@ const ImageCard = ({imageContent}) => {
           resizeMode={FastImage.resizeMode.contain}
         />
         <View style={styles.contentDetailBox}>
-          <MyText
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            style={styles.titleFont}>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.titleFont}>
             {imageContent.title}
-          </MyText>
+          </Text>
           <View style={styles.iconBox}>
             <View style={styles.iconSize}>
               {imageContent.isLiked ? <Favorite /> : <NotFavorite />}
@@ -117,7 +114,8 @@ const styles = StyleSheet.create({
 
   titleFont: {
     fontSize: 20,
-    fontWeight: 'bold',
+    color: '#262626',
+    fontFamily: 'Pretendard-Bold',
   },
   countBox: {
     justifyContent: 'center',
@@ -126,14 +124,18 @@ const styles = StyleSheet.create({
   },
   countFont: {
     fontSize: 12,
+    color: '#C8C8C8',
   },
   dateFont: {
     height: 12,
     fontSize: 8,
+    color: '#C8C8C8',
+    fontFamily: 'Pretendard-Light',
   },
   nicknameFont: {
     heigth: 20,
     fontSize: 12,
+    color: '#262626',
   },
   profileWriterWrapper: {
     flexDirection: 'row',
