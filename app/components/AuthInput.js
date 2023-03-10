@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 0,
     paddingLeft: 4,
+    color: '#262626',
   },
   pressableContainer: {
     alignItems: 'center',

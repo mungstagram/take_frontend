@@ -193,6 +193,7 @@ const AddImage = () => {
           <View style={styles.textBox}>
             <Surface style={styles.titleInput}>
               <TextInput
+                style={{color: '#262626'}}
                 placeholder="제목을 입력하세요(15자 이하)"
                 maxLength={15}
                 returnKeyType="next"
@@ -203,6 +204,7 @@ const AddImage = () => {
             </Surface>
             <Surface style={styles.contentInput}>
               <TextInput
+                style={{color: '#262626'}}
                 placeholder="내용을 입력하세요(2000자 이하)"
                 textAlignVertical="top"
                 numberOfLines={8}

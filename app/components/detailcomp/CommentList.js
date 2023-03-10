@@ -6,7 +6,6 @@ import {
   FlatList,
   Pressable,
   Alert,
-  TextInput,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import FastImage from 'react-native-fast-image';

@@ -296,6 +296,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     opacity: 0.5,
     padding: 16,
+    color: '#262626',
   },
   saveBtn: {
     marginLeft: '6%',

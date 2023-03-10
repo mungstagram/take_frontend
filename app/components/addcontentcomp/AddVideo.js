@@ -220,7 +220,7 @@ const AddVideo = () => {
           </View>
           <View style={styles.textBox}>
             <Surface style={styles.titleInput}>
-              <TextInput
+              <put
                 placeholder="제목을 입력하세요(15자 이하)"
                 maxLength={15}
                 returnKeyType="next"
@@ -232,6 +232,7 @@ const AddVideo = () => {
               <TextInput
                 placeholder="내용을 입력하세요(2000자 이하)"
                 maxLength={2000}
+                style={{color: '#262626'}}
                 // 확인하기
                 multiline={true}
                 value={contentText}

@@ -155,6 +155,7 @@ const ModifyVideo = ({route}) => {
                   returnKeyType="next"
                   value={titleText}
                   onChange={titleTextHandler}
+                  style={{color: '#262626'}}
                 />
               </Surface>
               <Surface style={styles.contentInput}>
@@ -165,6 +166,7 @@ const ModifyVideo = ({route}) => {
                   multiline={true}
                   value={contentText}
                   onChange={contentTextHandler}
+                  style={{color: '#262626'}}
                 />
                 <View style={styles.contentCount}>
                   <MyText style={styles.textCount}>
