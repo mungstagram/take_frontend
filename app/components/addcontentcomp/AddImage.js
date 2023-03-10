@@ -151,17 +151,20 @@ const AddImage = () => {
       formData.append('category', 'image');
       formData.append('title', titleText);
       formData.append('content', contentText);
-      formData.append('files', {
-        name: images[0].fileName,
-        type: images[0].mime,
-        uri: `file://${images[0].realPath}`,
+      images.map(imgData => {
+        formData.append('files', {
+          name: imgData.fileName,
+          type: imgData.mime,
+          uri: `file://${imgData.realPath}`,
+        });
       });
 
       dispatch(__postAddContentFormData(formData));
       setTitleText('');
       setContentText('');
       setImages([]);
-      navigation.navigate('userDetail');
+      //navigation.navigate('userDetail');
+      navigation.navigate('Home');
     }
   };
 
