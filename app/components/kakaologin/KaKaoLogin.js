@@ -17,7 +17,7 @@ const KaKaoLogin = () => {
       const token = await login();
       dispatch(__postKaKaoLogin({accessToken: token.accessToken}));
     } catch (err) {
-      Alert.alert('login err');
+      Alert.alert('현재 release apk 관련 이슈로 작동하지 않습니다.');
     }
   };
 
