@@ -71,7 +71,6 @@ const DirectMessage = () => {
       console.log(data, 'getMessages 데이터');
       dispatch(saveMessages(data));
       // setTotalMessage(data);
-      console.log('다시 작동하면 안되는얘');
     });
 
     // Listen for incoming messages and update the message state
@@ -80,6 +79,9 @@ const DirectMessage = () => {
 
       dispatch(addRecentMessage(data));
     });
+    if (!isFocused) {
+      newSocket.disconnect();
+    }
     // Disconnect from the server when the component is unmounted
     return () => {
       // newSocket.disconnect();
@@ -104,7 +106,7 @@ const DirectMessage = () => {
                 source={require('../assets/LogoSmall.png')}
                 resizeMode={'cover'}
               />
-              <MyText style={styles.logoText}>메시지</MyText>
+              <Text style={styles.logoText}>메시지</Text>
             </View>
             <View style={styles.targetProfileBox}>
               <FastImage
@@ -205,7 +207,8 @@ const styles = StyleSheet.create({
   },
   userButton: {
     position: 'absolute',
-    height: '7.48%',
+    marginTop: 12,
+    height: 40,
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginLeft: '7%',
@@ -227,14 +230,16 @@ const styles = StyleSheet.create({
   logoText: {
     marginLeft: 10,
     lineHeight: 32,
+    marginTop: 4,
     textAlign: 'center',
     textAlignVertical: 'center',
     fontSize: 28,
     color: Colors.pointColorDark,
+    fontFamily: 'SBAggro-M',
   },
   targetProfileBox: {
     width: '100%',
-    paddingTop: 12,
+    paddingTop: 16,
     flexDirection: 'row',
     paddingHorizontal: 28,
     backgroundColor: 'white',

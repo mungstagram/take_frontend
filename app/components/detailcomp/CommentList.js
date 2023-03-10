@@ -124,6 +124,7 @@ const CommentList = ({userNick}) => {
         <View style={styles.listBoxLong}>
           <FlatList
             ListHeaderComponent={detailContent}
+            data={commentList}
             renderItem={renderItem}
             keyExtractor={item => item.id}
             style={styles.listinBox2}

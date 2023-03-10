@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   Alert,
   Platform,
+  Pressable,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
@@ -22,8 +23,9 @@ import Emoticon from '../svg/Emoticon';
 import ServicesWhiteImg from '../svg/ServicesWhiteImg';
 import TaskImgWhite from '../svg/TaskImgWhite';
 import MyText from '../common/MyText';
+import ScanDelete from '../svg/ScanDelete';
 
-const PersonProfileCard = ({myInfo}) => {
+const PersonProfileCard = ({myInfo, myNick, nickname}) => {
   const dispatch = useDispatch();
 
   //카메라
@@ -78,6 +80,19 @@ const PersonProfileCard = ({myInfo}) => {
   }, []);
 
   //input 수정 폼 데이터
+  const cancleEdit = () => {
+    Alert.alert('프로필 수정을 취소하시겠습니까??', '', [
+      {
+        text: '아니요',
+      },
+      {
+        text: '네',
+        onPress: () => {
+          setIsEdit(false);
+        },
+      },
+    ]);
+  };
 
   const sendEditFormData = () => {
     const formData = new FormData();
@@ -138,6 +153,7 @@ const PersonProfileCard = ({myInfo}) => {
                       }}
                     />
                   ) : (
+                    // myinfo로 이모티콘넣기
                     <FastImage
                       style={styles.personProfileImg}
                       source={{
@@ -174,13 +190,24 @@ const PersonProfileCard = ({myInfo}) => {
 
         <View style={styles.cardRightWrap}>
           {isEdit ? (
-            <TouchableOpacity onPress={sendEditFormData} style={styles.saveBtn}>
-              <TaskImgWhite />
-            </TouchableOpacity>
+            <View style={styles.btnContainer}>
+              <Pressable onPress={cancleEdit} style={styles.cancleBtn}>
+                <ScanDelete white />
+              </Pressable>
+              <TouchableOpacity
+                onPress={sendEditFormData}
+                style={styles.saveBtn}>
+                <TaskImgWhite />
+              </TouchableOpacity>
+            </View>
           ) : (
-            <TouchableOpacity onPress={onPressInputEdit} style={styles.editBtn}>
-              <ServicesWhiteImg />
-            </TouchableOpacity>
+            myNick === nickname && (
+              <TouchableOpacity
+                onPress={onPressInputEdit}
+                style={styles.editBtn}>
+                <ServicesWhiteImg />
+              </TouchableOpacity>
+            )
           )}
           <View style={styles.textInputWrap}>
             {isEdit ? (
@@ -236,6 +263,7 @@ const styles = StyleSheet.create({
   cardRightWrap: {
     // borderWidth: 1,
     width: 226,
+    // backgroundColor: 'red',
   },
 
   textInputWrap: {
@@ -257,7 +285,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   textNickInput: {
-    width: 170,
+    width: 150,
     height: 56,
     borderWidth: 2,
     borderRadius: 4,
@@ -268,12 +296,20 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   saveBtn: {
-    // borderWidth: 1,
+    marginLeft: '6%',
     width: 24,
     height: 24,
+  },
+  cancleBtn: {
+    width: 24,
+    height: 27,
+  },
+  btnContainer: {
     zIndex: 1,
-    left: '80%',
-    top: '25%',
+    left: '125%',
+    top: '15%',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   editBtn: {
@@ -282,7 +318,7 @@ const styles = StyleSheet.create({
     height: 24,
     zIndex: 1,
     position: 'relative',
-    left: '80%',
+    left: '88%',
     top: '25%',
   },
 
