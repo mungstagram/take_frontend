@@ -101,6 +101,9 @@ export const __checkUser = createAsyncThunk(
       if (error.code === 'ECONNABORTED') {
         Alert.alert('요청에 실패했습니다.');
       }
+      if (error.response.status === 400) {
+        Alert.alert('실패 하였습니다. 유효성 조건을 확인해주세요');
+      }
       if (error.response.status === 409) {
         Alert.alert('이미 존재합니다');
       }

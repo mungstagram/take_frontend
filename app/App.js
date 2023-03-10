@@ -1,9 +1,16 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, ScrollView, StatusBar, StyleSheet} from 'react-native';
+import {StatusBar, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SplashScreen from 'react-native-splash-screen';
 import {useSelector} from 'react-redux';
+import {Text, TextInput} from 'react-native';
+// 안드로이드 글자 크기 설정 기능 제한
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
+
+TextInput.defaultProps = Text.defaultProps || {};
+TextInput.defaultProps.allowFontScaling = false;
 
 import Login from './screens/Login';
 import AuthStartScreen from './screens/AuthStartScreen';
