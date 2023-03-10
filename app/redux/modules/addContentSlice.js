@@ -24,7 +24,7 @@ export const __postAddContentFormData = createAsyncThunk(
           },
         })
         .then(res => {
-          //console.log('요청성공');
+          //console.log('res', res);
           Alert.alert('게시글 작성을 완료하였습니다.');
 
           return res;

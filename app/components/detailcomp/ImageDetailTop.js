@@ -32,6 +32,12 @@ const ImageDetailTop = ({detail}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const loginNick = useSelector(
+    state => state.profile.myProfile[0].user.nickname,
+  );
+  //console.log('loginNick', loginNick);
+  const userNick = detail.nickname;
+  //console.log('userNick', userNick);
   //게시물 편집 버튼
   const onEditHandler = () => {
     navigation.navigate('ModifyImage', {postId: detail.postId});
@@ -91,15 +97,20 @@ const ImageDetailTop = ({detail}) => {
             <MyText style={styles.nicknameText}>{detail.nickname}</MyText>
             <Text style={styles.timeText}>{detail.createdAt}</Text>
           </View>
-          <View style={styles.contentControl}>
-            <Pressable style={styles.editBtn} onPress={onEditHandler}>
-              <ServicesImg gray />
-            </Pressable>
-            <Pressable style={styles.deleteBtn} onPress={onDeleteHandler}>
-              <Delete gray />
-            </Pressable>
-          </View>
+          {userNick === loginNick ? (
+            <View style={styles.contentControl}>
+              <Pressable style={styles.editBtn} onPress={onEditHandler}>
+                <ServicesImg gray />
+              </Pressable>
+              <Pressable style={styles.deleteBtn} onPress={onDeleteHandler}>
+                <Delete gray />
+              </Pressable>
+            </View>
+          ) : (
+            <View style={styles.contentControl}></View>
+          )}
         </View>
+
         <View style={styles.scrollBox}>
           <SwiperFlatList
             index={0}
