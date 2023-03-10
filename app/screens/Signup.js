@@ -155,6 +155,7 @@ const Signup = () => {
       contentContainerStyle={{
         width: '100%',
         height: windowHeight,
+        backgroundColor: 'white',
       }}>
       <View style={styles.wrapper}>
         <View style={styles.buttonPosionter}>
@@ -165,7 +166,7 @@ const Signup = () => {
             source={require('../assets/LogoMedium.png')}
             resizeMode={'cover'}
           />
-          <MyText style={styles.imageText}>로그인하기</MyText>
+          <MyText style={styles.imageText}>회원가입 하기</MyText>
         </View>
         <View style={styles.inputWrapper}>
           <View>
@@ -252,7 +253,6 @@ const styles = StyleSheet.create({
   wrapper: {
     alignItems: 'center',
     backgroundColor: 'white',
-    // width: width,
     flex: 1,
   },
   imageContainer: {

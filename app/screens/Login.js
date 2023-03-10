@@ -36,6 +36,7 @@ const Login = () => {
       contentContainerStyle={{
         width: '100%',
         height: windowHeight,
+        backgroundColor: 'white',
       }}>
       <View style={styles.wrapper}>
         <View style={styles.buttonPosionter}>

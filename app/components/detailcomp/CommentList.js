@@ -59,7 +59,6 @@ const CommentList = ({userNick}) => {
     }
     dispatch(__putLikes({postId: detail.postId}));
   };
-  console.log(isLiked, '현재 좋아요', likedCount, '총 좋아요 수');
   // detail.isLiked가 true ..=> 내가 원래 좋아요 했던 애
   // 좋아요 누르면 하트 -> false + 좋아요개수 -1 한번더 누르면 원래 좋아요개수
 
