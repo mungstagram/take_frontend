@@ -20,7 +20,7 @@ import Delete from '../svg/Delete';
 import ScanDelete from '../svg/ScanDelete';
 import MyText from '../common/MyText';
 import {RadioButton} from 'react-native-paper';
-const DogCard = ({dog}) => {
+const DogCard = ({dog, nickname, myNick}) => {
   //추가 버튼 상태
   const [editMode, setEditMode] = useState(false);
   const editMyDoghandler = () => {
@@ -343,16 +343,18 @@ const DogCard = ({dog}) => {
                 <ProfileText title={'강아지 이름'} value={dog.name} />
                 <View style={styles.addButtonWrapper}>
                   <View style={{height: 12, width: '100%'}} />
-                  <View style={styles.addButtonAligner}>
-                    <Pressable onPress={onDeleteDogCardHandler}>
-                      <Delete gray />
-                    </Pressable>
-                    <Pressable
-                      style={{marginLeft: 16}}
-                      onPress={editMyDoghandler}>
-                      <ServicesImg gray />
-                    </Pressable>
-                  </View>
+                  {nickname === myNick && (
+                    <View style={styles.addButtonAligner}>
+                      <Pressable onPress={onDeleteDogCardHandler}>
+                        <Delete gray />
+                      </Pressable>
+                      <Pressable
+                        style={{marginLeft: 16}}
+                        onPress={editMyDoghandler}>
+                        <ServicesImg gray />
+                      </Pressable>
+                    </View>
+                  )}
                 </View>
               </View>
               <View style={styles.inputAligner}>

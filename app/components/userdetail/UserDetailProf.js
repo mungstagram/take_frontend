@@ -61,6 +61,10 @@ const UserDetailProf = ({nickname}) => {
     dispatch(__getRoomId({receiverNickname: nickname}));
   }, []);
 
+  const navigateToProfileHandler = () => {
+    navigation.push('Profile', {nickname});
+  };
+
   return (
     <>
       <View style={styles.userWrapper}>
@@ -85,9 +89,11 @@ const UserDetailProf = ({nickname}) => {
             )}
 
             <View style={styles.userImgIconContainer}>
-              <View style={styles.iconAligner}>
+              <Pressable
+                onPress={navigateToProfileHandler}
+                style={styles.iconAligner}>
                 <AccountCircle />
-              </View>
+              </Pressable>
               {myNick === nickname ? (
                 <Pressable
                   onPress={openDirectMessageHandler}
@@ -150,7 +156,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.mainColorBright,
   },
   userButton: {
-    height: '22%',
+    marginTop: 12,
+    height: 40,
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginLeft: '7%',

@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingLeft: '7%',
     paddingVertical: '7%',
-    width: 140,
+    width: 130,
     fontSize: 14,
   },
   selectOpener: {
