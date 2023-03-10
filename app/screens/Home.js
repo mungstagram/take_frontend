@@ -191,7 +191,7 @@ function Home({navigation}) {
                 style={{
                   fontSize: 16,
                   fontWeight: '600',
-                  color: '#ffb284',
+                  color: '#E79796',
                   textAlign: 'center',
                   top: '4%',
                 }}>
@@ -221,7 +221,7 @@ function Home({navigation}) {
                 style={{
                   fontSize: 16,
                   fontWeight: 'bold',
-                  color: '#000000',
+                  color: '#262626',
                   marginTop: '4%',
                 }}></MyText>
             ) : (
@@ -229,7 +229,7 @@ function Home({navigation}) {
                 style={{
                   fontSize: 16,
                   fontWeight: 'bold',
-                  color: '#000000',
+                  color: '#262626',
                   marginTop: '4%',
                 }}>
                 {profile[1]?.dogs[dogIndex]?.species}/{' '}

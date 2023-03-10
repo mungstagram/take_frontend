@@ -240,8 +240,8 @@ const AddImage = () => {
             />
           </View>
           <View style={styles.buttonRow}>
-            <CancelButton omPress={onCancelHandler}>Cancel</CancelButton>
-            <YellowButton onPress={onSendFormData}>Done</YellowButton>
+            <CancelButton omPress={onCancelHandler}>취소</CancelButton>
+            <YellowButton onPress={onSendFormData}>작성 완료</YellowButton>
           </View>
         </View>
       </KeyboardAvoidingView>

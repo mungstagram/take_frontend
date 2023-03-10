@@ -33,13 +33,23 @@ const AddContent = () => {
           <View style={styles.flex2}></View>
         </View>
       </View>
-      <Tab.Navigator>
-        <Tab.Screen name="사진" component={AddImage} style={styles.tabStyle} />
+      <Tab.Navigator
+        screenOptions={{
+          tabBarIndicatorStyle: {borderBottomWidth: 2, borderColor: '#C6C09C'},
+          tabBarLabelStyle: {fontSize: 12},
+          tabBarItemStyle: {width: videoCardWidth * 0.34},
+          activeTintColor: 'rgba(16,37,68,1)',
+          inactiveTintColor: 'rgba(16,37,68,1)',
+        }}>
         <Tab.Screen
-          name="동영상"
-          component={AddVideo}
-          style={styles.tabStyle}
+          name="사진"
+          component={AddImage}
+          options={{
+            headerShown: false,
+            color: ({focused}) => (focused ? '#F09090' : '#000000'),
+          }}
         />
+        <Tab.Screen name="동영상" component={AddVideo} />
       </Tab.Navigator>
     </>
   );
@@ -87,5 +97,4 @@ const styles = StyleSheet.create({
   flex2: {
     flex: 1,
   },
-  tabStyle: {},
 });

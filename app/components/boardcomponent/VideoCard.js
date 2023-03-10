@@ -43,9 +43,7 @@ const VideoCard = ({videoContent}) => {
                 <MyText style={styles.nicknameText}>
                   {videoContent.nickname}
                 </MyText>
-                <MyText style={styles.timeText}>
-                  {videoContent.createdAt}
-                </MyText>
+                <Text style={styles.timeText}>{videoContent.createdAt}</Text>
               </View>
             </View>
             <View>
@@ -59,7 +57,7 @@ const VideoCard = ({videoContent}) => {
               />
             </View>
             <View style={styles.preContent}>
-              <MyText style={styles.titleText}>{videoContent.title}</MyText>
+              <Text style={styles.titleText}>{videoContent.title}</Text>
               <View style={styles.subBox}>
                 <View style={styles.iconCount}>
                   <View style={styles.iconRow}>
@@ -128,6 +126,8 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: 8,
+    color: '#C8C8C8',
+    fontFamily: 'Pretendard-Light',
   },
   videoScreen: {
     width: videoCardWidth,
@@ -155,8 +155,8 @@ const styles = StyleSheet.create({
   titleText: {
     height: '60%',
     fontSize: 20,
-    fontWeight: 'bold',
-    color: BasicColors.blackColor,
+    color: '#262626',
+    fontFamily: 'Pretendard-Bold',
   },
   text: {
     marginLeft: 4,

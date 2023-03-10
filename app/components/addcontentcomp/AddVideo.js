@@ -245,10 +245,10 @@ const AddVideo = () => {
           </View>
           <View style={styles.buttonRow}>
             <CancelButton style={styles.cancelBtn} onPress={onCancelHandler}>
-              Cancel
+              취소
             </CancelButton>
             <YellowButton style={styles.doneBtn} onPress={onSendFormData}>
-              Done
+              작성 완료
             </YellowButton>
           </View>
         </View>

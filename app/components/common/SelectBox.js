@@ -67,7 +67,7 @@ const dynamicStyles = value =>
       width: '100%',
       height: 56,
       zIndex: 2,
-      backgroundColor: value ? 'gray' : 'white',
+      backgroundColor: value ? '#F4F4F4' : 'white',
       borderRadius: 4,
       elevation: value ? 5 : 0,
     },

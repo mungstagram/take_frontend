@@ -66,6 +66,7 @@ const CommentList = ({userNick}) => {
   //detail.isLiked가 false면  좋아요시 하트 -> true 좋아요 개수 +1 한번 더 누르면 원래개수
 
   const [line, setLine] = useState(2);
+
   const [isActivated, setIsActivated] = useState(false);
 
   const handleLine = () => {
@@ -88,9 +89,9 @@ const CommentList = ({userNick}) => {
             </View>
           </View>
           <View style={styles.contentText}>
-            <MyText numberOfLines={line} ellipsizeMode="tail">
+            <Text numberOfLines={line} ellipsizeMode="tail">
               {detail.content}
-            </MyText>
+            </Text>
           </View>
         </View>
         <View style={styles.commentCountBox}>
@@ -103,7 +104,7 @@ const CommentList = ({userNick}) => {
     );
   };
 
-  console.log(commentList, '커멘트리스트 ');
+  //console.log(commentList, '커멘트리스트 ');
   //FlatList Footer
   const FooterContainer = () => {
     return (
@@ -136,7 +137,7 @@ const CommentList = ({userNick}) => {
         //간략보기
         <View style={styles.listBoxShort}>
           <View style={styles.preContent}>
-            <MyText style={styles.titleText}>{detail.title}</MyText>
+            <Text style={styles.titleText}>{detail.title}</Text>
             <View style={styles.favoritBox}>
               <Pressable onPress={onIsLikeHandler}>
                 {isLiked ? <Favorite big /> : <NotFavorite big />}
@@ -149,7 +150,7 @@ const CommentList = ({userNick}) => {
               {detail.content}
             </MyText>
             <Pressable onPress={prev => handleLine(!prev[0], prev[1])}>
-              <MyText>더보기</MyText>
+              <MyText style={styles.addText}>더보기</MyText>
             </Pressable>
           </View>
           <View style={styles.container}>
@@ -205,7 +206,8 @@ const styles = StyleSheet.create({
 
   titleText: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'Pretendard-Bold',
+    color: '#262626',
   },
   favoritBox: {
     alignItems: 'center',
@@ -215,6 +217,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     flexDirection: 'row',
     alignItems: 'flex-end',
+  },
+  addText: {
+    marginLeft: 10,
   },
 
   // 댓글 리스트
@@ -228,8 +233,7 @@ const styles = StyleSheet.create({
     marginVertical: '2%',
   },
   commentIcon: {
-    marginRight: '1%',
-    marginTop: '3%',
+    marginRight: '2%',
   },
   //flatList
   listBox: {

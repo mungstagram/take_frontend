@@ -18,7 +18,7 @@ import {
   __doneTodos,
 } from '../../redux/modules/todoSlice';
 
-import TaskImg from '../svg/TaskImg';
+import TaskPinkImg from '../svg/TaskPinkImg';
 import ServicesImg from '../svg/ServicesImg';
 import Delete from '../svg/Delete';
 import CheckBox from '../svg/CheckBox';
@@ -131,7 +131,7 @@ const Todoitem = ({id, text, done}) => {
             onPressChangeBtn();
             onPressTodoEdit();
           }}>
-          <TaskImg />
+          <TaskPinkImg />
         </TouchableOpacity>
       ) : (
         <TouchableOpacity style={styles.utilBtn} onPress={onPressIsEdit}>
