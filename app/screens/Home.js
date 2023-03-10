@@ -230,10 +230,10 @@ function Home({navigation}) {
                   fontSize: 16,
                   fontWeight: 'bold',
                   color: '#262626',
-                  marginTop: '4%',
+                  marginTop: '8%',
                 }}>
-                {profile[1]?.dogs[dogIndex]?.species}/{' '}
-                {profile[1]?.dogs[dogIndex]?.age}/{' '}
+                {profile[1]?.dogs[dogIndex]?.species} /{' '}
+                {profile[1]?.dogs[dogIndex]?.age} /{' '}
                 {profile[1]?.dogs[dogIndex]?.weight}Kg
               </MyText>
             )}
@@ -283,6 +283,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     width: 40,
     height: 24,
+    top: 12,
     marginLeft: 16,
     color: '#ffffff',
   },
@@ -369,6 +370,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 12,
     alignItems: 'center',
     marginTop: '4%',
+    top: '4%',
   },
   homeTodoBoxInner: {
     // borderWidth: 1,
