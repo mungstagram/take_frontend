@@ -31,7 +31,8 @@ const Profile = ({navigation, route}) => {
   const isFocused = useIsFocused();
   // 프로필 정보
   const {profile} = useSelector(state => state.profile);
-
+  //내 닉네임
+  const myNick = useSelector(state => state.profile.myProfile[0].user.nickname);
   const {nickname} = route.params;
   const onDeleteUsersData = () => {
     Alert.alert(
@@ -96,7 +97,11 @@ const Profile = ({navigation, route}) => {
         </View>
         <View style={styles.top}>
           <View style={{bottom: '15%'}}>
-            <PersonProfileCard myInfo={profile[0].user} nickname={nickname} />
+            <PersonProfileCard
+              myInfo={profile[0].user}
+              nickname={nickname}
+              myNick={myNick}
+            />
           </View>
         </View>
         <View style={styles.content} />
@@ -104,9 +109,14 @@ const Profile = ({navigation, route}) => {
           <ScrollView style={styles.dogDetailWrapper} horizontal={true}>
             <View style={{width: 32}}></View>
             {profile[1].dogs.map(item => (
-              <DogCard key={item.id} dog={item} />
+              <DogCard
+                key={item.id}
+                dog={item}
+                nickname={nickname}
+                myNick={myNick}
+              />
             ))}
-            <AddDogProfile />
+            {myNick === nickname && <AddDogProfile />}
           </ScrollView>
         </View>
       </View>

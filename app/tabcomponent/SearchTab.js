@@ -7,6 +7,7 @@ import DirectMessage from '../screens/DirectMessage';
 import MessageBox from '../screens/MessageBox';
 import ImageDetail from '../screens/ImageDetail';
 import VideoDetail from '../screens/VideoDetail';
+import Profile from '../screens/Profile';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,11 @@ const SearchTab = () => {
       <Stack.Screen
         name="VideoDetail"
         component={VideoDetail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

@@ -37,7 +37,6 @@ const MessageBox = () => {
       setSocket(newSocket);
     });
     newSocket.on('DMList', data => {
-      console.log(data, 'DMlist 데이터');
       setDmUserList(data);
     });
 
@@ -47,12 +46,10 @@ const MessageBox = () => {
     // });
     if (!isFocused) {
       newSocket.disconnect();
-      console.log('화면 이동시에도 연결해제');
     }
     //페이지 이동시(disconnect)
     return () => {
       newSocket.disconnect();
-      console.log('요청종료, 리스트');
       // 리스트 밖으로 나갈떄만 꺼짐, 들어갈 때는 켜져있음.
     };
   }, [isFocused]);
@@ -70,7 +67,6 @@ const MessageBox = () => {
         <Image
           source={require('../assets/LogoSmall.png')}
           resizeMode={'cover'}
-          style={styles.headImage}
         />
         <Text style={styles.logoText}>메시지</Text>
       </View>
@@ -130,7 +126,8 @@ const styles = StyleSheet.create({
   },
   userButton: {
     position: 'absolute',
-    height: '7.6%',
+    marginTop: 12,
+    height: 40,
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginLeft: '7%',
@@ -142,18 +139,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 12,
   },
-  headImage: {
-    marginRight: 20,
-  },
   logoText: {
     marginLeft: 10,
     lineHeight: 32,
+    marginTop: 4,
     textAlign: 'center',
     textAlignVertical: 'center',
     fontSize: 28,
-    fontFamily: 'SBAggro-M',
-    top: 3,
     color: Colors.pointColorDark,
+    fontFamily: 'SBAggro-M',
   },
   userRoomWrapper: {
     position: 'absolute',
