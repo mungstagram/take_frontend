@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import {KeyboardAvoidingView} from 'react-native';
+import {useLongPress} from 'react-native-use-gesture';
 
 import {Colors, BasicColors} from '../constants/colors';
 import SelectBox from '../components/common/SelectBox';
@@ -8,7 +10,6 @@ import ImageGetter from '../components/boardcomponent/ImageGetter';
 import GoBackButtonWhite from '../components/common/GoBackButtonWhite';
 import HeaderTitle from '../components/common/HeaderTitle';
 import MyText from '../components/common/MyText';
-import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
 
 const ImageBoard = () => {
   //바텀텝의 높이
@@ -29,6 +30,10 @@ const ImageBoard = () => {
 
   const dateSortSelectorHandler = selector => {
     setDataSortSelector(selector);
+  };
+
+  const onClickBtn = () => {
+    navigation.navigate;
   };
 
   return (
@@ -53,7 +58,7 @@ const ImageBoard = () => {
         </View>
       </View>
       <View style={{height: headHeight - tabBarHeight, top: '10%'}}>
-        <View style={styles.preCards}>
+        <View style={styles.preCards} onLongPress={onClickBtn}>
           <ImageGetter order={selectDispatchParameter[dataSortSelector]} />
         </View>
       </View>
