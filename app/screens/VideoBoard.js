@@ -48,7 +48,7 @@ const VideoBoard = () => {
           />
         </View>
       </View>
-      <View style={{height: headHeight, top: '10%'}}>
+      <View style={{height: headHeight, top: '11.3%'}}>
         <View style={styles.preCards}>
           <VideoGetter order={selectDispatchParameter[dataSortSelector]} />
         </View>
@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
   },
   selectBoxHolder: {
     position: 'absolute',
-    // width: '45%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
     right: '4%',
     top: '2%',
     zIndex: 8,
@@ -120,8 +119,9 @@ const styles = StyleSheet.create({
     width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
   },
   preCards: {
-    height: '87.2%',
+    height: '88.5%',
     justifyContent: 'center',
     alignItems: 'center',
+    //backgroundColor: 'red',
   },
 });

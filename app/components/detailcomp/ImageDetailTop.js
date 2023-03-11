@@ -10,6 +10,7 @@ import {
   Image,
   Pressable,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
@@ -42,7 +43,9 @@ const ImageDetailTop = ({detail}) => {
   const onEditHandler = () => {
     navigation.navigate('ModifyImage', {postId: detail.postId});
   };
-
+  const onZoomIn = () => {
+    console.log('하이');
+  };
   //게시물 삭제 버튼
   const onDeleteHandler = () => {
     Alert.alert(
@@ -77,6 +80,16 @@ const ImageDetailTop = ({detail}) => {
           style={styles.imageScreen}
           resizeMode="contain"
         />
+        <Pressable
+          onPress={() => onZoomIn(item)}
+          activeOpacity={0.9}
+          style={styles.zoomBtnBox}>
+          <Image
+            source={require('../../assets/zoomIn.png')}
+            resizeMode={'cover'}
+            style={styles.zoomBtn}
+          />
+        </Pressable>
       </ScrollView>
     );
   };
@@ -121,6 +134,7 @@ const ImageDetailTop = ({detail}) => {
             paginationStyleItem={styles.dot}
           />
         </View>
+
         <CommentList />
       </View>
     </SafeAreaView>
@@ -138,10 +152,9 @@ const videoCardHeight = videoCardWidth * 0.8;
 const styles = StyleSheet.create({
   container: {
     width: videoCardWidth,
-    backgroundColor: BasicColors.whiteColor,
+    height: windowHeight,
   },
   detailTop: {
-    backgroundColor: BasicColors.whiteColor,
     flexDirection: 'row',
     paddingVertical: '2%',
     paddingHorizontal: '4%',
@@ -195,6 +208,15 @@ const styles = StyleSheet.create({
     width: videoCardWidth,
     height: videoCardHeight * 0.703,
     backgroundColor: BasicColors.blackColor,
+  },
+  zoomBtnBox: {
+    position: 'absolute',
+    right: '4%',
+    top: '4%',
+  },
+  zoomBtn: {
+    height: 32,
+    width: 32,
   },
   detailBottom: {
     backgroundColor: BasicColors.whiteColor,

@@ -288,11 +288,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'nowrap',
     justifyContent: 'center',
-    flex: 3,
+    //flex: 3,
     //backgroundColor: 'red',
   },
   fileupload: {
-    marginTop: 20,
+    marginTop: 10,
     width: videoCardWidth,
     height: videoCardHeight,
   },
@@ -337,6 +337,7 @@ const styles = StyleSheet.create({
   },
   textBox: {
     flex: 4,
+    marginTop: 10,
     width: videoCardWidth,
     height: windowHeight * 0.36,
     alignContent: 'center',

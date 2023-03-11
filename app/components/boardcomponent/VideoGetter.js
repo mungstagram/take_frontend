@@ -71,7 +71,10 @@ const videoCardWidth = windowWidth * 0.9;
 const styles = StyleSheet.create({
   getterWrapper: {
     height: '100%',
-    width: '92%',
+    width: '95%',
+    left: '1.6%',
+    justifyContent: 'center',
+    marginBottom: 24,
   },
   container: {},
 });

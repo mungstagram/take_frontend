@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
   },
   preCards: {
     height: '96%',
+    width: windowWidth,
     justifyContent: 'center',
     alignItems: 'center',
   },

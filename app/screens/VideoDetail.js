@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import {Colors, BasicColors} from '../constants/colors';
 import GoBackButtonWhite from '../components/common/GoBackButtonWhite';
@@ -19,6 +20,9 @@ import HeaderTitle from '../components/common/HeaderTitle';
 import MyText from '../components/common/MyText';
 
 const VideoDetail = ({route}) => {
+  //바텀텝의 높이
+  const tabBarHeight = useBottomTabBarHeight();
+
   const detail = useSelector(state => state.comments.detail);
 
   const videoUrl = detail.contentUrl[0];
@@ -49,8 +53,8 @@ const VideoDetail = ({route}) => {
       </View>
       <KeyboardAvoidingView
         behavior="position"
-        keyboardVerticalOffset={80}
-        style={styles.avoid}>
+        keyboardVerticalOffset={tabBarHeight}
+        style={{height: windowHeight}}>
         <View style={styles.container}>
           <View style={styles.videoContainer}>
             <View style={styles.contentBox}>
@@ -125,9 +129,8 @@ const styles = StyleSheet.create({
   },
   commentInputBox: {
     flex: 1,
-    top: 15,
+
     height: windowHeight,
     backgroundColor: BasicColors.whiteColor,
   },
-  avoid: {},
 });
