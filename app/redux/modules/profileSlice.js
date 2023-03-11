@@ -33,6 +33,7 @@ const initialState = {
   ],
   isLoading: false,
   error: null,
+  nicknameChanged: false,
 };
 
 // Thunk 함수
@@ -143,7 +144,11 @@ export const __deleteDogProfile = createAsyncThunk(
 export const profileSlice = createSlice({
   name: 'profile',
   initialState,
-  reducers: {},
+  reducers: {
+    nickNotChanged: (state, action) => {
+      state.nicknameChanged = false;
+    },
+  },
   extraReducers: {
     [__getHomeProfile.fulfilled]: (state, action) => {
       state.isLoading = false;
@@ -172,7 +177,7 @@ export const profileSlice = createSlice({
     [__editProfile.fulfilled]: (state, action) => {
       state.profile[0].user = action.payload;
       state.myProfile[0].user = action.payload;
-
+      state.nicknameChanged = true;
       state.error = null;
     },
     [__editProfile.pending]: state => {
@@ -222,5 +227,5 @@ export const profileSlice = createSlice({
   },
 });
 
-export const {} = profileSlice.actions;
+export const {nickNotChanged} = profileSlice.actions;
 export default profileSlice.reducer;

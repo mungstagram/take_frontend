@@ -54,7 +54,7 @@ const Signup = () => {
     /^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$/;
   const regNickname = /^[a-zA-Z0-9]{3,10}$/;
   const regPassword =
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])?[A-Za-z\d$@$!%*#?&]{8,}$/;
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@!#&])?[A-Za-z\d$@$!%*#?&]{8,}$/;
   //유효성 검사 및 유즈스테이트 작성
   const onChangeUserHandler = (name, value) => {
     setUser({...user, [name]: value});
@@ -69,7 +69,9 @@ const Signup = () => {
 
     if (name === 'password')
       !regPassword.test(value)
-        ? setPassInput(`영문,숫자, !,@로 구성된 8글자 이상으로 입력해야합니다.`)
+        ? setPassInput(
+            `영문,숫자, !,@,#,&로 구성된 8글자 이상으로 입력해야합니다.`,
+          )
         : setPassInput('');
 
     if (name === 'passwordCheck')
@@ -182,7 +184,9 @@ const Signup = () => {
               <View style={styles.buttonResizer}>
                 <View style={dynamicStyles().buttonPositioner}>
                   <Pressable
-                    style={dynamicStyles().buttonPositioner}
+                    style={({pressed}) =>
+                      dynamicStyles(pressed).buttonPositioner
+                    }
                     onPress={() => onCheckUsabilityHandler('email', email)}>
                     <MyText style={dynamicStyles().buttonText}>
                       중복 확인
@@ -203,7 +207,9 @@ const Signup = () => {
               <View style={styles.buttonResizer}>
                 <View style={dynamicStyles().buttonPositioner}>
                   <Pressable
-                    style={dynamicStyles().buttonPositioner}
+                    style={({pressed}) =>
+                      dynamicStyles(pressed).buttonPositioner
+                    }
                     onPress={() =>
                       onCheckUsabilityHandler('nickname', nickname)
                     }>
@@ -306,6 +312,7 @@ const dynamicStyles = value =>
       alignItems: 'center',
       width: 90,
       borderRadius: 4,
+      opacity: value ? 0.5 : 1,
     },
     buttonText: {
       color: Colors.mainColorBright,

@@ -10,7 +10,9 @@ const GoBackButton = () => {
   };
   return (
     <View style={styles.textContainer}>
-      <Pressable onPress={navigateBackPageHandler}>
+      <Pressable
+        onPress={navigateBackPageHandler}
+        style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
         <ArrowGoBack />
       </Pressable>
     </View>

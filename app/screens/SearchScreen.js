@@ -7,6 +7,7 @@ import {
   ImageBackground,
   Image,
   Text,
+  Dimensions,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -20,9 +21,13 @@ import SearchNick from '../components/userdetail/SearchNick';
 import SearchNone from '../components/userdetail/SearchNone';
 import ImageGetter from '../components/boardcomponent/ImageGetter';
 import VideoGetter from '../components/boardcomponent/VideoGetter';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import MyText from '../components/common/MyText';
+const windowHeight = Dimensions.get('window').height;
 
 const SearchScreen = () => {
+  const tabBarHeight = useBottomTabBarHeight();
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -73,7 +78,7 @@ const SearchScreen = () => {
     <ImageBackground
       source={require('../assets/pupfluencerBackGround.png')}
       resizeMode={'cover'}
-      style={{width: '100%'}}>
+      style={{width: '100%', height: windowHeight - tabBarHeight}}>
       <View style={styles.wrapper}>
         <View style={styles.header}>
           <View style={styles.buttonAligner}>
@@ -97,7 +102,9 @@ const SearchScreen = () => {
               onChangeText={onChangeRefHandler}
               placeholder="검색하기"
             />
-            <Pressable onPress={onSearchHandler} style={styles.searchIconBox}>
+            <Pressable
+              onPress={onSearchHandler}
+              style={({pressed}) => dynamicStyles(pressed).searchIconBox}>
               <Search />
             </Pressable>
           </View>
@@ -234,3 +241,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+const dynamicStyles = value =>
+  StyleSheet.create({
+    searchIconBox: {
+      width: 24,
+      height: 24,
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'absolute',
+      right: '5%',
+      top: 16,
+      backgroundColor: 'white',
+      opacity: value ? 0.5 : 1,
+    },
+  });

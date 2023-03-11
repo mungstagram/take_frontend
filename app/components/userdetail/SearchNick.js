@@ -19,7 +19,9 @@ const SearchNick = ({searchData}) => {
           <View style={styles.searchDataWrapper}>
             <View style={styles.searchDataContainer} imageContent={item}>
               <View style={styles.searchTextContainer}>
-                <Pressable onPress={() => moveToUserDetail(item.nickname)}>
+                <Pressable
+                  onPress={() => moveToUserDetail(item.nickname)}
+                  style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
                   <View>
                     <MyText style={styles.searchTextNick}>
                       {item.nickname}

@@ -10,7 +10,9 @@ const AuthNavigateButton = () => {
   };
   return (
     <View style={styles.textContainer}>
-      <Pressable onPress={navigateStartPageHandler}>
+      <Pressable
+        onPress={navigateStartPageHandler}
+        style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
         <ArrowGoBack />
       </Pressable>
     </View>

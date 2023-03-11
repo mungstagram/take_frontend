@@ -16,11 +16,11 @@ import {__getProfile} from '../redux/modules/profileSlice';
 import Logout from '../components/Logout';
 import GoBackButton from '../components/common/GoBackButton';
 import PersonProfileCard from '../components/profile/PersonProfileCard';
-
 import AddDogProfile from '../components/profile/AddDogProfile';
 import MyText from '../components/common/MyText';
 import {__deleteUsers} from '../redux/modules/loginSlice';
 import DogCard from '../components/profile/DogCard';
+import {nickNotChanged} from '../redux/modules/profileSlice';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -35,7 +35,8 @@ const Profile = ({route}) => {
   const {profile} = useSelector(state => state.profile);
   //내 닉네임
   const myNick = useSelector(state => state.profile.myProfile[0].user.nickname);
-  const {nickname} = route.params;
+  // const {paramNickname} = route.params.nickname;
+  const [nickname, setNickname] = useState(route.params.nickname);
   const onDeleteUsersData = () => {
     Alert.alert(
       '',
@@ -59,7 +60,17 @@ const Profile = ({route}) => {
   };
   useEffect(() => {
     dispatch(__getProfile(nickname));
-  }, [isFocused]);
+    return () => {
+      nickNotChanged();
+    };
+  }, [isFocused, nickname]);
+
+  const {nicknameChanged} = useSelector(state => state.profile);
+  useEffect(() => {
+    if (nicknameChanged) {
+      setNickname(profile[0].user.nickname);
+    }
+  }, [nicknameChanged, myNick]);
 
   return (
     <KeyboardAwareScrollView
@@ -80,7 +91,9 @@ const Profile = ({route}) => {
                   right: '7%',
                   alignItems: 'center',
                 }}>
-                <Pressable onPress={onDeleteUsersData}>
+                <Pressable
+                  onPress={onDeleteUsersData}
+                  style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
                   <MyText style={{fontSize: 11, paddingRight: 8}}>
                     회원탈퇴
                   </MyText>
@@ -105,6 +118,7 @@ const Profile = ({route}) => {
               nickname={nickname}
               myNick={myNick}
               dogsCount={profile[1].dogs.length}
+              setNickname={setNickname}
             />
           </View>
         </View>
