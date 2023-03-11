@@ -25,9 +25,8 @@ import TaskImgWhite from '../svg/TaskImgWhite';
 import MyText from '../common/MyText';
 import ScanDelete from '../svg/ScanDelete';
 
-const PersonProfileCard = ({myInfo, myNick, nickname}) => {
+const PersonProfileCard = ({myInfo, myNick, nickname, dogsCount}) => {
   const dispatch = useDispatch();
-
   //카메라
   const [openCamera, setOpenCamera] = useState(false);
 
@@ -108,9 +107,6 @@ const PersonProfileCard = ({myInfo, myNick, nickname}) => {
         });
     }
 
-    // console.log('edit profile');
-    // console.log('formData', formData);
-
     dispatch(__editProfile({nickname: myInfo?.nickname, formData: formData}));
     setIsEdit(false);
   };
@@ -130,11 +126,9 @@ const PersonProfileCard = ({myInfo, myNick, nickname}) => {
       // console.log('response: ', response);
       setImages(response);
     } catch (e) {
-      // console.log(e);
       Alert.alert('사진 등록 버튼에 오류가 생겼습니다. 문의부탁드립니다.');
     }
   };
-  // console.log(images, '이미지 저장되었는가?');
 
   return (
     <View style={styles.block}>
@@ -152,8 +146,12 @@ const PersonProfileCard = ({myInfo, myNick, nickname}) => {
                         uri: `file:// ${images[0]?.realPath}`,
                       }}
                     />
+                  ) : myInfo.contentUrl === '' ||
+                    myInfo.contentUrl === undefined ? (
+                    <View style={styles.personProfileImg}>
+                      <Emoticon />
+                    </View>
                   ) : (
-                    // myinfo로 이모티콘넣기
                     <FastImage
                       style={styles.personProfileImg}
                       source={{
@@ -164,6 +162,10 @@ const PersonProfileCard = ({myInfo, myNick, nickname}) => {
                     />
                   )}
                 </TouchableOpacity>
+              </View>
+            ) : myInfo.contentUrl === '' || myInfo.contentUrl === undefined ? (
+              <View style={styles.media}>
+                <Emoticon />
               </View>
             ) : (
               <FastImage
@@ -184,7 +186,7 @@ const PersonProfileCard = ({myInfo, myNick, nickname}) => {
               zIndex: 2,
               marginTop: '12%',
             }}>
-            {myInfo?.dogsCount} 마리의 집사
+            {dogsCount} 마리의 집사
           </MyText>
         </View>
 
@@ -294,6 +296,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     opacity: 0.5,
     padding: 16,
+    color: '#262626',
   },
   saveBtn: {
     marginLeft: '6%',
@@ -374,6 +377,8 @@ const styles = StyleSheet.create({
     height: 92,
     borderRadius: 50,
     backgroundColor: '#ffffff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   imgOpenBtn: {
     width: 92,

@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginLeft: '3%',
     width: '80%',
+    color: '#262626',
   },
   searchIconBox: {
     width: 24,

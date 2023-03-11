@@ -1,7 +1,15 @@
-import {View, Text, StyleSheet, Alert, Pressable, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Alert,
+  Dimensions,
+  Pressable,
+  Image,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import AuthInput from '../components/AuthInput';
 import AuthButton from '../components/common/AuthButton';
@@ -15,6 +23,7 @@ import {
 } from '../redux/modules/loginSlice';
 import {Colors} from '../constants/colors';
 import MyText from '../components/common/MyText';
+const windowHeight = Dimensions.get('window').height;
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -142,86 +151,99 @@ const Signup = () => {
   }, [isSuccessedSignup]);
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.buttonPosionter}>
-        <AuthNavigateButton />
-      </View>
-      <View style={styles.imageContainer}>
-        <Image
-          source={require('../assets/LogoMedium.png')}
-          resizeMode={'cover'}
-        />
-        <MyText style={styles.imageText}>로그인하기</MyText>
-      </View>
-      <View style={styles.inputWrapper}>
-        <View>
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
+        width: '100%',
+        height: windowHeight,
+        backgroundColor: 'white',
+      }}>
+      <View style={styles.wrapper}>
+        <View style={styles.buttonPosionter}>
+          <AuthNavigateButton />
+        </View>
+        <View style={styles.imageContainer}>
+          <Image
+            source={require('../assets/LogoMedium.png')}
+            resizeMode={'cover'}
+          />
+          <MyText style={styles.imageText}>회원가입 하기</MyText>
+        </View>
+        <View style={styles.inputWrapper}>
           <View>
-            <AuthInput
-              placeholder="id"
-              checkUsability
-              helper={emailInput}
-              onUpdateValue={onChangeUserHandler.bind(this, 'email')}
-              value={email}
-              isInvalid={regEmail.test(email)}
-            />
-            <View style={styles.buttonResizer}>
-              <View style={dynamicStyles().buttonPositioner}>
-                <Pressable
-                  style={dynamicStyles().buttonPositioner}
-                  onPress={() => onCheckUsabilityHandler('email', email)}>
-                  <MyText style={dynamicStyles().buttonText}>중복 확인</MyText>
-                </Pressable>
+            <View>
+              <AuthInput
+                placeholder="id"
+                checkUsability
+                helper={emailInput}
+                onUpdateValue={onChangeUserHandler.bind(this, 'email')}
+                value={email}
+                isInvalid={regEmail.test(email)}
+              />
+              <View style={styles.buttonResizer}>
+                <View style={dynamicStyles().buttonPositioner}>
+                  <Pressable
+                    style={dynamicStyles().buttonPositioner}
+                    onPress={() => onCheckUsabilityHandler('email', email)}>
+                    <MyText style={dynamicStyles().buttonText}>
+                      중복 확인
+                    </MyText>
+                  </Pressable>
+                </View>
               </View>
             </View>
-          </View>
-          <View>
-            <AuthInput
-              placeholder="nickname"
-              checkUsability
-              helper={nicknameInput}
-              onUpdateValue={onChangeUserHandler.bind(this, 'nickname')}
-              value={nickname}
-              isInvalid={regNickname.test(nickname)}
-            />
-            <View style={styles.buttonResizer}>
-              <View style={dynamicStyles().buttonPositioner}>
-                <Pressable
-                  style={dynamicStyles().buttonPositioner}
-                  onPress={() => onCheckUsabilityHandler('nickname', nickname)}>
-                  <MyText style={dynamicStyles().buttonText}>중복 확인</MyText>
-                </Pressable>
+            <View>
+              <AuthInput
+                placeholder="nickname"
+                checkUsability
+                helper={nicknameInput}
+                onUpdateValue={onChangeUserHandler.bind(this, 'nickname')}
+                value={nickname}
+                isInvalid={regNickname.test(nickname)}
+              />
+              <View style={styles.buttonResizer}>
+                <View style={dynamicStyles().buttonPositioner}>
+                  <Pressable
+                    style={dynamicStyles().buttonPositioner}
+                    onPress={() =>
+                      onCheckUsabilityHandler('nickname', nickname)
+                    }>
+                    <MyText style={dynamicStyles().buttonText}>
+                      중복 확인
+                    </MyText>
+                  </Pressable>
+                </View>
               </View>
             </View>
+            <AuthInput
+              placeholder="password"
+              helper={passInput}
+              onUpdateValue={onChangeUserHandler.bind(this, 'password')}
+              value={password}
+              secure={secureSetter}
+              setSecureSetter={setSecureSetter}
+              isInvalid={regPassword.test(password)}
+            />
+            <AuthInput
+              placeholder="password-check"
+              helper={passCheckInput}
+              onUpdateValue={onChangeUserHandler.bind(this, 'passwordCheck')}
+              value={passwordCheck}
+              secure={secureSetter}
+              setSecureSetter={setSecureSetter}
+              isInvalid={password === passwordCheck && passwordCheck !== ''}
+            />
           </View>
-          <AuthInput
-            placeholder="password"
-            helper={passInput}
-            onUpdateValue={onChangeUserHandler.bind(this, 'password')}
-            value={password}
-            secure={secureSetter}
-            setSecureSetter={setSecureSetter}
-            isInvalid={regPassword.test(password)}
-          />
-          <AuthInput
-            placeholder="password-check"
-            helper={passCheckInput}
-            onUpdateValue={onChangeUserHandler.bind(this, 'passwordCheck')}
-            value={passwordCheck}
-            secure={secureSetter}
-            setSecureSetter={setSecureSetter}
-            isInvalid={password === passwordCheck && passwordCheck !== ''}
-          />
+          <View style={styles.submitButtonPositioner}>
+            <AuthButton disabled={submitDisabled} onPress={onSubmitUserHandler}>
+              입력 완료
+            </AuthButton>
+          </View>
         </View>
-        <View style={styles.submitButtonPositioner}>
-          <AuthButton disabled={submitDisabled} onPress={onSubmitUserHandler}>
-            입력 완료
-          </AuthButton>
+        <View style={styles.socialLoginBox}>
+          <KaKaoLogin />
         </View>
       </View>
-      <View style={styles.socialLoginBox}>
-        <KaKaoLogin />
-      </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -231,7 +253,6 @@ const styles = StyleSheet.create({
   wrapper: {
     alignItems: 'center',
     backgroundColor: 'white',
-    // width: width,
     flex: 1,
   },
   imageContainer: {

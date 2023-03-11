@@ -1,8 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, Button, Pressable, Alert} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Dimensions,
+  Pressable,
+  Alert,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import {__getHomeProfile} from '../redux/modules/profileSlice';
 
@@ -14,8 +23,11 @@ import DogIndexChangeLeft from '../components/svg/DogIndexChangeLeft';
 import DogIndexChangeRight from '../components/svg/DogIndexChagneRight';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MyText from '../components/common/MyText';
+const windowHeight = Dimensions.get('window').height;
 
 function Home({navigation}) {
+  //바텀텝의 높이
+  const tabBarHeight = useBottomTabBarHeight();
   const dispatch = useDispatch();
   const [myNick, setMyNick] = useState();
   const isFocused = useIsFocused();
@@ -63,197 +75,203 @@ function Home({navigation}) {
   }, [isFocused]);
 
   return (
-    <View style={styles.homeProfile}>
-      <View style={styles.goToLink}>
-        <Pressable
-          onPress={() => navigation.push('Profile', {nickname: myNick})}>
-          <MyText style={styles.homeFontStyle}>프로필</MyText>
-        </Pressable>
-        <Pressable
-          onPress={() => navigation.push('UserDetail', {nickname: myNick})}>
-          <MyText style={styles.homeFontStyle}>게시글</MyText>
-        </Pressable>
-        <Pressable onPress={openDirectMessageHandler}>
-          <MyText style={styles.homeFontStyle}>메시지</MyText>
-        </Pressable>
-      </View>
-      <View style={styles.homeProfileInner}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}>
-          <View style={styles.dogIndexLeftSelector}>
-            {dogIndex === 0 ? (
-              <View
-                style={{
-                  width: 24,
-                  height: 24,
-                  alignItems: 'center',
-                }}
-              />
-            ) : (
-              <Pressable
-                onPress={() => dogIndexHandler('left')}
-                style={{
-                  width: 24,
-                  height: 24,
-                  alignItems: 'center',
-                }}>
-                <DogIndexChangeLeft />
-              </Pressable>
-            )}
-          </View>
-          <View style={styles.profileImg}>
-            {profile[0]?.user.contentUrl === '' ? (
-              <View style={styles.dogProfileImg}>
-                <Pets />
-              </View>
-            ) : (
-              <FastImage
-                style={styles.dogProfileImg}
-                source={{
-                  uri: profile[1]?.dogs[dogIndex]?.contentUrl,
-                  priority: FastImage.priority.normal,
-                }}
-                resizeMode={FastImage.resizeMode.contain}
-              />
-            )}
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
+        width: '100%',
+        height: windowHeight - tabBarHeight,
+      }}>
+      <View style={styles.homeProfile}>
+        <View style={styles.goToLink}>
+          <Pressable
+            onPress={() => navigation.push('Profile', {nickname: myNick})}>
+            <MyText style={styles.homeFontStyle}>프로필</MyText>
+          </Pressable>
+          <Pressable
+            onPress={() => navigation.push('UserDetail', {nickname: myNick})}>
+            <MyText style={styles.homeFontStyle}>게시글</MyText>
+          </Pressable>
+          <Pressable onPress={openDirectMessageHandler}>
+            <MyText style={styles.homeFontStyle}>메시지</MyText>
+          </Pressable>
+        </View>
+        <View style={styles.homeProfileInner}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <View style={styles.dogIndexLeftSelector}>
+              {dogIndex === 0 ? (
+                <View
+                  style={{
+                    width: 24,
+                    height: 24,
+                    alignItems: 'center',
+                  }}
+                />
+              ) : (
+                <Pressable
+                  onPress={() => dogIndexHandler('left')}
+                  style={{
+                    width: 24,
+                    height: 24,
+                    alignItems: 'center',
+                  }}>
+                  <DogIndexChangeLeft />
+                </Pressable>
+              )}
+            </View>
+            <View style={styles.profileImg}>
+              {profile[0]?.user.contentUrl === '' ? (
+                <View style={styles.dogProfileImg}>
+                  <Pets />
+                </View>
+              ) : (
+                <FastImage
+                  style={styles.dogProfileImg}
+                  source={{
+                    uri: profile[1]?.dogs[dogIndex]?.contentUrl,
+                    priority: FastImage.priority.normal,
+                  }}
+                  resizeMode={FastImage.resizeMode.contain}
+                />
+              )}
 
-            {profile[0].user.contentUrl === '' ? (
-              <View style={styles.personProfileImg}>
-                <Emoticon />
-              </View>
-            ) : (
-              <FastImage
-                style={styles.personProfileImg}
-                source={{
-                  uri: profile[0]?.user.contentUrl,
-                  priority: FastImage.priority.normal,
-                }}
-                resizeMode={FastImage.resizeMode.contain}
-              />
-            )}
+              {profile[0].user.contentUrl === '' ? (
+                <View style={styles.personProfileImg}>
+                  <Emoticon />
+                </View>
+              ) : (
+                <FastImage
+                  style={styles.personProfileImg}
+                  source={{
+                    uri: profile[0]?.user.contentUrl,
+                    priority: FastImage.priority.normal,
+                  }}
+                  resizeMode={FastImage.resizeMode.contain}
+                />
+              )}
+            </View>
+            <View style={styles.dogIndexRightSelector}>
+              {(dogIndex === profile[1].dogs.length - 1 &&
+                profile[1].dogs.length !== 0) ||
+              profile[1].dogs.length === 0 ? (
+                <View
+                  style={{
+                    width: 24,
+                    height: 24,
+                    alignItems: 'center',
+                  }}
+                />
+              ) : (
+                <Pressable
+                  onPress={() => dogIndexHandler('right')}
+                  style={{
+                    width: 24,
+                    height: 24,
+                    alignItems: 'center',
+                  }}>
+                  <DogIndexChangeRight />
+                </Pressable>
+              )}
+            </View>
           </View>
-          <View style={styles.dogIndexRightSelector}>
-            {(dogIndex === profile[1].dogs.length - 1 &&
-              profile[1].dogs.length !== 0) ||
-            profile[1].dogs.length === 0 ? (
-              <View
-                style={{
-                  width: 24,
-                  height: 24,
-                  alignItems: 'center',
-                }}
-              />
-            ) : (
-              <Pressable
-                onPress={() => dogIndexHandler('right')}
-                style={{
-                  width: 24,
-                  height: 24,
-                  alignItems: 'center',
-                }}>
-                <DogIndexChangeRight />
-              </Pressable>
-            )}
+          <View style={styles.profileInner}>
+            <View style={styles.dogNameBox}>
+              {profile[1].dogs.length === 0 ? (
+                <MyText
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '600',
+                    color: 'black',
+                    textAlign: 'center',
+                    top: '4%',
+                  }}>
+                  프로필에서
+                </MyText>
+              ) : (
+                <MyText
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '600',
+                    color: 'black',
+                    textAlign: 'center',
+                    top: '4%',
+                  }}>
+                  {profile[1]?.dogs[dogIndex]?.name}
+                </MyText>
+              )}
+            </View>
+            <View style={styles.dDayBox}>
+              {profile[1].dogs.length === 0 ? (
+                <MyText
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '600',
+                    color: '#E79796',
+                    textAlign: 'center',
+                    top: '4%',
+                  }}>
+                  강아지를 등록해주세요~
+                </MyText>
+              ) : (
+                <MyText
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '600',
+                    color: '#ffb284',
+                    textAlign: 'center',
+                    top: '4%',
+                  }}>
+                  우리가 함께한 날 {profile[1]?.dogs[dogIndex]?.daysWithin}일
+                </MyText>
+              )}
+            </View>
           </View>
         </View>
-        <View style={styles.profileInner}>
-          <View style={styles.dogNameBox}>
-            {profile[1].dogs.length === 0 ? (
-              <MyText
-                style={{
-                  fontSize: 16,
-                  fontWeight: '600',
-                  color: 'black',
-                  textAlign: 'center',
-                  top: '4%',
-                }}>
-                프로필에서
-              </MyText>
-            ) : (
-              <MyText
-                style={{
-                  fontSize: 16,
-                  fontWeight: '600',
-                  color: 'black',
-                  textAlign: 'center',
-                  top: '4%',
-                }}>
-                {profile[1]?.dogs[dogIndex]?.name}
-              </MyText>
-            )}
-          </View>
-          <View style={styles.dDayBox}>
-            {profile[1].dogs.length === 0 ? (
-              <MyText
-                style={{
-                  fontSize: 16,
-                  fontWeight: '600',
-                  color: '#E79796',
-                  textAlign: 'center',
-                  top: '4%',
-                }}>
-                강아지를 등록해주세요~
-              </MyText>
-            ) : (
-              <MyText
-                style={{
-                  fontSize: 16,
-                  fontWeight: '600',
-                  color: '#ffb284',
-                  textAlign: 'center',
-                  top: '4%',
-                }}>
-                우리가 함께한 날 {profile[1]?.dogs[dogIndex]?.daysWithin}일
-              </MyText>
-            )}
-          </View>
-        </View>
-      </View>
 
-      <View style={styles.homeTodoBox}>
-        <View style={styles.homeTodoBoxInner}>
-          <View style={styles.toDoText}>
-            {profile[1].dogs.length === 0 ? (
-              <MyText
+        <View style={styles.homeTodoBox}>
+          <View style={styles.homeTodoBoxInner}>
+            <View style={styles.toDoText}>
+              {profile[1].dogs.length === 0 ? (
+                <MyText
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    color: '#262626',
+                    marginTop: '4%',
+                  }}></MyText>
+              ) : (
+                <MyText
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    color: '#262626',
+                    marginTop: '8%',
+                  }}>
+                  {profile[1]?.dogs[dogIndex]?.species} /{' '}
+                  {profile[1]?.dogs[dogIndex]?.age} /{' '}
+                  {profile[1]?.dogs[dogIndex]?.weight}Kg
+                </MyText>
+              )}
+            </View>
+
+            <View style={styles.listBox}>
+              <View
                 style={{
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                  color: '#262626',
+                  borderBottomWidth: 2,
+                  borderBottomColor: '#c9c9c9',
                   marginTop: '4%',
-                }}></MyText>
-            ) : (
-              <MyText
-                style={{
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                  color: '#262626',
-                  marginTop: '8%',
-                }}>
-                {profile[1]?.dogs[dogIndex]?.species} /{' '}
-                {profile[1]?.dogs[dogIndex]?.age} /{' '}
-                {profile[1]?.dogs[dogIndex]?.weight}Kg
-              </MyText>
-            )}
-          </View>
-
-          <View style={styles.listBox}>
-            <View
-              style={{
-                borderBottomWidth: 2,
-                borderBottomColor: '#c9c9c9',
-                marginTop: '4%',
-                width: 320,
-              }}
-            />
-            <WriteTodo />
-            <TodoList />
+                  width: 320,
+                }}
+              />
+              <WriteTodo />
+              <TodoList />
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 

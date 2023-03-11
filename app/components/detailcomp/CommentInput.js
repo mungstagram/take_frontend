@@ -121,5 +121,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: BasicColors.grayColor,
     paddingRight: 50,
+    color: '#262626',
   },
 });

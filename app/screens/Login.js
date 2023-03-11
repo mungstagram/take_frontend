@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Dimensions, StyleSheet, Image} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import AuthInput from '../components/AuthInput';
@@ -8,6 +8,8 @@ import {__postLogin, deleteFailLog} from '../redux/modules/loginSlice';
 import AuthNavigateButton from '../components/AuthNavigateButton';
 import KaKaoLogin from '../components/kakaologin/KaKaoLogin';
 import MyText from '../components/common/MyText';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+const windowHeight = Dimensions.get('window').height;
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -30,46 +32,53 @@ const Login = () => {
   }, []);
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.buttonPosionter}>
-        <AuthNavigateButton />
-      </View>
-      <View style={styles.imageContainer}>
-        <Image
-          source={require('../assets/LogoMedium.png')}
-          resizeMode={'cover'}
-        />
-        <MyText style={styles.imageText}>로그인하기</MyText>
-      </View>
-      <View style={styles.inputWrapper}>
-        <AuthInput
-          placeholder="id"
-          refInput={idInput}
-          isInvalid={isSuccessLogin}
-        />
-        <AuthInput
-          placeholder="password"
-          refInput={passwordInput}
-          secure={secureSetter}
-          setSecureSetter={setSecureSetter}
-          isInvalid={isSuccessLogin}
-        />
-        <View style={styles.helperMessageBox}>
-          {isSuccessLogin ? (
-            <MyText> </MyText>
-          ) : (
-            <MyText style={styles.helperText}>
-              입력하신 정보가 일치하지 않습니다
-            </MyText>
-          )}
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
+        width: '100%',
+        height: windowHeight,
+        backgroundColor: 'white',
+      }}>
+      <View style={styles.wrapper}>
+        <View style={styles.buttonPosionter}>
+          <AuthNavigateButton />
         </View>
+        <View style={styles.imageContainer}>
+          <Image
+            source={require('../assets/LogoMedium.png')}
+            resizeMode={'cover'}
+          />
+          <MyText style={styles.imageText}>로그인하기</MyText>
+        </View>
+        <View style={styles.inputWrapper}>
+          <AuthInput
+            placeholder="id"
+            refInput={idInput}
+            isInvalid={isSuccessLogin}
+          />
+          <AuthInput
+            placeholder="password"
+            refInput={passwordInput}
+            secure={secureSetter}
+            setSecureSetter={setSecureSetter}
+            isInvalid={isSuccessLogin}
+          />
+          <View style={styles.helperMessageBox}>
+            {isSuccessLogin ? (
+              <MyText> </MyText>
+            ) : (
+              <MyText style={styles.helperText}>
+                입력하신 정보가 일치하지 않습니다
+              </MyText>
+            )}
+          </View>
 
-        <AuthButton onPress={onSubmitLogin}>입력 완료</AuthButton>
+          <AuthButton onPress={onSubmitLogin}>입력 완료</AuthButton>
+        </View>
+        <View style={styles.socialLoginBox}>
+          <KaKaoLogin />
+        </View>
       </View>
-      <View style={styles.socialLoginBox}>
-        <KaKaoLogin />
-      </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

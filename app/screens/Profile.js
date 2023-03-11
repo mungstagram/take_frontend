@@ -2,16 +2,15 @@ import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
-  Text,
   Pressable,
   Dimensions,
   Alert,
   ScrollView,
-  FlatList,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import {__getProfile} from '../redux/modules/profileSlice';
 import Logout from '../components/Logout';
@@ -26,7 +25,10 @@ import DogCard from '../components/profile/DogCard';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const Profile = ({navigation, route}) => {
+const Profile = ({route}) => {
+  //바텀텝의 높이
+  const tabBarHeight = useBottomTabBarHeight();
+
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   // 프로필 정보
@@ -38,7 +40,6 @@ const Profile = ({navigation, route}) => {
     Alert.alert(
       '',
       '펍플루언서를 다시 사용할 일이 없어 계정을 없애고 싶으시면 계정 삭제를 처리해드리겠습니다. 삭제된 계정은 다시 복구 할 수 없고 계정의 게시글이나 정보는 완전히 삭제된다는 점을 기억해 주세요.',
-
       [
         {
           text: '취소하기',
@@ -62,8 +63,10 @@ const Profile = ({navigation, route}) => {
 
   return (
     <KeyboardAwareScrollView
-      // style={styles.Wrapper}
-      contentContainerStyle={styles.Wrapper}>
+      contentContainerStyle={{
+        ...styles.Wrapper,
+        height: windowHeight - tabBarHeight,
+      }}>
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={{width: '100%', height: '100%'}}>
@@ -101,6 +104,7 @@ const Profile = ({navigation, route}) => {
               myInfo={profile[0].user}
               nickname={nickname}
               myNick={myNick}
+              dogsCount={profile[1].dogs.length}
             />
           </View>
         </View>
@@ -126,7 +130,6 @@ const Profile = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
   Wrapper: {
-    height: windowHeight * 0.945,
     width: windowWidth,
     backgroundColor: '#ffffff',
     bottom: 0,
@@ -134,7 +137,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    //alignItems: 'center',
     backgroundColor: '#ffffff',
     bottom: 0,
   },
@@ -143,7 +145,6 @@ const styles = StyleSheet.create({
     height: '6.8%',
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: 'red',
   },
   top: {
     width: '100%',
@@ -163,8 +164,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginLeft: '6.5%',
-    // left: '40%',
-    // backgroundColor: 'red',
     top: '4%',
   },
   dogDetailWrapper: {

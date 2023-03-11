@@ -1,15 +1,6 @@
 import React, {useState} from 'react';
 import {useEffect} from 'react';
-import {
-  FlatList,
-  View,
-  StyleSheet,
-  TextInput,
-  Text,
-  Button,
-  Keyboard,
-  ScrollView,
-} from 'react-native';
+import {FlatList, View, StyleSheet, ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {__getTodos} from '../../redux/modules/todoSlice';
 

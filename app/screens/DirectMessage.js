@@ -291,6 +291,7 @@ const styles = StyleSheet.create({
     paddingLeft: '5.5%',
     height: '100%',
     width: '70%',
+    color: '#262626',
   },
 
   sendIconPositioner: {

@@ -19,6 +19,7 @@ const ProfileInput = ({
           width: 108,
           maxHeight: 62,
           fontSize: 14,
+          color: '#262626',
         }}
         activeOutlineColor="black"
         mode="outlined"
@@ -38,6 +39,7 @@ const ProfileInput = ({
           padding: 0,
           width: 240,
           maxHeight: 62,
+          color: '#262626',
           fontSize: 14,
         }}
         activeOutlineColor="black"
@@ -59,6 +61,7 @@ const ProfileInput = ({
           width: 116,
           maxHeight: 62,
           fontSize: 14,
+          color: '#262626',
         }}
         activeOutlineColor="black"
         mode="outlined"
