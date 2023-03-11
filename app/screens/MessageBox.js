@@ -70,48 +70,59 @@ const MessageBox = () => {
         />
         <Text style={styles.logoText}>메시지</Text>
       </View>
-      <View style={styles.userRoomWrapper}>
-        <FlatList
-          data={dmUserList}
-          renderItem={({item}) => (
-            <View style={styles.roomCardWrapper}>
-              <Pressable
-                onPress={() =>
-                  accessRoomHandler({
-                    roomId: item.roomId,
-                    profileUrl: item.profileUrl,
-                    nickname: item.nickname,
-                  })
-                }
-                style={styles.pressArea}>
-                <FastImage
-                  style={styles.profileImageWrapper}
-                  source={{
-                    uri: item.profileUrl,
-                    priority: FastImage.priority.normal,
-                  }}
-                  resizeMode={FastImage.resizeMode.contain}
-                />
-                <View style={styles.textAlinger}>
-                  <MyText style={styles.nickNameFont}>{item.nickname}</MyText>
-                  <MyText style={styles.lastMessageFont}>
-                    {item.lastChat}
-                  </MyText>
-                </View>
-                <View style={styles.detailInformation}>
-                  <MyText style={styles.timeGapText}>{item.timeGap}</MyText>
-                  <View style={styles.unreadCountHolder}>
-                    <MyText style={styles.unreadCount}>
-                      {item.unreadCount}
+      {dmUserList.length === 0 ? (
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '80%',
+          }}>
+          <Text style={{fontSize: 18}}>메시지 내역이 없습니다.</Text>
+        </View>
+      ) : (
+        <View style={styles.userRoomWrapper}>
+          <FlatList
+            data={dmUserList}
+            renderItem={({item}) => (
+              <View style={styles.roomCardWrapper}>
+                <Pressable
+                  onPress={() =>
+                    accessRoomHandler({
+                      roomId: item.roomId,
+                      profileUrl: item.profileUrl,
+                      nickname: item.nickname,
+                    })
+                  }
+                  style={styles.pressArea}>
+                  <FastImage
+                    style={styles.profileImageWrapper}
+                    source={{
+                      uri: item.profileUrl,
+                      priority: FastImage.priority.normal,
+                    }}
+                    resizeMode={FastImage.resizeMode.contain}
+                  />
+                  <View style={styles.textAlinger}>
+                    <MyText style={styles.nickNameFont}>{item.nickname}</MyText>
+                    <MyText style={styles.lastMessageFont}>
+                      {item.lastChat}
                     </MyText>
                   </View>
-                </View>
-              </Pressable>
-            </View>
-          )}
-          keyExtractor={item => item.roomId}
-        />
-      </View>
+                  <View style={styles.detailInformation}>
+                    <MyText style={styles.timeGapText}>{item.timeGap}</MyText>
+                    <View style={styles.unreadCountHolder}>
+                      <MyText style={styles.unreadCount}>
+                        {item.unreadCount}
+                      </MyText>
+                    </View>
+                  </View>
+                </Pressable>
+              </View>
+            )}
+            keyExtractor={item => item.roomId}
+          />
+        </View>
+      )}
     </View>
   );
 };

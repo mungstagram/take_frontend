@@ -18,7 +18,9 @@ const Logout = () => {
 
   return (
     <View>
-      <Pressable onPress={onLogoutHandelr}>
+      <Pressable
+        onPress={onLogoutHandelr}
+        style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
         <MyText style={styles.textStyle}>로그아웃</MyText>
       </Pressable>
     </View>

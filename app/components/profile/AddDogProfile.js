@@ -102,8 +102,23 @@ const AddDogProfile = () => {
         return false;
       }
     };
-    if (!isValidDate(birthday) || !isValidDate(bringDate)) {
-      return Alert.alert('유효한 날짜를 입력해주세요', 'ex)2020-08-22');
+
+    const sendBirthday =
+      birthday.slice(0, 4) +
+      '-' +
+      birthday.slice(4, 6) +
+      '-' +
+      birthday.slice(6, 8);
+
+    const sendBringDate =
+      bringDate.slice(0, 4) +
+      '-' +
+      bringDate.slice(4, 6) +
+      '-' +
+      bringDate.slice(6, 8);
+    // console.log(sendBirthday, sendBringDate, '생일+ 입양일');
+    if (!isValidDate(sendBirthday) || !isValidDate(sendBringDate)) {
+      return Alert.alert('유효한 날짜를 입력해주세요', 'ex)20200822');
     } else if (images.length === 0) {
       return Alert.alert('사진을 등록해 주세요');
     } else if (
@@ -120,8 +135,8 @@ const AddDogProfile = () => {
       formData.append('species', species);
       formData.append('weight', weight);
       formData.append('introduce', introduce);
-      formData.append('birthday', birthday);
-      formData.append('bringDate', bringDate);
+      formData.append('birthday', sendBirthday);
+      formData.append('bringDate', sendBringDate);
       formData.append('files', {
         name: images[0].fileName,
         type: images[0].mime,
@@ -213,7 +228,9 @@ const AddDogProfile = () => {
                 <View style={styles.addButtonWrapper}>
                   <View style={{height: 12, width: '100%'}} />
                   <View style={styles.addButtonAligner}>
-                    <Pressable onPress={unAddMyDoghandler}>
+                    <Pressable
+                      onPress={unAddMyDoghandler}
+                      style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
                       <ScanDelete brightGray />
                     </Pressable>
                     <Pressable
@@ -249,13 +266,15 @@ const AddDogProfile = () => {
               <View style={styles.inputAligner}>
                 <ProfileInput
                   label={'태어난 날'}
-                  placeholder={'0000-00-00'}
+                  placeholder={'00000000'}
+                  number
                   onUpdateValue={onChangeInputHandler.bind(this, 'birthday')}
                   value={birthday}
                 />
                 <ProfileInput
                   label={'데려온 날'}
-                  placeholder={'0000-00-00'}
+                  placeholder={'00000000'}
+                  number
                   onUpdateValue={onChangeInputHandler.bind(this, 'bringDate')}
                   value={bringDate}
                 />

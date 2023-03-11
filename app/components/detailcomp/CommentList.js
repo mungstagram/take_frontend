@@ -80,7 +80,9 @@ const CommentList = ({userNick}) => {
           <View style={styles.preContent}>
             <MyText style={styles.titleText}>{detail.title}</MyText>
             <View style={styles.favoritBox}>
-              <Pressable onPress={onIsLikeHandler}>
+              <Pressable
+                onPress={onIsLikeHandler}
+                style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
                 {isLiked ? <Favorite big /> : <NotFavorite big />}
               </Pressable>
               <MyText>{likedCount}</MyText>
@@ -138,7 +140,9 @@ const CommentList = ({userNick}) => {
           <View style={styles.preContent}>
             <Text style={styles.titleText}>{detail.title}</Text>
             <View style={styles.favoritBox}>
-              <Pressable onPress={onIsLikeHandler}>
+              <Pressable
+                onPress={onIsLikeHandler}
+                style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
                 {isLiked ? <Favorite big /> : <NotFavorite big />}
               </Pressable>
               <MyText>{likedCount}</MyText>
@@ -148,7 +152,9 @@ const CommentList = ({userNick}) => {
             <MyText numberOfLines={line} ellipsizeMode="tail">
               {detail.content}
             </MyText>
-            <Pressable onPress={prev => handleLine(!prev[0], prev[1])}>
+            <Pressable
+              onPress={prev => handleLine(!prev[0], prev[1])}
+              style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
               <MyText style={styles.addText}>더보기</MyText>
             </Pressable>
           </View>

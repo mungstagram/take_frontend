@@ -184,7 +184,9 @@ const DirectMessage = () => {
                 onChangeText={onChangeInputHandler}
                 maxLength={150}
               />
-              <Pressable style={styles.sendMsgArea} onPress={handleSendMessage}>
+              <Pressable
+                style={({pressed}) => dynamicStyles(pressed).sendMsgArea}
+                onPress={handleSendMessage}>
                 <View style={styles.sendIconPositioner}>
                   <SendDM />
                 </View>
@@ -345,167 +347,13 @@ const dynamicStyles = value =>
       borderTopStartRadius: value ? 20 : 4,
       borderTopEndRadius: value ? 4 : 20,
     },
+    sendMsgArea: {
+      zIndex: 3,
+      width: '25%',
+      alignItems: 'flex-end',
+      height: '100%',
+      justifyContent: 'center',
+      paddingRight: 20,
+      opacity: value ? 0.5 : 1,
+    },
   });
-
-//   return (
-//     <View style={styles.wrapper}>
-//       <View style={styles.userButton}>
-//         <GoBackButton />
-//       </View>
-//       <View style={styles.directMessageBox}>
-//         <View style={styles.targetProfileWrapper}>
-//           <FastImage
-//             style={styles.targetProfileImage}
-//             source={{
-//               uri: value.profileUrl,
-//               priority: FastImage.priority.normal,
-//             }}
-//             resizeMode={FastImage.resizeMode.contain}
-//           />
-//           <MyText style={styles.targetFont}>{value.nickname}</MyText>
-//         </View>
-//       </View>
-//       <View style={styles.chatListWrapper}>
-// <FlatList
-//   data={totalMessage}
-//   renderItem={({item, index}) => (
-//     <View>
-//       {totalMessage.length > index + 1 &&
-//         totalMessage[index].createdAt.substr(0, 10) !==
-//           totalMessage[index + 1].createdAt.substr(0, 10) && (
-//           <MyText>
-//             {totalMessage[index].createdAt.substr(0, 4)}년{' '}
-//             {totalMessage[index].createdAt.substr(5, 2)}월{' '}
-//             {totalMessage[index].createdAt.substr(8, 2)}일{' '}
-//           </MyText>
-//         )}
-//       <MyText>{item.message}</MyText>
-//       <MyText>
-//         {item.createdAt.substr(11, 2)}시 {item.createdAt.substr(14, 2)}
-//         분
-//       </MyText>
-//     </View>
-//   )}
-//   keyExtractor={(item, index) => index}
-//   horizontal={false}
-// />
-//       </View>
-//       <KeyboardAvoidingView
-//         style={styles.bottomInputWrapper}
-//         behavior="padding"
-//         // contentContainerStyle={styles.bottomInputWrapper}
-//         keyboardVerticalOffset={50}>
-//         <View style={styles.textInputContainer}>
-//           <TextInput
-//             style={styles.textInputStyler}
-//             placeholder="메시지 입력하기"
-//             value={myDM}
-//             onChangeText={onChangeInputHandler}
-//           />
-//           <Pressable style={styles.sendMsgArea} onPress={handleSendMessage}>
-//             <View style={styles.sendIconPositioner}>
-//               <SendDM />
-//             </View>
-//           </Pressable>
-//         </View>
-//       </KeyboardAvoidingView>
-//     </View>
-//   );
-// };
-
-// export default DirectMessage;
-
-// const styles = StyleSheet.create({
-//   wrapper: {
-//     height: '100%',
-//     width: '100%',
-//   },
-//   userButton: {
-//     position: 'absolute',
-//     height: '7.48%',
-//     justifyContent: 'center',
-//     alignItems: 'flex-start',
-//     marginLeft: '7%',
-//     zIndex: 4,
-//   },
-//   directMessageBox: {
-//     position: 'absolute',
-//     width: '100%',
-//     height: '15.48%',
-//     backgroundColor: 'white',
-//     elevation: 3,
-//   },
-//   targetProfileWrapper: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     paddingTop: '14%',
-//     marginLeft: '7%',
-//     height: '100%',
-//   },
-//   targetProfileImage: {
-//     height: 32,
-//     width: 32,
-//     borderRadius: 100,
-//     backgroundColor: 'gray',
-//   },
-//   targetFont: {
-//     fontSize: 20,
-//     marginLeft: '3%',
-//   },
-//   bottomInputWrapper: {
-//     position: 'absolute',
-//     bottom: 0,
-//     width: '100%',
-//     height: '12%',
-//     justifyContent: 'center',
-//     paddingHorizontal: '5%',
-//     alignItems: 'center',
-//     backgroundColor: 'blue',
-//   },
-//   // bottomAvoidInputWrapper: {
-//   //   position: 'absolute',
-//   //   bottom: '12%',
-//   //   width: '100%',
-//   //   height: '12%',
-//   //   justifyContent: 'center',
-//   //   alignItems: 'center',
-//   // },
-//   sendIconPositioner: {
-//     width: 24,
-//     height: 24,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   sendMsgArea: {
-//     position: 'absolute',
-//     right: '0%',
-//     zIndex: 3,
-//     width: '25%',
-//     alignItems: 'flex-end',
-//     height: '100%',
-//     justifyContent: 'center',
-//     paddingRight: '23%',
-//   },
-//   textInputContainer: {
-//     // alignItems: 'center',
-//     flexDirection: 'row',
-//     width: '91%',
-//     borderRadius: 4,
-//     height: 56,
-//     backgroundColor: 'white',
-//   },
-//   textInputStyler: {
-//     fontSize: 14,
-//     padding: 0,
-//     paddingLeft: '5.5%',
-//     height: '100%',
-//     width: '70%',
-//   },
-//   chatListWrapper: {
-//     position: 'absolute',
-//     top: '19%',
-//     height: '70%',
-//     // backgroundColor: 'red',
-//     width: '100%',
-//   },
-// });

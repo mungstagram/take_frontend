@@ -10,7 +10,6 @@ import {useNavigation} from '@react-navigation/native';
 const UserDetail = () => {
   const route = useRoute();
   const {nickname} = route.params;
-  console.log('UserDetail', nickname);
   return (
     <View style={styles.wrapper}>
       <View style={styles.container1}>
