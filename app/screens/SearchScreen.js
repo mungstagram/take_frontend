@@ -210,7 +210,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     elevation: 5,
   },
-  textStyle: {fontSize: 14, marginLeft: '3%', color: '#262626'},
+  textStyle: {
+    fontSize: 14,
+    marginLeft: '3%',
+    width: '80%',
+    color: '#262626',
+  },
   searchIconBox: {
     width: 24,
     height: 24,

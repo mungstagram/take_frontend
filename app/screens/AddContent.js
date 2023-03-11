@@ -41,14 +41,7 @@ const AddContent = () => {
           activeTintColor: 'rgba(16,37,68,1)',
           inactiveTintColor: 'rgba(16,37,68,1)',
         }}>
-        <Tab.Screen
-          name="사진"
-          component={AddImage}
-          options={{
-            headerShown: false,
-            color: ({focused}) => (focused ? '#F09090' : '#000000'),
-          }}
-        />
+        <Tab.Screen name="사진" component={AddImage} />
         <Tab.Screen name="동영상" component={AddVideo} />
       </Tab.Navigator>
     </>
