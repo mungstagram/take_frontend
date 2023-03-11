@@ -63,9 +63,6 @@ const styles = StyleSheet.create({
   getterWrapper: {
     width: '96.8%',
     height: '100%',
-    position: 'absolute',
-    left: '1.6%',
-    bottom: 0,
     // backgroundColor: 'green', //TODO : 색 원래대로
   },
   textStyle: {

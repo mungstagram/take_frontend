@@ -19,6 +19,7 @@ import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import {Surface, Text} from 'react-native-paper';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import {useNavigation} from '@react-navigation/native';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import {__postAddContentFormData} from '../../redux/modules/addContentSlice';
 import YellowButton from '../YellowButton';
@@ -27,7 +28,16 @@ import {Colors, BasicColors} from '../../constants/colors';
 import AddCircle from '../svg/AddCircle';
 import MyText from '../common/MyText';
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const videoCardWidth = windowWidth * 0.92;
+const videoCardHeight = videoCardWidth * 0.52;
+
 const AddVideo = () => {
+  //바텀텝의 높이
+  const tabBarHeight = useBottomTabBarHeight();
+
   // 제목 인풋상태
   const [titleText, setTitleText] = useState('');
 
@@ -157,7 +167,7 @@ const AddVideo = () => {
       setTitleText('');
       setContentText('');
       setVideos([]);
-      navigation.navigate('Home');
+      navigation.navigate('VideoBoard');
     }
   };
 
@@ -183,8 +193,12 @@ const AddVideo = () => {
     );
   };
   return (
-    <SafeAreaView style={styles.containerBox}>
-      <KeyboardAvoidingView behavior="position">
+    <KeyboardAvoidingView
+      behavior="height"
+      contentContainerStyle={{
+        height: windowHeight - tabBarHeight,
+      }}>
+      <SafeAreaView style={styles.containerBox}>
         <View style={styles.box}>
           <View style={styles.fileInput}>
             <View style={styles.fileupload}>
@@ -255,23 +269,17 @@ const AddVideo = () => {
             </YellowButton>
           </View>
         </View>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
 export default AddVideo;
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-
-const videoCardWidth = windowWidth * 0.92;
-const videoCardHeight = videoCardWidth * 0.52;
-
 const styles = StyleSheet.create({
   containerBox: {},
   box: {
-    height: windowHeight * 0.81,
+    height: '100%',
     flexDirection: 'column',
     alignItems: 'center',
     //backgroundColor: 'red',

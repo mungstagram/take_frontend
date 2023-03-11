@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import {Colors, BasicColors} from '../constants/colors';
 import SelectBox from '../components/common/SelectBox';
@@ -7,8 +8,11 @@ import ImageGetter from '../components/boardcomponent/ImageGetter';
 import GoBackButtonWhite from '../components/common/GoBackButtonWhite';
 import HeaderTitle from '../components/common/HeaderTitle';
 import MyText from '../components/common/MyText';
+import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
 
 const ImageBoard = () => {
+  //바텀텝의 높이
+  const tabBarHeight = useBottomTabBarHeight();
   // 최신순 or 좋아요 순 결정하는 state (초깃값 설정 서버에 보낼 값을 배열에 담고, 그때의 인덱스)
   const [dataSortSelector, setDataSortSelector] = useState(0);
   // SelectBox에 표시될 이름
@@ -48,8 +52,10 @@ const ImageBoard = () => {
           />
         </View>
       </View>
-      <View style={styles.preCards}>
-        <ImageGetter order={selectDispatchParameter[dataSortSelector]} />
+      <View style={{height: headHeight - tabBarHeight, top: '10%'}}>
+        <View style={styles.preCards}>
+          <ImageGetter order={selectDispatchParameter[dataSortSelector]} />
+        </View>
       </View>
     </View>
   );
@@ -61,7 +67,9 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const videoCardWidth = windowWidth * 0.92;
-const videoCardHeight = videoCardWidth;
+
+//위에서부터 셀렉트박스까지 높이
+const headHeight = windowHeight - 114;
 
 const styles = StyleSheet.create({
   container: {
@@ -106,7 +114,6 @@ const styles = StyleSheet.create({
   },
   selectBoxHolder: {
     position: 'absolute',
-    // width: '45%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
     right: '4%',
     top: '2%',
     zIndex: 8,
@@ -116,10 +123,8 @@ const styles = StyleSheet.create({
     width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
   },
   preCards: {
-    height: windowHeight * 0.78,
-    width: windowWidth,
+    height: '96%',
     justifyContent: 'center',
     alignItems: 'center',
-    top: '10%',
   },
 });

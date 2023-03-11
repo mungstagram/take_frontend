@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Dimensions, Text, Pressable} from 'react-native';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import SelectBox from '../components/common/SelectBox';
 import {Colors, BasicColors} from '../constants/colors';
@@ -9,8 +10,8 @@ import HeaderTitle from '../components/common/HeaderTitle';
 import MyText from '../components/common/MyText';
 
 const VideoBoard = () => {
-  // 높이, 너비를 자동으로 업데이트 해준다.
-  // const {height, width} = useWindowDimensions();
+  //바텀텝의 높이
+  const tabBarHeight = useBottomTabBarHeight();
 
   //최신순 or 좋아요순 결정하는 state (초깃값을 설정, 서버에 보낼 값을 배열에 담고, 그때의 인덱스)
   const [dataSortSelector, setDataSortSelector] = useState(0);
@@ -47,8 +48,10 @@ const VideoBoard = () => {
           />
         </View>
       </View>
-      <View style={styles.preCards}>
-        <VideoGetter order={selectDispatchParameter[dataSortSelector]} />
+      <View style={{height: headHeight, top: '10%'}}>
+        <View style={styles.preCards}>
+          <VideoGetter order={selectDispatchParameter[dataSortSelector]} />
+        </View>
       </View>
     </View>
   );
@@ -60,7 +63,8 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const videoCardWidth = windowWidth * 0.92;
-//const videoCardHeight = videoCardWidth;
+
+const headHeight = windowHeight - 114;
 
 const styles = StyleSheet.create({
   container: {
@@ -116,10 +120,8 @@ const styles = StyleSheet.create({
     width: '42%', //  화면의 절반정도로 설정  세부사항은 selecetor에서 설정함
   },
   preCards: {
-    height: windowHeight * 0.78,
-    width: windowWidth,
+    height: '87.2%',
     justifyContent: 'center',
     alignItems: 'center',
-    top: '12%',
   },
 });
