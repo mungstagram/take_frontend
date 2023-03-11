@@ -5,10 +5,8 @@ import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import {useDispatch} from 'react-redux';
 
 import Pets from '../svg/Pets';
-import AddCircle from '../svg/AddCircle';
 import ProfileInput from './components/ProfileInput';
 import TaskPinkImg from '../svg/TaskPinkImg';
-import TaskImg from '../svg/TaskImg';
 import FastImage from 'react-native-fast-image';
 import ProfileText from './components/ProfileText';
 import ServicesImg from '../svg/ServicesImg';
@@ -26,6 +24,7 @@ const DogCard = ({dog, nickname, myNick}) => {
   const editMyDoghandler = () => {
     setEditMode(!editMode);
   };
+
   const unEditMyDoghandler = () => {
     Alert.alert(
       '',
@@ -41,8 +40,8 @@ const DogCard = ({dog, nickname, myNick}) => {
               introduce: dog.introduce,
               species: dog.species,
               weight: dog.weight,
-              birthday: dog.birthday,
-              bringDate: dog.bringDate,
+              birthday: dog.birthday.replace(/-/g, ''),
+              bringDate: dog.bringDate.replace(/-/g, ''),
             });
           },
         },
@@ -95,7 +94,6 @@ const DogCard = ({dog, nickname, myNick}) => {
       // console.log(e.code, e.message);
     }
   };
-  //   console.log(images, 'images멀까?');
 
   const openAgainPicker = () => {
     setOpenCamera(true);
@@ -121,8 +119,21 @@ const DogCard = ({dog, nickname, myNick}) => {
         return false;
       }
     };
-    if (!isValidDate(birthday) || !isValidDate(bringDate)) {
-      return Alert.alert('유효한 날짜를 입력해주세요', 'ex)2020-08-22');
+    const sendBirthday =
+      birthday.slice(0, 4) +
+      '-' +
+      birthday.slice(4, 6) +
+      '-' +
+      birthday.slice(6, 8);
+
+    const sendBringDate =
+      bringDate.slice(0, 4) +
+      '-' +
+      bringDate.slice(4, 6) +
+      '-' +
+      bringDate.slice(6, 8);
+    if (!isValidDate(sendBirthday) || !isValidDate(sendBringDate)) {
+      return Alert.alert('유효한 날짜를 입력해주세요', 'ex)20200822');
     } else if (
       name === '' ||
       species === '' ||
@@ -138,8 +149,8 @@ const DogCard = ({dog, nickname, myNick}) => {
       formData.append('species', species);
       formData.append('weight', weight);
       formData.append('introduce', introduce);
-      formData.append('birthday', birthday);
-      formData.append('bringDate', bringDate);
+      formData.append('birthday', sendBirthday);
+      formData.append('bringDate', sendBringDate);
       formData.append('representative', representative);
       {
         images.length !== 0 &&
@@ -173,9 +184,10 @@ const DogCard = ({dog, nickname, myNick}) => {
       introduce: dog.introduce,
       species: dog.species,
       weight: dog.weight,
-      birthday: dog.birthday,
-      bringDate: dog.bringDate,
+      birthday: dog.birthday.replace(/-/g, ''),
+      bringDate: dog.bringDate.replace(/-/g, ''),
     });
+    setRepresentative(dog.representative);
   }, [dog]);
 
   //인풋값 변경 함수

@@ -41,7 +41,6 @@ const UserBoardWrap = ({nickname}) => {
         <View style={dynamicStyles(mainSelector).tabLeftBox}>
           <Pressable onPress={showImageBoard}>
             <MyText style={dynamicStyles(mainSelector).tabTextLeft}>
-              {' '}
               사진
             </MyText>
           </Pressable>

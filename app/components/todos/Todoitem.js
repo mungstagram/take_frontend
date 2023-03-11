@@ -27,7 +27,7 @@ import MyText from '../common/MyText';
 const Todoitem = ({id, text, done}) => {
   const dispatch = useDispatch();
 
-  const [edit, setEdit] = useState();
+  const [edit, setEdit] = useState(text);
   const [isEdit, setIsEdit] = useState(false);
 
   //done 을 가져와서 랜더링만 관리만 하는 거니까 done 만 가져와준다.

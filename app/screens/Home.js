@@ -179,16 +179,22 @@ function Home({navigation}) {
           <View style={styles.profileInner}>
             <View style={styles.dogNameBox}>
               {profile[1].dogs.length === 0 ? (
-                <MyText
-                  style={{
-                    fontSize: 16,
-                    fontWeight: '600',
-                    color: 'black',
-                    textAlign: 'center',
-                    top: '4%',
-                  }}>
-                  프로필에서
-                </MyText>
+                <Pressable
+                  style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}
+                  onPress={() =>
+                    navigation.push('Profile', {nickname: myNick})
+                  }>
+                  <MyText
+                    style={{
+                      fontSize: 16,
+                      fontWeight: '600',
+                      color: 'black',
+                      textAlign: 'center',
+                      top: '4%',
+                    }}>
+                    프로필에서
+                  </MyText>
+                </Pressable>
               ) : (
                 <MyText
                   style={{
@@ -204,16 +210,20 @@ function Home({navigation}) {
             </View>
             <View style={styles.dDayBox}>
               {profile[1].dogs.length === 0 ? (
-                <MyText
-                  style={{
-                    fontSize: 16,
-                    fontWeight: '600',
-                    color: '#E79796',
-                    textAlign: 'center',
-                    top: '4%',
-                  }}>
-                  강아지를 등록해주세요~
-                </MyText>
+                <Pressable
+                  onPress={() => navigation.push('Profile', {nickname: myNick})}
+                  style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
+                  <MyText
+                    style={{
+                      fontSize: 16,
+                      fontWeight: '600',
+                      color: '#E79796',
+                      textAlign: 'center',
+                      top: '4%',
+                    }}>
+                    강아지를 등록해주세요~
+                  </MyText>
+                </Pressable>
               ) : (
                 <MyText
                   style={{
@@ -301,7 +311,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     width: 40,
     height: 24,
-    top: 12,
+    marginTop: 16,
     marginLeft: 16,
     color: '#ffffff',
   },
