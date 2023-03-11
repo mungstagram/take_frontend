@@ -5,6 +5,7 @@ import {
   TextInput,
   Dimensions,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -48,37 +49,39 @@ const CommentInput = ({detail}) => {
     }
   }, [isFocused]);
   return (
-    <View style={styles.container}>
-      <View style={styles.commentsInput}>
-        <View style={styles.profileImg}>
-          <FastImage
-            style={styles.profileImg}
-            source={{
-              uri: userImg.contentUrl,
-              priority: FastImage.priority.normal,
-            }}
-            resizeMode={'cover'}
-          />
+    <KeyboardAvoidingView>
+      <View style={styles.container}>
+        <View style={styles.commentsInput}>
+          <View style={styles.profileImg}>
+            <FastImage
+              style={styles.profileImg}
+              source={{
+                uri: userImg.contentUrl,
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={'cover'}
+            />
+          </View>
+          <TextInput
+            numberOfLines={2}
+            multiline
+            maxLength={60}
+            placeholder=" 댓글을 남겨주세요(60자 이하)"
+            placeholderTextColor={BasicColors.grayColor}
+            value={inputText}
+            onChangeText={commentTextEnter}
+            style={styles.commentInput}
+            cursorColor="#FFC98B"></TextInput>
         </View>
-        <TextInput
-          numberOfLines={3}
-          multiline
-          maxLength={60}
-          placeholder=" 댓글을 남겨주세요(60자 이하)"
-          placeholderTextColor={BasicColors.grayColor}
-          value={inputText}
-          onChangeText={commentTextEnter}
-          style={styles.commentInput}
-          cursorColor="#FFC98B"></TextInput>
+        <TouchableOpacity
+          style={styles.writeIcon}
+          activeOpacity={0.8}
+          hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+          onPress={commentEnterHandler}>
+          {inputText ? <WriteCommentOn /> : <WriteComment />}
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.writeIcon}
-        activeOpacity={0.8}
-        hitSlop={{top: 32, bottom: 32, left: 32, right: 32}}
-        onPress={commentEnterHandler}>
-        {inputText ? <WriteCommentOn /> : <WriteComment />}
-      </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

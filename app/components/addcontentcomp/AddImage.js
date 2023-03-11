@@ -12,13 +12,14 @@ import {
   Alert,
   Dimensions,
   Pressable,
-  KeyboardAvoidingView,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
+import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import {Surface, Text} from 'react-native-paper';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import {useNavigation} from '@react-navigation/native';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import {__postAddContentFormData} from '../../redux/modules/addContentSlice';
 import YellowButton from '../YellowButton';
@@ -27,7 +28,15 @@ import {Colors, BasicColors} from '../../constants/colors';
 import AddCircle from '../svg/AddCircle';
 import MyText from '../common/MyText';
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const videoCardWidth = windowWidth * 0.92;
+const videoCardHeight = videoCardWidth * 0.52;
+
 const AddImage = () => {
+  //바텀텝의 높이
+  const tabBarHeight = useBottomTabBarHeight();
   // 제목 인풋상태
   const [titleText, setTitleText] = useState('');
   // console.log(titleText);
@@ -164,7 +173,7 @@ const AddImage = () => {
       setContentText('');
       setImages([]);
       //navigation.navigate('userDetail');
-      navigation.navigate('Home');
+      navigation.navigate('ImageBoard');
     }
   };
 
@@ -187,8 +196,10 @@ const AddImage = () => {
     );
   };
   return (
-    <SafeAreaView style={styles.containerBox}>
-      <KeyboardAvoidingView behavior="height">
+    <KeyboardAvoidingView
+      behavior="height"
+      contentContainerStyle={{height: windowHeight - tabBarHeight}}>
+      <SafeAreaView style={styles.containerBox}>
         <View style={styles.box}>
           <View style={styles.textBox}>
             <Surface style={styles.titleInput}>
@@ -249,25 +260,20 @@ const AddImage = () => {
             <YellowButton onPress={onSendFormData}>작성 완료</YellowButton>
           </View>
         </View>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
 export default AddImage;
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-
-const videoCardWidth = windowWidth * 0.92;
-const videoCardHeight = videoCardWidth * 0.52;
-
 const styles = StyleSheet.create({
   containerBox: {
     backgroundColor: BasicColors.whiteColor,
+    width: windowWidth,
   },
   box: {
-    height: windowHeight * 0.81,
+    height: '100%',
     flexDirection: 'column',
     alignItems: 'center',
   },

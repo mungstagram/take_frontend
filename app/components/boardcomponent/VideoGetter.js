@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
     left: '1.6%',
     justifyContent: 'center',
     marginBottom: 24,
-    // backgroundColor: 'green', //TODO : 색 원래대로
   },
   container: {},
 });

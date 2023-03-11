@@ -35,11 +35,13 @@ const AddContent = () => {
       </View>
       <Tab.Navigator
         screenOptions={{
-          tabBarIndicatorStyle: {borderBottomWidth: 2, borderColor: '#C6C09C'},
+          tabBarIndicatorStyle: {
+            borderBottomWidth: 2,
+            borderColor: '#C6C09C',
+          },
           tabBarLabelStyle: {fontSize: 12},
           tabBarItemStyle: {width: videoCardWidth * 0.34},
-          activeTintColor: 'rgba(16,37,68,1)',
-          inactiveTintColor: 'rgba(16,37,68,1)',
+          tabBarHideOnKeyboard: 'true',
         }}>
         <Tab.Screen name="사진" component={AddImage} />
         <Tab.Screen name="동영상" component={AddVideo} />

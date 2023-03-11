@@ -44,10 +44,7 @@ const ImageDetail = ({route}) => {
         </View>
         <View style={styles.flex2}></View>
       </View>
-      <KeyboardAvoidingView
-        behavior="position"
-        keyboardVerticalOffset={80}
-        style={styles.avoid}>
+      <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={80}>
         <SafeAreaView>
           <View style={styles.container}>
             <View style={styles.imageContainer}>
@@ -118,6 +115,7 @@ const styles = StyleSheet.create({
     width: windowWidth,
     height: windowHeight,
     alignItems: 'center',
+    backgroundColor: BasicColors.whiteColor,
   },
   contentBox: {
     flex: 3,
@@ -125,7 +123,7 @@ const styles = StyleSheet.create({
   commentListBox: {},
   commentInputBox: {
     flex: 1,
-    top: 15,
+    top: 10,
     height: windowHeight,
     backgroundColor: BasicColors.whiteColor,
   },
