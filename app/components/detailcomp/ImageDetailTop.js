@@ -10,6 +10,7 @@ import {
   Image,
   Pressable,
   Alert,
+  Modal,
 } from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
@@ -25,6 +26,7 @@ import Delete from '../svg/Delete';
 import ServicesImg from '../svg/ServicesImg';
 import CommentList from './CommentList';
 import MyText from '../common/MyText';
+import SlideImg from './SlideImg';
 import AddModal from './AddModal';
 
 const ImageDetailTop = ({detail}) => {
@@ -66,9 +68,10 @@ const ImageDetailTop = ({detail}) => {
       ],
     );
   };
+
   //사진 미리보기
   const renderItem = ({item}) => {
-    return <AddModal item={item} />;
+    return <SlideImg item={item} />;
   };
 
   return (

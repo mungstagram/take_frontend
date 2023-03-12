@@ -18,6 +18,7 @@ import ImageDetailTop from '../components/detailcomp/ImageDetailTop';
 import GoBackButtonWhite from '../components/common/GoBackButtonWhite';
 import HeaderTitle from '../components/common/HeaderTitle';
 import MyText from '../components/common/MyText';
+import AddModal from '../components/detailcomp/AddModal';
 
 const ImageDetail = ({route}) => {
   const detail = useSelector(state => state.comments.detail);
@@ -31,6 +32,8 @@ const ImageDetail = ({route}) => {
       dispatch(__getPostDetailData(route.params.postId));
     }
   }, [isFocused, route]);
+  // 모달 가져옴
+  const modalImage = useSelector(state => state.comments.modalImg);
 
   return (
     <>
@@ -58,6 +61,15 @@ const ImageDetail = ({route}) => {
           </View>
         </SafeAreaView>
       </KeyboardAvoidingView>
+      <View style={styles.modalBox}>
+        {modalImage.state ? (
+          <View>
+            <AddModal modalImage={modalImage} />
+          </View>
+        ) : (
+          <></>
+        )}
+      </View>
     </>
   );
 };
@@ -127,4 +139,5 @@ const styles = StyleSheet.create({
     height: windowHeight,
     backgroundColor: BasicColors.whiteColor,
   },
+  modalBox: {},
 });
