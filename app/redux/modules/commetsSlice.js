@@ -22,9 +22,6 @@ export const __postComment = createAsyncThunk(
         })
 
         .then(res => {
-          //console.log('요청성공');
-          Alert.alert('댓글성공');
-
           return res;
         });
       //console.log('post_data', data);
