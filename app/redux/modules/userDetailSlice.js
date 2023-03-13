@@ -4,6 +4,7 @@ import http from '../api/http';
 const initialState = {
   userDetail: [],
   error: null,
+  isProfLoading: false,
   isLoading: false,
   targetRoomId: '',
 };

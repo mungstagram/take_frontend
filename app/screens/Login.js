@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, Dimensions, StyleSheet, Image} from 'react-native';
+import {View, Dimensions, StyleSheet, Image, Text} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import AuthInput from '../components/AuthInput';
@@ -9,6 +9,7 @@ import AuthNavigateButton from '../components/AuthNavigateButton';
 import KaKaoLogin from '../components/kakaologin/KaKaoLogin';
 import MyText from '../components/common/MyText';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import LoadingModal from '../components/common/LoadingModal';
 const windowHeight = Dimensions.get('window').height;
 
 const Login = () => {
@@ -26,6 +27,7 @@ const Login = () => {
       }),
     );
   };
+  const {isLoading} = useSelector(state => state.login);
 
   useEffect(() => {
     dispatch(deleteFailLog());
@@ -71,13 +73,13 @@ const Login = () => {
               </MyText>
             )}
           </View>
-
           <AuthButton onPress={onSubmitLogin}>입력 완료</AuthButton>
         </View>
         <View style={styles.socialLoginBox}>
           <KaKaoLogin />
         </View>
       </View>
+      <LoadingModal modalHandler={isLoading} />
     </KeyboardAwareScrollView>
   );
 };

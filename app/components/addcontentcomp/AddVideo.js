@@ -167,7 +167,6 @@ const AddVideo = () => {
       setTitleText('');
       setContentText('');
       setVideos([]);
-      navigation.navigate('VideoBoard');
     }
   };
 

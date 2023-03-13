@@ -26,9 +26,9 @@ const UserDetailProf = ({nickname}) => {
   const {myNick} = useSelector(state => state.login);
   // console.log(myNick, '내 닉네임');
   const {userDetail} = useSelector(state => state.userDetail);
-  console.log(userDetail.contentUrl, '유저 디테일');
   const {targetRoomId} = useSelector(state => state.userDetail);
   // console.log(targetRoomId, 'targetRoomId');
+  const {isLoading} = useSelector(state => state.userDetail);
 
   // 해당 프로필패이지 데이터 얻기
   useEffect(() => {
@@ -48,12 +48,12 @@ const UserDetailProf = ({nickname}) => {
 
   //내 메시지함 열기
   const openDirectMessageHandler = () => {
-    navigation.push('MessageBox', {token: myToken});
+    !isLoading && navigation.push('MessageBox', {token: myToken});
   };
 
   //타인에게 dm보내기
   const sendDirectMessageHandler = value => {
-    navigation.push('DirectMessage', {value, token: myToken});
+    !isLoading && navigation.push('DirectMessage', {value, token: myToken});
   };
 
   // 대상과의 소켓 룸아이디 얻기
@@ -62,7 +62,7 @@ const UserDetailProf = ({nickname}) => {
   }, []);
 
   const navigateToProfileHandler = () => {
-    navigation.push('Profile', {nickname});
+    !isLoading && navigation.push('Profile', {nickname});
   };
 
   return (

@@ -10,7 +10,6 @@ import {
   Dimensions,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
 import {useIsFocused} from '@react-navigation/native';
 
 import GoBackButtonWhite from '../components/common/GoBackButtonWhite';
@@ -22,14 +21,18 @@ import SearchNone from '../components/userdetail/SearchNone';
 import ImageGetter from '../components/boardcomponent/ImageGetter';
 import VideoGetter from '../components/boardcomponent/VideoGetter';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import {ActivityIndicator} from 'react-native-paper';
 import MyText from '../components/common/MyText';
+import {Colors} from '../constants/colors';
+
 const windowHeight = Dimensions.get('window').height;
 
 const SearchScreen = () => {
   const tabBarHeight = useBottomTabBarHeight();
 
-  const navigation = useNavigation();
   const dispatch = useDispatch();
+  //로딩상태관리
+  const {isLoading} = useSelector(state => state.searchData);
   const isFocused = useIsFocused();
   //검색을 했는지 안했는지
   const [startSearch, setStartSearch] = useState(false);
@@ -117,18 +120,25 @@ const SearchScreen = () => {
             />
           </View>
         </View>
-        <View style={styles.contentPositioner}>
-          {searchData.length === 0 && startSearch && <SearchNone />}
-          {category === 'users' && searchData.length !== 0 && startSearch && (
-            <SearchNick searchData={searchData} />
-          )}
-          {category === 'image' && searchData.length !== 0 && startSearch && (
-            <ImageGetter searchData={searchData} />
-          )}
-          {category === 'video' && searchData.length !== 0 && startSearch && (
-            <VideoGetter searchData={searchData} />
-          )}
-        </View>
+        {isLoading ? (
+          <View style={styles.activityPositioner}>
+            <ActivityIndicator color={'white'} size={40} />
+            <MyText style={styles.activityText}>로딩중...</MyText>
+          </View>
+        ) : (
+          <View style={styles.contentPositioner}>
+            {searchData.length === 0 && startSearch && <SearchNone />}
+            {category === 'users' && searchData.length !== 0 && startSearch && (
+              <SearchNick searchData={searchData} />
+            )}
+            {category === 'image' && searchData.length !== 0 && startSearch && (
+              <ImageGetter searchData={searchData} />
+            )}
+            {category === 'video' && searchData.length !== 0 && startSearch && (
+              <VideoGetter searchData={searchData} />
+            )}
+          </View>
+        )}
       </View>
     </ImageBackground>
   );
@@ -239,6 +249,20 @@ const styles = StyleSheet.create({
     width: ' 100%',
     height: '100%',
     alignItems: 'center',
+  },
+  activityPositioner: {
+    paddingTop: '47%',
+    // height: '10%',
+    width: ' 100%',
+    height: '100%',
+    alignItems: 'center',
+  },
+  activityText: {
+    marginTop: 4,
+    textAlign: 'center',
+    backgroundColor: 'transparent',
+    fontSize: 20,
+    color: 'white',
   },
 });
 

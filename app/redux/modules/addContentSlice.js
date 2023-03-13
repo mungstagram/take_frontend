@@ -1,14 +1,13 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import http from '../api/http';
 import {Alert} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //초기상태
 const initialState = {
   contentList: [],
   isLoading: false,
   error: null,
+  isWrittenNavigator: '',
 };
 
 //게시물 작성
@@ -24,12 +23,12 @@ export const __postAddContentFormData = createAsyncThunk(
           },
         })
         .then(res => {
-          //console.log('res', res);
           Alert.alert('게시글 작성을 완료하였습니다.');
 
           return res;
         });
-      return thunkAPI.fulfillWithValue();
+      // console.log(data, '작성시받는값');
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       //console.log('요청실패');
       Alert.alert('게시글 작성에 실패하였습니다.');
@@ -91,13 +90,18 @@ export const __putLikes = createAsyncThunk(
 const addContentSlice = createSlice({
   name: 'addContent',
   initialState,
-  reducers: {},
+  reducers: {
+    resetNavigator: (state, action) => {
+      state.isWrittenNavigator = '';
+    },
+  },
   extraReducers: {
     [__postAddContentFormData.pending]: state => {
       state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
     },
     [__postAddContentFormData.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
+      state.isWrittenNavigator = action.payload.category;
       // 여기에 네비게이트 넣기! 유저디테일페이지로. /유저디테일.{nickName} 검색해보기
     },
     [__postAddContentFormData.rejected]: (state, action) => {
@@ -119,5 +123,5 @@ const addContentSlice = createSlice({
   },
 });
 
-export const {} = addContentSlice.actions;
+export const {resetNavigator} = addContentSlice.actions;
 export default addContentSlice.reducer;

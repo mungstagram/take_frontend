@@ -18,7 +18,7 @@ const KaKaoLogin = () => {
       dispatch(__postKaKaoLogin({accessToken: token.accessToken}));
     } catch (err) {
       console.log(err);
-      Alert.alert('현재 release apk 관련 이슈로 작동하지 않습니다.');
+      Alert.alert('카카오 로그인에 실패했습니다.');
     }
   };
 
