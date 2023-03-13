@@ -34,6 +34,7 @@ const initialState = {
   isLoading: false,
   error: null,
   nicknameChanged: false,
+  isAddingDog: false,
 };
 
 // Thunk 함수
@@ -179,6 +180,7 @@ export const profileSlice = createSlice({
       state.myProfile[0].user = action.payload;
       state.nicknameChanged = true;
       state.error = null;
+      state.isLoading = false;
     },
     [__editProfile.pending]: state => {
       state.isLoading = true;
@@ -190,6 +192,7 @@ export const profileSlice = createSlice({
     //강아지
     [__editDogProfile.fulfilled]: (state, action) => {
       state.profile[1].dogs = action.payload.dogs;
+      state.isLoading = false;
       state.error = null;
     },
     [__editDogProfile.pending]: state => {
@@ -200,17 +203,19 @@ export const profileSlice = createSlice({
       state.error = action.payload;
     },
     [__addDogProfile.fulfilled]: (state, action) => {
+      state.isAddingDog = false;
       state.profile[1].dogs.push(action.payload);
       state.error = null;
     },
     [__addDogProfile.pending]: state => {
-      state.isLoading = true;
+      state.isAddingDog = true;
     },
     [__addDogProfile.rejected]: (state, action) => {
-      state.isLoading = false;
+      state.isAddingDog = false;
       state.error = action.payload;
     },
     [__deleteDogProfile.fulfilled]: (state, action) => {
+      state.isLoading = false;
       const target = state.profile[1].dogs.findIndex(
         dog => dog.id === action.payload,
       );

@@ -288,13 +288,13 @@ const DogCard = ({dog, nickname, myNick}) => {
                     />
                     <Pressable
                       style={{marginLeft: 16}}
-                      onPress={unEditMyDoghandler}>
-                      <ScanDelete brightGray />
+                      onPress={onSendFormData}>
+                      <TaskPinkImg />
                     </Pressable>
                     <Pressable
                       style={{marginLeft: 16}}
-                      onPress={onSendFormData}>
-                      <TaskPinkImg />
+                      onPress={unEditMyDoghandler}>
+                      <ScanDelete brightGray />
                     </Pressable>
                   </View>
                 </View>
@@ -357,13 +357,13 @@ const DogCard = ({dog, nickname, myNick}) => {
                   <View style={{height: 12, width: '100%'}} />
                   {nickname === myNick && (
                     <View style={styles.addButtonAligner}>
-                      <Pressable onPress={onDeleteDogCardHandler}>
-                        <Delete gray />
+                      <Pressable onPress={editMyDoghandler}>
+                        <ServicesImg gray />
                       </Pressable>
                       <Pressable
                         style={{marginLeft: 16}}
-                        onPress={editMyDoghandler}>
-                        <ServicesImg gray />
+                        onPress={onDeleteDogCardHandler}>
+                        <Delete gray />
                       </Pressable>
                     </View>
                   )}

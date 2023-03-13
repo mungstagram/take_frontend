@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text, Image, Alert, Pressable} from 'react-native';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {ActivityIndicator} from 'react-native-paper';
 
 import Pets from '../svg/Pets';
 import AddCircle from '../svg/AddCircle';
@@ -10,8 +11,11 @@ import ProfileInput from './components/ProfileInput';
 import TaskPinkImg from '../svg/TaskPinkImg';
 import {__addDogProfile} from '../../redux/modules/profileSlice';
 import ScanDelete from '../svg/ScanDelete';
-
+import {Colors} from '../../constants/colors';
 const AddDogProfile = () => {
+  //추가중인 상태
+  const {isAddingDog} = useSelector(state => state.profile);
+
   //추가 버튼 상태
   const [addMode, setAddMode] = useState(false);
   const addMyDoghandler = () => {
@@ -229,14 +233,14 @@ const AddDogProfile = () => {
                   <View style={{height: 12, width: '100%'}} />
                   <View style={styles.addButtonAligner}>
                     <Pressable
-                      onPress={unAddMyDoghandler}
-                      style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
-                      <ScanDelete brightGray />
+                      style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}
+                      onPress={onSendFormData}>
+                      <TaskPinkImg />
                     </Pressable>
                     <Pressable
                       style={{marginLeft: 16}}
-                      onPress={onSendFormData}>
-                      <TaskPinkImg />
+                      onPress={unAddMyDoghandler}>
+                      <ScanDelete brightGray />
                     </Pressable>
                   </View>
                 </View>
@@ -282,13 +286,23 @@ const AddDogProfile = () => {
             </View>
           </>
         ) : (
-          <Pressable onPress={addMyDoghandler} style={styles.addDogCardText}>
-            <View style={{marginBottom: 12}}>
-              <AddCircle grayColor />
-            </View>
-            <Text style={styles.textStyle}>저희 집에</Text>
-            <Text style={styles.textStyle}>댕댕이를 추가할게요!</Text>
-          </Pressable>
+          <>
+            {isAddingDog ? (
+              <View style={styles.addDogCardText}>
+                <ActivityIndicator color={Colors.pointColorDark} size={40} />
+              </View>
+            ) : (
+              <Pressable
+                onPress={addMyDoghandler}
+                style={styles.addDogCardText}>
+                <View style={{marginBottom: 12}}>
+                  <AddCircle grayColor />
+                </View>
+                <Text style={styles.textStyle}>저희 집에</Text>
+                <Text style={styles.textStyle}>댕댕이를 추가할게요!</Text>
+              </Pressable>
+            )}
+          </>
         )}
       </View>
     </View>

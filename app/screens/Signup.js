@@ -23,6 +23,8 @@ import {
 } from '../redux/modules/loginSlice';
 import {Colors} from '../constants/colors';
 import MyText from '../components/common/MyText';
+import LoadingModal from '../components/common/LoadingModal';
+import {ActivityIndicator} from 'react-native-paper';
 const windowHeight = Dimensions.get('window').height;
 
 const Signup = () => {
@@ -48,6 +50,11 @@ const Signup = () => {
   const [nicknameInput, setNicknameInput] = useState('');
   const [passInput, setPassInput] = useState('');
   const [passCheckInput, setPassCheckInput] = useState('');
+
+  // 회원가입시 로딩처리
+  const {isLoading} = useSelector(state => state.login);
+  //중복확인시 로딩처리
+  const {isChecking} = useSelector(state => state.login);
 
   // 입력 조건 정규식 validation?
   const regEmail =
@@ -183,15 +190,22 @@ const Signup = () => {
               />
               <View style={styles.buttonResizer}>
                 <View style={dynamicStyles().buttonPositioner}>
-                  <Pressable
-                    style={({pressed}) =>
-                      dynamicStyles(pressed).buttonPositioner
-                    }
-                    onPress={() => onCheckUsabilityHandler('email', email)}>
-                    <MyText style={dynamicStyles().buttonText}>
-                      중복 확인
-                    </MyText>
-                  </Pressable>
+                  {isChecking ? (
+                    <ActivityIndicator
+                      color={Colors.mainColorBright}
+                      size={15}
+                    />
+                  ) : (
+                    <Pressable
+                      style={({pressed}) =>
+                        dynamicStyles(pressed).buttonPositioner
+                      }
+                      onPress={() => onCheckUsabilityHandler('email', email)}>
+                      <MyText style={dynamicStyles().buttonText}>
+                        중복 확인
+                      </MyText>
+                    </Pressable>
+                  )}
                 </View>
               </View>
             </View>
@@ -206,17 +220,24 @@ const Signup = () => {
               />
               <View style={styles.buttonResizer}>
                 <View style={dynamicStyles().buttonPositioner}>
-                  <Pressable
-                    style={({pressed}) =>
-                      dynamicStyles(pressed).buttonPositioner
-                    }
-                    onPress={() =>
-                      onCheckUsabilityHandler('nickname', nickname)
-                    }>
-                    <MyText style={dynamicStyles().buttonText}>
-                      중복 확인
-                    </MyText>
-                  </Pressable>
+                  {isChecking ? (
+                    <ActivityIndicator
+                      color={Colors.mainColorBright}
+                      size={15}
+                    />
+                  ) : (
+                    <Pressable
+                      style={({pressed}) =>
+                        dynamicStyles(pressed).buttonPositioner
+                      }
+                      onPress={() =>
+                        onCheckUsabilityHandler('nickname', nickname)
+                      }>
+                      <MyText style={dynamicStyles().buttonText}>
+                        중복 확인
+                      </MyText>
+                    </Pressable>
+                  )}
                 </View>
               </View>
             </View>
@@ -249,6 +270,7 @@ const Signup = () => {
           <KaKaoLogin />
         </View>
       </View>
+      <LoadingModal modalHandler={isLoading} />
     </KeyboardAwareScrollView>
   );
 };

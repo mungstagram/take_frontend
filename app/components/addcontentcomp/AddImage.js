@@ -39,7 +39,6 @@ const AddImage = () => {
   const tabBarHeight = useBottomTabBarHeight();
   // 제목 인풋상태
   const [titleText, setTitleText] = useState('');
-
   //제목 인풋 핸들러
   const titleTextHandler = event => {
     setTitleText(event.nativeEvent.text);
@@ -142,7 +141,6 @@ const AddImage = () => {
       </ScrollView>
     );
   };
-  const navigation = useNavigation();
   const dispatch = useDispatch();
 
   // 폼데이터 선언 및 전송
@@ -170,8 +168,6 @@ const AddImage = () => {
       setTitleText('');
       setContentText('');
       setImages([]);
-
-      navigation.navigate('ImageBoard');
     }
   };
 

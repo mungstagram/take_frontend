@@ -36,6 +36,8 @@ function Home({navigation}) {
   // 몇번쨰 강아지인지
   const [dogIndex, setDogIndex] = useState(0);
   // profile[0] 유저  , profile[1] 강아지
+  //
+  const {isLoading} = useSelector(state => state.profile);
 
   // 다음 강아지 혹은 이전 강아지가 있을 때, 다음 혹은 이전 강아지의 정보를 받아오는 함수
   const dogIndexHandler = value => {
@@ -59,7 +61,7 @@ function Home({navigation}) {
 
   //내 메시지함 열기
   const openDirectMessageHandler = () => {
-    navigation.push('MessageBox', {token: myToken});
+    !isLoading && myToken && navigation.push('MessageBox', {token: myToken});
   };
 
   //내 닉네임을 받아오는 함수
@@ -83,11 +85,15 @@ function Home({navigation}) {
       <View style={styles.homeProfile}>
         <View style={styles.goToLink}>
           <Pressable
-            onPress={() => navigation.push('Profile', {nickname: myNick})}>
+            onPress={() =>
+              !isLoading && navigation.push('Profile', {nickname: myNick})
+            }>
             <MyText style={styles.homeFontStyle}>프로필</MyText>
           </Pressable>
           <Pressable
-            onPress={() => navigation.push('UserDetail', {nickname: myNick})}>
+            onPress={() =>
+              !isLoading && navigation.push('UserDetail', {nickname: myNick})
+            }>
             <MyText style={styles.homeFontStyle}>게시글</MyText>
           </Pressable>
           <Pressable onPress={openDirectMessageHandler}>
