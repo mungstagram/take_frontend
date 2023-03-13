@@ -61,8 +61,14 @@ const UserDetailProf = ({nickname}) => {
     dispatch(__getRoomId({receiverNickname: nickname}));
   }, []);
 
+  //프로필페이지 이동
   const navigateToProfileHandler = () => {
-    !isLoading && navigation.push('Profile', {nickname});
+    // !isLoading && navigation.push('Profile', {nickname});
+    !isLoading &&
+      navigation.navigate('Home', {
+        screen: 'Profile',
+        params: {nickname},
+      });
   };
 
   return (
