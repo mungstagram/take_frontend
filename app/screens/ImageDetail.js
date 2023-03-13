@@ -12,12 +12,10 @@ import {useIsFocused} from '@react-navigation/native';
 
 import {Colors, BasicColors} from '../constants/colors';
 import CommentInput from '../components/detailcomp/CommentInput';
-import CommentList from '../components/detailcomp/CommentList';
 import {__getPostDetailData} from '../redux/modules/commetsSlice';
 import ImageDetailTop from '../components/detailcomp/ImageDetailTop';
 import GoBackButtonWhite from '../components/common/GoBackButtonWhite';
 import HeaderTitle from '../components/common/HeaderTitle';
-import MyText from '../components/common/MyText';
 import AddModal from '../components/detailcomp/AddModal';
 
 const ImageDetail = ({route}) => {

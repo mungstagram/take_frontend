@@ -32,10 +32,6 @@ const ImageBoard = () => {
     setDataSortSelector(selector);
   };
 
-  const onClickBtn = () => {
-    navigation.navigate;
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.headerBox}>
@@ -58,7 +54,7 @@ const ImageBoard = () => {
         </View>
       </View>
       <View style={{height: headHeight - tabBarHeight, top: '10%'}}>
-        <View style={styles.preCards} onLongPress={onClickBtn}>
+        <View style={styles.preCards}>
           <ImageGetter order={selectDispatchParameter[dataSortSelector]} />
         </View>
       </View>

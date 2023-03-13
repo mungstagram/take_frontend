@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {
   View,
-  Text,
   Dimensions,
   StyleSheet,
   SafeAreaView,
@@ -9,12 +8,9 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {Colors, BasicColors} from '../../constants/colors';
 import VideoCard from './VideoCard';
 import {__getPostData} from '../../redux/modules/addContentSlice';
-import {startDetecting} from 'react-native/Libraries/Utilities/PixelRatio';
 import {useIsFocused} from '@react-navigation/native';
-import MyText from '../common/MyText';
 
 const VideoGetter = ({order, nickname, searchData}) => {
   const videoContentList = useSelector(state => state.addContent.contentList);

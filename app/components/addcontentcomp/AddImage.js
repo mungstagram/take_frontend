@@ -39,10 +39,9 @@ const AddImage = () => {
   const tabBarHeight = useBottomTabBarHeight();
   // 제목 인풋상태
   const [titleText, setTitleText] = useState('');
-  // console.log(titleText);
+
   //제목 인풋 핸들러
   const titleTextHandler = event => {
-    //console.log('제목', event.nativeEvent.text);
     setTitleText(event.nativeEvent.text);
   };
   // 내용 인풋상태
@@ -50,7 +49,6 @@ const AddImage = () => {
 
   // 내용 인풋 핸들러
   const contentTextHandler = event => {
-    //console.log('내용', event.nativeEvent.text);
     setContentText(event.nativeEvent.text);
   };
   //사진넣기버튼의 사용가능여부조절
@@ -104,7 +102,7 @@ const AddImage = () => {
       // console.log(e.code, e.message);
     }
   };
-  // console.log('Add images', images);
+
   // 권한 거절 후 다시 시도할때
   const openAgainPicker = () => {
     setOpenCamera(true);
@@ -172,7 +170,7 @@ const AddImage = () => {
       setTitleText('');
       setContentText('');
       setImages([]);
-      //navigation.navigate('userDetail');
+
       navigation.navigate('ImageBoard');
     }
   };

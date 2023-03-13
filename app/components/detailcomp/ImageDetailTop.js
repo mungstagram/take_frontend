@@ -27,7 +27,6 @@ import ServicesImg from '../svg/ServicesImg';
 import CommentList from './CommentList';
 import MyText from '../common/MyText';
 import SlideImg from './SlideImg';
-import AddModal from './AddModal';
 
 const ImageDetailTop = ({detail}) => {
   const imageList = detail.contentUrl;
@@ -38,9 +37,8 @@ const ImageDetailTop = ({detail}) => {
   const loginNick = useSelector(
     state => state.profile.myProfile[0].user.nickname,
   );
-  //console.log('loginNick', loginNick);
   const userNick = detail.nickname;
-  //console.log('userNick', userNick);
+
   //게시물 편집 버튼
   const onEditHandler = () => {
     navigation.navigate('ModifyImage', {postId: detail.postId});
@@ -60,9 +58,9 @@ const ImageDetailTop = ({detail}) => {
         {
           text: '네',
           onPress: () => {
-            Alert.alert('귀여운 댕댕이사진이 지워졌습니다😭'),
-              dispatch(__deletePostDetailData({postId: detail.postId})),
-              navigation.navigate('ImageBoard', {postId: detail.postId});
+            dispatch(__deletePostDetailData({postId: detail.postId})).then(
+              navigation.navigate('ImageBoard', {postId: detail.postId}),
+            );
           },
         },
       ],
@@ -113,7 +111,6 @@ const ImageDetailTop = ({detail}) => {
             paginationStyleItem={styles.dot}
           />
         </View>
-
         <CommentList />
       </View>
     </SafeAreaView>
@@ -181,14 +178,12 @@ const styles = StyleSheet.create({
   },
   detailBottom: {
     backgroundColor: BasicColors.whiteColor,
-    //height: videoCardHeight * 0.3,
     padding: '2%',
   },
   preContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    //height: '60%',
   },
   titleText: {
     fontSize: 20,

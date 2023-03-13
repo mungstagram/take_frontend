@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     width: videoCardWidth * 0.475,
     height: 36,
     borderRadius: 4,
-    backgroundColor: Colors.userDataColor,
+    backgroundColor: Colors.mainColorDark,
     alignItems: 'center',
     justifyContent: 'center',
   },

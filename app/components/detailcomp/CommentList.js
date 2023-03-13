@@ -12,16 +12,12 @@ import FastImage from 'react-native-fast-image';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 
-import {Colors, BasicColors} from '../../constants/colors';
 import CommentImg from '../svg/CommentImg';
-import ServicesImg from '../svg/ServicesImg';
-import Delete from '../svg/Delete';
 import {__deleteComment, __putComment} from '../../redux/modules/commetsSlice';
 import {__getPostDetailData} from '../../redux/modules/commetsSlice';
 import {__putLikes} from '../../redux/modules/addContentSlice';
 import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
-import TaskImg from '../svg/TaskImg';
 import MyText from '../common/MyText';
 
 import Comments from './Comments';
@@ -31,9 +27,9 @@ const CommentList = ({userNick}) => {
   const isFocused = useIsFocused();
   //댓글 리스트
   const commentList = useSelector(state => state.comments.comments);
-  //console.log('list', commentList);
+
   const detail = useSelector(state => state.comments.detail);
-  //console.log('de', detail);
+
   //좋아요 상태
   const [isLiked, setIsLiked] = useState(detail.isLiked);
   const [likedCount, setLikedCount] = useState(detail.likesCount);
@@ -104,7 +100,6 @@ const CommentList = ({userNick}) => {
     );
   };
 
-  //console.log(commentList, '커멘트리스트 ');
   //FlatList Footer
   const FooterContainer = () => {
     return (
@@ -152,11 +147,15 @@ const CommentList = ({userNick}) => {
             <MyText numberOfLines={line} ellipsizeMode="tail">
               {detail.content}
             </MyText>
-            <Pressable
-              onPress={prev => handleLine(!prev[0], prev[1])}
-              style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
-              <MyText style={styles.addText}>더보기</MyText>
-            </Pressable>
+            {detail.content.length > 69 ? (
+              <Pressable
+                onPress={prev => handleLine(!prev[0], prev[1])}
+                style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
+                <MyText style={styles.addText}>더보기</MyText>
+              </Pressable>
+            ) : (
+              <></>
+            )}
           </View>
           <View style={styles.container}>
             <View style={styles.commentCountBox}>
@@ -222,15 +221,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     flexDirection: 'row',
     alignItems: 'flex-end',
+    maxWidth: videoCardWidth * 0.92,
   },
   addText: {
-    marginLeft: 10,
+    paddingHorizontal: 10,
+    backgroundColor: 'white',
   },
 
   // 댓글 리스트
-  commentsContainer: {
-    //backgroundColor: 'red',
-  },
+  commentsContainer: {},
   commentCountBox: {
     flexDirection: 'row',
     alignItems: 'center',

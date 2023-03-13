@@ -9,8 +9,6 @@ import {
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useRoute} from '@react-navigation/native';
 import {useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 
@@ -27,7 +25,6 @@ const CommentInput = ({detail}) => {
   const isFocused = useIsFocused();
 
   const userImg = useSelector(state => state.profile.myProfile[0].user);
-  //console.log('mp', userImg);
   // 댓글 인풋창 상태
   const [inputText, setInputText] = useState('');
   // 댓글 인풋 set
@@ -89,9 +86,6 @@ export default CommentInput;
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
-const videoCardWidth = windowWidth * 0.9;
-//const videoCardHeight = videoCardWidth;
 
 const styles = StyleSheet.create({
   container: {

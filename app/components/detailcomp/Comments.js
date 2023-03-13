@@ -18,10 +18,8 @@ import {__deleteComment} from '../../redux/modules/commetsSlice';
 import {useIsFocused} from '@react-navigation/native';
 
 import {Colors, BasicColors} from '../../constants/colors';
-import CommentImg from '../svg/CommentImg';
 import ServicesImg from '../svg/ServicesImg';
 import Delete from '../svg/Delete';
-import TaskImg from '../svg/TaskImg';
 import TaskImgOn from '../svg/TaskImgOn';
 import ScanDelete from '../svg/ScanDelete';
 
@@ -92,9 +90,7 @@ const Comments = ({item, detail}) => {
   const loginNick = useSelector(
     state => state.profile.myProfile[0].user.nickname,
   );
-  const userNick = detail.nickname;
   const commentNick = itemData.nickname;
-  //console.log('commentNick', commentNick);
 
   useEffect(() => {
     if (isFocused) {

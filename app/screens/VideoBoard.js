@@ -122,6 +122,5 @@ const styles = StyleSheet.create({
     height: '88.5%',
     justifyContent: 'center',
     alignItems: 'center',
-    //backgroundColor: 'red',
   },
 });

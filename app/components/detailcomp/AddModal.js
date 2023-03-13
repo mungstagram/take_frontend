@@ -1,18 +1,7 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Modal,
-  Image,
-  Pressable,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet, View, Modal, Pressable, Dimensions} from 'react-native';
 import React, {useState} from 'react';
 
 import FastImage from 'react-native-fast-image';
-import MyText from '../common/MyText';
-import {Colors, BasicColors} from '../../constants/colors';
 import {useDispatch} from 'react-redux';
 import {enterModal} from '../../redux/modules/commetsSlice';
 
