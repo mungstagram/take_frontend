@@ -15,6 +15,7 @@ import CommentImg from '../svg/CommentImg';
 import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
 import MyText from '../common/MyText';
+import {BasicColors} from '../../constants/colors';
 
 const VideoCard = ({videoContent}) => {
   const navigation = useNavigation();
@@ -87,7 +88,6 @@ const VideoCard = ({videoContent}) => {
 export default VideoCard;
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const videoCardWidth = windowWidth * 0.92;
 const videoCardHeight = videoCardWidth * 0.8;
