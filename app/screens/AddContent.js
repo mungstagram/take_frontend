@@ -25,7 +25,7 @@ const AddContent = () => {
   const dispatch = useDispatch();
   const {isWrittenNavigator} = useSelector(state => state.addContent);
   // 로딩중
-  const {isLoading} = useSelector(state => state.addContent);
+  const {isAdding} = useSelector(state => state.addContent);
   //작성완료시 페이지 이동
   useEffect(() => {
     if (isWrittenNavigator === 'image') {
@@ -63,7 +63,7 @@ const AddContent = () => {
         <Tab.Screen name="사진" component={AddImage} />
         <Tab.Screen name="동영상" component={AddVideo} />
       </Tab.Navigator>
-      <LoadingModal modalHandler={isLoading} writting />
+      <LoadingModal modalHandler={isAdding} writting />
     </>
   );
 };
