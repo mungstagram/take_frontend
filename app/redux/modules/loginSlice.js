@@ -12,6 +12,7 @@ const initialState = {
   isEmailChecked: false, //중복확인 변수들
   isNickNameChecked: false,
   isSuccessedSignup: false,
+  isChecking: false,
 };
 
 // 로그인 POST요청
@@ -94,7 +95,11 @@ export const __checkUser = createAsyncThunk(
     try {
       const {data} = await http.post('/users/signup/check', payload);
       const keyOfPayload = Object.keys(payload);
-      Alert.alert('사용 가능합니다');
+      Alert.alert(
+        keyOfPayload[0] === 'email'
+          ? '사용가능한 이메일입니다.'
+          : '사용가능한 닉네임입니다.',
+      );
 
       return thunkAPI.fulfillWithValue(keyOfPayload[0]);
     } catch (error) {
@@ -211,17 +216,17 @@ const loginSlice = createSlice({
     },
     //아이디와 닉네임부분
     [__checkUser.pending]: state => {
-      state.isLoading = true;
+      state.isChecking = true;
     },
     [__checkUser.fulfilled]: (state, action) => {
-      state.isLoading = false;
+      state.isChecking = false;
       // email 중복확인시 이메일 체크했다, 아니면 닉네임 체크했다
       action.payload === 'email'
         ? (state.isEmailChecked = true)
         : (state.isNickNameChecked = true);
     },
     [__checkUser.rejected]: (state, action) => {
-      state.isLoading = false;
+      state.isChecking = false;
       // state.idNotChecked = true;
       state.error = action.payload;
     },

@@ -5,8 +5,7 @@ import {__getPostData} from '../../redux/modules/addContentSlice';
 import {useIsFocused} from '@react-navigation/native';
 
 import ImageCard from './ImageCard';
-import MyText from '../common/MyText';
-
+import {ActivityIndicator} from 'react-native-paper';
 const ImageGetter = ({order, nickname, searchData}) => {
   // 검색에서 값을 받는 경우 searchData 가 true
   // 요청할 데이터 정렬 순서 , 카테고리 프룹스로 받기
@@ -23,36 +22,49 @@ const ImageGetter = ({order, nickname, searchData}) => {
         : dispatch(__getPostData({category: 'image', order}));
     }
   }, [order, isFocused]);
+  //로딩여부
+  const {isLoading} = useSelector(state => state.addContent);
 
   return (
     <View style={styles.getterWrapper}>
-      <SafeAreaView>
-        {searchData ? (
-          <FlatList
-            data={searchData}
-            renderItem={({item}) => (
-              <View style={styles.cardColor}>
-                <ImageCard imageContent={item} title={item.title} />
-              </View>
-            )}
-            keyExtractor={item => item.postId}
-            numColumns={2}
-            horizontal={false}
-          />
-        ) : (
-          <FlatList
-            data={imageContentList}
-            renderItem={({item}) => (
-              <View style={styles.cardColor}>
-                <ImageCard imageContent={item} title={item.title} />
-              </View>
-            )}
-            keyExtractor={item => item.postId}
-            numColumns={2}
-            horizontal={false}
-          />
-        )}
-      </SafeAreaView>
+      {isLoading ? (
+        <View
+          style={{
+            height: '99%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <ActivityIndicator color={'gray'} size={40} />
+        </View>
+      ) : (
+        <SafeAreaView>
+          {searchData ? (
+            <FlatList
+              data={searchData}
+              renderItem={({item}) => (
+                <View style={styles.cardColor}>
+                  <ImageCard imageContent={item} title={item.title} />
+                </View>
+              )}
+              keyExtractor={item => item.postId}
+              numColumns={2}
+              horizontal={false}
+            />
+          ) : (
+            <FlatList
+              data={imageContentList}
+              renderItem={({item}) => (
+                <View style={styles.cardColor}>
+                  <ImageCard imageContent={item} title={item.title} />
+                </View>
+              )}
+              keyExtractor={item => item.postId}
+              numColumns={2}
+              horizontal={false}
+            />
+          )}
+        </SafeAreaView>
+      )}
     </View>
   );
 };

@@ -9,12 +9,10 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {Colors, BasicColors} from '../../constants/colors';
 import VideoCard from './VideoCard';
 import {__getPostData} from '../../redux/modules/addContentSlice';
-import {startDetecting} from 'react-native/Libraries/Utilities/PixelRatio';
 import {useIsFocused} from '@react-navigation/native';
-import MyText from '../common/MyText';
+import {ActivityIndicator} from 'react-native-paper';
 
 const VideoGetter = ({order, nickname, searchData}) => {
   const videoContentList = useSelector(state => state.addContent.contentList);
@@ -30,33 +28,47 @@ const VideoGetter = ({order, nickname, searchData}) => {
     }
   }, [order, isFocused]);
 
+  //로딩여부
+  const {isLoading} = useSelector(state => state.addContent);
+
   return (
     <View style={styles.getterWrapper}>
-      <SafeAreaView>
-        {searchData ? (
-          <FlatList
-            data={searchData}
-            renderItem={({item}) => (
-              <View>
-                <VideoCard videoContent={item} title={item.title} />
-              </View>
-            )}
-            keyExtractor={item => item.postId}
-            horizontal={false}
-          />
-        ) : (
-          <FlatList
-            data={videoContentList}
-            renderItem={({item}) => (
-              <View>
-                <VideoCard videoContent={item} title={item.title} />
-              </View>
-            )}
-            keyExtractor={item => item.postId}
-            horizontal={false}
-          />
-        )}
-      </SafeAreaView>
+      {isLoading ? (
+        <View
+          style={{
+            height: '99%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <ActivityIndicator color={'gray'} size={40} />
+        </View>
+      ) : (
+        <SafeAreaView>
+          {searchData ? (
+            <FlatList
+              data={searchData}
+              renderItem={({item}) => (
+                <View>
+                  <VideoCard videoContent={item} title={item.title} />
+                </View>
+              )}
+              keyExtractor={item => item.postId}
+              horizontal={false}
+            />
+          ) : (
+            <FlatList
+              data={videoContentList}
+              renderItem={({item}) => (
+                <View>
+                  <VideoCard videoContent={item} title={item.title} />
+                </View>
+              )}
+              keyExtractor={item => item.postId}
+              horizontal={false}
+            />
+          )}
+        </SafeAreaView>
+      )}
     </View>
   );
 };

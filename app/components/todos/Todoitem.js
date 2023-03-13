@@ -23,6 +23,7 @@ import ServicesImg from '../svg/ServicesImg';
 import Delete from '../svg/Delete';
 import CheckBox from '../svg/CheckBox';
 import MyText from '../common/MyText';
+import ScanDelete from '../svg/ScanDelete';
 
 const Todoitem = ({id, text, done}) => {
   const dispatch = useDispatch();
@@ -119,10 +120,6 @@ const Todoitem = ({id, text, done}) => {
         </MyText>
       )}
 
-      <TouchableOpacity style={styles.utilBtn} onPress={onPressTodoRemove}>
-        <Delete />
-      </TouchableOpacity>
-
       {isEdit ? (
         <TouchableOpacity
           style={styles.utilBtn}
@@ -136,6 +133,15 @@ const Todoitem = ({id, text, done}) => {
       ) : (
         <TouchableOpacity style={styles.utilBtn} onPress={onPressIsEdit}>
           <ServicesImg />
+        </TouchableOpacity>
+      )}
+      {isEdit ? (
+        <TouchableOpacity style={styles.utilBtn} onPress={onPressTodoRemove}>
+          <ScanDelete brightGray />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.utilBtn} onPress={onPressTodoRemove}>
+          <Delete />
         </TouchableOpacity>
       )}
       <View style={styles.removePlaceholder} />

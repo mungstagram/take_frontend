@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,17 +8,34 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {useSelector, useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 import {Colors, BasicColors} from '../constants/colors';
 import AddImage from '../components/addcontentcomp/AddImage';
 import AddVideo from '../components/addcontentcomp/AddVideo';
 import GoBackButton from '../components/common/GoBackButton';
 import HeaderTitle from '../components/common/HeaderTitle';
-import MyText from '../components/common/MyText';
+import {resetNavigator} from '../redux/modules/addContentSlice';
+import LoadingModal from '../components/common/LoadingModal';
 
 const AddContent = () => {
   const Tab = createMaterialTopTabNavigator();
-
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const {isWrittenNavigator} = useSelector(state => state.addContent);
+  // 로딩중
+  const {isAdding} = useSelector(state => state.addContent);
+  //작성완료시 페이지 이동
+  useEffect(() => {
+    if (isWrittenNavigator === 'image') {
+      navigation.navigate('Photo', {screen: 'ImageBoard'});
+      dispatch(resetNavigator());
+    } else if (isWrittenNavigator === 'video') {
+      navigation.navigate('Video', {screen: 'VideoBoard'});
+      dispatch(resetNavigator());
+    }
+  }, [isWrittenNavigator]);
   return (
     <>
       <View style={styles.container}>
@@ -46,6 +63,7 @@ const AddContent = () => {
         <Tab.Screen name="사진" component={AddImage} />
         <Tab.Screen name="동영상" component={AddVideo} />
       </Tab.Navigator>
+      <LoadingModal modalHandler={isAdding} writting />
     </>
   );
 };

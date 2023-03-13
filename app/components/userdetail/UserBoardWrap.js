@@ -6,8 +6,8 @@ import SelectBox from '../common/SelectBox';
 import ImageGetter from '../boardcomponent/ImageGetter';
 import VideoGetter from '../boardcomponent/VideoGetter';
 import MyText from '../common/MyText';
+
 const UserBoardWrap = ({nickname}) => {
-  console.log(nickname, '유저보드랩마운트되면 닉네임임');
   // 사진 동영상 중 어떤 페이진지 선택하는 탭
   const [mainSelector, setMainSelector] = useState(true);
   // 사진 선택
@@ -65,6 +65,7 @@ const UserBoardWrap = ({nickname}) => {
             selectParameter={selectParameter}
           />
         </View>
+
         <View style={styles.dataGetterWrapper}>
           {mainSelector ? (
             <ImageGetter
@@ -138,7 +139,6 @@ const dynamicStyles = value =>
       zIndex: value ? 1 : 3,
       elevation: value ? 10 : 0,
     },
-
     tabTextLeft: {
       textAlign: 'center',
       marginBottom: '5%',
@@ -148,7 +148,7 @@ const dynamicStyles = value =>
     tabTextRight: {
       textAlign: 'center',
       marginBottom: '5%',
-      color: value ? 'black' : 'blue',
+      color: value ? 'black' : Colors.mainColorBright,
       fontWeight: value ? 'normal' : 'bold',
     },
   });

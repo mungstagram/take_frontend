@@ -33,9 +33,9 @@ const Profile = ({route}) => {
   const isFocused = useIsFocused();
   // 프로필 정보
   const {profile} = useSelector(state => state.profile);
+
   //내 닉네임
   const myNick = useSelector(state => state.profile.myProfile[0].user.nickname);
-  // const {paramNickname} = route.params.nickname;
   const [nickname, setNickname] = useState(route.params.nickname);
   const onDeleteUsersData = () => {
     Alert.alert(
