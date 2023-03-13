@@ -36,10 +36,9 @@ const ModifyImage = ({route}) => {
   const fileData = useSelector(state => state.comments.detail);
   // 제목 인풋상태
   const [titleText, setTitleText] = useState('');
-  // console.log(titleText);
+
   //제목 인풋 핸들러
   const titleTextHandler = event => {
-    //console.log('제목', event.nativeEvent.text);
     setTitleText(event.nativeEvent.text);
   };
   // 내용 인풋상태
@@ -47,7 +46,6 @@ const ModifyImage = ({route}) => {
 
   // 내용 인풋 핸들러
   const contentTextHandler = event => {
-    //console.log('내용', event.nativeEvent.text);
     setContentText(event.nativeEvent.text);
   };
   const navigation = useNavigation();
@@ -236,7 +234,7 @@ const styles = StyleSheet.create({
   title: {
     marginHorizontal: imageCardWidth * 0.05,
     fontSize: 28,
-    color: Colors.userDataColor,
+    color: Colors.mainColorDark,
     fontFamily: 'SBAggro-M',
     top: 3,
   },

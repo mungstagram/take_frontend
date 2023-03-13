@@ -7,9 +7,7 @@ import {
   SafeAreaView,
   Pressable,
   Alert,
-  ScrollView,
 } from 'react-native';
-import {useIsFocused} from '@react-navigation/native';
 import {useNavigation} from '@react-navigation/native';
 
 import FastImage from 'react-native-fast-image';
@@ -32,9 +30,7 @@ const VideoDetailTop = ({detail, videoUrl}) => {
   const loginNick = useSelector(
     state => state.profile.myProfile[0].user.nickname,
   );
-  //console.log('loginNick', loginNick);
   const userNick = detail.nickname;
-  //console.log('userNick', userNick);
   //게시물 편집 버튼
   const onEditHandler = () => {
     navigation.navigate('ModifyVideo', {postId: detail.postId});

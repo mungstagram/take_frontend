@@ -8,8 +8,6 @@ import {
   SafeAreaView,
   Pressable,
 } from 'react-native';
-import {Colors, BasicColors} from '../../constants/colors';
-import Video from 'react-native-video';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 
@@ -29,7 +27,9 @@ const VideoCard = ({videoContent}) => {
     <View style={styles.wrapper}>
       <SafeAreaView>
         <View style={styles.container}>
-          <Pressable onPress={onDetailHandler}>
+          <Pressable
+            onPress={onDetailHandler}
+            android_ripple={{color: 'white'}}>
             <View style={styles.contentTop}>
               <FastImage
                 style={styles.profileimg}
@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     justifyContent: 'center',
     marginBottom: videoCardHeight * 0.16,
-    shadowColor: BasicColors.blackColor,
   },
   contentTop: {
     backgroundColor: BasicColors.whiteColor,

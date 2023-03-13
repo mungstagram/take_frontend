@@ -16,7 +16,7 @@ const ImageCard = ({imageContent}) => {
   };
   return (
     <View style={styles.cardWrapper}>
-      <Pressable onPress={onDetailHandler}>
+      <Pressable onPress={onDetailHandler} android_ripple={{color: 'gray'}}>
         <View style={styles.profileWriterWrapper}>
           <FastImage
             style={styles.profileImageWrapper}
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   imageWrapper: {
     width: '100%',
     height: 200,
-    backgroundColor: 'gray',
+    backgroundColor: 'black',
   },
   profileImageWrapper: {
     width: 24,

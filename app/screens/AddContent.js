@@ -54,7 +54,7 @@ const AddContent = () => {
         screenOptions={{
           tabBarIndicatorStyle: {
             borderBottomWidth: 2,
-            borderColor: '#C6C09C',
+            borderColor: Colors.mainColorDark,
           },
           tabBarLabelStyle: {fontSize: 12},
           tabBarItemStyle: {width: videoCardWidth * 0.34},
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   title: {
     marginHorizontal: videoCardWidth * 0.05,
     fontSize: 28,
-    color: Colors.userDataColor,
+    color: Colors.mainColorDark,
     fontFamily: 'SBAggro-M',
     top: 3,
   },
