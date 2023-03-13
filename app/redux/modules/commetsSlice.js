@@ -5,6 +5,7 @@ import {Alert} from 'react-native';
 const initialState = {
   comments: [],
   detail: {contentUrl: ['']},
+  modalImg: {},
   isLoading: false,
   error: null,
 };
@@ -22,9 +23,6 @@ export const __postComment = createAsyncThunk(
         })
 
         .then(res => {
-          //console.log('요청성공');
-          Alert.alert('댓글성공');
-
           return res;
         });
       //console.log('post_data', data);
@@ -107,7 +105,12 @@ export const __deleteComment = createAsyncThunk(
 const commetsSlice = createSlice({
   name: 'comments',
   initialState,
-  reducers: {},
+  reducers: {
+    //모달 url 관리
+    enterModal: (state, action) => {
+      state.modalImg = action.payload; //모달상태, 이미지관리
+    },
+  },
   extraReducers: {
     [__getPostDetailData.pending]: (state, action) => {
       state.isLoading = true;
@@ -178,6 +181,6 @@ const commetsSlice = createSlice({
   },
 });
 
-export const {} = commetsSlice.actions;
+export const {enterModal} = commetsSlice.actions;
 
 export default commetsSlice.reducer;

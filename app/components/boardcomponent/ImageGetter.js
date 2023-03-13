@@ -15,7 +15,6 @@ const ImageGetter = ({order, nickname, searchData}) => {
 
   // 마운트 될 때, 데이터의 정렬 순서 카테고리가 바뀔때 , 요청하기 (기본 요청은 최신순이 되도록 props받기)
   useEffect(() => {
-    // console.log('리랜더링되나?', imageContentList);
     if (isFocused && !searchData) {
       nickname
         ? dispatch(__getPostData({category: 'image', order, nickname}))
@@ -78,7 +77,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: '1.6%',
     bottom: 0,
-    // backgroundColor: 'green', //TODO : 색 원래대로
   },
   textStyle: {
     fontSize: 16,

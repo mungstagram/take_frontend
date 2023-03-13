@@ -10,7 +10,7 @@ import {
   Image,
   Pressable,
   Alert,
-  TouchableOpacity,
+  Modal,
 } from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
@@ -26,6 +26,7 @@ import Delete from '../svg/Delete';
 import ServicesImg from '../svg/ServicesImg';
 import CommentList from './CommentList';
 import MyText from '../common/MyText';
+import SlideImg from './SlideImg';
 
 const ImageDetailTop = ({detail}) => {
   const imageList = detail.contentUrl;
@@ -36,16 +37,13 @@ const ImageDetailTop = ({detail}) => {
   const loginNick = useSelector(
     state => state.profile.myProfile[0].user.nickname,
   );
-  //console.log('loginNick', loginNick);
   const userNick = detail.nickname;
-  //console.log('userNick', userNick);
+
   //게시물 편집 버튼
   const onEditHandler = () => {
     navigation.navigate('ModifyImage', {postId: detail.postId});
   };
-  const onZoomIn = () => {
-    console.log('하이');
-  };
+
   //게시물 삭제 버튼
   const onDeleteHandler = () => {
     Alert.alert(
@@ -60,9 +58,9 @@ const ImageDetailTop = ({detail}) => {
         {
           text: '네',
           onPress: () => {
-            Alert.alert('귀여운 댕댕이사진이 지워졌습니다😭'),
-              dispatch(__deletePostDetailData({postId: detail.postId})),
-              navigation.navigate('ImageBoard', {postId: detail.postId});
+            dispatch(__deletePostDetailData({postId: detail.postId})).then(
+              navigation.navigate('ImageBoard', {postId: detail.postId}),
+            );
           },
         },
       ],
@@ -71,27 +69,7 @@ const ImageDetailTop = ({detail}) => {
 
   //사진 미리보기
   const renderItem = ({item}) => {
-    return (
-      <ScrollView style={styles.imageView}>
-        <Image
-          source={{
-            uri: item,
-          }}
-          style={styles.imageScreen}
-          resizeMode="contain"
-        />
-        <Pressable
-          onPress={() => onZoomIn(item)}
-          activeOpacity={0.9}
-          style={styles.zoomBtnBox}>
-          <Image
-            source={require('../../assets/zoomIn.png')}
-            resizeMode={'cover'}
-            style={styles.zoomBtn}
-          />
-        </Pressable>
-      </ScrollView>
-    );
+    return <SlideImg item={item} />;
   };
 
   return (
@@ -123,7 +101,6 @@ const ImageDetailTop = ({detail}) => {
             <View style={styles.contentControl}></View>
           )}
         </View>
-
         <View style={styles.scrollBox}>
           <SwiperFlatList
             index={0}
@@ -134,7 +111,6 @@ const ImageDetailTop = ({detail}) => {
             paginationStyleItem={styles.dot}
           />
         </View>
-
         <CommentList />
       </View>
     </SafeAreaView>
@@ -146,12 +122,12 @@ export default ImageDetailTop;
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const videoCardWidth = windowWidth;
-const videoCardHeight = videoCardWidth * 0.8;
+const imageCardWidth = windowWidth;
+const imageCardHeight = imageCardWidth * 0.8;
 
 const styles = StyleSheet.create({
   container: {
-    width: videoCardWidth,
+    width: imageCardWidth,
     height: windowHeight,
   },
   detailTop: {
@@ -195,39 +171,19 @@ const styles = StyleSheet.create({
     height: 24,
     marginHorizontal: '6%',
   },
-  imageView: {
-    flexDirection: 'column',
-    flexWrap: 'nowrap',
-    position: 'relative',
-  },
+
   scrollBox: {
-    width: videoCardWidth,
-    height: videoCardHeight * 0.703,
-  },
-  imageScreen: {
-    width: videoCardWidth,
-    height: videoCardHeight * 0.703,
-    backgroundColor: BasicColors.blackColor,
-  },
-  zoomBtnBox: {
-    position: 'absolute',
-    right: '4%',
-    top: '4%',
-  },
-  zoomBtn: {
-    height: 32,
-    width: 32,
+    width: imageCardWidth,
+    height: imageCardHeight * 0.703,
   },
   detailBottom: {
     backgroundColor: BasicColors.whiteColor,
-    //height: videoCardHeight * 0.3,
     padding: '2%',
   },
   preContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    //height: '60%',
   },
   titleText: {
     fontSize: 20,

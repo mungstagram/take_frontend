@@ -15,21 +15,15 @@ import {
   Text,
   KeyboardAvoidingView,
 } from 'react-native';
-
-import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import {Surface} from 'react-native-paper';
-import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 
 import {__getPostDetailData} from '../../redux/modules/commetsSlice';
 import YellowButton from '../YellowButton';
-import CancelButton from '../CancelButton';
 import {Colors, BasicColors} from '../../constants/colors';
-import AddCircle from '../svg/AddCircle';
 import GoBackButton from '../common/GoBackButton';
-import FastImage from 'react-native-fast-image';
 import Video from 'react-native-video';
 import {__putPostDetailData} from '../../redux/modules/commetsSlice';
 import MyText from '../common/MyText';
@@ -40,10 +34,9 @@ const ModifyVideo = ({route}) => {
 
   // 제목 인풋상태
   const [titleText, setTitleText] = useState(fileData.title);
-  // console.log(titleText);
+
   //제목 인풋 핸들러
   const titleTextHandler = event => {
-    //console.log('제목', event.nativeEvent.text);
     setTitleText(event.nativeEvent.text);
   };
   // 내용 인풋상태
@@ -51,7 +44,6 @@ const ModifyVideo = ({route}) => {
 
   // 내용 인풋 핸들러
   const contentTextHandler = event => {
-    //console.log('내용', event.nativeEvent.text);
     setContentText(event.nativeEvent.text);
   };
   const navigation = useNavigation();
@@ -162,7 +154,6 @@ const ModifyVideo = ({route}) => {
                 <TextInput
                   placeholder="내용을 입력하세요(2000자 이하)"
                   maxLength={2000}
-                  // 확인하기
                   multiline={true}
                   value={contentText}
                   onChange={contentTextHandler}
@@ -230,7 +221,7 @@ const styles = StyleSheet.create({
   title: {
     marginHorizontal: videoCardWidth * 0.05,
     fontSize: 28,
-    color: Colors.userDataColor,
+    color: Colors.mainColorDark,
     fontFamily: 'SBAggro-M',
     top: 3,
   },

@@ -43,7 +43,6 @@ const AddVideo = () => {
 
   //제목 인풋 핸들러
   const titleTextHandler = event => {
-    //console.log('제목', event.nativeEvent.text);
     setTitleText(event.nativeEvent.text);
   };
   // 내용 인풋상태
@@ -51,7 +50,6 @@ const AddVideo = () => {
 
   // 내용 인풋 핸들러
   const contentTextHandler = event => {
-    //console.log('내용', event.nativeEvent.text);
     setContentText(event.nativeEvent.text);
   };
 
@@ -96,7 +94,6 @@ const AddVideo = () => {
         isExportThumbnail: true,
         isCrop: true,
         isCropCircle: true,
-        //singleSelectedMode: true,
       });
 
       setVideos(response);
@@ -162,7 +159,7 @@ const AddVideo = () => {
         type: videos[0].mime,
         uri: `file://${videos[0].realPath}`,
       });
-      //console.log(formData);
+
       dispatch(__postAddContentFormData(formData));
       setTitleText('');
       setContentText('');
@@ -247,7 +244,6 @@ const AddVideo = () => {
                 placeholder="내용을 입력하세요(2000자 이하)"
                 style={{color: '#262626'}}
                 maxLength={2000}
-                // 확인하기
                 multiline={true}
                 value={contentText}
                 onChange={contentTextHandler}
@@ -281,14 +277,12 @@ const styles = StyleSheet.create({
     height: '100%',
     flexDirection: 'column',
     alignItems: 'center',
-    //backgroundColor: 'red',
+    backgroundColor: BasicColors.whiteColor,
   },
   fileInput: {
     flexDirection: 'row',
     flexWrap: 'nowrap',
     justifyContent: 'center',
-    //flex: 3,
-    //backgroundColor: 'red',
   },
   fileupload: {
     marginTop: 10,
@@ -302,7 +296,6 @@ const styles = StyleSheet.create({
   openfileBtn: {
     width: videoCardWidth,
     height: videoCardHeight,
-    //backgroundColor: 'red',
     zIndex: 20,
     bottom: '100%',
   },

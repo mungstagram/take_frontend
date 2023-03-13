@@ -63,9 +63,9 @@ export const __deletePostDetailData = createAsyncThunk(
     //console.log('payload', payload);
     try {
       const {data} = await http.delete(`/posts/${payload.postId}`);
-
-      //console.log('deleteData', data);
-      return thunkAPI.fulfillWithValue(data);
+      Alert.alert('귀여운 댕댕이사진이 지워졌습니다😭');
+      console.log('deleteData', payload.postId);
+      return thunkAPI.fulfillWithValue(payload.postId);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -118,6 +118,20 @@ const addContentSlice = createSlice({
       state.contentList = action.payload;
     },
     [__getPostData.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
+    },
+    [__deletePostDetailData.pending]: state => {
+      state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
+    },
+    [__deletePostDetailData.fulfilled]: (state, action) => {
+      state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
+      const target = state.addContent.findIndex(
+        content => content.id === action.payload,
+      );
+      state.addContent.splice(target, 1);
+    },
+    [__deletePostDetailData.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
     },

@@ -8,8 +8,6 @@ import {
   SafeAreaView,
   Pressable,
 } from 'react-native';
-import {Colors, BasicColors} from '../../constants/colors';
-import Video from 'react-native-video';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 
@@ -17,6 +15,7 @@ import CommentImg from '../svg/CommentImg';
 import Favorite from '../svg/Favorite';
 import NotFavorite from '../svg/NotFavorite';
 import MyText from '../common/MyText';
+import {BasicColors} from '../../constants/colors';
 
 const VideoCard = ({videoContent}) => {
   const navigation = useNavigation();
@@ -29,7 +28,9 @@ const VideoCard = ({videoContent}) => {
     <View style={styles.wrapper}>
       <SafeAreaView>
         <View style={styles.container}>
-          <Pressable onPress={onDetailHandler}>
+          <Pressable
+            onPress={onDetailHandler}
+            android_ripple={{color: 'white'}}>
             <View style={styles.contentTop}>
               <FastImage
                 style={styles.profileimg}
@@ -87,7 +88,6 @@ const VideoCard = ({videoContent}) => {
 export default VideoCard;
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const videoCardWidth = windowWidth * 0.92;
 const videoCardHeight = videoCardWidth * 0.8;
@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     justifyContent: 'center',
     marginBottom: videoCardHeight * 0.16,
-    shadowColor: BasicColors.blackColor,
   },
   contentTop: {
     backgroundColor: BasicColors.whiteColor,
