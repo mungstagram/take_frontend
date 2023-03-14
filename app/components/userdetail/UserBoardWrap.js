@@ -142,7 +142,7 @@ const dynamicStyles = value =>
     tabTextLeft: {
       textAlign: 'center',
       marginBottom: '5%',
-      color: value ? 'blue' : 'black',
+      color: value ? Colors.mainColorBright : 'black',
       fontWeight: value ? 'bold' : 'normal',
     },
     tabTextRight: {

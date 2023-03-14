@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import {useNavigation} from '@react-navigation/native';
 
 import {__getProfile} from '../redux/modules/profileSlice';
 import Logout from '../components/Logout';
@@ -26,6 +27,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const Profile = ({route}) => {
+  const navigation = useNavigation();
   //바텀텝의 높이
   const tabBarHeight = useBottomTabBarHeight();
 
@@ -60,6 +62,10 @@ const Profile = ({route}) => {
   };
   useEffect(() => {
     dispatch(__getProfile(nickname));
+    //페이지 이동시 나가기
+    if (!isFocused) {
+      navigation.goBack();
+    }
     return () => {
       nickNotChanged();
     };

@@ -4,7 +4,7 @@ import {Alert} from 'react-native';
 
 const initialState = {
   comments: [],
-  detail: {contentUrl: ['']},
+  detail: {contentUrl: [''], content: ''},
   modalImg: {},
   isLoading: false,
   error: null,
