@@ -67,6 +67,13 @@ const ImageDetailTop = ({detail}) => {
     );
   };
 
+  //유저 디테일페이지 이동
+  const moveToUserDetail = nickname => {
+    navigation.navigate('Search', {
+      screen: 'UserDetail',
+      params: {nickname},
+    });
+  };
   //사진 미리보기
   const renderItem = ({item}) => {
     return <SlideImg item={item} />;
@@ -76,17 +83,21 @@ const ImageDetailTop = ({detail}) => {
     <SafeAreaView>
       <View style={styles.container}>
         <View style={styles.detailTop}>
-          <FastImage
-            style={styles.profileImg}
-            source={{
-              uri: detail.profileUrl,
-              priority: FastImage.priority.normal,
-            }}
-            resizeMode={'cover'}
-          />
+          <Pressable
+            onPress={() => moveToUserDetail(detail.nickname)}
+            style={({pressed}) => [{opacity: pressed ? 0.5 : 1}]}>
+            <FastImage
+              style={styles.profileImg}
+              source={{
+                uri: detail.profileUrl,
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={'cover'}
+            />
+          </Pressable>
           <View style={styles.userInfo}>
             <MyText style={styles.nicknameText}>{detail.nickname}</MyText>
-            <Text style={styles.timeText}>{detail.createdAt}</Text>
+            <Text style={styles.timeText}>{detail.createdAt}jk</Text>
           </View>
           {userNick === loginNick ? (
             <View style={styles.contentControl}>
