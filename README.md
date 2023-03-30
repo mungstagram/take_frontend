@@ -82,6 +82,7 @@
 
 <details><summary>라이브러리 
 </summary>
+  
   - redux toolkit :전역 변수의 상태관리를 위해 사용했다. 또한 Reudx의 단점으로 꼽히는 보일러플레이트 코드를 줄일 수 있어서 채택했다.
   
   - React Native Multiple Image Picker : 모바일 기기내의 이미지 및 동영상 파일 업로드하기 위해 사용함. image picker라이브러리와 다르게 업로드와 촬영을 동시에 할 수 있어서 채택함.
