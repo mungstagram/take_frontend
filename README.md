@@ -136,7 +136,7 @@ hotfix : 출시 버전에서 발생한 버그를 수정 하는 브랜치
 
 - 업데이트 작업이 완료되면 최후에 main 브랜치에 병합한다.
 
-- 커밋 메시지는 gitmoji 를 활용 
+- 커밋 메시지는 gitmoji 를 활용   https://gitmoji.dev/
 
   
 ## 👷 ERD
