@@ -171,7 +171,7 @@ hotfix : 출시 버전에서 발생한 버그를 수정 하는 브랜치
 ✅ 깨달은 점:  HTTP 통신할 때 데이터 타입을 HTTP Header에 multipart/form-data 를 명시하면 데이터가 인코딩됨
 
 ## 유저 피드백 
-3.10~3.13 유저 피드백을 받았고 3.10~3.14일 동안 피드백 반영 및 오류 수정을 함
+ 3.10 ~ 3.13 유저 피드백을 받았고 3.10 ~ 3.14일 동안 피드백 반영 및 오류 수정을 함
 
 ![image](https://user-images.githubusercontent.com/120103909/228956443-02a39375-eaf8-45da-beb1-d4a69c7a3df0.png)
 
