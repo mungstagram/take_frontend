@@ -77,7 +77,7 @@
 | TypeORM | TypeSCript를 지원하고, QueryBuilder를 지원한다. |
 | Cloud Front | S3에 접근시 캐싱을 통하여 더욱 빠르고, 원본인 S3의 트래픽 부하를 줄일 수 있다. |
 | Cloud Watch | 로드밸런싱을 사용했을때 로그를 통합적으로 관리 할 수 있다. |
-| React Native | 크로스플랫폼(Cross-platform)을 통한 어플의 확장성을 기대할 수 있다 |
+| React Native | 크로스플랫폼(Cross-platform)을 통한 어플의 확장성을 기대할 수 있고, 코드 푸쉬 기능을 통한 최신 기능 업데이트에 강점이 있다.|
 | Axios | promise 기반으로 데이터 처리의 용이, json 데이터 변환을 통한 코드 최적화할 수 있다. |
 
 ## 👷 ERD
