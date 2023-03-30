@@ -108,6 +108,34 @@
   - react-native-papper : 프로젝트 기간내에 특정 컴퍼넌트를 (profile페이지의 input버튼) 빠르게 구현하기 위해서 사용했다.
   </details>
   
+### Frontend Git Branch 전략
+main : 제품으로 출시될 수 있는 브랜치
+
+develop : 다음 출시 버전을 개발하는 브랜치
+
+feature : 기능을 개발하는 브랜치
+
+hotfix : 출시 버전에서 발생한 버그를 수정 하는 브랜치
+
+
+규칙
+
+- main 브랜치는 최소한의 병합으로 진행
+
+- 작업을 시작하기 전에 이슈를 생성한다.
+
+- 출시 전까지는 develop 브랜치가 main 브랜치를 대체한다.
+
+- 각자 로컬 개발환경에서 기능별 feature 브랜치 작성 후 작업 feature 브랜치 → develop 브랜치 로 Pull-Request 병합을 요청한다.
+
+- Pull-Request는 1명 이상의 팀원이 승인시에만 merge 가능하다.
+
+- feature 브랜치명은 이슈 번호로 작성
+
+- 배포 시에는  develop 브랜치를  main 브랜치와 merge한 이후 베포, 버그나 이슈가 발생되었을 때에는 hotfix 브랜치로 수정작업을 진행한 후, main 브랜치에 병합한다.
+
+- 업데이트 작업이 완료되면 최후에 main 브랜치에 병합한다.
+  
 ## 👷 ERD
 
 ![https://i.imgur.com/6vccr5H.png](https://i.imgur.com/6vccr5H.png)
