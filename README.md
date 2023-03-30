@@ -82,20 +82,29 @@
 
 <details><summary>라이브러리 
 </summary>
-  <br>
   - redux toolkit :전역 변수의 상태관리를 위해 사용했다. 또한 Reudx의 단점으로 꼽히는 보일러플레이트 코드를 줄일 수 있어서 채택했다.
+  
   - React Native Multiple Image Picker : 모바일 기기내의 이미지 및 동영상 파일 업로드하기 위해 사용함. image picker라이브러리와 다르게 업로드와 촬영을 동시에 할 수 있어서 채택함.
+  
   - fast image : react native의 image 태그 사용시 이미지가 깨지는 형상이 생기는데, 이를 방지할 수 있다. 또한 랜더링 속도 또한 향상된다.
+  
   - react-native-permission : 앨범의 사진이나 동영상 업로드 전 퍼미션을 얻기 위해서 사용했다.
+  
   - asynStorage : 자동로그인 구현하는데 필요한 유저 정보를 캐싱하기 위해서 사용했다.
+  
   - react-native-splash-screen : 앱 로딩중에 유저가 볼 splash-screen 구현을 위해 사용했다.
+  
   - react-native-svg : 리액트와 다르게 reactnative에서는 svg태그를 지원하지 않기 때문에 사용했다.
+  
   - react-native-video : 동영상 재생 기능을 구현하기 위해서 사용했다.
+  
   - socket io-client : 실시간 채팅을 구현하기 위해서 사용했다. 
+  
   - react-native-swiper-flatlist : 프로젝트 기간내에 이미지 슬라이드 효과를 빠르게 구현하기 위해서 사용했다.
+  
   - react-native-keyboard-aware-scroll-view : 키보드에 의해서 input창이 가려지지 않게 슬라이드 효과를 주기 위해서 사용했다.
+  
   - react-native-papper : 프로젝트 기간내에 특정 컴퍼넌트를 (profile페이지의 input버튼) 빠르게 구현하기 위해서 사용했다.
-  </br>
   </details>
   
 ## 👷 ERD
