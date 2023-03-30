@@ -108,7 +108,7 @@
   - react-native-papper : 프로젝트 기간내에 특정 컴퍼넌트를 (profile페이지의 input버튼) 빠르게 구현하기 위해서 사용했다.
   </details>
   
-## Frontend Git Branch 전략
+## Frontend Git-flow 전략
 main : 제품으로 출시될 수 있는 브랜치
 
 develop : 다음 출시 버전을 개발하는 브랜치
