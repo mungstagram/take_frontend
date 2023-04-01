@@ -35,10 +35,14 @@ const Profile = ({route}) => {
   const isFocused = useIsFocused();
   // 프로필 정보
   const {profile} = useSelector(state => state.profile);
+  console.log(profile, '프로필 랜더링(가져온것)');
 
   //내 닉네임
   const myNick = useSelector(state => state.profile.myProfile[0].user.nickname);
   const [nickname, setNickname] = useState(route.params.nickname);
+
+  console.log('랜더링 횟수');
+
   const onDeleteUsersData = () => {
     Alert.alert(
       '',

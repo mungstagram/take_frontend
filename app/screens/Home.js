@@ -38,7 +38,6 @@ function Home({navigation}) {
   // profile[0] 유저  , profile[1] 강아지
   //
   const {isLoading} = useSelector(state => state.profile);
-  console.log(profile, '정보들');
   // 다음 강아지 혹은 이전 강아지가 있을 때, 다음 혹은 이전 강아지의 정보를 받아오는 함수
   const dogIndexHandler = value => {
     if (value === 'right' && dogIndex !== profile[1]?.dogs?.length - 1) {

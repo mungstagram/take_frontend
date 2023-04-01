@@ -26,6 +26,8 @@ import MyText from '../common/MyText';
 import ScanDelete from '../svg/ScanDelete';
 
 const PersonProfileCard = ({myInfo, myNick, nickname, dogsCount}) => {
+  console.log('프로필 인물 카드 랜더링');
+
   const dispatch = useDispatch();
   //카메라
   const [openCamera, setOpenCamera] = useState(false);
