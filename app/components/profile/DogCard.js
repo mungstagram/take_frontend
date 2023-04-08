@@ -19,7 +19,6 @@ import ScanDelete from '../svg/ScanDelete';
 import MyText from '../common/MyText';
 import {RadioButton} from 'react-native-paper';
 const DogCard = ({dog, nickname, myNick}) => {
-  console.log('강아지카드 props값들', dog, nickname, myNick);
   //추가 버튼 상태
   console.log('강아지 카드 랜더링');
   const [editMode, setEditMode] = useState(false);
