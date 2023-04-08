@@ -1,9 +1,7 @@
 import {
   StyleSheet,
-  Text,
   View,
   ScrollView,
-  Modal,
   Image,
   Pressable,
   Dimensions,
@@ -11,9 +9,7 @@ import {
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-import FastImage from 'react-native-fast-image';
-import MyText from '../common/MyText';
-import {Colors, BasicColors} from '../../constants/colors';
+import {BasicColors} from '../../constants/colors';
 import {enterModal} from '../../redux/modules/commetsSlice';
 
 const SlideImg = ({item}) => {

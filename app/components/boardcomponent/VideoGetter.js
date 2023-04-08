@@ -7,11 +7,11 @@ import {
   FlatList,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {ActivityIndicator} from 'react-native-paper';
+import {useIsFocused} from '@react-navigation/native';
 
 import VideoCard from './VideoCard';
 import {__getPostData} from '../../redux/modules/addContentSlice';
-import {useIsFocused} from '@react-navigation/native';
-import {ActivityIndicator} from 'react-native-paper';
 
 const VideoGetter = ({order, nickname, searchData}) => {
   const videoContentList = useSelector(state => state.addContent.contentList);

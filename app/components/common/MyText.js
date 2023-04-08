@@ -16,6 +16,6 @@ const MyText = props => {
   );
 };
 
-export default MyText;
+export default React.memo(MyText);
 
 const styles = StyleSheet.create({});

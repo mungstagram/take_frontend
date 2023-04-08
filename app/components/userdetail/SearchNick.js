@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, Pressable, FlatList, StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/core';
+
 import MyText from '../common/MyText';
 
 const SearchNick = ({searchData}) => {

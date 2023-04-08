@@ -1,18 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  Text,
-  Button,
-  Keyboard,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {__addTodos} from '../../redux/modules/todoSlice';
 
 import TaskPinkImg from '../svg/TaskPinkImg';
-import MyText from '../common/MyText';
 
 const WriteTodo = () => {
   const dispatch = useDispatch();
@@ -23,7 +14,6 @@ const WriteTodo = () => {
     setTodo(e);
   };
 
-  // console.log('되나?', todo);
   const onPressAdd = () => {
     dispatch(__addTodos(todo));
     setTodo('');

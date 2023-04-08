@@ -182,7 +182,7 @@ const CommentList = ({userNick}) => {
   );
 };
 
-export default CommentList;
+export default React.memo(CommentList);
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;

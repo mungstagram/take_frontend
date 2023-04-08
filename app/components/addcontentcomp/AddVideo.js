@@ -10,7 +10,6 @@ import {
   Platform,
   Alert,
   Dimensions,
-  Pressable,
   ScrollView,
   KeyboardAvoidingView,
 } from 'react-native';
@@ -24,7 +23,7 @@ import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {__postAddContentFormData} from '../../redux/modules/addContentSlice';
 import YellowButton from '../YellowButton';
 import CancelButton from '../CancelButton';
-import {Colors, BasicColors} from '../../constants/colors';
+import {BasicColors} from '../../constants/colors';
 import AddCircle from '../svg/AddCircle';
 import MyText from '../common/MyText';
 

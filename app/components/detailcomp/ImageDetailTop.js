@@ -5,14 +5,9 @@ import {
   StyleSheet,
   Dimensions,
   SafeAreaView,
-  FlatList,
-  ScrollView,
-  Image,
   Pressable,
   Alert,
-  Modal,
 } from 'react-native';
-import {useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import {useDispatch, useSelector} from 'react-redux';
 import {SwiperFlatList} from 'react-native-swiper-flatlist';

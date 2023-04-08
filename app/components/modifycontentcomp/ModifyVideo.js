@@ -19,12 +19,12 @@ import {Surface} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
+import Video from 'react-native-video';
 
 import {__getPostDetailData} from '../../redux/modules/commetsSlice';
 import YellowButton from '../YellowButton';
 import {Colors, BasicColors} from '../../constants/colors';
 import GoBackButton from '../common/GoBackButton';
-import Video from 'react-native-video';
 import {__putPostDetailData} from '../../redux/modules/commetsSlice';
 import MyText from '../common/MyText';
 import HeaderTitle from '../common/HeaderTitle';

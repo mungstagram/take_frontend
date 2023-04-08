@@ -383,4 +383,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddDogProfile;
+export default React.memo(AddDogProfile);

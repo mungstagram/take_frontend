@@ -1,6 +1,7 @@
 import React, {Children} from 'react';
 import {Pressable, View, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+
 import ArrowGoBackWhite from '../svg/ArrowGoBackWhite';
 
 const GoBackButtonWhite = () => {

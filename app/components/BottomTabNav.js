@@ -6,7 +6,6 @@ import AddContent from '../screens/AddContent';
 import ImageTab from '../tabcomponent/ImageTab';
 import SearchTab from '../tabcomponent/SearchTab';
 import VideoTab from '../tabcomponent/VideoTab';
-
 import HomeSvg from './svg/HomeSvg';
 import SearchBlack from './svg/SearchBlack';
 import Edit from './svg/Edit';

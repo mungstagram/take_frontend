@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Dimensions} from 'react-native';
 import {Colors, BasicColors} from '../constants/colors';
 import {useNavigation} from '@react-navigation/native';
+
 import MyText from './common/MyText';
 
 const CancelButton = ({children}) => {
