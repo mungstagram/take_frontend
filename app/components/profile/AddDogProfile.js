@@ -13,6 +13,7 @@ import {__addDogProfile} from '../../redux/modules/profileSlice';
 import ScanDelete from '../svg/ScanDelete';
 import {Colors} from '../../constants/colors';
 const AddDogProfile = () => {
+  // console.log('추가 카드 랜더링');
   //추가중인 상태
   const {isAddingDog} = useSelector(state => state.profile);
 
@@ -382,4 +383,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddDogProfile;
+export default React.memo(AddDogProfile);

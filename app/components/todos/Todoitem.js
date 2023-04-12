@@ -12,12 +12,12 @@ import {
   Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+
 import {
   __deleteTodos,
   __editTodos,
   __doneTodos,
 } from '../../redux/modules/todoSlice';
-
 import TaskPinkImg from '../svg/TaskPinkImg';
 import ServicesImg from '../svg/ServicesImg';
 import Delete from '../svg/Delete';
@@ -212,4 +212,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Todoitem;
+export default React.memo(Todoitem);

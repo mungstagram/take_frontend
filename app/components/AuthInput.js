@@ -104,7 +104,7 @@ const AuthInput = ({
   );
 };
 
-export default AuthInput;
+export default React.memo(AuthInput);
 
 const styles = StyleSheet.create({
   inputContainer: {

@@ -23,7 +23,7 @@ const AuthButton = ({children, onPress, border, disabled}) => {
   );
 };
 
-export default AuthButton;
+export default React.memo(AuthButton);
 
 const styles = value =>
   StyleSheet.create({

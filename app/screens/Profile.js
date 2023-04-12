@@ -39,6 +39,7 @@ const Profile = ({route}) => {
   //내 닉네임
   const myNick = useSelector(state => state.profile.myProfile[0].user.nickname);
   const [nickname, setNickname] = useState(route.params.nickname);
+
   const onDeleteUsersData = () => {
     Alert.alert(
       '',

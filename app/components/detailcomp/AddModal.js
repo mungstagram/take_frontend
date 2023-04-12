@@ -1,8 +1,8 @@
 import {StyleSheet, View, Modal, Pressable, Dimensions} from 'react-native';
 import React, {useState} from 'react';
-
 import FastImage from 'react-native-fast-image';
 import {useDispatch} from 'react-redux';
+
 import {enterModal} from '../../redux/modules/commetsSlice';
 
 const AddModal = ({modalImage}) => {

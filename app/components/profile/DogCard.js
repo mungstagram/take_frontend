@@ -3,11 +3,12 @@ import {View, StyleSheet, Text, Image, Alert, Pressable} from 'react-native';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import {useDispatch} from 'react-redux';
+import FastImage from 'react-native-fast-image';
+import {RadioButton} from 'react-native-paper';
 
 import Pets from '../svg/Pets';
 import ProfileInput from './components/ProfileInput';
 import TaskPinkImg from '../svg/TaskPinkImg';
-import FastImage from 'react-native-fast-image';
 import ProfileText from './components/ProfileText';
 import ServicesImg from '../svg/ServicesImg';
 import {
@@ -17,9 +18,9 @@ import {
 import Delete from '../svg/Delete';
 import ScanDelete from '../svg/ScanDelete';
 import MyText from '../common/MyText';
-import {RadioButton} from 'react-native-paper';
 const DogCard = ({dog, nickname, myNick}) => {
   //추가 버튼 상태
+  console.log('강아지 카드 랜더링');
   const [editMode, setEditMode] = useState(false);
   const editMyDoghandler = () => {
     setEditMode(!editMode);
@@ -460,4 +461,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DogCard;
+export default React.memo(DogCard);

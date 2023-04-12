@@ -16,15 +16,14 @@ import {
 import {useDispatch} from 'react-redux';
 import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
-import {Surface, Text} from 'react-native-paper';
+import {Surface} from 'react-native-paper';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
-import {useNavigation} from '@react-navigation/native';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import {__postAddContentFormData} from '../../redux/modules/addContentSlice';
 import YellowButton from '../YellowButton';
 import CancelButton from '../CancelButton';
-import {Colors, BasicColors} from '../../constants/colors';
+import {BasicColors} from '../../constants/colors';
 import AddCircle from '../svg/AddCircle';
 import MyText from '../common/MyText';
 

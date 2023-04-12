@@ -1,6 +1,7 @@
 import React from 'react';
 import {Pressable, View, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+
 import ArrowGoBack from './svg/ArrowGoBack';
 
 const AuthNavigateButton = () => {

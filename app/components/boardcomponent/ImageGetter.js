@@ -3,9 +3,9 @@ import {View, StyleSheet, FlatList, SafeAreaView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {__getPostData} from '../../redux/modules/addContentSlice';
 import {useIsFocused} from '@react-navigation/native';
+import {ActivityIndicator} from 'react-native-paper';
 
 import ImageCard from './ImageCard';
-import {ActivityIndicator} from 'react-native-paper';
 const ImageGetter = ({order, nickname, searchData}) => {
   // 검색에서 값을 받는 경우 searchData 가 true
   // 요청할 데이터 정렬 순서 , 카테고리 프룹스로 받기
@@ -68,7 +68,7 @@ const ImageGetter = ({order, nickname, searchData}) => {
   );
 };
 
-export default ImageGetter;
+export default React.memo(ImageGetter);
 
 const styles = StyleSheet.create({
   getterWrapper: {

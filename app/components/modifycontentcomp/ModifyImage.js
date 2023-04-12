@@ -25,8 +25,6 @@ import YellowButton from '../YellowButton';
 import CancelButton from '../CancelButton';
 import {Colors, BasicColors} from '../../constants/colors';
 import GoBackButton from '../common/GoBackButton';
-import FastImage from 'react-native-fast-image';
-import Video from 'react-native-video';
 import {__putPostDetailData} from '../../redux/modules/commetsSlice';
 import {__getPostDetailData} from '../../redux/modules/commetsSlice';
 import MyText from '../common/MyText';

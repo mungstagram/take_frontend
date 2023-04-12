@@ -1,6 +1,5 @@
-import {StyleSheet, Text, View, Dimensions} from 'react-native';
-import React, {Children} from 'react';
-import FastImage from 'react-native-fast-image';
+import {StyleSheet, View, Dimensions} from 'react-native';
+import React from 'react';
 import {Image} from 'react-native';
 
 const HeaderTitle = ({children}) => {

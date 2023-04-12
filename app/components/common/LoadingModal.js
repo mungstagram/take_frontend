@@ -3,6 +3,7 @@ import React from 'react';
 import MyText from './MyText';
 import {Colors} from '../../constants/colors';
 import {ActivityIndicator} from 'react-native-paper';
+
 const LoadingModal = ({modalHandler, writting}) => {
   return (
     <>

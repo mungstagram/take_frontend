@@ -85,7 +85,7 @@ const UserBoardWrap = ({nickname}) => {
   );
 };
 
-export default UserBoardWrap;
+export default React.memo(UserBoardWrap);
 
 // 동적 스타일링
 const dynamicStyles = value =>

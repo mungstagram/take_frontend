@@ -2,9 +2,7 @@ import {Pressable, StyleSheet, Text, View, Alert, Image} from 'react-native';
 import React, {useState} from 'react';
 import {
   login,
-  logout,
   getProfile as getKakaoProfile,
-  unlink,
 } from '@react-native-seoul/kakao-login';
 import {useDispatch} from 'react-redux';
 import {__postKaKaoLogin} from '../../redux/modules/loginSlice';
@@ -22,35 +20,6 @@ const KaKaoLogin = () => {
     }
   };
 
-  // const signOutWithKakao = async () => {
-  //   try {
-  //     const message = await logout();
-
-  //     setResult(message);
-  //   } catch (err) {
-  //     console.error('signOut error', err);
-  //   }
-  // };
-
-  // const getProfile = async () => {
-  //   try {
-  //     const profile = await getKakaoProfile();
-
-  //     setResult(JSON.stringify(profile));
-  //   } catch (err) {
-  //     console.error('signOut error', err);
-  //   }
-  // };
-
-  // const unlinkKakao = async () => {
-  //   try {
-  //     const message = await unlink();
-
-  //     setResult(message);
-  //   } catch (err) {
-  //     console.error('signOut error', err);
-  //   }
-  // };
   return (
     <View style={styles.container}>
       <MyText style={styles.text}>간편하게 로그인하기</MyText>

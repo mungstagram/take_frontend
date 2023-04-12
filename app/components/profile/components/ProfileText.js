@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
+
 import MyText from '../../common/MyText';
 const ProfileText = ({long, title, value}) => {
   return long ? (
@@ -26,4 +27,4 @@ const ProfileText = ({long, title, value}) => {
     </View>
   );
 };
-export default ProfileText;
+export default React.memo(ProfileText);

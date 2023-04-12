@@ -153,7 +153,7 @@ const UserDetailProf = ({nickname}) => {
   );
 };
 
-export default UserDetailProf;
+export default React.memo(UserDetailProf);
 
 const styles = StyleSheet.create({
   userWrapper: {

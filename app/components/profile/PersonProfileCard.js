@@ -1,12 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {
-  FlatList,
   View,
   StyleSheet,
   TextInput,
-  Text,
-  Button,
-  Keyboard,
   Image,
   TouchableOpacity,
   Alert,
@@ -17,7 +13,7 @@ import {useDispatch} from 'react-redux';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import FastImage from 'react-native-fast-image';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
-import {useSelector} from 'react-redux';
+
 import {__getProfile, __editProfile} from '../../redux/modules/profileSlice';
 import Emoticon from '../svg/Emoticon';
 import ServicesWhiteImg from '../svg/ServicesWhiteImg';
@@ -51,7 +47,6 @@ const PersonProfileCard = ({myInfo, myNick, nickname, dogsCount}) => {
   const onPresschangeNickEdit = e => {
     setProfNickEdit(e);
   };
-  // console.log('input profile profNickEdit', profNickEdit);
 
   const onPresschangeProfEdit = e => {
     setProfIntroEdit(e);

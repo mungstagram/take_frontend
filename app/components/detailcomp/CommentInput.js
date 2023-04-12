@@ -12,13 +12,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 
-import {Colors, BasicColors} from '../../constants/colors';
+import {BasicColors} from '../../constants/colors';
 import WriteComment from '../svg/WriteComment';
 import {__postComment} from '../../redux/modules/commetsSlice';
 import {__getHomeProfile} from '../../redux/modules/profileSlice';
 import WriteCommentOn from '../svg/WriteCommentOn';
 import {__getProfile} from '../../redux/modules/profileSlice';
-import MyText from '../common/MyText';
 
 const CommentInput = ({detail}) => {
   const dispatch = useDispatch();
@@ -82,7 +81,7 @@ const CommentInput = ({detail}) => {
   );
 };
 
-export default CommentInput;
+export default React.memo(CommentInput);
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;

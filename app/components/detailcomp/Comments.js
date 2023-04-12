@@ -10,13 +10,13 @@ import {
 import React, {useState, useEffect} from 'react';
 import FastImage from 'react-native-fast-image';
 import {useDispatch, useSelector} from 'react-redux';
+
 import {
   __getPostDetailData,
   __putComment,
 } from '../../redux/modules/commetsSlice';
 import {__deleteComment} from '../../redux/modules/commetsSlice';
 import {useIsFocused} from '@react-navigation/native';
-
 import {Colors, BasicColors} from '../../constants/colors';
 import ServicesImg from '../svg/ServicesImg';
 import Delete from '../svg/Delete';

@@ -76,4 +76,4 @@ const ProfileInput = ({
   );
 };
 
-export default ProfileInput;
+export default React.memo(ProfileInput);

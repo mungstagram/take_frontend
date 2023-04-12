@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Dimensions} from 'react-native';
+
 import {Colors, BasicColors} from '../constants/colors';
 import MyText from './common/MyText';
 
@@ -24,10 +19,8 @@ const YellowButton = ({children, onPress}) => {
 export default YellowButton;
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const videoCardWidth = windowWidth * 0.92;
-const videoCardHeight = videoCardWidth * 0.8;
 
 const styles = StyleSheet.create({
   buttonBox: {

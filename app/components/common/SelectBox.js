@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Image, Pressable, Text} from 'react-native';
+import {StyleSheet, View, Pressable} from 'react-native';
 
 import ArrowDropDown from '../svg/ArrowDropDown';
 import ArrowDropUp from '../svg/ArrowDropUp';
 import MyText from './MyText';
+
 const SelectBox = ({
   dataSortSelector,
   dateSortSelectorHandler,
